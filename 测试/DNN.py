@@ -39,8 +39,8 @@ model = keras.Sequential([
     keras.layers.Dense(128, activation='relu'),#隐藏层2
     keras.layers.Dense(64, activation='relu'),#隐藏层3
     keras.layers.Dense(32, activation='relu'),#隐藏层4
-    keras.layers.Dense(16, activation='relu',kernel_regularizer=keras.regularizers.L2(0.01)),#隐藏层5
-    keras.layers.Dense(8, activation='relu',kernel_regularizer=keras.regularizers.L2(0.01)),#隐藏层6
+    keras.layers.Dense(16, activation='relu',),#隐藏层5
+    keras.layers.Dense(8, activation='relu',),#隐藏层6
     keras.layers.Dense(4, activation='relu'),#隐藏层7
     keras.layers.Dense(1)  # 输出层
 ])

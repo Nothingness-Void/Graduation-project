@@ -30,8 +30,8 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # 标准化数据X
 scaler_x = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
+X_train = scaler_x.fit_transform(X_train)
+X_test = scaler_x.transform(X_test)
 
 # 标准化数据y
 scaler_y = StandardScaler()
@@ -78,15 +78,17 @@ for model, param in tqdm(zip(models, params), total=len(models), desc='正在建
     best_param = grid.best_params_
     best_score = grid.best_score_
 
+    # 在测试集上评估最优的模型
+    y_pred = grid.predict(X_test)
+
     # 反标准化
     y_pred_origin = scaler_y.inverse_transform(y_pred.reshape(-1, 1)).ravel()
     y_test_origin = scaler_y.inverse_transform(y_test.reshape(-1, 1)).ravel()
 
-    # 在测试集上评估最优的模型
-    y_pred = grid.predict(X_test)
-    r2 = r2_score(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    mape = mean_absolute_percentage_error(y_test, y_pred)
+    # 计算 R2 分数和 MSE
+    r2 = r2_score(y_test_origin, y_pred_origin)
+    mae = mean_absolute_error(y_test_origin, y_pred_origin)
+    mape = mean_absolute_percentage_error(y_test_origin, y_pred_origin)
 
     # 打印模型的名称，最优参数，最优分数，以及在测试集上的 R2 分数和 MSE
     print(f"当前模型: {model.__class__.__name__}")
