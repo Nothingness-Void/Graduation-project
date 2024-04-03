@@ -7,35 +7,6 @@ import urllib.parse
 import time
 import random
 
-'''
-# 定义函数，将名称转换为SMILES
-def CIRconvert(ids):
-    try:
-        # 检查化学名称是否包含聚合物
-        if 'poly(' in ids and ids.endswith(')'):
-
-            # 找到"poly("和")"的位置
-            start = ids.index('poly(') + 5
-            end = ids.index(')', start)
-
-            # 只取出括号内的部分
-            ids = ids[start:end]
-
-        if ids.lower() == 'polyisoprene':
-            ids = 'isoprene'
-        
-        encoded_component = urllib.parse.quote(ids) 
-        url = f'http://cactus.nci.nih.gov/chemical/structure/{encoded_component}/smiles'
-        
-        # 在发送请求之前等待一段随机的时间
-        time.sleep(random.uniform(0.5, 2.0))
-        
-        ans = urlopen(url).read().decode('utf8')
-        print (ans)
-        return ans
-    except Exception as e:
-        return str(e)
-'''
 # 定义函数，将名称转换为SMILES
 def CIRconvert(ids):
     try:

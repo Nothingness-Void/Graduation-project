@@ -28,10 +28,15 @@ y = data[target_name].values
 # 划分训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# 标准化数据
-scaler = StandardScaler()
+# 标准化数据X
+scaler_x = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
+
+# 标准化数据y
+scaler_y = StandardScaler()
+y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).ravel()
+y_test = scaler_y.transform(y_test.reshape(-1, 1)).ravel()
 
 ########################################### 分割线 ####################################
 
@@ -72,6 +77,10 @@ for model, param in tqdm(zip(models, params), total=len(models), desc='正在建
     # 获取最优的参数和分数
     best_param = grid.best_params_
     best_score = grid.best_score_
+
+    # 反标准化
+    y_pred_origin = scaler_y.inverse_transform(y_pred.reshape(-1, 1)).ravel()
+    y_test_origin = scaler_y.inverse_transform(y_test.reshape(-1, 1)).ravel()
 
     # 在测试集上评估最优的模型
     y_pred = grid.predict(X_test)
