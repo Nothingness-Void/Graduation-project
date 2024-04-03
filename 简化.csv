@@ -1,0 +1,264 @@
+﻿Compound 1,Compound 2,χ,χN,Measured at T (K),Reference,SMILES 1,SMILES 2
+poly(lactic acid),poly(6-methyl-ε-caprolactone),-0.1 + 61.2T,,428.15,10.1021/ma201063t10.1021/ma201063t,lactic%20acid,6-methyl-%CE%B5-caprolactone
+poly(methyl acrylate),silicon dioxide,-0.3,,423.15,10.1021/ma200205j,methyl%20acrylate,silicon%20dioxide
+poly(methyl acrylate),2-butanone,-0.45,,423.15,10.1021/ma200205j10.1021/ef502918t10.1021/ma035830m,methyl%20acrylate,2-butanone
+water,poly(ethylene oxide),0.8 - 100T,,298.15,10.1021/ma301193h,water,ethylene%20oxide
+polythiophene,tetrahydrofuran,3.34,,300,10.1021/ma401345n,thiophene,tetrahydrofuran
+poly(3-methylthiophene),tetrahydrofuran,11.43,,300,10.1021/ma401345n,3-methylthiophene,tetrahydrofuran
+poly(3-butylthiophene),tetrahydrofuran,7.41,,300,10.1021/ma401345n,3-butylthiophene,tetrahydrofuran
+poly(3-hexylthiophene),tetrahydrofuran,0.39,,300,10.1021/ma401345n,3-hexylthiophene,tetrahydrofuran
+poly(3-octylthiophene),tetrahydrofuran,-1.06,,300,10.1021/ma401345n,3-octylthiophene,tetrahydrofuran
+poly(3-dodecylthiophene),tetrahydrofuran,-0.38,,300,10.1021/ma401345n,3-dodecylthiophene,tetrahydrofuran
+polystyrene,poly(4-hydroxystyrene),0.68,,,10.1021/ma502192k10.1021/ma00203a026,styrene,4-hydroxystyrene
+poly(ethylene oxide),poly(methyl acrylate),-0.04,,313.15,10.1021/ma102867d,ethylene%20oxide,methyl%20acrylate
+polybutadiene,tetrahydrofuran,0.399,,298.15,10.1021/ma302010j,butadiene,tetrahydrofuran
+polybutadiene,tetrahydrofuran,0.403,,313.15,10.1021/ma302010j,butadiene,tetrahydrofuran
+polybutadiene,tetrahydrofuran,0.4,,328.15,10.1021/ma302010j,butadiene,tetrahydrofuran
+polybutadiene,tetrahydrofuran,0.4,,298.15,10.1021/ma302010j,butadiene,tetrahydrofuran
+polybutadiene,tetrahydrofuran,0.411,,313.15,10.1021/ma302010j,butadiene,tetrahydrofuran
+polybutadiene,tetrahydrofuran,0.42,,328.15,10.1021/ma302010j,butadiene,tetrahydrofuran
+polyisoprene,cyclohexane,0.394,,298.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,isoprene,cyclohexane
+polyisoprene,cyclohexane,0.373,,313.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,isoprene,cyclohexane
+polyisoprene,cyclohexane,0.395,,328.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,isoprene,cyclohexane
+polyisoprene,cyclohexane,0.437,,298.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,isoprene,cyclohexane
+polyisoprene,cyclohexane,0.438,,313.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,isoprene,cyclohexane
+polyisoprene,cyclohexane,0.44,,328.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,isoprene,cyclohexane
+poly(4-tert-butylstyrene),poly(methyl methacrylate),(-0.044 ± 0.002) + (41.2 ± 0.9)T,,,10.1021/ma301047y,4-tert-butylstyrene,methyl%20methacrylate
+polystyrene,poly(methacrylic acid),1.1 ± 0.2,,293.15,10.1021/ma500232y10.1021/ma500232y,styrene,methacrylic%20acid
+poly(acrylic acid),polyacrylamide,0.505 ± 0.01,,293.15,10.1021/ma2024683,acrylic%20acid,acrylamide
+tetrahydrofuran,poly(3-hexylthiophene),1.04 ± 0.04,,296.15,10.1021/ma400597j,tetrahydrofuran,3-hexylthiophene
+chloroform,poly(3-hexylthiophene),0.99 ± 0.01,,296.15,10.1021/ma400597j,chloroform,3-hexylthiophene
+tetrahydrofuran,polystyrene,0.41 ± 0.02,,296.15,10.1021/ma400597j,tetrahydrofuran,styrene
+chloroform,polystyrene,0.39 ± 0.01,,296.15,10.1021/ma400597j,chloroform,styrene
+polystyrene,poly(3-hexylthiophene),0.48 ± 0.06,,296.15,10.1021/ma400597j,styrene,3-hexylthiophene
+poly(trimethylsilylstyrene),poly(lactic acid),0.29 + 51.3T,,298.15,10.1021/ma401719p10.1021/ma301238j,trimethylsilylstyrene,lactic%20acid
+deuterated poly(ethylene-alt-propylene),poly(ethylene-alt-propylene),0.0054 ± 0.0008,,423.15,10.1021/ma101898c,ethylene-alt-propylene,ethylene-alt-propylene
+polystyrene,poly(methyl methacrylate),0.0209 + 2.87T,,413.15,10.1021/ma4004538,styrene,methyl%20methacrylate
+polystyrene,poly(ε-caprolactone),-0.913 + 412T,,167,10.1021/ma301531a10.1016/0032-3861(95)93654-5,styrene,%CE%B5-caprolactone
+poly(cyclohexylethylene),poly(methyl methacrylate),(-0.162 ± 0.013) + (144.4 ± 6.2)T,,,10.1021/ma4020164,cyclohexylethylene,methyl%20methacrylate
+poly(styrene-ran-acrylonitrile),deuterated poly(methyl methacrylate),0.092 - 39.622T,,373 - 413,10.1021/ma401090q,styrene-ran-acrylonitrile,methyl%20methacrylate
+polystyrene,poly(vinyl methyl ether),,,378.15,10.1021/ma101421s,styrene,vinyl%20methyl%20ether
+poly(methyl methacrylate),carbon dioxide,1.499,,313,10.1021/ma401090q,methyl%20methacrylate,carbon%20dioxide
+poly(styrene-ran-acrylonitrile),carbon dioxide,1.512,,313,10.1021/ma401090q,styrene-ran-acrylonitrile,carbon%20dioxide
+poly(hydroxyethyl acrylate),poly(methyl acrylate),0.06,,293,10.1021/ma500905n,hydroxyethyl%20acrylate,methyl%20acrylate
+poly(hydroxyethyl acrylate),poly(octyl acrylate),0.13,,293,10.1021/ma500905n,hydroxyethyl%20acrylate,octyl%20acrylate
+poly(methyl acrylate),poly(octyl acrylate),0.07,,293,10.1021/ma500905n,methyl%20acrylate,octyl%20acrylate
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,1 - 119T,,293.15,10.1021/ma401450w,butyl%20methacrylate,1-butyl-3-methylimidazolium%20bis%28trifluoromethylsulfonyl%29imide
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,0.79 - 83T,,293.15,10.1021/ma401450w,butyl%20methacrylate,1-butyl-3-methylimidazolium%20bis%28trifluoromethylsulfonyl%29imide
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,0.83 - 87T,,293.15,10.1021/ma401450w,butyl%20methacrylate,1-butyl-3-methylimidazolium%20bis%28trifluoromethylsulfonyl%29imide
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,1.07 - 149T,,293.15,10.1021/ma401450w,butyl%20methacrylate,1-butyl-3-methylimidazolium%20bis%28trifluoromethylsulfonyl%29imide
+deuterated poly(butylene oxide),poly(butylene oxide),-0.0000225 ± 0.0000025,,320,10.1021/ma201288a,butylene%20oxide,butylene%20oxide
+deuterated poly(hexene oxide),poly(hexene oxide),-0.00001 ± 0.000005,,320,10.1021/ma201288a,hexene%20oxide,hexene%20oxide
+deuterated poly(octylene oxide),poly(octylene oxide),0.000046 ± 0.000033,,320,10.1021/ma201288a,octylene%20oxide,octylene%20oxide
+deuterated poly(butylene oxide),poly(butylene oxide),0.00004 ± 0.00001,,320,10.1021/ma201288a,butylene%20oxide,butylene%20oxide
+deuterated poly(hexene oxide),poly(hexene oxide),0.00005 ± 0.00001,,320,10.1021/ma201288a,hexene%20oxide,hexene%20oxide
+deuterated poly(octylene oxide),poly(octylene oxide),0.00029 ± 0.00004,,320,10.1021/ma201288a,octylene%20oxide,octylene%20oxide
+poly(ethylene oxide),1-ethyl-3-methylimidazolium bis(trifluoromethanesulfonyl)amide,0.43,,,10.1021/ma400218e,ethylene%20oxide,1-ethyl-3-methylimidazolium%20bis%28trifluoromethanesulfonyl%29amide
+poly(ethylene oxide),1-ethyl-3-methylimidazolium bis(fluorosulfonyl)amide,0.48,,,10.1021/ma400218e,ethylene%20oxide,1-ethyl-3-methylimidazolium%20bis%28fluorosulfonyl%29amide
+poly(ethylene oxide),water,0 + 117.35T,,373.15,10.1021/ma1027752,ethylene%20oxide,water
+polystyrene,poly(4-vinylpyridine),,,,10.1021/ma100679210.1021/ma062516u,styrene,4-vinylpyridine
+polystyrene,polyisoprene,-0.07 + 63T,,150 - 310,10.1021/ma400098u10.1063/1.469130,styrene,isoprene
+polystyrene,polybutadiene,0.047,,313.15,10.1021/ma401957sISBN: 0-387-31235-8,styrene,butadiene
+polystyrene,polydimethylsiloxane,0.226,,313.15,10.1021/ma401957sISBN: 0-387-31235-8,styrene,dimethylsiloxane
+deuterated poly(methyl methacrylate),carbon dioxide,,,,10.1021/ma5018154,methyl%20methacrylate,carbon%20dioxide
+poly(styrene-ran-acrylonitrile),carbon dioxide,,,,10.1021/ma5018154,styrene-ran-acrylonitrile,carbon%20dioxide
+deuterated poly(methyl methacrylate),poly(styrene-ran-acrylonitrile),0.092 - 39.6T,,,10.1021/ma501815410.1021/ma401090q,methyl%20methacrylate,styrene-ran-acrylonitrile
+polystyrene,polystyrenesulfonate,5.89,,298.15,10.1021/ma400078y10.1021/ma702733f,styrene,styrenesulfonate
+poly(butyl acrylate),poly(benzyl methacrylate),0.036 - 0.56T,,353.15 - 513.15,10.1021/ma1003776,butyl%20acrylate,benzyl%20methacrylate
+polystyrenesulfonate,poly(ethylene-alt-propylene),0.194 - 0.395,,327.15,10.1021/ma400078y10.1021/ma702733f,styrenesulfonate,ethylene-alt-propylene
+poly(lactic acid),polybutadiene,0.192,,428.15,10.1021/ma5006233,lactic%20acid,butadiene
+diethyl phthalate,polyisoprene,-1.3 + 938T,,,10.1021/ma402598r,diethyl%20phthalate,isoprene
+dibutyl phthalate,polyisoprene,-0.56 + 468T,,,10.1021/ma402598r,dibutyl%20phthalate,isoprene
+polystyrene,poly(2-vinylpyridine),-0.1322 + 0.0761T,,,10.1021/ma200429v,styrene,2-vinylpyridine
+polystyrene,poly(methyl methacrylate),0.0425 + 4.046T,,,10.1021/ma500716f10.1021/ma901313a,styrene,methyl%20methacrylate
+poly(allylamine hydrochloride),water,-0.0513,,,10.1021/ma101983s,allylamine%20hydrochloride,water
+poly(acrylic acid),water,0.729,,,10.1021/ma101983s,acrylic%20acid,water
+"poly(N,N-dimethylacrylamide)",polyethylene,-0.26 + 221T,,413.15,10.1021/ma302069s,N%2CN-dimethylacrylamide,ethylene
+poly(3-hexylthiophene),poly(methyl methacrylate),0.0433 + 56.37T,,496.15 - 503.15,10.1021/ma302220b,3-hexylthiophene,methyl%20methacrylate
+poly(3-dodecylthiophene),poly(methyl methacrylate),0.0828 + 38.582T,,513.15 - 523.15,10.1021/ma302220b,3-dodecylthiophene,methyl%20methacrylate
+poly(3-(2-ethylhexyl)thiophene),poly(methyl methacrylate),0.0932 + 25.482T,,383.15 - 423.15,10.1021/ma302220b,3-%282-ethylhexyl,methyl%20methacrylate
+"poly[N-(4-vinylbenzyl)-N,N-diethylamine]",polystyrene,0.033,,298.15,10.1021/ma402370j,%5BN-%284-vinylbenzyl%29-N%2CN-diethylamine%5D,styrene
+"poly(N,N-dimethylacrylamide)","poly[N-(4-vinylbenzyl)-N,N-diethylamine]",0.287,,298.15,10.1021/ma402370j,N%2CN-dimethylacrylamide,%5BN-%284-vinylbenzyl%29-N%2CN-diethylamine%5D
+"poly(N,N-dimethylacrylamide)",polystyrene,0.096,,298.15,10.1021/ma402370j,N%2CN-dimethylacrylamide,styrene
+poly(vinylidene fluoride),poly(methyl methacrylate),-0.295,,433.15,10.1021/ma301460h10.1021/ma60048a040,vinylidene%20fluoride,methyl%20methacrylate
+carboxylated nitrile rubber,toluene,,,298,"10.1021/ma500240vCiation: Zaborski, M.; Kosmalska, A. Kautsch. Gummi Kunstst. 2005, 58, 354– 357.",carboxylated%20nitrile%20rubber,toluene
+polystyrene,"poly(2,6-dimethyl-1,4-phenylene oxide)",0.112 - 62T,,,10.1021/ma402200d10.1021/ma00186a046,styrene,2%2C6-dimethyl-1%2C4-phenylene%20oxide
+polyacrylamide,water,0.47,,,10.1021/ma501396jISBN: 0-19-518101-8,acrylamide,water
+polystyrene,polyisoprene,-0.0288 + 26.4T,,390 - 555,10.1021/ma202196c10.1209/epl/i2001-00205-7,styrene,isoprene
+polystyrene,polybutadiene,0.05,,393.15,10.1021/ma400533w10.1021/ma011958x,styrene,butadiene
+polyisoprene,poly(ethylene oxide),-0.0579 + 90.7T,,390 - 555,10.1021/ma202196c10.1209/epl/i2001-00205-7,isoprene,ethylene%20oxide
+polystyrene,poly(ethylene oxide),-0.0229 + 29.8T,,390 - 555,10.1021/ma202196c10.1209/epl/i2001-00205-7,styrene,ethylene%20oxide
+polystyrene,poly(lactic acid),-0.211 + 154.9T,,,10.1021/ma501957b10.1021/ja9083804,styrene,lactic%20acid
+poly(ethylene-alt-propylene),poly(lactic acid),-0.434 + 302T,,,10.1021/ma301047y10.1002/polb.10291,ethylene-alt-propylene,lactic%20acid
+polyethylene,polydimethylsiloxane,-0.095 + 90.7T,,,10.1021/ma301047y10.1021/ma020148y,ethylene,dimethylsiloxane
+polystyrene,polyisoprene,-0.071 + 59.1T,,,10.1021/ma301047y10.1021/ma00130a012,styrene,isoprene
+polystyrene,polydimethylsiloxane,-0.061 + 57.4T,,,10.1021/ma301047y10.1021/ja0278584,styrene,dimethylsiloxane
+polyethylene,poly(ethylene-alt-propylene),-0.016 + 8.87T,,,10.1021/ma301047y10.1021/ma020148y,ethylene,ethylene-alt-propylene
+polystyrene,poly(methyl methacrylate),0.022 + 3.5T,,,10.1021/ma301047y10.1021/ma00205a03310.1021/ma8013004,styrene,methyl%20methacrylate
+poly(propylene),carbon monofluoride,0.394,,,10.1021/ma400384a,propylene,carbon%20monofluoride
+polystyrene,poly(2-vinylpyridine),0.0072 + 30T,,,10.1021/ma400957p10.1678/rheology.41.83,styrene,2-vinylpyridine
+poly(methyl methacrylate),chloroform,0.39,,298.15,10.1021/ma101529b10.1021/ma0497761,methyl%20methacrylate,chloroform
+polystyrene,chloroform,0.45,,298.15,10.1021/ma101529b10.1021/ma0497761,styrene,chloroform
+acetone,poly(methyl methacrylate),0.18,,298.15,10.1021/ma101529b10.1021/ma0497761,acetone,methyl%20methacrylate
+acetone,polystyrene,1.1,,298.15,10.1021/ma101529b10.1021/ma0497761,acetone,styrene
+toluene,poly(methyl methacrylate),0.45,,298.15,10.1021/ma101529b10.1021/ma0497761,toluene,methyl%20methacrylate
+toluene,polystyrene,0.34,,298.15,10.1021/ma101529b10.1021/ma0497761,toluene,styrene
+carbon disulfide,poly(methyl methacrylate),1.2,,298.15,10.1021/ma101529b10.1021/ma0497761,carbon%20disulfide,methyl%20methacrylate
+carbon disulfide,polystyrene,0.01,,298.15,10.1021/ma101529b10.1021/ma0497761,carbon%20disulfide,styrene
+polyacrylamide,water,0.47,,298.15,10.1021/ma501396jISBN: 0-19-518101-8,acrylamide,water
+polystyrene,poly(butyl acrylate),0.034,,423.15,10.1021/ma100743s10.1021/ma50006a07910.1016/j.polymer.2007.09.039,styrene,butyl%20acrylate
+poly(methyl methacrylate),poly(vinylidene fluoride),-0.07,,473,10.1021/ma301620a10.1002/pol.1980.130180607,methyl%20methacrylate,vinylidene%20fluoride
+polyisoprene,polystyrene,27.9 - 0.0258T,,,10.1021/ma301739j10.1021/ma00127a050,isoprene,styrene
+poly(ethylene-alt-propylene),polystyrene,8 + 0.05T,,,10.1021/ma301739j10.1021/ma00127a050,ethylene-alt-propylene,styrene
+polyisoprene,poly(methyl methacrylate),0.077,,413.15,10.1021/ma301739j10.1021/ma950840b,isoprene,methyl%20methacrylate
+poly(3-hexylthiophene),"[6,6]-phenyl-C61 butyric acid methyl ester",0.86 ± 0.09,,,10.1021/ma200855r,3-hexylthiophene,%5B6%2C6%5D-phenyl-C61%20butyric%20acid%20methyl%20ester
+n-tridecane,perfluorinated copolymer AF1600,29 - 0.092T + 0.000077T²,,,10.1021/ma1025658,n-tridecane,luorinated%20copolymer%20AF1600
+n-tetradecane,perfluorinated copolymer AF1600,56.5 - 0.201T + 0.000186T²,,,10.1021/ma1025658,n-tetradecane,luorinated%20copolymer%20AF1600
+n-pentadecane,perfluorinated copolymer AF1600,60.9 - 0.212T + 0.000192T²,,,10.1021/ma1025658,n-pentadecane,luorinated%20copolymer%20AF1600
+n-hexadecane,perfluorinated copolymer AF1600,54.6 - 0.186T + 0.000165T²,,,10.1021/ma1025658,n-hexadecane,luorinated%20copolymer%20AF1600
+polystyrene,poly(n-butyl acrylate),0.087,,503.15,10.1021/ma100743s10.1002/(SICI)1099-0488(20000201)38:3<369::AID-POLB3>3.0.CO;2-W,styrene,n-butyl%20acrylate
+chloroform,"poly[(9,9-dioctylfluorenyl-2,7-diyl)-co-5,5-(4′,7′-di-2-thienyl-2′,1′,3′-benzothiadiazole]",0.505,,,10.1021/ma400269j10.1021/ma070712a,chloroform,%5B%289%2C9-dioctylfluorenyl-2%2C7-diyl%29-co-5%2C5-%284%E2%80%B2%2C7%E2%80%B2-di-2-thienyl-2%E2%80%B2%2C1%E2%80%B2%2C3%E2%80%B2-benzothiadiazole%5D
+chloroform,phenyl-C61-butyric acid methyl ester,0.885,,,10.1021/ma400269j10.1021/ma070712a,chloroform,phenyl-C61-butyric%20acid%20methyl%20ester
+"poly[(9,9-dioctylfluorenyl-2,7-diyl)-co-5,5-(4′,7′-di-2-thienyl-2′,1′,3′-benzothiadiazole]",phenyl-C61-butyric acid methyl ester,0.45 - 0.479,,,10.1021/ma400269j10.1021/ma070712a,%5B%289%2C9-dioctylfluorenyl-2%2C7-diyl%29-co-5%2C5-%284%E2%80%B2%2C7%E2%80%B2-di-2-thienyl-2%E2%80%B2%2C1%E2%80%B2%2C3%E2%80%B2-benzothiadiazole%5D,phenyl-C61-butyric%20acid%20methyl%20ester
+chloroform,silicon oxide,3.4,,,10.1021/ma400269j10.1016/0021-9797(77)90009-1,chloroform,silicon%20oxide
+"poly[(9,9-dioctylfluorenyl-2,7-diyl)-co-5,5-(4′,7′-di-2-thienyl-2′,1′,3′-benzothiadiazole]",silicon oxide,3.7,,,10.1021/ma400269j10.1021/ma07071,%5B%289%2C9-dioctylfluorenyl-2%2C7-diyl%29-co-5%2C5-%284%E2%80%B2%2C7%E2%80%B2-di-2-thienyl-2%E2%80%B2%2C1%E2%80%B2%2C3%E2%80%B2-benzothiadiazole%5D,silicon%20oxide
+phenyl-C61-butyric acid methyl ester,silicon oxide,1.9,,,10.1021/ma400269j10.1021/ma07071,phenyl-C61-butyric%20acid%20methyl%20ester,silicon%20oxide
+poly(acrylic acid),acetone,1.057,,298.15,10.1021/ma3019188,acrylic%20acid,acetone
+poly(acrylic acid),"n,n-dimethylformide",0.34,,298.15,10.1021/ma3019188,acrylic%20acid,n%2Cn-dimethylformide
+poly(acrylic acid),water,4.333,,298.15,10.1021/ma3019188,acrylic%20acid,water
+poly(butyl acrylate),acetone,0.49,,298.15,10.1021/ma3019188,butyl%20acrylate,acetone
+poly(butyl acrylate),"n,n-dimethylformide",1.766,,298.15,10.1021/ma3019188,butyl%20acrylate,n%2Cn-dimethylformide
+poly(butyl acrylate),water,6.926,,298.15,10.1021/ma3019188,butyl%20acrylate,water
+poly(trifluoroethyl methacrylate),acetone,0.542,,298.15,10.1021/ma3019188,trifluoroethyl%20methacrylate,acetone
+poly(trifluoroethyl methacrylate),"n,n-dimethylformide",2.147,,298.15,10.1021/ma3019188,trifluoroethyl%20methacrylate,n%2Cn-dimethylformide
+poly(trifluoroethyl methacrylate),water,7.303,,298.15,10.1021/ma3019188,trifluoroethyl%20methacrylate,water
+polystyrene,poly(ethylene oxide),0.019 - 0.03,,,10.1021/ma100925c10.1021/ma00028a025,styrene,ethylene%20oxide
+polystyrene,poly(acrylic acid),0.45,,,10.1021/ma102378wISBN: 0-471-16628-6,styrene,acrylic%20acid
+polystyrene,poly(ferrocenylmethylethylsilane),0.023 + 3.68T,,,10.1021/ma302602u10.1021/ma020647z,styrene,ferrocenylmethylethylsilane
+polyisoprene,polystyrene,-0.0522 + 48.8T,,,10.1021/ma302602u10.1021/ma011696z,isoprene,styrene
+polystyrene,poly(methyl methacrylate),0.021 + 3.2T,,,10.1021/ma401184610.1021/ma00073a044,styrene,methyl%20methacrylate
+deuterated polystyrene,poly(n-pentyl methacrylate),0.104 - 55T + 10355.6T²,,,10.1021/ma401184610.1021/ma025615q,erated%20polystyrene,n-pentyl%20methacrylate
+polystyrene,polyisoprene,-0.01 + 33T,,180,10.1021/ma400944z10.1021/ma991470k10.1063/1.471656,styrene,isoprene
+polystyrene,poly(lactic acid),-0.112 + 98.1T,,,10.1021/ma500625k10.1021/ja0278584,styrene,lactic%20acid
+polystyrene,poly(4-vinylpyridine),0.3 - 0.35,,433.15,10.1021/ma902651t10.1021/ma992118,styrene,4-vinylpyridine
+polystyrene,poly(tert-butoxystyrene),0.031 - 0.034,,,10.1021/ma902651tISBN: 978-90-367-3805-7,styrene,tert-butoxystyrene
+poly(4-vinylpyridine),poly(tert-butoxystyrene),0.39 - 0.43,,,10.1021/ma902651tISBN: 978-90-367-3805-7,4-vinylpyridine,tert-butoxystyrene
+polystyrene,poly(methyl methacrylate),(0.028 ± 0.002) + (3.9 ± 0.6)T,,,10.1021/ma401704m10.1021/ma00205a033,styrene,methyl%20methacrylate
+poly(4-tert-butylstyrene),poly(2-vinylpyridine),(-0.0502 ± 0.0029) + (67.9 ± 3.4)T,,405.15 - 513.15,10.1021/ma501597g,4-tert-butylstyrene,2-vinylpyridine
+polystyrene,poly(2-vinylpyridine),-0.033 + 63T,,,10.1021/ma501597g10.1016/0032-3861(94)90065-5,styrene,2-vinylpyridine
+water,polyacrylamide,0.45,,,10.1021/ma300366410.1021/jp710284e,water,acrylamide
+water,polyacrylamide,0.47,,,10.1021/ma102708bISBN: 0-19-518101-8,water,acrylamide
+poly(ethylene oxide),water,0.41 - 0.45,,298.15,10.1021/ma500314d10.1016/0079-6700(95)00011-410.1021/ma010804e,ethylene%20oxide,water
+polystyrene,poly(4-vinylbenzyltrimethylammonium chloride),0.197,,301.15,10.1021/ma302357k,styrene,4-vinylbenzyltrimethylammonium%20chloride
+polymerized soybean oil,poly(lactic acid),0.35,,463.15,10.1021/ma902279510.1021/am900514v,merized%20soybean%20oil,lactic%20acid
+polystyrene,polyisoprene,0.07,,463.15,10.1021/ma902279510.1007/978-0-387-69002-5_19,styrene,isoprene
+methanol,poly(N-isopropylacrylamide),0.45,,,10.1021/ma401877c10.1021/ma00004a02210.1143/JPSJ.56.233,methanol,N-isopropylacrylamide
+water,poly(N-isopropylacrylamide),0.45 - 0.55,,,10.1021/ma401877c10.1021/ma00004a02210.1143/JPSJ.56.233,water,N-isopropylacrylamide
+polystyrene,polybutadiene,0.055,,,10.1021/ma500633b10.1051/jp2:1997217,styrene,butadiene
+polystyrene,poly(ethylene-alt-propylene),,,,10.1021/ma102788v10.1021/ma991156q,styrene,ethylene-alt-propylene
+polystyrene,poly(2-vinylpyridine),-0.095 + 91.6T,,,10.1021/ma902804e10.1021/ma951714a,styrene,2-vinylpyridine
+polystyrene,poly(ferrocenylmethylethylsilane),0.028 + 3.28T,,,10.1021/ma302602u10.1021/ma020647z,styrene,ferrocenylmethylethylsilane
+deuterated polystyrene,poly(methyl methacrylate),0.0284 + 3.902T,,,10.1021/ma401184610.1021/ma00073a044,erated%20polystyrene,methyl%20methacrylate
+polystyrene,deuterated poly(methyl methacrylate),0.0292 + 3.188T,,,10.1021/ma401184610.1021/ma00073a044,styrene,methyl%20methacrylate
+deuterated polystyrene,deuterated poly(methyl methacrylate),0.0251 + 3.199T,,,10.1021/ma401184610.1021/ma00073a044,erated%20polystyrene,methyl%20methacrylate
+polystyrene,poly(methyl methacrylate),0.021 + 3.2T,,,10.1021/ma401184610.1021/ma00073a044,styrene,methyl%20methacrylate
+deuterated polystyrene,poly(n-pentyl methacrylate),0.104 - 55T + 10355.6T²,,,10.1021/ma401184610.1021/ma025615q,erated%20polystyrene,n-pentyl%20methacrylate
+poly(lactic acid),tetrahydrofuran,0.11,,298.15,10.1021/ma500613c,lactic%20acid,tetrahydrofuran
+poly(norbornene),tetrahydrofuran,0.42,,298.15,10.1021/ma500613c,norbornene,tetrahydrofuran
+poly(lactic acid),poly(norbornene),0.72,,298.15,10.1021/ma500613c,lactic%20acid,norbornene
+polyethylene,poly(ethyl ethylene),0.0283,,373.15,10.1021/ma100741810.1021/ma00046a070,ethylene,ethyl%20ethylene
+poly(ethylene-alt-propylene),poly(ethyl ethylene),0.0116,,373.15,10.1021/ma100741810.1021/ma00046a070,ethylene-alt-propylene,ethyl%20ethylene
+polyethylene,poly(ethylene-alt-propylene),0.0086,,373.15,10.1021/ma100741810.1021/ma00046a070,ethylene,ethylene-alt-propylene
+polystyrene,polyisoprene,-0.0857 + 71.4T,,,10.1021/ma401033w10.1021/ma00130a012,styrene,isoprene
+polystyrene,poly(4-hydroxystyrene),0.68,,,10.1021/ma200747d10.1021/ma00203a026,styrene,4-hydroxystyrene
+polydimethylsiloxane,"poly{2,5-bis[(4-methoxyphenyl)oxycarbonyl]styrene}",0 + 886T,,,10.1021/ma1023704,dimethylsiloxane,%7B2%2C5-bis%5B%284-methoxyphenyl%29oxycarbonyl%5Dstyrene%7D
+polyisoprene,poly(methyl methacrylate),0.077 ± 0.004,,295.15,10.1021/ma300365h10.1021/ma950840b,isoprene,methyl%20methacrylate
+polystyrene,poly(4-vinylpyridine),0.3 - 0.35,,433.15,10.1021/ma301461410.1021/ma992118,styrene,4-vinylpyridine
+polystyrene,polycarbonate,0.035 - 0.0046,,523.15,10.1021/ma301461410.1002/app.1987.070340307,styrene,carbonate
+polystyrene,poly(vinyl chloride),0.099,,,10.1021/ma301461410.1016/0032-3861(95)93653-4,styrene,vinyl%20chloride
+polystyrene,poly(methyl methacrylate),0.0044,,,10.1021/ma301461410.1021/ma00113a010,styrene,methyl%20methacrylate
+polystyrene,poly(tert-butyl acrylate),0.09,,,10.1021/ma301461410.1021/ma9009802,styrene,tert-butyl%20acrylate
+polystyrene,poly(butyl methacrylate),(0.012 - 0.015) ± 0.001,,393.15,10.1021/ma301461410.1021/ma991660v,styrene,butyl%20methacrylate
+polystyrene,polybutadiene,-0.03813 + 30.137T,,,10.1021/ma101140m10.1063/1.47074910.1002/1521-3900(200001)149:1<99::AID-MASY99>3.0.CO;2-X10.1021/ma981665c10.1021/ma030020w,styrene,butadiene
+polystyrene,poly(ethylene-r-butylene),(0.02 ± 0.005) + (24 ± 6)T,,,10.1021/ma200297f10.1021/ma991842p,styrene,ethylene-r-butylene
+poly(n-hexyl methacrylate),polystyrene,0.0065 - 0.01,,403.15 - 453.15,10.1021/ma301461410.1002/pi.1481,n-hexyl%20methacrylate,styrene
+polyvinyl alcohol,water,0.506,,,10.1021/ma101031t10.1002/bip.1972.360110704,vinyl%20alcohol,water
+poly(cyclohexylethylene),polyethylene,-0.0174 + 29.4T,,,10.1021/ma100347k10.1021/ma020227,cyclohexylethylene,ethylene
+poly(cyclohexylethylene),poly(ethyl ethylene),-0.0087 + 11.2T,,,10.1021/ma100347k10.1021/ma020227,cyclohexylethylene,ethyl%20ethylene
+poly(cyclohexylethylene),poly(ethylene-alt-propylene),-0.0036 + 15.7T,,,10.1021/ma100347k10.1021/ma020227+,cyclohexylethylene,ethylene-alt-propylene
+polystyrene,acetone,0.68,,297.15,10.1021/ma102470v,styrene,acetone
+polystyrene,acetone,0.73,,275.15,10.1021/ma102470v,styrene,acetone
+poly(methyl methacrylate),acetone,0.32,,297.15,10.1021/ma102470v,methyl%20methacrylate,acetone
+poly(methyl methacrylate),acetone,0.35,,275.15,10.1021/ma102470v,methyl%20methacrylate,acetone
+polystyrene,polydimethylsiloxane,-0.037 + 68T,,,10.1021/ma501033a10.1126/science.122604610.1021/ma0115489,styrene,dimethylsiloxane
+poly(trimethylsilylstyrene),poly(lactic acid),0.29 + 51.3T,,,10.1021/ma301238j,trimethylsilylstyrene,lactic%20acid
+polystyrene,polydimethylsiloxane,0.037 + 68T,,,10.1021/ma301238j10.1021/ma020651a,styrene,dimethylsiloxane
+polystyrene,poly(ethylene oxide),-0.023 + 29.8T,,,10.1021/ma301238j10.1021/ma020651a,styrene,ethylene%20oxide
+polystyrene,poly(methyl methacrylate),0.0282 + 4.46T,,,10.1021/ma301238j10.1021/ma301238j,styrene,methyl%20methacrylate
+polystyrene,poly(lactic acid),-0.211 + 154.9T,,,10.1021/ma402187j10.1021/ja9083804,styrene,lactic%20acid
+poly(ethylene oxide),polyisoprene,0.125 + 65T,,,10.1021/ma402356z10.1021/ma001957p10.1063/1.478122,ethylene%20oxide,isoprene
+poly(ethylene-alt-propylene),poly(ethyl ethylene),0.000444 + 4.69T,,,10.1021/ma402356z10.1021/ma00210a032,ethylene-alt-propylene,ethyl%20ethylene
+polystyrene,polyethylene,0.07,,,10.1021/ma902805x10.1021/ma020754t,styrene,ethylene
+polystyrene,polyisoprene,,58.0,393.15,10.1021/ma402171410.1007/978-0-387-69002-5_19,styrene,isoprene
+poly(methyl methacrylate),poly(vinylidene fluoride),-0.07,,,10.1021/ma201151k10.1016/0032-3861(94)90351-4,methyl%20methacrylate,vinylidene%20fluoride
+polystyrene,poly(2-vinylpyridine),0.09 - 0.11,,433.15,10.1021/ma301402n10.1021/ma992118,styrene,2-vinylpyridine
+polystyrene,poly(2-vinylpyridine),-0.000179 + 0.478T,,,10.1021/ma301402n10.1021/ma062516u,styrene,2-vinylpyridine
+polystyrene,deuterated polystyrene,(-0.00029 ± 0.00004) + (0.00002 ± 0.000001)T,,,10.1021/ma400765v10.1103/PhysRevLett.57.1429,styrene,erated%20polystyrene
+poly(ethylene oxide),water,0.426,,,10.1021/ma300244u10.1021/bm025744e10.1016/0142-9612(93)90154-T,ethylene%20oxide,water
+polystyrene,polyisoprene,-0.0156 + 22.6T,,,10.1021/ma100400q10.1021/ma062778w10.1002/(SICI)1099-0488(199812)36:17<3101::AID-POLB10>3.0.CO;2-X,styrene,isoprene
+polystyrene,poly(ethylene oxide),-0.0229 + 29.8T,,390 - 555,10.1021/ma100400q10.1021/ma062778w10.1209/epl/i2001-00205-7,styrene,ethylene%20oxide
+polyisoprene,poly(ethylene oxide),0.117 + 60.9T,,,10.1021/ma100400q10.1021/ma062778w10.1063/1.478122,isoprene,ethylene%20oxide
+polystyrene,polybutadiene,(0.019 ± 0.005) + (21.6 ± 2.2)T,,298,10.1021/ma202717p10.1063/1.470749,styrene,butadiene
+polyethylene,polyoctene,,,440.15,10.1021/ma100609k,ethylene,octene
+polydimethylsiloxane,polydimethylsiloxane,,,,10.1021/ma202030z10.1002/polb.1995.090331109,dimethylsiloxane,dimethylsiloxane
+poly(propylene),poly(ε-caprolactone),,45.6,463.15,10.1021/ma300711k10.1021/ma802598n,propylene,%CE%B5-caprolactone
+polystyrene,carbon tetrachloride,0.72,,,10.1021/ma101294610.1021/ma1012946,styrene,carbon%20tetrachloride
+polystyrene,benzene,0.28,,,10.1021/ma101294610.1021/ma1012946,styrene,benzene
+polystyrene,chlorobenzene,0.33,,338.15,10.1021/ma101294610.1021/ma1012946,styrene,chlorobenzene
+polystyrene,toluene,0.35,,338.15,10.1021/ma101294610.1021/ma1012946,styrene,toluene
+polystyrene,"1,1,2-trichloroethane",0.38,,338.15,10.1021/ma101294610.1021/ma1012946,styrene,1%2C1%2C2-trichloroethane
+poly(lactic acid),benzene,2.03,,,10.1021/ma101294610.1021/ma1012946,lactic%20acid,benzene
+poly(lactic acid),carbon tetrachloride,3.18,,,10.1021/ma101294610.1021/ma1012946,lactic%20acid,carbon%20tetrachloride
+poly(lactic acid),chlorobenzene,2.37,,338.15,10.1021/ma101294610.1021/ma1012946,lactic%20acid,chlorobenzene
+poly(lactic acid),toluene,2.45,,338.15,10.1021/ma101294610.1021/ma1012946,lactic%20acid,toluene
+poly(lactic acid),"1,1,2-trichloroethane",2.38,,338.15,10.1021/ma101294610.1021/ma1012946,lactic%20acid,1%2C1%2C2-trichloroethane
+polystyrene,chloroform,0.04,,338.15,10.1021/ma101294610.1021/ma1012946,styrene,chloroform
+polystyrene,dichloromethane,0.03,,,10.1021/ma101294610.1021/ma1012946,styrene,dichloromethane
+polystyrene,xylene,0.22,,,10.1021/ma101294610.1021/ma1012946,styrene,xylene
+poly(lactic acid),chloroform,0.58,,338.15,10.1021/ma101294610.1021/ma1012946,lactic%20acid,chloroform
+poly(lactic acid),dichloromethane,0.37,,,10.1021/ma101294610.1021/ma1012946,lactic%20acid,dichloromethane
+poly(lactic acid),ethylene dichloride,1.02,,,10.1021/ma101294610.1021/ma1012946,lactic%20acid,ethylene%20dichloride
+poly(lactic acid),xylene,2.19,,,10.1021/ma101294610.1021/ma1012946,lactic%20acid,xylene
+polystyrene,poly(n-hexyl methacrylate),0.035 + 3.93T,,423 - 488,10.1021/ma402526q10.1021/ma981055c,styrene,n-hexyl%20methacrylate
+polystyrene,polybutadiene,0.00659 + 13.6T,,,10.1021/ma301487e10.1021/ma00036a019,styrene,butadiene
+carbon dioxide,"poly(hexafluoroisopropylidene diphthalic anhydride-alt-2,3,5,6-tetramethyl-1,4-diaminobenzene)",3.78,,303.15,10.1021/ma200587610.1021/ma971786x10.1002/aic.690080416,carbon%20dioxide,hexafluoroisopropylidene%20diphthalic%20anhydride-alt-2%2C3%2C5%2C6-tetramethyl-1%2C4-diaminobenzene
+carbon dioxide,matrimid,1.84,,303.15,10.1021/ma200587610.1021/ma971786x10.1002/aic.690080416,carbon%20dioxide,matrimid
+oxygen,matrimid,3.04,,303.15,10.1021/ma200587610.1021/ma971786x10.1002/aic.690080416,oxygen,matrimid
+oxygen,"poly(hexafluoroisopropylidene diphthalic anhydride-alt-2,3,5,6-tetramethyl-1,4-diaminobenzene)",5.57,,303.15,10.1021/ma200587610.1021/ma971786x10.1002/aic.690080416,oxygen,hexafluoroisopropylidene%20diphthalic%20anhydride-alt-2%2C3%2C5%2C6-tetramethyl-1%2C4-diaminobenzene
+poly(propylene),poly(lactic acid),,73.2,463.15,10.1021/ma300711k10.1021/ma802598n,propylene,lactic%20acid
+polystyrene,"1,2-dichloroethane",0.03,,,10.1021/ma1012946,styrene,1%2C2-dichloroethane
+polystyrene,poly(butyl acrylate),0.087,,503.15,10.1021/ma201259w10.1002/(SICI)1099-0488(20000201)38:3<369::AID-POLB3>3.0.CO;2-W,styrene,butyl%20acrylate
+poly(ethyl methacrylate),poly(butyl acrylate),0.013,,503.15,10.1021/ma201259w10.1002/(SICI)1099-0488(20000201)38:3<369::AID-POLB3>3.0.CO;2-W,ethyl%20methacrylate,butyl%20acrylate
+polystyrene,poly(butyl methacrylate),0.017 - 0.018,,,10.1021/ma201259w10.1021/ma0526037,styrene,butyl%20methacrylate
+polystyrene,chloroform,0.29 ± 0.01,,,10.1021/ma500561q,styrene,chloroform
+polybutadiene,chloroform,0.21 ± 0.1,,,10.1021/ma500561q,butadiene,chloroform
+polydimethylsiloxane,polystyrene,0.072 + 6.85T,,423.15,10.1021/acs.macromol.5b00518,dimethylsiloxane,styrene
+poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,-0.091 + 34.8T,,,10.1021/ma502417w,diethylhexyloxy-p-phenylenevinylene,isoprene
+polystyrene,polydimethylsiloxane,0.033 + 32.6T,,423.15,10.1021/acs.macromol.5b0051810.1021/ma402016410.1016/S0368-2048(01)00329-2,styrene,dimethylsiloxane
+polydimethylsiloxane,poly(methyl methacrylate),0.13 + 31.5T,,,10.1021/acs.macromol.5b00518,dimethylsiloxane,methyl%20methacrylate
+polydimethylsiloxane,poly(methyl methacrylate),0.13 + 24.5T,,,10.1021/acs.macromol.5b00518,dimethylsiloxane,methyl%20methacrylate
+polystyrene,chloroform,0.35,,,10.1021/acs.macromol.5b01261ISBN: 0-471-16628-6,styrene,chloroform
+polystyrene,toluene,0.35,,,10.1021/acs.macromol.5b01261ISBN: 0-471-16628-6,styrene,toluene
+poly(4-vinylpyridine),chloroform,0.67,,,10.1021/acs.macromol.5b01261ISBN: 0-471-16628-6,4-vinylpyridine,chloroform
+poly(4-vinylpyridine),toluene,1.01,,,10.1021/acs.macromol.5b01261ISBN: 0-471-16628-6,4-vinylpyridine,toluene
+carbon tetrachloride,polystyrene,0.396,,,10.1021/acs.macromol.5b0051010.1021/la00089a00910.1039/TF9585401742,carbon%20tetrachloride,styrene
+cyclohexane,polystyrene,0.505,,,10.1021/acs.macromol.5b0051010.1021/la00089a00910.5254/1.3535155,cyclohexane,styrene
+polystyrene,benzene,0.438,,,10.1021/acs.macromol.5b0051010.1021/la00089a00910.1039/TF9585401742,styrene,benzene
+polystyrene,toluene,0.432,,,10.1021/acs.macromol.5b0051010.1021/la00089a00910.1039/TF9585401742,styrene,toluene
+poly(propylene oxide),"2,6-diaminotriazine",3.5,,,10.1021/ma502304k10.1021/ja2119496,propylene%20oxide,2%2C6-diaminotriazine
+polyethylene,thymine,8.5,,,10.1021/ma502304kISBN: 9780849301766,ethylene,thymine
+polyethylene,"2,6-diaminotriazine",3,,,10.1021/ma502304kISBN: 9780849301766,ethylene,2%2C6-diaminotriazine
+poly(propylene oxide),thymine,10.6,,,10.1021/ma502304k10.1021/ja2119496,propylene%20oxide,thymine
+polyisoprene,poly(lactic acid),-0.48 + 381T,,,10.1021/acs.macromol.5b00277,isoprene,lactic%20acid
+polyisoprene,poly(lactic acid),-0.69 + 411T,,,10.1021/acs.macromol.5b00277,isoprene,lactic%20acid
+polyisoprene,poly(lactic acid),-0.41 + 247T,,,10.1021/acs.macromol.5b00277,isoprene,lactic%20acid

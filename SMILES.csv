@@ -1,0 +1,200 @@
+﻿Compound 1,Compound 2,χ,χN,Measured at T (K),Reference,SMILES 1,SMILES 2
+poly(lactic acid),poly(6-methyl-ε-caprolactone),-0.1 + 61.2T,,428.15,10.1021/ma201063t10.1021/ma201063t,CC(C(=O)O)O,CC1CCCCC(=O)O1
+poly(methyl acrylate),silicon dioxide,-0.3,,423.15,10.1021/ma200205j,COC(=O)C=C,O=[Si]=O
+poly(methyl acrylate),2-butanone,-0.45,,423.15,10.1021/ma200205j10.1021/ef502918t10.1021/ma035830m,COC(=O)C=C,CCC(=O)C
+water,poly(ethylene oxide),0.8 - 100T,,298.15,10.1021/ma301193h,O,C1CO1
+polythiophene,tetrahydrofuran,3.34,,300,10.1021/ma401345n,C1=CSC=C1,C1CCOC1
+poly(3-methylthiophene),tetrahydrofuran,11.43,,300,10.1021/ma401345n,CC1=CSC=C1,C1CCOC1
+poly(3-butylthiophene),tetrahydrofuran,7.41,,300,10.1021/ma401345n,CCCCC1=CSC=C1,C1CCOC1
+poly(3-hexylthiophene),tetrahydrofuran,0.39,,300,10.1021/ma401345n,CCCCCCC1=CSC=C1,C1CCOC1
+poly(3-octylthiophene),tetrahydrofuran,-1.06,,300,10.1021/ma401345n,CCCCCCCCC1=CSC=C1,C1CCOC1
+poly(3-dodecylthiophene),tetrahydrofuran,-0.38,,300,10.1021/ma401345n,CCCCCCCCCCCCC1=CSC=C1,C1CCOC1
+polystyrene,poly(4-hydroxystyrene),0.68,,,10.1021/ma502192k10.1021/ma00203a026,C=CC1=CC=CC=C1,C=CC1=CC=C(C=C1)O
+poly(ethylene oxide),poly(methyl acrylate),-0.04,,313.15,10.1021/ma102867d,C1CO1,COC(=O)C=C
+polybutadiene,tetrahydrofuran,0.399,,298.15,10.1021/ma302010j,C=CC=C,C1CCOC1
+polybutadiene,tetrahydrofuran,0.403,,313.15,10.1021/ma302010j,C=CC=C,C1CCOC1
+polybutadiene,tetrahydrofuran,0.4,,328.15,10.1021/ma302010j,C=CC=C,C1CCOC1
+polybutadiene,tetrahydrofuran,0.4,,298.15,10.1021/ma302010j,C=CC=C,C1CCOC1
+polybutadiene,tetrahydrofuran,0.411,,313.15,10.1021/ma302010j,C=CC=C,C1CCOC1
+polybutadiene,tetrahydrofuran,0.42,,328.15,10.1021/ma302010j,C=CC=C,C1CCOC1
+polyisoprene,cyclohexane,0.394,,298.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,CC(=C)C=C,C1CCCCC1
+polyisoprene,cyclohexane,0.373,,313.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,CC(=C)C=C,C1CCCCC1
+polyisoprene,cyclohexane,0.395,,328.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,CC(=C)C=C,C1CCCCC1
+polyisoprene,cyclohexane,0.437,,298.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,CC(=C)C=C,C1CCCCC1
+polyisoprene,cyclohexane,0.438,,313.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,CC(=C)C=C,C1CCCCC1
+polyisoprene,cyclohexane,0.44,,328.15,10.1021/ma302010j10.1016/j.eurpolymj.2007.08.002,CC(=C)C=C,C1CCCCC1
+poly(4-tert-butylstyrene),poly(methyl methacrylate),(-0.044 ± 0.002) + (41.2 ± 0.9)T,,,10.1021/ma301047y,CC(C)(C)C1=CC=C(C=C1)C=C,CC(=C)C(=O)OC
+polystyrene,poly(methacrylic acid),1.1 ± 0.2,,293.15,10.1021/ma500232y10.1021/ma500232y,C=CC1=CC=CC=C1,CC(=C)C(=O)O
+poly(acrylic acid),polyacrylamide,0.505 ± 0.01,,293.15,10.1021/ma2024683,C=CC(=O)O,C=CC(=O)N
+tetrahydrofuran,poly(3-hexylthiophene),1.04 ± 0.04,,296.15,10.1021/ma400597j,C1CCOC1,CCCCCCC1=CSC=C1
+chloroform,poly(3-hexylthiophene),0.99 ± 0.01,,296.15,10.1021/ma400597j,C(Cl)(Cl)Cl,CCCCCCC1=CSC=C1
+tetrahydrofuran,polystyrene,0.41 ± 0.02,,296.15,10.1021/ma400597j,C1CCOC1,C=CC1=CC=CC=C1
+chloroform,polystyrene,0.39 ± 0.01,,296.15,10.1021/ma400597j,C(Cl)(Cl)Cl,C=CC1=CC=CC=C1
+polystyrene,poly(3-hexylthiophene),0.48 ± 0.06,,296.15,10.1021/ma400597j,C=CC1=CC=CC=C1,CCCCCCC1=CSC=C1
+poly(trimethylsilylstyrene),poly(lactic acid),0.29 + 51.3T,,298.15,10.1021/ma401719p10.1021/ma301238j,C[Si](C)(C)C=CC1=CC=CC=C1,CC(C(=O)O)O
+polystyrene,poly(methyl methacrylate),0.0209 + 2.87T,,413.15,10.1021/ma4004538,C=CC1=CC=CC=C1,CC(=C)C(=O)OC
+polystyrene,poly(ε-caprolactone),-0.913 + 412T,,167,10.1021/ma301531a10.1016/0032-3861(95)93654-5,C=CC1=CC=CC=C1,O=C1CCCCCO1
+poly(cyclohexylethylene),poly(methyl methacrylate),(-0.162 ± 0.013) + (144.4 ± 6.2)T,,,10.1021/ma4020164,C=CC1CCCCC1,CC(=C)C(=O)OC
+poly(methyl methacrylate),carbon dioxide,1.499,,313,10.1021/ma401090q,CC(=C)C(=O)OC,C(=O)=O
+poly(hydroxyethyl acrylate),poly(methyl acrylate),0.06,,293,10.1021/ma500905n,C=CC(=O)OCCO,COC(=O)C=C
+poly(hydroxyethyl acrylate),poly(octyl acrylate),0.13,,293,10.1021/ma500905n,C=CC(=O)OCCO,CCCCCCCCOC(=O)C=C
+poly(methyl acrylate),poly(octyl acrylate),0.07,,293,10.1021/ma500905n,COC(=O)C=C,CCCCCCCCOC(=O)C=C
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,1 - 119T,,293.15,10.1021/ma401450w,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,0.79 - 83T,,293.15,10.1021/ma401450w,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,0.83 - 87T,,293.15,10.1021/ma401450w,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,1.07 - 149T,,293.15,10.1021/ma401450w,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F
+deuterated poly(butylene oxide),poly(butylene oxide),-0.0000225 ± 0.0000025,,320,10.1021/ma201288a,C1CCOC1,C1CCOC1
+deuterated poly(butylene oxide),poly(butylene oxide),0.00004 ± 0.00001,,320,10.1021/ma201288a,C1CCOC1,C1CCOC1
+poly(ethylene oxide),1-ethyl-3-methylimidazolium bis(trifluoromethanesulfonyl)amide,0.43,,,10.1021/ma400218e,C1CO1,CCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F
+poly(ethylene oxide),1-ethyl-3-methylimidazolium bis(fluorosulfonyl)amide,0.48,,,10.1021/ma400218e,C1CO1,CCN1C=C[N+](=C1)C.[N-](S(=O)(=O)F)S(=O)(=O)F
+poly(ethylene oxide),water,0 + 117.35T,,373.15,10.1021/ma1027752,C1CO1,O
+polystyrene,polyisoprene,-0.07 + 63T,,150 - 310,10.1021/ma400098u10.1063/1.469130,C=CC1=CC=CC=C1,CC(=C)C=C
+polystyrene,polybutadiene,0.047,,313.15,10.1021/ma401957sISBN: 0-387-31235-8,C=CC1=CC=CC=C1,C=CC=C
+polystyrene,polystyrenesulfonate,5.89,,298.15,10.1021/ma400078y10.1021/ma702733f,C=CC1=CC=CC=C1,[O-][S](=O)(=O)C=Cc1ccccc1
+poly(butyl acrylate),poly(benzyl methacrylate),0.036 - 0.56T,,353.15 - 513.15,10.1021/ma1003776,CCCCOC(=O)C=C,CC(=C)C(=O)OCC1=CC=CC=C1
+poly(lactic acid),polybutadiene,0.192,,428.15,10.1021/ma5006233,CC(C(=O)O)O,C=CC=C
+diethyl phthalate,polyisoprene,-1.3 + 938T,,,10.1021/ma402598r,CCOC(=O)C1=CC=CC=C1C(=O)OCC,CC(=C)C=C
+dibutyl phthalate,polyisoprene,-0.56 + 468T,,,10.1021/ma402598r,CCCCOC(=O)C1=CC=CC=C1C(=O)OCCCC,CC(=C)C=C
+polystyrene,poly(2-vinylpyridine),-0.1322 + 0.0761T,,,10.1021/ma200429v,C=CC1=CC=CC=C1,C=CC1=CC=CC=N1
+polystyrene,poly(methyl methacrylate),0.0425 + 4.046T,,,10.1021/ma500716f10.1021/ma901313a,C=CC1=CC=CC=C1,CC(=C)C(=O)OC
+poly(allylamine hydrochloride),water,-0.0513,,,10.1021/ma101983s,C=CCN.Cl,O
+poly(acrylic acid),water,0.729,,,10.1021/ma101983s,C=CC(=O)O,O
+"poly(N,N-dimethylacrylamide)",polyethylene,-0.26 + 221T,,413.15,10.1021/ma302069s,CN(C)C(=O)C=C,C=C
+poly(3-hexylthiophene),poly(methyl methacrylate),0.0433 + 56.37T,,496.15 - 503.15,10.1021/ma302220b,CCCCCCC1=CSC=C1,CC(=C)C(=O)OC
+poly(3-dodecylthiophene),poly(methyl methacrylate),0.0828 + 38.582T,,513.15 - 523.15,10.1021/ma302220b,CCCCCCCCCCCCC1=CSC=C1,CC(=C)C(=O)OC
+"poly[N-(4-vinylbenzyl)-N,N-diethylamine]",polystyrene,0.033,,298.15,10.1021/ma402370j,CCN(CC)Cc1ccc(C=C)cc1,C=CC1=CC=CC=C1
+"poly(N,N-dimethylacrylamide)","poly[N-(4-vinylbenzyl)-N,N-diethylamine]",0.287,,298.15,10.1021/ma402370j,CN(C)C(=O)C=C,CCN(CC)Cc1ccc(C=C)cc1
+"poly(N,N-dimethylacrylamide)",polystyrene,0.096,,298.15,10.1021/ma402370j,CN(C)C(=O)C=C,C=CC1=CC=CC=C1
+poly(vinylidene fluoride),poly(methyl methacrylate),-0.295,,433.15,10.1021/ma301460h10.1021/ma60048a040,C=C(F)F,CC(=C)C(=O)OC
+polystyrene,"poly(2,6-dimethyl-1,4-phenylene oxide)",0.112 - 62T,,,10.1021/ma402200d10.1021/ma00186a046,C=CC1=CC=CC=C1,CC1=CC2=CC(=C1O2)C
+polyacrylamide,water,0.47,,,10.1021/ma501396jISBN: 0-19-518101-8,C=CC(=O)N,O
+polystyrene,polyisoprene,-0.0288 + 26.4T,,390 - 555,10.1021/ma202196c10.1209/epl/i2001-00205-7,C=CC1=CC=CC=C1,CC(=C)C=C
+polystyrene,polybutadiene,0.05,,393.15,10.1021/ma400533w10.1021/ma011958x,C=CC1=CC=CC=C1,C=CC=C
+polyisoprene,poly(ethylene oxide),-0.0579 + 90.7T,,390 - 555,10.1021/ma202196c10.1209/epl/i2001-00205-7,CC(=C)C=C,C1CO1
+polystyrene,poly(ethylene oxide),-0.0229 + 29.8T,,390 - 555,10.1021/ma202196c10.1209/epl/i2001-00205-7,C=CC1=CC=CC=C1,C1CO1
+polystyrene,poly(lactic acid),-0.211 + 154.9T,,,10.1021/ma501957b10.1021/ja9083804,C=CC1=CC=CC=C1,CC(C(=O)O)O
+polystyrene,polyisoprene,-0.071 + 59.1T,,,10.1021/ma301047y10.1021/ma00130a012,C=CC1=CC=CC=C1,CC(=C)C=C
+polystyrene,poly(methyl methacrylate),0.022 + 3.5T,,,10.1021/ma301047y10.1021/ma00205a03310.1021/ma8013004,C=CC1=CC=CC=C1,CC(=C)C(=O)OC
+poly(propylene),carbon monofluoride,0.394,,,10.1021/ma400384a,CC=C,[CH2]F
+polystyrene,poly(2-vinylpyridine),0.0072 + 30T,,,10.1021/ma400957p10.1678/rheology.41.83,C=CC1=CC=CC=C1,C=CC1=CC=CC=N1
+poly(methyl methacrylate),chloroform,0.39,,298.15,10.1021/ma101529b10.1021/ma0497761,CC(=C)C(=O)OC,C(Cl)(Cl)Cl
+polystyrene,chloroform,0.45,,298.15,10.1021/ma101529b10.1021/ma0497761,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl
+acetone,poly(methyl methacrylate),0.18,,298.15,10.1021/ma101529b10.1021/ma0497761,CC(=O)C,CC(=C)C(=O)OC
+acetone,polystyrene,1.1,,298.15,10.1021/ma101529b10.1021/ma0497761,CC(=O)C,C=CC1=CC=CC=C1
+toluene,poly(methyl methacrylate),0.45,,298.15,10.1021/ma101529b10.1021/ma0497761,CC1=CC=CC=C1,CC(=C)C(=O)OC
+toluene,polystyrene,0.34,,298.15,10.1021/ma101529b10.1021/ma0497761,CC1=CC=CC=C1,C=CC1=CC=CC=C1
+carbon disulfide,poly(methyl methacrylate),1.2,,298.15,10.1021/ma101529b10.1021/ma0497761,C(=S)=S,CC(=C)C(=O)OC
+carbon disulfide,polystyrene,0.01,,298.15,10.1021/ma101529b10.1021/ma0497761,C(=S)=S,C=CC1=CC=CC=C1
+polyacrylamide,water,0.47,,298.15,10.1021/ma501396jISBN: 0-19-518101-8,C=CC(=O)N,O
+polystyrene,poly(butyl acrylate),0.034,,423.15,10.1021/ma100743s10.1021/ma50006a07910.1016/j.polymer.2007.09.039,C=CC1=CC=CC=C1,CCCCOC(=O)C=C
+poly(methyl methacrylate),poly(vinylidene fluoride),-0.07,,473,10.1021/ma301620a10.1002/pol.1980.130180607,CC(=C)C(=O)OC,C=C(F)F
+polyisoprene,polystyrene,27.9 - 0.0258T,,,10.1021/ma301739j10.1021/ma00127a050,CC(=C)C=C,C=CC1=CC=CC=C1
+polyisoprene,poly(methyl methacrylate),0.077,,413.15,10.1021/ma301739j10.1021/ma950840b,CC(=C)C=C,CC(=C)C(=O)OC
+polystyrene,poly(n-butyl acrylate),0.087,,503.15,10.1021/ma100743s10.1002/(SICI)1099-0488(20000201)38:3<369::AID-POLB3>3.0.CO;2-W,C=CC1=CC=CC=C1,CCCCOC(=O)C=C
+chloroform,silicon oxide,3.4,,,10.1021/ma400269j10.1016/0021-9797(77)90009-1,C(Cl)(Cl)Cl,O=[Si]=O
+poly(acrylic acid),acetone,1.057,,298.15,10.1021/ma3019188,C=CC(=O)O,CC(=O)C
+poly(acrylic acid),water,4.333,,298.15,10.1021/ma3019188,C=CC(=O)O,O
+poly(butyl acrylate),acetone,0.49,,298.15,10.1021/ma3019188,CCCCOC(=O)C=C,CC(=O)C
+poly(butyl acrylate),water,6.926,,298.15,10.1021/ma3019188,CCCCOC(=O)C=C,O
+poly(trifluoroethyl methacrylate),acetone,0.542,,298.15,10.1021/ma3019188,CC(=C)C(=O)OCC(F)(F)F,CC(=O)C
+poly(trifluoroethyl methacrylate),water,7.303,,298.15,10.1021/ma3019188,CC(=C)C(=O)OCC(F)(F)F,O
+polystyrene,poly(ethylene oxide),0.019 - 0.03,,,10.1021/ma100925c10.1021/ma00028a025,C=CC1=CC=CC=C1,C1CO1
+polystyrene,poly(acrylic acid),0.45,,,10.1021/ma102378wISBN: 0-471-16628-6,C=CC1=CC=CC=C1,C=CC(=O)O
+polyisoprene,polystyrene,-0.0522 + 48.8T,,,10.1021/ma302602u10.1021/ma011696z,CC(=C)C=C,C=CC1=CC=CC=C1
+polystyrene,poly(methyl methacrylate),0.021 + 3.2T,,,10.1021/ma401184610.1021/ma00073a044,C=CC1=CC=CC=C1,CC(=C)C(=O)OC
+polystyrene,polyisoprene,-0.01 + 33T,,180,10.1021/ma400944z10.1021/ma991470k10.1063/1.471656,C=CC1=CC=CC=C1,CC(=C)C=C
+polystyrene,poly(lactic acid),-0.112 + 98.1T,,,10.1021/ma500625k10.1021/ja0278584,C=CC1=CC=CC=C1,CC(C(=O)O)O
+polystyrene,poly(4-vinylpyridine),0.3 - 0.35,,433.15,10.1021/ma902651t10.1021/ma992118,C=CC1=CC=CC=C1,C=CC1=CC=NC=C1
+polystyrene,poly(tert-butoxystyrene),0.031 - 0.034,,,10.1021/ma902651tISBN: 978-90-367-3805-7,C=CC1=CC=CC=C1,CC(C)(C)OC=Cc1ccccc1
+poly(4-vinylpyridine),poly(tert-butoxystyrene),0.39 - 0.43,,,10.1021/ma902651tISBN: 978-90-367-3805-7,C=CC1=CC=NC=C1,CC(C)(C)OC=Cc1ccccc1
+polystyrene,poly(methyl methacrylate),(0.028 ± 0.002) + (3.9 ± 0.6)T,,,10.1021/ma401704m10.1021/ma00205a033,C=CC1=CC=CC=C1,CC(=C)C(=O)OC
+poly(4-tert-butylstyrene),poly(2-vinylpyridine),(-0.0502 ± 0.0029) + (67.9 ± 3.4)T,,405.15 - 513.15,10.1021/ma501597g,CC(C)(C)C1=CC=C(C=C1)C=C,C=CC1=CC=CC=N1
+polystyrene,poly(2-vinylpyridine),-0.033 + 63T,,,10.1021/ma501597g10.1016/0032-3861(94)90065-5,C=CC1=CC=CC=C1,C=CC1=CC=CC=N1
+water,polyacrylamide,0.45,,,10.1021/ma300366410.1021/jp710284e,O,C=CC(=O)N
+water,polyacrylamide,0.47,,,10.1021/ma102708bISBN: 0-19-518101-8,O,C=CC(=O)N
+poly(ethylene oxide),water,0.41 - 0.45,,298.15,10.1021/ma500314d10.1016/0079-6700(95)00011-410.1021/ma010804e,C1CO1,O
+polystyrene,poly(4-vinylbenzyltrimethylammonium chloride),0.197,,301.15,10.1021/ma302357k,C=CC1=CC=CC=C1,C[N+](C)(C)CC1=CC=C(C=C1)C=C.[Cl-]
+polystyrene,polyisoprene,0.07,,463.15,10.1021/ma902279510.1007/978-0-387-69002-5_19,C=CC1=CC=CC=C1,CC(=C)C=C
+methanol,poly(N-isopropylacrylamide),0.45,,,10.1021/ma401877c10.1021/ma00004a02210.1143/JPSJ.56.233,CO,CC(C)NC(=O)C=C
+water,poly(N-isopropylacrylamide),0.45 - 0.55,,,10.1021/ma401877c10.1021/ma00004a02210.1143/JPSJ.56.233,O,CC(C)NC(=O)C=C
+polystyrene,polybutadiene,0.055,,,10.1021/ma500633b10.1051/jp2:1997217,C=CC1=CC=CC=C1,C=CC=C
+polystyrene,poly(2-vinylpyridine),-0.095 + 91.6T,,,10.1021/ma902804e10.1021/ma951714a,C=CC1=CC=CC=C1,C=CC1=CC=CC=N1
+polystyrene,deuterated poly(methyl methacrylate),0.0292 + 3.188T,,,10.1021/ma401184610.1021/ma00073a044,C=CC1=CC=CC=C1,CC(=C)C(=O)OC
+polystyrene,poly(methyl methacrylate),0.021 + 3.2T,,,10.1021/ma401184610.1021/ma00073a044,C=CC1=CC=CC=C1,CC(=C)C(=O)OC
+poly(lactic acid),tetrahydrofuran,0.11,,298.15,10.1021/ma500613c,CC(C(=O)O)O,C1CCOC1
+poly(norbornene),tetrahydrofuran,0.42,,298.15,10.1021/ma500613c,"C1CC2CC1C=C2
+C1CC2CC1C=C2",C1CCOC1
+poly(lactic acid),poly(norbornene),0.72,,298.15,10.1021/ma500613c,CC(C(=O)O)O,"C1CC2CC1C=C2
+C1CC2CC1C=C2"
+polystyrene,polyisoprene,-0.0857 + 71.4T,,,10.1021/ma401033w10.1021/ma00130a012,C=CC1=CC=CC=C1,CC(=C)C=C
+polystyrene,poly(4-hydroxystyrene),0.68,,,10.1021/ma200747d10.1021/ma00203a026,C=CC1=CC=CC=C1,C=CC1=CC=C(C=C1)O
+polyisoprene,poly(methyl methacrylate),0.077 ± 0.004,,295.15,10.1021/ma300365h10.1021/ma950840b,CC(=C)C=C,CC(=C)C(=O)OC
+polystyrene,poly(4-vinylpyridine),0.3 - 0.35,,433.15,10.1021/ma301461410.1021/ma992118,C=CC1=CC=CC=C1,C=CC1=CC=NC=C1
+polystyrene,polycarbonate,0.035 - 0.0046,,523.15,10.1021/ma301461410.1002/app.1987.070340307,C=CC1=CC=CC=C1,C(=O)([O-])[O-]
+polystyrene,poly(vinyl chloride),0.099,,,10.1021/ma301461410.1016/0032-3861(95)93653-4,C=CC1=CC=CC=C1,C=CCl
+polystyrene,poly(methyl methacrylate),0.0044,,,10.1021/ma301461410.1021/ma00113a010,C=CC1=CC=CC=C1,CC(=C)C(=O)OC
+polystyrene,poly(tert-butyl acrylate),0.09,,,10.1021/ma301461410.1021/ma9009802,C=CC1=CC=CC=C1,CC(C)(C)OC(=O)C=C
+polystyrene,poly(butyl methacrylate),(0.012 - 0.015) ± 0.001,,393.15,10.1021/ma301461410.1021/ma991660v,C=CC1=CC=CC=C1,CCCCOC(=O)C(=C)C
+polystyrene,polybutadiene,-0.03813 + 30.137T,,,10.1021/ma101140m10.1063/1.47074910.1002/1521-3900(200001)149:1<99::AID-MASY99>3.0.CO;2-X10.1021/ma981665c10.1021/ma030020w,C=CC1=CC=CC=C1,C=CC=C
+poly(n-hexyl methacrylate),polystyrene,0.0065 - 0.01,,403.15 - 453.15,10.1021/ma301461410.1002/pi.1481,CCCCCCOC(=O)C(=C)C,C=CC1=CC=CC=C1
+polyvinyl alcohol,water,0.506,,,10.1021/ma101031t10.1002/bip.1972.360110704,C=CO,O
+poly(cyclohexylethylene),polyethylene,-0.0174 + 29.4T,,,10.1021/ma100347k10.1021/ma020227,C=CC1CCCCC1,C=C
+polystyrene,acetone,0.68,,297.15,10.1021/ma102470v,C=CC1=CC=CC=C1,CC(=O)C
+polystyrene,acetone,0.73,,275.15,10.1021/ma102470v,C=CC1=CC=CC=C1,CC(=O)C
+poly(methyl methacrylate),acetone,0.32,,297.15,10.1021/ma102470v,CC(=C)C(=O)OC,CC(=O)C
+poly(methyl methacrylate),acetone,0.35,,275.15,10.1021/ma102470v,CC(=C)C(=O)OC,CC(=O)C
+poly(trimethylsilylstyrene),poly(lactic acid),0.29 + 51.3T,,,10.1021/ma301238j,C[Si](C)(C)C=CC1=CC=CC=C1,CC(C(=O)O)O
+polystyrene,poly(ethylene oxide),-0.023 + 29.8T,,,10.1021/ma301238j10.1021/ma020651a,C=CC1=CC=CC=C1,C1CO1
+polystyrene,poly(methyl methacrylate),0.0282 + 4.46T,,,10.1021/ma301238j10.1021/ma301238j,C=CC1=CC=CC=C1,CC(=C)C(=O)OC
+polystyrene,poly(lactic acid),-0.211 + 154.9T,,,10.1021/ma402187j10.1021/ja9083804,C=CC1=CC=CC=C1,CC(C(=O)O)O
+poly(ethylene oxide),polyisoprene,0.125 + 65T,,,10.1021/ma402356z10.1021/ma001957p10.1063/1.478122,C1CO1,CC(=C)C=C
+polystyrene,polyethylene,0.07,,,10.1021/ma902805x10.1021/ma020754t,C=CC1=CC=CC=C1,C=C
+poly(methyl methacrylate),poly(vinylidene fluoride),-0.07,,,10.1021/ma201151k10.1016/0032-3861(94)90351-4,CC(=C)C(=O)OC,C=C(F)F
+polystyrene,poly(2-vinylpyridine),0.09 - 0.11,,433.15,10.1021/ma301402n10.1021/ma992118,C=CC1=CC=CC=C1,C=CC1=CC=CC=N1
+polystyrene,poly(2-vinylpyridine),-0.000179 + 0.478T,,,10.1021/ma301402n10.1021/ma062516u,C=CC1=CC=CC=C1,C=CC1=CC=CC=N1
+poly(ethylene oxide),water,0.426,,,10.1021/ma300244u10.1021/bm025744e10.1016/0142-9612(93)90154-T,C1CO1,O
+polystyrene,polyisoprene,-0.0156 + 22.6T,,,10.1021/ma100400q10.1021/ma062778w10.1002/(SICI)1099-0488(199812)36:17<3101::AID-POLB10>3.0.CO;2-X,C=CC1=CC=CC=C1,CC(=C)C=C
+polystyrene,poly(ethylene oxide),-0.0229 + 29.8T,,390 - 555,10.1021/ma100400q10.1021/ma062778w10.1209/epl/i2001-00205-7,C=CC1=CC=CC=C1,C1CO1
+polyisoprene,poly(ethylene oxide),0.117 + 60.9T,,,10.1021/ma100400q10.1021/ma062778w10.1063/1.478122,CC(=C)C=C,C1CO1
+polystyrene,polybutadiene,(0.019 ± 0.005) + (21.6 ± 2.2)T,,298,10.1021/ma202717p10.1063/1.470749,C=CC1=CC=CC=C1,C=CC=C
+polystyrene,carbon tetrachloride,0.72,,,10.1021/ma101294610.1021/ma1012946,C=CC1=CC=CC=C1,C(Cl)(Cl)(Cl)Cl
+polystyrene,benzene,0.28,,,10.1021/ma101294610.1021/ma1012946,C=CC1=CC=CC=C1,C1=CC=CC=C1
+polystyrene,chlorobenzene,0.33,,338.15,10.1021/ma101294610.1021/ma1012946,C=CC1=CC=CC=C1,C1=CC=C(C=C1)Cl
+polystyrene,toluene,0.35,,338.15,10.1021/ma101294610.1021/ma1012946,C=CC1=CC=CC=C1,CC1=CC=CC=C1
+polystyrene,"1,1,2-trichloroethane",0.38,,338.15,10.1021/ma101294610.1021/ma1012946,C=CC1=CC=CC=C1,C(C(Cl)Cl)Cl
+poly(lactic acid),benzene,2.03,,,10.1021/ma101294610.1021/ma1012946,CC(C(=O)O)O,C1=CC=CC=C1
+poly(lactic acid),carbon tetrachloride,3.18,,,10.1021/ma101294610.1021/ma1012946,CC(C(=O)O)O,C(Cl)(Cl)(Cl)Cl
+poly(lactic acid),chlorobenzene,2.37,,338.15,10.1021/ma101294610.1021/ma1012946,CC(C(=O)O)O,C1=CC=C(C=C1)Cl
+poly(lactic acid),toluene,2.45,,338.15,10.1021/ma101294610.1021/ma1012946,CC(C(=O)O)O,CC1=CC=CC=C1
+poly(lactic acid),"1,1,2-trichloroethane",2.38,,338.15,10.1021/ma101294610.1021/ma1012946,CC(C(=O)O)O,C(C(Cl)Cl)Cl
+polystyrene,chloroform,0.04,,338.15,10.1021/ma101294610.1021/ma1012946,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl
+polystyrene,dichloromethane,0.03,,,10.1021/ma101294610.1021/ma1012946,C=CC1=CC=CC=C1,C(Cl)Cl
+polystyrene,xylene,0.22,,,10.1021/ma101294610.1021/ma1012946,C=CC1=CC=CC=C1,CC1=CC=CC=C1C
+poly(lactic acid),chloroform,0.58,,338.15,10.1021/ma101294610.1021/ma1012946,CC(C(=O)O)O,C(Cl)(Cl)Cl
+poly(lactic acid),dichloromethane,0.37,,,10.1021/ma101294610.1021/ma1012946,CC(C(=O)O)O,C(Cl)Cl
+poly(lactic acid),ethylene dichloride,1.02,,,10.1021/ma101294610.1021/ma1012946,CC(C(=O)O)O,C(CCl)Cl
+poly(lactic acid),xylene,2.19,,,10.1021/ma101294610.1021/ma1012946,CC(C(=O)O)O,CC1=CC=CC=C1C
+polystyrene,poly(n-hexyl methacrylate),0.035 + 3.93T,,423 - 488,10.1021/ma402526q10.1021/ma981055c,C=CC1=CC=CC=C1,CCCCCCOC(=O)C(=C)C
+polystyrene,polybutadiene,0.00659 + 13.6T,,,10.1021/ma301487e10.1021/ma00036a019,C=CC1=CC=CC=C1,C=CC=C
+polystyrene,"1,2-dichloroethane",0.03,,,10.1021/ma1012946,C=CC1=CC=CC=C1,C(CCl)Cl
+polystyrene,poly(butyl acrylate),0.087,,503.15,10.1021/ma201259w10.1002/(SICI)1099-0488(20000201)38:3<369::AID-POLB3>3.0.CO;2-W,C=CC1=CC=CC=C1,CCCCOC(=O)C=C
+poly(ethyl methacrylate),poly(butyl acrylate),0.013,,503.15,10.1021/ma201259w10.1002/(SICI)1099-0488(20000201)38:3<369::AID-POLB3>3.0.CO;2-W,CCOC(=O)C(=C)C,CCCCOC(=O)C=C
+polystyrene,poly(butyl methacrylate),0.017 - 0.018,,,10.1021/ma201259w10.1021/ma0526037,C=CC1=CC=CC=C1,CCCCOC(=O)C(=C)C
+polystyrene,chloroform,0.29 ± 0.01,,,10.1021/ma500561q,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl
+polybutadiene,chloroform,0.21 ± 0.1,,,10.1021/ma500561q,C=CC=C,C(Cl)(Cl)Cl
+poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,-0.091 + 34.8T,,,10.1021/ma502417w,CCCCCCOc1ccc(cc1CC)C#CCC,CC(=C)C=C
+polystyrene,chloroform,0.35,,,10.1021/acs.macromol.5b01261ISBN: 0-471-16628-6,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl
+polystyrene,toluene,0.35,,,10.1021/acs.macromol.5b01261ISBN: 0-471-16628-6,C=CC1=CC=CC=C1,CC1=CC=CC=C1
+poly(4-vinylpyridine),chloroform,0.67,,,10.1021/acs.macromol.5b01261ISBN: 0-471-16628-6,C=CC1=CC=NC=C1,C(Cl)(Cl)Cl
+poly(4-vinylpyridine),toluene,1.01,,,10.1021/acs.macromol.5b01261ISBN: 0-471-16628-6,C=CC1=CC=NC=C1,CC1=CC=CC=C1
+carbon tetrachloride,polystyrene,0.396,,,10.1021/acs.macromol.5b0051010.1021/la00089a00910.1039/TF9585401742,C(Cl)(Cl)(Cl)Cl,C=CC1=CC=CC=C1
+cyclohexane,polystyrene,0.505,,,10.1021/acs.macromol.5b0051010.1021/la00089a00910.5254/1.3535155,C1CCCCC1,C=CC1=CC=CC=C1
+polystyrene,benzene,0.438,,,10.1021/acs.macromol.5b0051010.1021/la00089a00910.1039/TF9585401742,C=CC1=CC=CC=C1,C1=CC=CC=C1
+polystyrene,toluene,0.432,,,10.1021/acs.macromol.5b0051010.1021/la00089a00910.1039/TF9585401742,C=CC1=CC=CC=C1,CC1=CC=CC=C1
+poly(propylene oxide),"2,6-diaminotriazine",3.5,,,10.1021/ma502304k10.1021/ja2119496,CC1CO1,C1=CNN(N=C1N)N
+polyethylene,thymine,8.5,,,10.1021/ma502304kISBN: 9780849301766,C=C,CC1=CNC(=O)NC1=O
+polyethylene,"2,6-diaminotriazine",3,,,10.1021/ma502304kISBN: 9780849301766,C=C,C1=CNN(N=C1N)N
+poly(propylene oxide),thymine,10.6,,,10.1021/ma502304k10.1021/ja2119496,CC1CO1,CC1=CNC(=O)NC1=O
+polyisoprene,poly(lactic acid),-0.48 + 381T,,,10.1021/acs.macromol.5b00277,CC(=C)C=C,CC(C(=O)O)O
+polyisoprene,poly(lactic acid),-0.69 + 411T,,,10.1021/acs.macromol.5b00277,CC(=C)C=C,CC(C(=O)O)O
+polyisoprene,poly(lactic acid),-0.41 + 247T,,,10.1021/acs.macromol.5b00277,CC(=C)C=C,CC(C(=O)O)O
