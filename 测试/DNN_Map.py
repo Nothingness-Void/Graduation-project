@@ -37,6 +37,7 @@ y_test = scaler_y.transform(y_test.reshape(-1, 1))
 # 导入 KerasRegressor
 from keras.wrappers.scikit_learn import KerasRegressor
 from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
 
 # 定义模型构建函数
 def create_model(optimizer='adam', init_mode='uniform', activation='relu', dropout_rate=0.0, weight_constraint=0):
