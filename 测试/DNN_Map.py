@@ -60,15 +60,12 @@ model = KerasRegressor(build_fn=create_model, verbose=0)
 param_grid = {
     'batch_size': [10, 20, 40, 60, 80, 100],
     'epochs': [10, 50, 100],
-    'optimizer': ['SGD', 'RMSprop', 'Adagrad', 'Adadelta', 'Adam', 'Adamax', 'Nadam'],
-    'init_mode': ['uniform', 'lecun_uniform', 'normal', 'zero', 'glorot_normal', 'glorot_uniform', 'he_normal', 'he_uniform'],
-    'activation': ['softmax', 'softplus', 'softsign', 'relu', 'tanh', 'sigmoid', 'hard_sigmoid', 'linear'],
     'dropout_rate': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
     'weight_constraint': [1, 2, 3, 4, 5]
 }
 
 # 创建 GridSearchCV 对象
-grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1, cv=3)
+grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=2, cv=3)
 grid_result = grid.fit(X_train, y_train)
 
 # 输出最优的模型参数
