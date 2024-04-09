@@ -25,6 +25,12 @@ y = data['χ-result'].values
 # 划分训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+# 使用 SMOTE 进行数据增强 (在此处添加)
+from imblearn.over_sampling import SMOTE
+smote = SMOTE(sampling_strategy='minority')
+X_train, y_train = smote.fit_resample(X_train, y_train)
+
+
 # 标准化数据
 scaler_X = StandardScaler()
 scaler_y = StandardScaler()  
@@ -32,6 +38,10 @@ X_train = scaler_X.fit_transform(X_train)
 X_test = scaler_X.transform(X_test)
 y_train = scaler_y.fit_transform(y_train.reshape(-1, 1))  
 y_test = scaler_y.transform(y_test.reshape(-1, 1))  
+
+
+
+
 
 ##### 数据处理部分↑ ##### 分割线 ##### 模型训练部分↓ #####
 
