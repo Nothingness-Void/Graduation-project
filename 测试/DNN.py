@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, RobustScaler
 from sklearn.metrics import r2_score, mean_squared_error,mean_absolute_error,mean_absolute_percentage_error
 import tensorflow as tf
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
@@ -10,6 +10,7 @@ from tensorflow import keras
 import matplotlib.pyplot as plt
 from tensorflow.keras import regularizers
 from keras.layers import BatchNormalization
+from keras.layers import LeakyReLU
 
 
 # 读取数据文件
@@ -36,15 +37,19 @@ y_test = scaler_y.transform(y_test.reshape(-1, 1))
 
 # 构建 DNN 模型
 model = keras.Sequential([
-    keras.layers.Dense(32, activation='relu', input_shape=(X_train.shape[1],),),#输入层
+    keras.layers.Dense(32, activation='ReLU', input_shape=(X_train.shape[1],),),#输入层
     BatchNormalization(),
     #keras.layers.Dense(256, activation='relu'),#隐藏层1
     #keras.layers.Dense(128, activation='relu'),#隐藏层2
-    keras.layers.Dense(16, activation='relu'),#隐藏层3
-    keras.layers.Dense(16, activation='relu'),#隐藏层4
+    keras.layers.Dense(8, activation='ReLU',), #隐藏层3 ,L2正则化
+    keras.layers.Dense(8, activation='relu',), #隐藏层4 ,L2正则化
+    keras.layers.Dense(8, activation='elu'),#隐藏层4
+    keras.layers.Dense(8, activation='elu'),#隐藏层5
+    #keras.layers.Dense(4, activation='elu'),#隐藏层5
+    #BatchNormalization(),
     #keras.layers.Dense(16, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
     #keras.layers.Dense(8, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层6
-    keras.layers.Dense(1)  # 输出层
+    keras.layers.Dense(1, activation='linear') #输出层
 ])
 
 
@@ -56,10 +61,10 @@ model.compile(optimizer='adam', loss= 'mse') # 使用 Adam 优化器和均方误
 
 
 # 创建早停回调
-early_stopping = EarlyStopping(monitor='loss', patience=10)
+early_stopping = EarlyStopping(monitor='val_loss', patience=10)
 
 # 创建学习率衰减回调
-reduce_lr = ReduceLROnPlateau(monitor='loss', factor=0.2, patience=5)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=0.00001)
 
 # 训练与评估模型
 history = model.fit(X_train, y_train, epochs=1000, validation_data=(X_test, y_test), callbacks=[early_stopping, reduce_lr])
