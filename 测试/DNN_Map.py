@@ -38,41 +38,48 @@ y_test = scaler_y.transform(y_test.reshape(-1, 1))
 from keras.wrappers.scikit_learn import KerasRegressor
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.optimizers import Adam, RMSprop
 
-# 定义模型构建函数
-def create_model(optimizer='adam', init_mode='uniform', activation='relu', dropout_rate=0.0, weight_constraint=0):
-    model = keras.Sequential([
-        keras.layers.Dense(64, activation=activation, kernel_initializer=init_mode, kernel_constraint=tf.keras.constraints.max_norm(weight_constraint), input_shape=(X_train.shape[1],),kernel_regularizer=regularizers.l1(0.01)),#输入层
-        BatchNormalization(),
-        keras.layers.Dropout(dropout_rate),
-        keras.layers.Dense(32, activation=activation, kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
-        keras.layers.Dense(16, activation=activation, kernel_regularizer=regularizers.l2(0.01)),#隐藏层6
-        keras.layers.Dense(8, activation=activation, kernel_regularizer=regularizers.l2(0.01)),#隐藏层7
-        keras.layers.Dense(1)  # 输出层
-    ])
-    model.compile(optimizer=optimizer, loss= 'mse')
+# 创建一个函数，该函数返回你想要优化的模型
+def create_model(hidden_layer_sizes=(32, 16), activation='relu', optimizer='adam', learning_rate=0.001):
+    model = Sequential()
+    model.add(Dense(hidden_layer_sizes[0], activation=activation, input_shape=(X_train.shape[1],)))
+    model.add(BatchNormalization())
+    model.add(Dense(hidden_layer_sizes[1], activation=activation))
+    model.add(BatchNormalization())
+    model.add(Dense(1))
+
+    if optimizer == 'adam':
+        opt = Adam(learning_rate=learning_rate)
+    else:
+        opt = RMSprop(learning_rate=learning_rate)
+
+    model.compile(optimizer=opt, loss='mse')
+
     return model
 
-# 创建 KerasRegressor 对象
-model = KerasRegressor(build_fn=create_model, verbose=0)
-
-# 定义网格搜索参数
+# 定义参数网格
 param_grid = {
-    'batch_size': [10, 20, 40, 60, 80, 100],
-    'epochs': [10, 50, 100],
-    'dropout_rate': [0.0, 0.1, 0.2, 0.3, 0.4, 0.5],
-    'weight_constraint': [1, 2, 3, 4, 5]
+    'hidden_layer_sizes': [(32, 16), (64, 32), (128, 64)],
+    'activation': ['relu', 'tanh'],
+    'optimizer': ['adam', 'rmsprop'],
+    'learning_rate': [0.001, 0.0001]
 }
 
-# 创建 GridSearchCV 对象
-grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=2, cv=3)
-grid_result = grid.fit(X_train, y_train)
+# 创建网格搜索对象
+grid = GridSearchCV(KerasRegressor(build_fn=create_model), param_grid, cv=5, scoring='neg_mean_squared_error')
 
-# 输出最优的模型参数
-print("最优参数: %f 使用 %s" % (grid_result.best_score_, grid_result.best_params_))
+# 在训练集上进行网格搜索
+grid.fit(X_train, y_train)
 
-# 预测
-y_pred = model.predict(X_test)
+# 获取最优的参数和分数
+print("最优参数：", grid.best_params_)
+print("最优分数：", grid.best_score_)
+
+# 使用最优模型进行预测
+y_pred = grid.best_estimator_.predict(X_test)
 
 # 反标准化
 y_pred = scaler_y.inverse_transform(y_pred)
@@ -87,6 +94,7 @@ print(f'MAE(平均绝对误差)值为：{mae}')
 print(f'MAPE(平均绝对百分比误差)值为：{mape}')
 
 # 绘制训练误差和验证误差
+history = grid.best_estimator_.model.history
 plt.plot(history.history['loss'])
 plt.plot(history.history['val_loss'])
 plt.title('Model loss')
