@@ -25,19 +25,20 @@ y = data['χ-result'].values
 # 划分训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+'''
 # 使用 SMOTE 进行数据增强 (在此处添加)
 from imblearn.over_sampling import SMOTE
 smote = SMOTE(sampling_strategy='minority')
 X_train, y_train = smote.fit_resample(X_train, y_train)
-
+'''
 
 # 标准化数据
 scaler_X = StandardScaler()
-scaler_y = StandardScaler()  
+# sscaler_y = StandardScaler()  
 X_train = scaler_X.fit_transform(X_train)
 X_test = scaler_X.transform(X_test)
-y_train = scaler_y.fit_transform(y_train.reshape(-1, 1))  
-y_test = scaler_y.transform(y_test.reshape(-1, 1))  
+# y_train = scaler_y.fit_transform(y_train.reshape(-1, 1))  
+# y_test = scaler_y.transform(y_test.reshape(-1, 1))  
 
 
 
@@ -47,14 +48,14 @@ y_test = scaler_y.transform(y_test.reshape(-1, 1))
 
 # 构建 DNN 模型
 model = keras.Sequential([
-    keras.layers.Dense(32, activation='ReLU', input_shape=(X_train.shape[1],),),#输入层
-    BatchNormalization(),
+    keras.layers.Dense(32, activation='relu', input_shape=(X_train.shape[1],),),#输入层
+    #BatchNormalization(),
     #keras.layers.Dense(256, activation='relu'),#隐藏层1
     #keras.layers.Dense(128, activation='relu'),#隐藏层2
-    keras.layers.Dense(8, activation='ReLU',), #隐藏层3 ,L2正则化
-    keras.layers.Dense(8, activation='relu',), #隐藏层4 ,L2正则化
+    keras.layers.Dense(8, activation='relu',), #隐藏层3 ,L2正则化
+    #keras.layers.Dense(8, activation='relu',), #隐藏层4 ,L2正则化
     keras.layers.Dense(8, activation='elu'),#隐藏层4
-    keras.layers.Dense(8, activation='elu'),#隐藏层5
+    #keras.layers.Dense(8, activation='elu'),#隐藏层5
     #keras.layers.Dense(4, activation='elu'),#隐藏层5
     #BatchNormalization(),
     #keras.layers.Dense(16, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
@@ -71,7 +72,7 @@ model.compile(optimizer='adam', loss= 'mse') # 使用 Adam 优化器和均方误
 
 
 # 创建早停回调
-early_stopping = EarlyStopping(monitor='val_loss', patience=10)
+early_stopping = EarlyStopping(monitor='loss', patience=10)
 
 # 创建学习率衰减回调
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=0.00001)
@@ -83,16 +84,16 @@ history = model.fit(X_train, y_train, epochs=1000, validation_data=(X_test, y_te
 y_pred = model.predict(X_test)
 
 # 反标准化
-y_pred = scaler_y.inverse_transform(y_pred)
-y_test = scaler_y.inverse_transform(y_test)
+# y_pred = scaler_y.inverse_transform(y_pred)
+# y_test = scaler_y.inverse_transform(y_test)
 
 # 计算并打印模型的R^2值
 r2 = r2_score(y_test, y_pred)
 mae = mean_absolute_error(y_test, y_pred)
-mape = mean_absolute_percentage_error(y_test, y_pred)
+#mape = mean_absolute_percentage_error(y_test, y_pred)
 print(f'R^2值为：{r2}')
 print(f'MAE(平均绝对误差)值为：{mae}')
-print(f'MAPE(平均绝对百分比误差)值为：{mape}')
+#print(f'MAPE(平均绝对百分比误差)值为：{mape}')
 
 # 绘制训练误差和验证误差
 plt.plot(history.history['loss'])

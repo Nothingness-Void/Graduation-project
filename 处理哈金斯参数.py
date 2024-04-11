@@ -32,7 +32,7 @@ def process_chi(chi, T):
         try:
             part_result = float(part) if part else 0.0  # 尝试转换为浮点数
             if 'T' in original_part:
-                result += sign * part_result * T  # 如果部分包含T，那么将其乘以T并加到结果上
+                result += sign * part_result / T  # 如果部分包含T，那么将其乘以T并加到结果上
             else:
                 result += sign * part_result  # 否则，将其加到结果上
         except ValueError:  # 如果转换失败，记录错误信息
