@@ -32,7 +32,7 @@ def process_chi(chi, T):
         try:
             part_result = float(part) if part else 0.0  # 尝试转换为浮点数
             if 'T' in original_part:
-                result += sign * part_result / T  # 如果部分包含T，那么将其乘以T并加到结果上
+                result += sign * part_result / T  # 如果部分包含T，那么将其除以T并加到结果上
             else:
                 result += sign * part_result  # 否则，将其加到结果上
         except ValueError:  # 如果转换失败，记录错误信息
@@ -49,9 +49,34 @@ def process_T(T):
     else:
         return float(T)
 
-# 应用函数处理数据
-df['χ'] = df.apply(lambda row: process_chi(row['χ'], process_T(row['Measured at T (K)']))[0], axis=1)
-df['Measured at T (K)'] = df['Measured at T (K)'].apply(process_T)
+# 裂变数据
+def split_row(row, index):
+    chi = row['χ']
+    T = row['Measured at T (K)']
+    # 如果χ列没有包含T，那么不需要裂变
+    if 'T' not in chi:
+        return pd.DataFrame([row], index=[index])
+    # 否则，需要裂变
+    rows = []
+    if pd.isnull(T):  # 如果T是空值
+        temperatures = [273.15, 323.15, 348.15, 373.15]  # 0, 50, 75, 100摄氏度对应的开尔文温度
+    elif '-' in T:  # 如果T是浮动值
+        T1, T2 = map(float, T.split('-'))
+        temperatures = [T1, T1 + (T2 - T1) * 0.25, T1 + (T2 - T1) * 0.75, T2]
+    else:  # 如果T是固定值
+        temperatures = [float(T)]
+    for temperature in temperatures:
+        new_row = row.copy()
+        new_row['χ'], error = process_chi(chi, temperature)
+        new_row['Measured at T (K)'] = temperature
+        rows.append(new_row)
+    return pd.DataFrame(rows, index=[index + i / 1000 for i in range(1, len(rows) + 1)])
+
+# 使用裂变函数处理数据
+frames = []
+for index, row in df.iterrows():
+    frames.append(split_row(row, index))
+df = pd.concat(frames).sort_index()
 
 # 保存处理后的数据
-df.to_csv('processed_Smiles.csv', index=False)
+df.to_excel('processed_and_split_Smiles.xlsx', index=False)
