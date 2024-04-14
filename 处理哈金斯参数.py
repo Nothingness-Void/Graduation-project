@@ -28,7 +28,7 @@ def process_chi(chi, T):
             continue
         if '±' in part:
             part = part.split('±')[0]  # 只取原始值
-        part = part.replace('T', '').strip()  # 去除T和空格
+        part = part.replace('T', '').strip()  # 去除原始部分的T和空格
         try:
             part_result = float(part) if part else 0.0  # 尝试转换为浮点数
             if 'T' in original_part:
@@ -55,20 +55,32 @@ def split_row(row, index):
     T = row['Measured at T (K)']
     # 如果χ列没有包含T，那么不需要裂变
     if 'T' not in chi:
+        chi, error = process_chi(chi, process_T(T))
+        row['χ'] = chi
+        row['Measured at T (K)'] = process_T(T)
+        if error:
+            row['Type'] = error
+        else:
+            row['Type'] = '原始数据'
         return pd.DataFrame([row], index=[index])
     # 否则，需要裂变
     rows = []
     if pd.isnull(T):  # 如果T是空值
         temperatures = [273.15, 323.15, 348.15, 373.15]  # 0, 50, 75, 100摄氏度对应的开尔文温度
+        types = ['0摄氏度', '50摄氏度', '75摄氏度', '100摄氏度']
     elif '-' in T:  # 如果T是浮动值
         T1, T2 = map(float, T.split('-'))
         temperatures = [T1, T1 + (T2 - T1) * 0.25, T1 + (T2 - T1) * 0.75, T2]
+        types = ['最小值', '下四分位', '上四分位', '最大值']
     else:  # 如果T是固定值
         temperatures = [float(T)]
-    for temperature in temperatures:
+        types = ['计算数据']
+
+    for temperature, type in zip(temperatures, types):
         new_row = row.copy()
         new_row['χ'], error = process_chi(chi, temperature)
         new_row['Measured at T (K)'] = temperature
+        new_row['Type'] = type
         rows.append(new_row)
     return pd.DataFrame(rows, index=[index + i / 1000 for i in range(1, len(rows) + 1)])
 
