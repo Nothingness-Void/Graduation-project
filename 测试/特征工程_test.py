@@ -75,6 +75,9 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         mol1_npr2 = rdMolDescriptors.CalcNPR2(mol1)
         mol2_npr1 = rdMolDescriptors.CalcNPR1(mol2)
         mol2_npr2 = rdMolDescriptors.CalcNPR2(mol2)
+        # 计算分子的偶极矩
+        dipole1 = rdMolDescriptors.CalcCrippenDescriptors(mol1)[0]
+        dipole2 = rdMolDescriptors.CalcCrippenDescriptors(mol2)[0]
 
         # 计算物理化学性质
         # 分子量
@@ -124,6 +127,7 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
             'inertial_shape_factor1': inertial_shape_factor1,
             'mol1_npr1': mol1_npr1,
             'mol1_npr2': mol1_npr2,
+            'dipole1': dipole1,
             'LabuteASA1': LabuteASA1,
             'AvalonFP2': Avalon_fingerprint2.ToBitString(),
             'MorganFP2': Morgan_fingerprint2.ToBitString(),
@@ -140,6 +144,7 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
             'inertial_shape_factor2': inertial_shape_factor2,
             'mol2_npr1': mol2_npr1,
             'mol2_npr2': mol2_npr2,
+            'dipole2': dipole2,
             'LabuteASA2': LabuteASA2,
             'Avalon Similarity': Avalon_Similar,
             'Morgan Similarity': Morgan_Similar,
