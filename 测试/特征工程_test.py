@@ -19,11 +19,16 @@ data = pd.read_excel('processed_and_split_Smiles.xlsx')
 results = []
 
 # 使用 tqdm 函数来显示进度条
-for smiles1, smiles2 in tqdm(zip(data[smiles1_name], data[smiles2_name]), total=len(data), desc="处理中……"):
+for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
+
+    # 获取 SMILES 字符串
+    smiles1, smiles2 = row[smiles1_name], row[smiles2_name]
 
     # 从 SMILES 字符串创建分子对象
     mol1 = Chem.MolFromSmiles(smiles1)
+    mol1 = Chem.AddHs(mol1)
     mol2 = Chem.MolFromSmiles(smiles2)
+    mol2 = Chem.AddHs(mol2)
 
     if mol1 is not None and mol2 is not None:
 
@@ -56,7 +61,7 @@ for smiles1, smiles2 in tqdm(zip(data[smiles1_name], data[smiles2_name]), total=
         eccentricity1 = rdMolDescriptors.CalcEccentricity(mol1)
         eccentricity2 = rdMolDescriptors.CalcEccentricity(mol2)
         # 计算分子的惯性形状因子
-        inertial_shape_factor = rdMolDescriptors.CalcInertialShapeFactor(mol1)
+        inertial_shape_factor1 = rdMolDescriptors.CalcInertialShapeFactor(mol1)
         inertial_shape_factor2 = rdMolDescriptors.CalcInertialShapeFactor(mol2)
         # 计算分子的主惯性比
         mol1_npr1 = rdMolDescriptors.CalcNPR1(mol1)
@@ -101,6 +106,11 @@ for smiles1, smiles2 in tqdm(zip(data[smiles1_name], data[smiles2_name]), total=
             'n_h_acceptor1': n_h_acceptor1,
             'total_charge1': total_charge1,
             'bond_count1': bond_count1,
+            'asphericity1': asphericity1,
+            'eccentricity1': eccentricity1,
+            'inertial_shape_factor1': inertial_shape_factor1,
+            'mol1_npr1': mol1_npr1,
+            'mol1_npr2': mol1_npr2,
             'AvalonFP2': Avalon_fingerprint2.ToBitString(),
             'MorganFP2': Morgan_fingerprint2.ToBitString(),
             'MolWt2': mol_wt2,
@@ -110,10 +120,15 @@ for smiles1, smiles2 in tqdm(zip(data[smiles1_name], data[smiles2_name]), total=
             'n_h_acceptor2': n_h_acceptor2,
             'total_charge2': total_charge2,
             'bond_count2': bond_count2,
+            'asphericity2': asphericity2,
+            'eccentricity2': eccentricity2,
+            'inertial_shape_factor2': inertial_shape_factor2,
+            'mol2_npr1': mol2_npr1,
+            'mol2_npr2': mol2_npr2,
             'Similarity': Avalon_Similar,
             'Morgan Similarity': Morgan_Similar,
-            'Measured at T (K)': data.loc[data[smiles1_name] == smiles1, 'Measured at T (K)'].values[0],
-            'χ-result': data.loc[data[smiles1_name] == smiles1, target_name].values[0]
+            'Measured at T (K)': row['Measured at T (K)'],
+            'χ-result': row[target_name],
         })
     else:
         print(f"Unable to parse SMILES string: {smiles1} or {smiles2}")
