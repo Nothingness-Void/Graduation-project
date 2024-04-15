@@ -40,11 +40,18 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         Morgan_fingerprint1 = AllChem.GetMorganFingerprintAsBitVect(mol1, 2, nBits=1024)
         Morgan_fingerprint2 = AllChem.GetMorganFingerprintAsBitVect(mol2, 2, nBits=1024)
 
+        # 计算拓扑结构指纹
+        Topological_fingerprint1 = rdMolDescriptors.GetHashedTopologicalTorsionFingerprintAsBitVect(mol1)
+        Topological_fingerprint2 = rdMolDescriptors.GetHashedTopologicalTorsionFingerprintAsBitVect(mol2)
+
         # 计算结构相似度
         Morgan_Similar = DataStructs.TanimotoSimilarity(Morgan_fingerprint1, Morgan_fingerprint2) # 利用Tanimoto系数计算相似度
 
         # 计算指纹相似度
         Avalon_Similar = FingerprintSimilarity(Avalon_fingerprint1, Avalon_fingerprint2)  # 利用Avalon指纹计算相似度
+
+        # 计算拓补结构指纹相似度
+        Topological_Similar = DataStructs.TanimotoSimilarity(Topological_fingerprint1, Topological_fingerprint2) # 利用Tanimoto系数计算相似度
 
         #创建分子3D结构
         AllChem.EmbedMolecule(mol1)
@@ -92,13 +99,19 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         bond_count1 = len(bond_types1)
         bond_types2 = set(bond.GetBondType() for bond in mol2.GetBonds())
         bond_count2 = len(bond_types2)
+
+        # 计算分子的Labute 约化表面积
+        LabuteASA1 = rdMolDescriptors.CalcLabuteASA(mol1)
+        LabuteASA2 = rdMolDescriptors.CalcLabuteASA(mol2)
         
+
 
 
         # 将结果添加到结果列表中
         results.append({
             'AvalonFP1': Avalon_fingerprint1.ToBitString(),
             'MorganFP1': Morgan_fingerprint1.ToBitString(),
+            'TopologicalFP1': Topological_fingerprint1.ToBitString(),
             'MolWt1': mol_wt1,
             'logP1': logp1,
             'TPSA1': tpsa1,
@@ -111,8 +124,10 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
             'inertial_shape_factor1': inertial_shape_factor1,
             'mol1_npr1': mol1_npr1,
             'mol1_npr2': mol1_npr2,
+            'LabuteASA1': LabuteASA1,
             'AvalonFP2': Avalon_fingerprint2.ToBitString(),
             'MorganFP2': Morgan_fingerprint2.ToBitString(),
+            'TopologicalFP2': Topological_fingerprint2.ToBitString(),
             'MolWt2': mol_wt2,
             'logP2': logp2,
             'TPSA2': tpsa2,
@@ -125,8 +140,10 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
             'inertial_shape_factor2': inertial_shape_factor2,
             'mol2_npr1': mol2_npr1,
             'mol2_npr2': mol2_npr2,
-            'Similarity': Avalon_Similar,
+            'LabuteASA2': LabuteASA2,
+            'Avalon Similarity': Avalon_Similar,
             'Morgan Similarity': Morgan_Similar,
+            'Topological Similarity': Topological_Similar,
             'Measured at T (K)': row['Measured at T (K)'],
             'χ-result': row[target_name],
         })
