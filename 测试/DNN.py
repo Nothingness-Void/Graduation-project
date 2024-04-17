@@ -17,7 +17,20 @@ from keras.layers import LeakyReLU
 data = pd.read_excel('计算结果.xlsx')
 
 # 定义特征矩阵
-X = data[['Similarity', 'MolWt1', 'logP1', 'TPSA1', 'MolWt2', 'logP2', 'TPSA2']].values
+featere_cols = ['MolWt1', 'logP1', 'TPSA1', 'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
+                'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
+                'MolWt2', 'logP2', 'TPSA2', 'n_h_donor2', 'n_h_acceptor2', 'total_charge2', 'bond_count2',
+                'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
+                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
+
+# 定义指纹特征矩阵
+fingerprints = ['AvalonFP1', 'AvalonFP2', 'TopologicalFP1', 'TopologicalFP2', 'MorganFP1', 'MorganFP2']
+
+
+# 将编码后的指纹特征和数值特征合并
+X = pd.concat([data[featere_cols], 
+# data[fingerprints]
+], axis=1)
 
 # 定义目标参数
 y = data['χ-result'].values
@@ -25,12 +38,6 @@ y = data['χ-result'].values
 # 划分训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-'''
-# 使用 SMOTE 进行数据增强 (在此处添加)
-from imblearn.over_sampling import SMOTE
-smote = SMOTE(sampling_strategy='minority')
-X_train, y_train = smote.fit_resample(X_train, y_train)
-'''
 
 # 标准化数据
 scaler_X = StandardScaler()
@@ -48,14 +55,14 @@ X_test = scaler_X.transform(X_test)
 
 # 构建 DNN 模型
 model = keras.Sequential([
-    keras.layers.Dense(32, activation='relu', input_shape=(X_train.shape[1],),),#输入层
+    keras.layers.Dense(128, activation='relu', input_shape=(X_train.shape[1],),),#输入层
     #BatchNormalization(),
     #keras.layers.Dense(256, activation='relu'),#隐藏层1
     #keras.layers.Dense(128, activation='relu'),#隐藏层2
-    keras.layers.Dense(8, activation='relu',), #隐藏层3 ,L2正则化
-    #keras.layers.Dense(8, activation='relu',), #隐藏层4 ,L2正则化
-    keras.layers.Dense(8, activation='elu'),#隐藏层4
-    #keras.layers.Dense(8, activation='elu'),#隐藏层5
+    keras.layers.Dense(64, activation='relu',), #隐藏层3 ,L2正则化
+    keras.layers.Dense(64, activation='relu',), #隐藏层4 ,L2正则化
+    keras.layers.Dense(32, activation='elu'),#隐藏层4
+    keras.layers.Dense(32, activation='elu'),#隐藏层5
     #keras.layers.Dense(4, activation='elu'),#隐藏层5
     #BatchNormalization(),
     #keras.layers.Dense(16, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
@@ -72,7 +79,7 @@ model.compile(optimizer='adam', loss= 'mse') # 使用 Adam 优化器和均方误
 
 
 # 创建早停回调
-early_stopping = EarlyStopping(monitor='loss', patience=10)
+early_stopping = EarlyStopping(monitor='val_loss', patience=15)
 
 # 创建学习率衰减回调
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=0.00001)
