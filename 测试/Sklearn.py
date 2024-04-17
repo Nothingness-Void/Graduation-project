@@ -11,6 +11,9 @@ from sklearn.neural_network import MLPRegressor
 import pickle
 from tqdm import tqdm
 from sklearn.preprocessing import StandardScaler
+from skopt import BayesSearchCV
+from skopt.space import Real, Categorical, Integer
+import xgboost as xgb
 
 target_name = 'χ-result'  # 哈金斯参数的表头
 
@@ -18,9 +21,9 @@ target_name = 'χ-result'  # 哈金斯参数的表头
 data = pd.read_excel('计算结果.xlsx')
 
 # 定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1', 'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
+featere_cols = ['MolWt1', 'logP1', 'TPSA1', #'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
                 'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 'n_h_donor2', 'n_h_acceptor2', 'total_charge2', 'bond_count2',
+                'MolWt2', 'logP2', 'TPSA2', #'n_h_donor2', 'n_h_acceptor2', 'total_charge2', 'bond_count2',
                 'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
@@ -55,36 +58,43 @@ y_test = scaler_y.transform(y_test.reshape(-1, 1)).ravel()
 ########################################### 分割线 ####################################
 
 
-# 定义机器学习算法列表
-models = [  # LinearRegression(),
-    Ridge(),
-    Lasso(),
-    SVR(),
-    RandomForestRegressor(),
-    GradientBoostingRegressor(),
-    #MLPRegressor()
-]
-
-# 定义网格搜索参数列表
-params = [
-    {'alpha': [0.01, 0.1, 1, 10, 100, 1000, 10000], 'max_iter': [1000,5000, 10000, 20000]},#Ridge
-    {'alpha': [0.01, 0.1, 1, 10, 100, 1000, 10000], 'max_iter': [1000,5000, 10000, 20000]},#Lasso
-    {'kernel': ['linear', 'rbf', 'poly'], 'C': [0.1, 1, 10, 100, 1000, 1200, 1500],
-     'gamma': [0.01, 0.05, 0.1, 1, 10, 100], 'max_iter': [50,500,1000, 5000]},#SVR
-    {'n_estimators': [10, 50, 100, 200, 500], 'max_depth': [None, 3, 5, 10, 20],
-     'max_features': [None, 'sqrt', 'log2']},#RandomForestRegressor
-    {'n_estimators': [10, 50, 100, 200, 500], 'max_depth': [None, 3, 5, 10, 20],
-     'max_features': [None, 'sqrt', 'log2']},#GradientBoostingRegressor
-    #{'hidden_layer_sizes': [(10,), (20,), (50,), (100,)], 'activation': ['relu', 'tanh', 'logistic'], 'solver': ['adam', 'sgd', 'lbfgs'], 'max_iter': [1000]}
+# 定义模型和参数空间
+models = [
+    (Ridge(), {'alpha': Real(1e-3, 1e3, prior='log-uniform'), 'max_iter': Integer(1000, 20000)}),
+    (Lasso(), {'alpha': Real(1e-3, 1e3, prior='log-uniform'), 'max_iter': Integer(1000, 20000)}),
+    (SVR(), {'C': Real(1e-3, 1e3, prior='log-uniform'), 'kernel': Categorical(['linear', 'rbf', 'poly']),
+             'gamma': Real(1e-3, 1e3, prior='log-uniform'), 'max_iter': Integer(50, 5000)}),
+    (RandomForestRegressor(), {'n_estimators': Integer(10, 500), 'max_depth': Integer(3, 20),
+                               'max_features': Categorical(['sqrt', 'log2'])}),
+    (GradientBoostingRegressor(), {'n_estimators': Integer(10, 500), 'max_depth': Integer(3, 20),
+                                   'max_features': Categorical(['sqrt', 'log2'])}),  
+    # 添加XGBRegressor
+    (xgb.XGBRegressor(), {
+        'n_estimators': Integer(50, 500),
+        'max_depth': Integer(3, 10),
+        'learning_rate': Real(0.01, 0.3, prior='log-uniform'),
+        'subsample': Real(0.5, 1, prior='uniform'),
+        'colsample_bytree': Real(0.5, 1, prior='uniform'),
+    }),                  
 ]
 
 # 创建结果 DataFrame
-results = pd.DataFrame(columns=['Model', 'Best parameter', 'Best score', 'R2', 'MAE', 'RMSE'])
+results = pd.DataFrame(columns=['Model', 'Best parameter', 'Best score', 'R2', 'MAE', 'MaPE'])
 
 result_models = []  # 用于存储每个模型的最优模型
-for model, param in tqdm(zip(models, params), total=len(models), desc='正在建模'):
-    # 创建网格搜索对象
-    grid = GridSearchCV(model, param, cv=5, scoring='neg_mean_squared_error')
+
+for model, param_space in tqdm(models, total=len(models), desc='正在建模'):
+    # 创建贝叶斯优化对象
+    #grid = GridSearchCV(model, param, scoring='r2', cv=5, n_jobs=-1)
+    grid = BayesSearchCV(
+        estimator=model,
+        search_spaces=param_space,
+        n_iter=75,  # 迭代次数
+        cv=5,  # 交叉验证折数
+        scoring='neg_mean_squared_error',  # 评估指标
+        n_jobs=-1,  # 使用所有 CPU 核心
+    )
+    
     # 在训练集上进行网格搜索
     grid.fit(X_train, y_train)
 
