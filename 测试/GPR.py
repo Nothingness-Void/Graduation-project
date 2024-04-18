@@ -14,9 +14,9 @@ import pickle
 data = pd.read_excel('计算结果.xlsx')
 
 # 定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1', #'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
+featere_cols = ['MolWt1', 'logP1', 'TPSA1', 'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
                 'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', #'n_h_donor2', 'n_h_acceptor2', 'total_charge2', 'bond_count2',
+                'MolWt2', 'logP2', 'TPSA2', 'n_h_donor2', 'n_h_acceptor2', 'total_charge2', 'bond_count2',
                 'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
@@ -39,6 +39,7 @@ scaler_X = StandardScaler()
 X_train = scaler_X.fit_transform(X_train)
 X_test = scaler_X.transform(X_test)
 
+# 标准化目标参数
 scaler_y = StandardScaler() 
 y_train = scaler_y.fit_transform(y_train.reshape(-1, 1))  
 y_test = scaler_y.transform(y_test.reshape(-1, 1))  
@@ -49,7 +50,7 @@ model = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=10)
 param_space = {'alpha': Real(1e-6, 1e-2, prior='log-uniform')}  
 
 # 创建贝叶斯搜索对象
-optimizer = BayesSearchCV(estimator=model, search_spaces=param_space, n_iter=50, cv=5, 
+optimizer = BayesSearchCV(estimator=model, search_spaces=param_space, n_iter=75, cv=5, 
                           scoring='neg_mean_squared_error', n_jobs=-1, random_state=42, verbose=1)
 
 # 进行贝叶斯优化

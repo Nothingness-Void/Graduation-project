@@ -21,9 +21,9 @@ target_name = 'χ-result'  # 哈金斯参数的表头
 data = pd.read_excel('计算结果.xlsx')
 
 # 定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1', #'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
+featere_cols = ['MolWt1', 'logP1', 'TPSA1', 'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
                 'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', #'n_h_donor2', 'n_h_acceptor2', 'total_charge2', 'bond_count2',
+                'MolWt2', 'logP2', 'TPSA2', 'n_h_donor2', 'n_h_acceptor2', 'total_charge2', 'bond_count2',
                 'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
@@ -113,7 +113,7 @@ for model, param_space in tqdm(models, total=len(models), desc='正在建模'):
     # 计算 R2 分数和 MSE
     r2 = r2_score(y_test_origin, y_pred_origin)
     mae = mean_absolute_error(y_test_origin, y_pred_origin)
-    mape = mean_absolute_percentage_error(y_test_origin, y_pred_origin)
+    rmse = np.sqrt(mean_squared_error(y_test_origin, y_pred_origin))
 
     # 打印模型的名称，最优参数，最优分数，以及在测试集上的 R2 分数和 MSE
     print(f"当前模型: {model.__class__.__name__}")
@@ -121,18 +121,18 @@ for model, param_space in tqdm(models, total=len(models), desc='正在建模'):
     print(f"Best Score: {best_score}")
     print(f"R2: {r2}")
     print(f"MAE: {mae}")
-    print(f"MAPE: {mape}")
+    print(f"RMSE: {rmse}")
     print("\n")
 
     # 将结果添加到结果 DataFrame
     new_row = pd.DataFrame(
         {'Model': [model.__class__.__name__], 'Best parameter': [best_param], 'Best score': [best_score], 'R2': [r2],
-         'MAE': [mae], 'MaPE': [mape]})
+         'MAE': [mae], 'RMSE': [rmse]})
     results = pd.concat([results, new_row], ignore_index=True)
     # 将最优模型添加到列表
     result_models.append(grid.best_estimator_)
     mae = mean_absolute_error(y_test, y_pred)
-    mape = mean_absolute_percentage_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 
     # 打印模型的名称，最优参数，最优分数，以及在测试集上的 R2 分数和 MSE
     print(f"当前模型: {model.__class__.__name__}")
@@ -140,20 +140,20 @@ for model, param_space in tqdm(models, total=len(models), desc='正在建模'):
     print(f"Best Score: {best_score}")
     print(f"R2: {r2}")
     print(f"MAE: {mae}")
-    print(f"MAPE: {mape}")
+    print(f"RMSE: {rmse}")
     print("\n")
 
     # 将结果添加到结果 DataFrame
     new_row = pd.DataFrame(
         {'Model': [model.__class__.__name__], 'Best parameter': [best_param], 'Best score': [best_score], 'R2': [r2],
-         'MAE': [mae], 'MaPE': [mape]})
+         'MAE': [mae], 'RMSE': [rmse]})
     results = pd.concat([results, new_row], ignore_index=True)
     # 将最优模型添加到列表
     result_models.append(grid.best_estimator_)
 
 results['R2'] = results['R2'].astype(float)
 results['MAE'] = results['MAE'].astype(float)
-results['MaPE'] = results['MaPE'].astype(float)
+results['RMSE'] = results['RMSE'].astype(float)
 
 # 选择最优的模型
 best_model_index = results['R2'].idxmax()
@@ -169,5 +169,5 @@ print('最优模型:', result_model.__class__.__name__)
 print('最优参数：', results['Best parameter'][best_model_index])
 print('R²:', results['R2'].max())
 print('MAE(平均绝对误差):', results['MAE'].min())
-print('MAPE(平均绝对百分比误差):', results['MaPE'].min())
+print('RMSE(均方根误差):', results['RMSE'].min())
 
