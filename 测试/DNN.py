@@ -41,7 +41,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # 标准化数据
 scaler_X = StandardScaler()
-# sscaler_y = StandardScaler()  
+# scaler_y = StandardScaler()  
 X_train = scaler_X.fit_transform(X_train)
 X_test = scaler_X.transform(X_test)
 # y_train = scaler_y.fit_transform(y_train.reshape(-1, 1))  
@@ -56,13 +56,14 @@ X_test = scaler_X.transform(X_test)
 # 构建 DNN 模型
 model = keras.Sequential([
     keras.layers.Dense(128, activation='relu', input_shape=(X_train.shape[1],),),#输入层
-    #BatchNormalization(),
+    BatchNormalization(),
     #keras.layers.Dense(256, activation='relu'),#隐藏层1
     #keras.layers.Dense(128, activation='relu'),#隐藏层2
-    keras.layers.Dense(64, activation='relu',), #隐藏层3 ,L2正则化
-    keras.layers.Dense(64, activation='relu',), #隐藏层4 ,L2正则化
+    keras.layers.Dense(64, activation='relu',), #隐藏层3 
+    keras.layers.Dense(64, activation='relu',), #隐藏层4 
     keras.layers.Dense(32, activation='elu'),#隐藏层4
-    keras.layers.Dense(32, activation='elu'),#隐藏层5
+    keras.layers.Dense(16, activation='elu'),#隐藏层5
+    #keras.layers.Dense(8, activation='elu'),#隐藏层6
     #keras.layers.Dense(4, activation='elu'),#隐藏层5
     #BatchNormalization(),
     #keras.layers.Dense(16, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
@@ -73,13 +74,13 @@ model = keras.Sequential([
 
 # 编译模型
 
-model.compile(optimizer='adam', loss= 'mse') # 使用 Adam 优化器和均方误差作为损失函数
+model.compile(optimizer='adam', loss= 'mae') # 使用 Adam 优化器和均方误差作为损失函数
 #model.compile(optimizer='Adam', loss= 'mae')  # 使用 Adam 优化器和平均绝对误差作为损失函数
 #model.compile(optimizer='Adam', loss= 'mape')
 
 
 # 创建早停回调
-early_stopping = EarlyStopping(monitor='val_loss', patience=15)
+early_stopping = EarlyStopping(monitor='val_loss', patience=10)
 
 # 创建学习率衰减回调
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=0.00001)
@@ -97,10 +98,11 @@ y_pred = model.predict(X_test)
 # 计算并打印模型的R^2值
 r2 = r2_score(y_test, y_pred)
 mae = mean_absolute_error(y_test, y_pred)
-#mape = mean_absolute_percentage_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+
 print(f'R^2值为：{r2}')
 print(f'MAE(平均绝对误差)值为：{mae}')
-#print(f'MAPE(平均绝对百分比误差)值为：{mape}')
+print(f'RMSE(均方根误差)值为：{np.sqrt(mean_squared_error(y_test, y_pred))}')
 
 # 绘制训练误差和验证误差
 plt.plot(history.history['loss'])
