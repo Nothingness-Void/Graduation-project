@@ -48,12 +48,12 @@ scaler_x = StandardScaler()
 X_train = scaler_x.fit_transform(X_train)
 X_test = scaler_x.transform(X_test)
 
-'''
+
 # 标准化数据y
 scaler_y = StandardScaler()
 y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).ravel()
 y_test = scaler_y.transform(y_test.reshape(-1, 1)).ravel()
-'''
+
 
 ########################################### 分割线 ####################################
 
@@ -107,13 +107,13 @@ for model, param_space in tqdm(models, total=len(models), desc='正在建模'):
 
 
     # 反标准化
-    #y_pred_origin = scaler_y.inverse_transform(y_pred.reshape(-1, 1)).ravel()
-    #y_test_origin = scaler_y.inverse_transform(y_test.reshape(-1, 1)).ravel()
+    y_pred_origin = scaler_y.inverse_transform(y_pred.reshape(-1, 1)).ravel()
+    y_test_origin = scaler_y.inverse_transform(y_test.reshape(-1, 1)).ravel()
 
     # 计算 R2 分数和 MSE
-    r2 = r2_score(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    mape = mean_absolute_percentage_error(y_test, y_pred)
+    r2 = r2_score(y_test_origin, y_pred_origin)
+    mae = mean_absolute_error(y_test_origin, y_pred_origin)
+    mape = mean_absolute_percentage_error(y_test_origin, y_pred_origin)
 
     # 打印模型的名称，最优参数，最优分数，以及在测试集上的 R2 分数和 MSE
     print(f"当前模型: {model.__class__.__name__}")

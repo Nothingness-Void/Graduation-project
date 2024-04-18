@@ -17,9 +17,9 @@ from keras.layers import LeakyReLU
 data = pd.read_excel('计算结果.xlsx')
 
 # 定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1', 'n_h_donor1', #'n_h_acceptor1', 'total_charge1', 'bond_count1',
+featere_cols = ['MolWt1', 'logP1', 'TPSA1', #'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
                 'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 'n_h_donor2', #'n_h_acceptor2', 'total_charge2', 'bond_count2',
+                'MolWt2', 'logP2', 'TPSA2', #'n_h_donor2', 'n_h_acceptor2', 'total_charge2', 'bond_count2',
                 'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
@@ -41,11 +41,11 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 # 标准化数据
 scaler_X = StandardScaler()
-# scaler_y = StandardScaler()  
+scaler_y = StandardScaler()  
 X_train = scaler_X.fit_transform(X_train)
 X_test = scaler_X.transform(X_test)
-# y_train = scaler_y.fit_transform(y_train.reshape(-1, 1))  
-# y_test = scaler_y.transform(y_test.reshape(-1, 1))  
+y_train = scaler_y.fit_transform(y_train.reshape(-1, 1))  
+y_test = scaler_y.transform(y_test.reshape(-1, 1))  
 
 
 
@@ -56,14 +56,13 @@ X_test = scaler_X.transform(X_test)
 # 构建 DNN 模型
 model = keras.Sequential([
     keras.layers.Dense(128, activation='relu', input_shape=(X_train.shape[1],),),#输入层
-    BatchNormalization(),
+    #BatchNormalization(),
     #keras.layers.Dense(256, activation='relu'),#隐藏层1
     #keras.layers.Dense(128, activation='relu'),#隐藏层2
-    keras.layers.Dense(64, activation='relu',), #隐藏层3 
-    keras.layers.Dense(64, activation='relu',), #隐藏层4 
-    keras.layers.Dense(32, activation='elu'),#隐藏层4
-    keras.layers.Dense(16, activation='elu'),#隐藏层5
-    #keras.layers.Dense(8, activation='elu'),#隐藏层6
+    keras.layers.Dense(64, activation='relu',), #隐藏层3 ,L2正则化
+    #keras.layers.Dense(64, activation='relu',), #隐藏层4 ,L2正则化
+    #keras.layers.Dense(32, activation='elu'),#隐藏层4
+    keras.layers.Dense(32, activation='elu'),#隐藏层5
     #keras.layers.Dense(4, activation='elu'),#隐藏层5
     #BatchNormalization(),
     #keras.layers.Dense(16, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
@@ -74,7 +73,7 @@ model = keras.Sequential([
 
 # 编译模型
 
-model.compile(optimizer='adam', loss= 'mae') # 使用 Adam 优化器和均方误差作为损失函数
+model.compile(optimizer='adam', loss= 'mse') # 使用 Adam 优化器和均方误差作为损失函数
 #model.compile(optimizer='Adam', loss= 'mae')  # 使用 Adam 优化器和平均绝对误差作为损失函数
 #model.compile(optimizer='Adam', loss= 'mape')
 
@@ -92,17 +91,18 @@ history = model.fit(X_train, y_train, epochs=1000, validation_data=(X_test, y_te
 y_pred = model.predict(X_test)
 
 # 反标准化
-# y_pred = scaler_y.inverse_transform(y_pred)
-# y_test = scaler_y.inverse_transform(y_test)
+y_pred = scaler_y.inverse_transform(y_pred)
+y_test = scaler_y.inverse_transform(y_test)
 
 # 计算并打印模型的R^2值
 r2 = r2_score(y_test, y_pred)
 mae = mean_absolute_error(y_test, y_pred)
-rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-
+rmae = np.sqrt(mean_squared_error(y_test, y_pred))
+#mape = mean_absolute_percentage_error(y_test, y_pred)
 print(f'R^2值为：{r2}')
 print(f'MAE(平均绝对误差)值为：{mae}')
-print(f'RMSE(均方根误差)值为：{np.sqrt(mean_squared_error(y_test, y_pred))}')
+print(f'RMSE(均方根误差)值为：{rmae}')
+#print(f'MAPE(平均绝对百分比误差)值为：{mape}')
 
 # 绘制训练误差和验证误差
 plt.plot(history.history['loss'])
