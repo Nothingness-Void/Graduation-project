@@ -31,6 +31,8 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
     mol2 = Chem.AddHs(mol2)
 
     if mol1 is not None and mol2 is not None:
+        
+        #计算分子指纹
 
         # 计算 Avalon 指纹
         Avalon_fingerprint1 = pyAvalonTools.GetAvalonFP(mol1)
@@ -44,14 +46,17 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         Topological_fingerprint1 = rdMolDescriptors.GetHashedTopologicalTorsionFingerprintAsBitVect(mol1)
         Topological_fingerprint2 = rdMolDescriptors.GetHashedTopologicalTorsionFingerprintAsBitVect(mol2)
 
+
         # 计算结构相似度
-        Morgan_Similar = DataStructs.TanimotoSimilarity(Morgan_fingerprint1, Morgan_fingerprint2) # 利用Tanimoto系数计算相似度
+        Morgan_Similar = FingerprintSimilarity(Morgan_fingerprint1, Morgan_fingerprint2) # 利用Tanimoto系数计算相似度
 
         # 计算指纹相似度
         Avalon_Similar = FingerprintSimilarity(Avalon_fingerprint1, Avalon_fingerprint2)  # 利用Avalon指纹计算相似度
 
         # 计算拓补结构指纹相似度
-        Topological_Similar = DataStructs.TanimotoSimilarity(Topological_fingerprint1, Topological_fingerprint2) # 利用Tanimoto系数计算相似度
+        Topological_Similar = FingerprintSimilarity(Topological_fingerprint1, Topological_fingerprint2) # 利用Tanimoto系数计算相似度
+
+
 
         #创建分子3D结构
         AllChem.EmbedMolecule(mol1)
@@ -59,6 +64,7 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         #优化分子3D结构
         AllChem.MMFFOptimizeMolecule(mol1)
         AllChem.MMFFOptimizeMolecule(mol2)
+
 
         # 计算立体描述符
         # 计算分子的不对称性
@@ -78,8 +84,19 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         # 计算分子的偶极矩
         dipole1 = rdMolDescriptors.CalcCrippenDescriptors(mol1)[0]
         dipole2 = rdMolDescriptors.CalcCrippenDescriptors(mol2)[0]
+        # 计算可旋转键的数量
+        rotatable_bonds1 = rdMolDescriptors.CalcNumRotatableBonds(mol1)
+        rotatable_bonds2 = rdMolDescriptors.CalcNumRotatableBonds(mol2)
+        # 计算分子的球形度指数
+        CalcSpherocityIndex1 = rdMolDescriptors.CalcSpherocityIndex(mol1)
+        CalcSpherocityIndex2 = rdMolDescriptors.CalcSpherocityIndex(mol2)
+        # 计算分子的回旋半径    
+        CalcRadiusOfGyration1 = rdMolDescriptors.CalcRadiusOfGyration(mol1)
+        CalcRadiusOfGyration2 = rdMolDescriptors.CalcRadiusOfGyration(mol2)
 
-        # 计算物理化学性质
+
+
+        # QSPR描述符
         # 分子量
         mol_wt1 = rdMolDescriptors.CalcExactMolWt(mol1)
         mol_wt2 = rdMolDescriptors.CalcExactMolWt(mol2)
@@ -106,9 +123,10 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         # 计算分子的Labute 约化表面积
         LabuteASA1 = rdMolDescriptors.CalcLabuteASA(mol1)
         LabuteASA2 = rdMolDescriptors.CalcLabuteASA(mol2)
-        
 
-
+        #计算杂原子数量
+        atom_count1 = Descriptors.NumHeteroatoms(mol1)
+        atom_count2 = Descriptors.NumHeteroatoms(mol2)
 
         # 将结果添加到结果列表中
         results.append({
@@ -129,6 +147,9 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
             'mol1_npr2': mol1_npr2,
             'dipole1': dipole1,
             'LabuteASA1': LabuteASA1,
+            'CalcSpherocityIndex1': CalcSpherocityIndex1,
+            'CalcRadiusOfGyration1': CalcRadiusOfGyration1,
+            'atom_count1': atom_count1,
             # 'AvalonFP2': Avalon_fingerprint2.ToBitString(),
             # 'MorganFP2': Morgan_fingerprint2.ToBitString(),
             # 'TopologicalFP2': Topological_fingerprint2.ToBitString(),
@@ -146,6 +167,9 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
             'mol2_npr2': mol2_npr2,
             'dipole2': dipole2,
             'LabuteASA2': LabuteASA2,
+            'CalcSpherocityIndex2': CalcSpherocityIndex2,
+            'CalcRadiusOfGyration2': CalcRadiusOfGyration2,
+            'atom_count2': atom_count2,
             'Avalon Similarity': Avalon_Similar,
             'Morgan Similarity': Morgan_Similar,
             'Topological Similarity': Topological_Similar,
