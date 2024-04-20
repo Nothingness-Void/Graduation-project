@@ -112,9 +112,9 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
 
         # 将结果添加到结果列表中
         results.append({
-            'AvalonFP1': Avalon_fingerprint1.ToBitString(),
-            'MorganFP1': Morgan_fingerprint1.ToBitString(),
-            'TopologicalFP1': Topological_fingerprint1.ToBitString(),
+            #'AvalonFP1': Avalon_fingerprint1.ToBitString(),
+            #'MorganFP1': Morgan_fingerprint1.ToBitString(),
+            #'TopologicalFP1': Topological_fingerprint1.ToBitString(),
             'MolWt1': mol_wt1,
             'logP1': logp1,
             'TPSA1': tpsa1,
@@ -129,9 +129,9 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
             'mol1_npr2': mol1_npr2,
             'dipole1': dipole1,
             'LabuteASA1': LabuteASA1,
-            'AvalonFP2': Avalon_fingerprint2.ToBitString(),
-            'MorganFP2': Morgan_fingerprint2.ToBitString(),
-            'TopologicalFP2': Topological_fingerprint2.ToBitString(),
+            # 'AvalonFP2': Avalon_fingerprint2.ToBitString(),
+            # 'MorganFP2': Morgan_fingerprint2.ToBitString(),
+            # 'TopologicalFP2': Topological_fingerprint2.ToBitString(),
             'MolWt2': mol_wt2,
             'logP2': logp2,
             'TPSA2': tpsa2,

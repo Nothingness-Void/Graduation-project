@@ -49,6 +49,7 @@ kernel = C(1.0, (1e-3, 1e3)) * RBF(10, (1e-3, 1e2))
 model = GaussianProcessRegressor(kernel=kernel, n_restarts_optimizer=10)  
 param_space = {'alpha': Real(1e-6, 1e-2, prior='log-uniform')}  
 
+    
 # 创建贝叶斯搜索对象
 optimizer = BayesSearchCV(estimator=model, search_spaces=param_space, n_iter=75, cv=5, 
                           scoring='neg_mean_squared_error', n_jobs=-1, random_state=42, verbose=1)

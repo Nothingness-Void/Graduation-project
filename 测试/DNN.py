@@ -24,8 +24,6 @@ featere_cols = ['MolWt1', 'logP1', 'TPSA1', 'n_h_donor1', 'n_h_acceptor1', 'tota
                 'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
-# 定义指纹特征矩阵
-fingerprints = ['AvalonFP1', 'AvalonFP2', 'TopologicalFP1', 'TopologicalFP2', 'MorganFP1', 'MorganFP2']
 
 
 # 将编码后的指纹特征和数值特征合并
@@ -41,35 +39,35 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 
 
 # 标准化数据
-scaler_X = StandardScaler()
-scaler_y = StandardScaler()  
+scaler_X = StandardScaler() 
 X_train = scaler_X.fit_transform(X_train)
 X_test = scaler_X.transform(X_test)
+
+'''
+scaler_y = StandardScaler() 
 y_train = scaler_y.fit_transform(y_train.reshape(-1, 1))  
 y_test = scaler_y.transform(y_test.reshape(-1, 1))  
-
-
-
-
-
+'''
 ##### 数据处理部分↑ ##### 分割线 ##### 模型训练部分↓ #####
 
 # 构建 DNN 模型
 model = keras.Sequential([
-    keras.layers.Dense(64, activation='relu', input_shape=(X_train.shape[1],),),#输入层
+    keras.layers.Dense(128, activation='relu', input_shape=(X_train.shape[1],),),#输入层
     BatchNormalization(),
     #keras.layers.Dense(256, activation='relu'),#隐藏层1
     #keras.layers.Dense(128, activation='relu'),#隐藏层2
-    keras.layers.Dense(64, activation='relu',), #隐藏层3 ,L2正则化
-    keras.layers.Dense(32, activation='relu'),#隐藏层4
+    #keras.layers.Dense(128, activation='relu',), #隐藏层3 ,L2正则化
+    keras.layers.Dense(64, activation='relu'),#隐藏层4
     keras.layers.Dense(32, activation='relu'),#隐藏层5
     keras.layers.Dense(32, activation='relu'),#隐藏层5
     #BatchNormalization(),
     keras.layers.Dense(16, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
-    #keras.layers.Dense(8, activation='elu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层6
+    keras.layers.Dense(8, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层6
     keras.layers.Dense(1, activation='linear') #输出层
 ])
 
+def rmse(y_true, y_pred):
+    return tf.sqrt(tf.reduce_mean(tf.square(y_pred - y_true)))
 
 # 编译模型
 # model.compile(optimizer='adam', loss=rmse)  # 使用 Adam 优化器和平均绝对误差作为损失函数
@@ -89,9 +87,11 @@ history = model.fit(X_train, y_train, epochs=1000, validation_data=(X_test, y_te
 # 预测
 y_pred = model.predict(X_test)
 
+'''
 # 反标准化
 y_pred = scaler_y.inverse_transform(y_pred)
 y_test = scaler_y.inverse_transform(y_test)
+'''
 
 # 计算并打印模型的R^2值
 r2 = r2_score(y_test, y_pred)
