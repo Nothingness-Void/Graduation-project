@@ -21,12 +21,12 @@ target_name = 'χ-result'  # 哈金斯参数的表头
 data = pd.read_excel('计算结果.xlsx')
 
 # 定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1', #'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
-                'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 
-                'LabuteASA1','CalcSpherocityIndex1','CalcRadiusOfGyration1','atom_count1',
-                'MolWt2', 'logP2', 'TPSA2', #'n_h_donor2', 'n_h_acceptor2', 'total_charge2', 'bond_count2',
-                'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 
-                'LabuteASA2','CalcSpherocityIndex2','CalcRadiusOfGyration2','atom_count2',
+featere_cols = ['MolWt1', 'logP1', 'TPSA1',
+                'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
+                'CalcSpherocityIndex1','CalcRadiusOfGyration1',
+                'MolWt2', 'logP2', 'TPSA2', 
+                'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
+                'CalcSpherocityIndex2','CalcRadiusOfGyration2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
 # 定义指纹特征矩阵
@@ -50,12 +50,12 @@ scaler_x = StandardScaler()
 X_train = scaler_x.fit_transform(X_train)
 X_test = scaler_x.transform(X_test)
 
-
+'''
 # 标准化数据y
 scaler_y = StandardScaler()
 y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).ravel()
 y_test = scaler_y.transform(y_test.reshape(-1, 1)).ravel()
-
+'''
 
 ########################################### 分割线 ####################################
 
@@ -66,9 +66,9 @@ models = [
     (Lasso(), {'alpha': Real(1e-3, 1e3, prior='log-uniform'), 'max_iter': Integer(1000, 20000)}),
     (SVR(), {'C': Real(1e-3, 1e3, prior='log-uniform'), 'kernel': Categorical(['linear', 'rbf', 'poly']),
              'gamma': Real(1e-3, 1e3, prior='log-uniform'), 'max_iter': Integer(50, 5000)}),
-    (RandomForestRegressor(), {'n_estimators': Integer(10, 500), 'max_depth': Integer(3, 20),
+    (RandomForestRegressor(), {'n_estimators': Integer(1, 500), 'max_depth': Integer(1, 20),
                                'max_features': Categorical(['sqrt', 'log2'])}),
-    (GradientBoostingRegressor(), {'n_estimators': Integer(10, 500), 'max_depth': Integer(3, 20),
+    (GradientBoostingRegressor(), {'n_estimators': Integer(1, 500), 'max_depth': Integer(1, 20),
                                    'max_features': Categorical(['sqrt', 'log2'])}),  
     # 添加XGBRegressor
     (xgb.XGBRegressor(), {
@@ -92,7 +92,7 @@ for model, param_space in tqdm(models, total=len(models), desc='正在建模'):
     grid = BayesSearchCV(
         estimator=model,
         search_spaces=param_space,
-        n_iter=75,  # 迭代次数
+        n_iter=50,  # 迭代次数
         cv=5,  # 交叉验证折数
         scoring='neg_mean_squared_error',  # 评估指标
         n_jobs=-1,  # 使用所有 CPU 核心
@@ -110,13 +110,19 @@ for model, param_space in tqdm(models, total=len(models), desc='正在建模'):
 
 
     # 反标准化
-    y_pred_origin = scaler_y.inverse_transform(y_pred.reshape(-1, 1)).ravel()
-    y_test_origin = scaler_y.inverse_transform(y_test.reshape(-1, 1)).ravel()
+    # y_pred_origin = scaler_y.inverse_transform(y_pred.reshape(-1, 1)).ravel()
+    # y_test_origin = scaler_y.inverse_transform(y_test.reshape(-1, 1)).ravel()
 
+    '''
     # 计算 R2 分数和 MSE
     r2 = r2_score(y_test_origin, y_pred_origin)
     mae = mean_absolute_error(y_test_origin, y_pred_origin)
     rmse = np.sqrt(mean_squared_error(y_test_origin, y_pred_origin))
+    '''
+    # 计算 R2 分数和 MSE
+    r2 = r2_score(y_test, y_pred)
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 
     # 打印模型的名称，最优参数，最优分数，以及在测试集上的 R2 分数和 MSE
     print(f"当前模型: {model.__class__.__name__}")
