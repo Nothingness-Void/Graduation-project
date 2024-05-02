@@ -57,13 +57,13 @@ model = keras.Sequential([
     keras.layers.Dense(128, activation='relu', input_shape=(X_train.shape[1],),),#输入层
     BatchNormalization(),
     keras.layers.Dense(64, activation='relu'),#隐藏层2
-    keras.layers.Dense(32, activation='relu'),#隐藏层3
+    #keras.layers.Dense(32, activation='relu'),#隐藏层3
     keras.layers.Dense(32, activation='relu'),#隐藏层4
-    keras.layers.Dense(32, activation='relu'),#隐藏层5
+    #keras.layers.Dense(32, activation='relu'),#隐藏层5
     keras.layers.Dense(16, activation='relu'),#隐藏层6
     keras.layers.Dense(8, activation='relu'),#隐藏层7
     keras.layers.Dense(4, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
-    keras.layers.Dense(2, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层6
+    #keras.layers.Dense(2, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层6
     keras.layers.Dense(1, activation='linear') #输出层
 ])
 
@@ -71,8 +71,8 @@ def rmse(y_true, y_pred):
     return tf.sqrt(tf.reduce_mean(tf.square(y_pred - y_true)))
 
 # 编译模型
-model.compile(optimizer='adam', loss=rmse)  # 使用 Adam 优化器和平均绝对误差作为损失函数
-#model.compile(optimizer='Adam', loss= 'mse')  # 使用 Adam 优化器和平均绝对误差作为损失函数
+#model.compile(optimizer='adam', loss=rmse)  # 使用 Adam 优化器和平均绝对误差作为损失函数
+model.compile(optimizer='Adam', loss= 'mae')  # 使用 Adam 优化器和平均绝对误差作为损失函数
 #model.compile(optimizer='Adam', loss= 'mape')
 
 

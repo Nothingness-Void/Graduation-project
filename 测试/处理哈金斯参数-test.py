@@ -91,4 +91,4 @@ for index, row in df.iterrows():
 df = pd.concat(frames).sort_index()
 
 # 保存处理后的数据
-df.to_excel('processed_and_split_Smiles.xlsx', index=False)
+df.to_excel('processed_and_split_Smiles_test.xlsx', index=False)
