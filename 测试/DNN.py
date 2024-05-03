@@ -57,12 +57,12 @@ model = keras.Sequential([
     keras.layers.Dense(128, activation='relu', input_shape=(X_train.shape[1],),),#输入层
     BatchNormalization(),
     keras.layers.Dense(64, activation='relu'),#隐藏层2
-    #keras.layers.Dense(32, activation='relu'),#隐藏层3
-    keras.layers.Dense(32, activation='relu'),#隐藏层4
+    keras.layers.Dense(32, activation='relu'),#隐藏层3
+    #keras.layers.Dense(32, activation='relu'),#隐藏层4
     #keras.layers.Dense(32, activation='relu'),#隐藏层5
     keras.layers.Dense(16, activation='relu'),#隐藏层6
     keras.layers.Dense(8, activation='relu'),#隐藏层7
-    keras.layers.Dense(4, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
+    keras.layers.Dense(4, activation='elu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
     #keras.layers.Dense(2, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层6
     keras.layers.Dense(1, activation='linear') #输出层
 ])
@@ -103,6 +103,8 @@ print(f'R^2值为：{r2}')
 print(f'MAE(平均绝对误差)值为：{mae}')
 print(f'RMSE(均方根误差)值为：{rmse}')
 #print(f'MAPE(平均绝对百分比误差)值为：{mape}')
+
+model.save('DNN.h5')
 
 # 绘制训练误差和验证误差
 plt.plot(history.history['loss'])
