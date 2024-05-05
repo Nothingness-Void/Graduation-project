@@ -13,7 +13,7 @@ model = load_model("DNN_0.706.h5")
 data = pd.read_excel("计算结果.xlsx")  # 将文件名替换为实际文件名
 
 #定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1',
+feature_cols = ['MolWt1', 'logP1', 'TPSA1',
                 'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
                 'CalcSpherocityIndex1','CalcRadiusOfGyration1',
                 'MolWt2', 'logP2', 'TPSA2', 
@@ -21,38 +21,47 @@ featere_cols = ['MolWt1', 'logP1', 'TPSA1',
                 'CalcSpherocityIndex2','CalcRadiusOfGyration2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
-
-
-# 将编码后的指纹特征和数值特征合并
-X = pd.concat([data[featere_cols],
-# data[fingerprints]
-], axis=1)
-
 # 获取特征和目标参数
-X_val = data[featere_cols]
-y_val = data["χ-result"].values
+X_val = data[feature_cols]
 
 # 对验证数据进行标准化
 scaler_X = StandardScaler()
 X_val = scaler_X.fit_transform(X_val)
 
-# 初始化JS解释器
+# 将X_val转换回DataFrame
+X_val = pd.DataFrame(X_val, columns=feature_cols)
+
+# 初始化GradientExplainer解释器
 explainer = shap.GradientExplainer(model, X_val)
 
 # 计算SHAP值
-shap_values = explainer.shap_values(X_val)
+shap_values = explainer.shap_values(X_val.values)
 
-# 计算每个特征的平均绝对SHAP值
-mean_shap_values = np.mean(np.abs(shap_values[0]), axis=0)
+print("SHAP values ：", shap_values)
 
-# 获取特征重要性排序的索引
-sorted_idx = np.argsort(mean_shap_values)
+# 选择第一个输出的 SHAP 值
+shap_values_output1 = shap_values[0]
 
-# 绘制特征重要性图
-plt.figure(figsize=(10, 7))
-plt.barh(range(len(sorted_idx)), mean_shap_values[sorted_idx], align='center')
-plt.yticks(range(len(sorted_idx)), np.array(feature_cols)[sorted_idx])
-plt.xlabel('SHAP Value (average impact on model output)')
-plt.title('Feature importances')
-plt.draw()
+# 计算每个特征的平均绝对 SHAP 值
+mean_abs_shap_values = np.mean(np.abs(shap_values_output1), axis=0)
+
+# 计算每个特征的平均 SHAP 值
+mean_shap_values = np.mean(shap_values_output1, axis=0)
+
+# 创建一个新的图形
+plt.figure(figsize=(10, 8))
+
+# 绘制平均绝对 SHAP 值
+plt.subplot(1, 2, 1)
+plt.barh(feature_cols, mean_abs_shap_values)
+plt.xlabel('Mean Absolute SHAP Value')
+plt.title('Feature Importance (Absolute)')
+
+# 绘制平均 SHAP 值
+plt.subplot(1, 2, 2)
+plt.barh(feature_cols, mean_shap_values)
+plt.xlabel('Mean SHAP Value')
+plt.title('Feature Importance (Signed)')
+
+plt.tight_layout()
 plt.show()
