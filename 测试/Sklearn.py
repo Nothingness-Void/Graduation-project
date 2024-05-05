@@ -29,9 +29,6 @@ featere_cols = ['MolWt1', 'logP1', 'TPSA1',
                 'CalcSpherocityIndex2','CalcRadiusOfGyration2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
-# 定义指纹特征矩阵
-fingerprints = ['AvalonFP1', 'AvalonFP2', 'TopologicalFP1', 'TopologicalFP2', 'MorganFP1', 'MorganFP2']
-
 
 # 将编码后的指纹特征和数值特征合并
 X = pd.concat([data[featere_cols], 

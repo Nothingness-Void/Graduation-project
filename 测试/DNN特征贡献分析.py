@@ -1,14 +1,16 @@
-import tensorflow as tf
-from tensorflow import keras
+import shap
+from keras.models import load_model
 import pandas as pd
+import matplotlib.pyplot as plt
+import numpy as np
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import StandardScaler
 
 # 加载模型
-model = keras.models.load_model("DNN_0.706.h5")
+model = load_model("DNN_0.706.h5")
 
-# 加载验证数据 
-data = pd.read_excel('计算结果.xlsx')
+# 加载数据
+data = pd.read_excel("计算结果.xlsx")  # 将文件名替换为实际文件名
 
 #定义特征矩阵
 featere_cols = ['MolWt1', 'logP1', 'TPSA1',
@@ -34,11 +36,23 @@ y_val = data["χ-result"].values
 scaler_X = StandardScaler()
 X_val = scaler_X.fit_transform(X_val)
 
-# 进行预测
-y_pred = model.predict(X_val)
+# 初始化JS解释器
+explainer = shap.GradientExplainer(model, X_val)
 
-# 将预测结果添加到 DataFrame
-data["Predicted χ-result"] = y_pred
+# 计算SHAP值
+shap_values = explainer.shap_values(X_val)
 
-# 将 DataFrame 输出到新的 Excel 文件
-data.to_excel("DNN_validation_results.xlsx", index=False)
+# 计算每个特征的平均绝对SHAP值
+mean_shap_values = np.mean(np.abs(shap_values[0]), axis=0)
+
+# 获取特征重要性排序的索引
+sorted_idx = np.argsort(mean_shap_values)
+
+# 绘制特征重要性图
+plt.figure(figsize=(10, 7))
+plt.barh(range(len(sorted_idx)), mean_shap_values[sorted_idx], align='center')
+plt.yticks(range(len(sorted_idx)), np.array(feature_cols)[sorted_idx])
+plt.xlabel('SHAP Value (average impact on model output)')
+plt.title('Feature importances')
+plt.draw()
+plt.show()

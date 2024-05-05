@@ -62,7 +62,7 @@ model = keras.Sequential([
     #keras.layers.Dense(32, activation='relu'),#隐藏层5
     keras.layers.Dense(16, activation='relu'),#隐藏层6
     keras.layers.Dense(8, activation='relu'),#隐藏层7
-    keras.layers.Dense(4, activation='elu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
+    keras.layers.Dense(4, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
     #keras.layers.Dense(2, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层6
     keras.layers.Dense(1, activation='linear') #输出层
 ])
