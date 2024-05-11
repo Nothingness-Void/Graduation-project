@@ -14,6 +14,11 @@ from sklearn.preprocessing import StandardScaler
 from skopt import BayesSearchCV
 from skopt.space import Real, Categorical, Integer
 import xgboost as xgb
+import matplotlib.pyplot as plt
+from skopt.plots import plot_convergence
+import os
+from sklearn.model_selection import learning_curve
+from sklearn.model_selection import cross_val_score
 
 target_name = 'χ-result'  # 哈金斯参数的表头
 
@@ -47,13 +52,6 @@ scaler_x = StandardScaler()
 X_train = scaler_x.fit_transform(X_train)
 X_test = scaler_x.transform(X_test)
 
-'''
-# 标准化数据y
-scaler_y = StandardScaler()
-y_train = scaler_y.fit_transform(y_train.reshape(-1, 1)).ravel()
-y_test = scaler_y.transform(y_test.reshape(-1, 1)).ravel()
-'''
-
 ########################################### 分割线 ####################################
 
 
@@ -85,19 +83,18 @@ result_models = []  # 用于存储每个模型的最优模型
 
 for model, param_space in tqdm(models, total=len(models), desc='正在建模'):
     # 创建贝叶斯优化对象
-    #grid = GridSearchCV(model, param, scoring='r2', cv=5, n_jobs=-1)
     grid = BayesSearchCV(
         estimator=model,
         search_spaces=param_space,
         n_iter=50,  # 迭代次数
         cv=5,  # 交叉验证折数
-        scoring='neg_mean_squared_error',  # 评估指标
+        scoring= 'r2',  # 评分指标
         n_jobs=-1,  # 使用所有 CPU 核心
     )
     
     # 在训练集上进行网格搜索
     grid.fit(X_train, y_train)
-
+    
     # 获取最优的参数和分数
     best_param = grid.best_params_
     best_score = grid.best_score_
@@ -105,55 +102,17 @@ for model, param_space in tqdm(models, total=len(models), desc='正在建模'):
     # 在测试集上评估最优的模型
     y_pred = grid.predict(X_test)
 
-
-    # 反标准化
-    # y_pred_origin = scaler_y.inverse_transform(y_pred.reshape(-1, 1)).ravel()
-    # y_test_origin = scaler_y.inverse_transform(y_test.reshape(-1, 1)).ravel()
-
-    '''
-    # 计算 R2 分数和 MSE
-    r2 = r2_score(y_test_origin, y_pred_origin)
-    mae = mean_absolute_error(y_test_origin, y_pred_origin)
-    rmse = np.sqrt(mean_squared_error(y_test_origin, y_pred_origin))
-    '''
     # 计算 R2 分数和 MSE
     r2 = r2_score(y_test, y_pred)
     mae = mean_absolute_error(y_test, y_pred)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 
-    # 打印模型的名称，最优参数，最优分数，以及在测试集上的 R2 分数和 MSE
-    print(f"当前模型: {model.__class__.__name__}")
-    print(f"最优参数: {best_param}")
-    print(f"Best Score: {best_score}")
-    print(f"R2: {r2}")
-    print(f"MAE: {mae}")
-    print(f"RMSE: {rmse}")
-    print("\n")
-
     # 将结果添加到结果 DataFrame
     new_row = pd.DataFrame(
         {'Model': [model.__class__.__name__], 'Best parameter': [best_param], 'Best score': [best_score], 'R2': [r2],
          'MAE': [mae], 'RMSE': [rmse]})
     results = pd.concat([results, new_row], ignore_index=True)
-    # 将最优模型添加到列表
-    result_models.append(grid.best_estimator_)
-    mae = mean_absolute_error(y_test, y_pred)
-    rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 
-    # 打印模型的名称，最优参数，最优分数，以及在测试集上的 R2 分数和 MSE
-    print(f"当前模型: {model.__class__.__name__}")
-    print(f"最优参数: {best_param}")
-    print(f"Best Score: {best_score}")
-    print(f"R2: {r2}")
-    print(f"MAE: {mae}")
-    print(f"RMSE: {rmse}")
-    print("\n")
-
-    # 将结果添加到结果 DataFrame
-    new_row = pd.DataFrame(
-        {'Model': [model.__class__.__name__], 'Best parameter': [best_param], 'Best score': [best_score], 'R2': [r2],
-         'MAE': [mae], 'RMSE': [rmse]})
-    results = pd.concat([results, new_row], ignore_index=True)
     # 将最优模型添加到列表
     result_models.append(grid.best_estimator_)
 
@@ -165,7 +124,37 @@ results['RMSE'] = results['RMSE'].astype(float)
 best_model_index = results['R2'].idxmax()
 result_model = result_models[best_model_index]
 
-# 保存最优的模型
+all_scores = []
+labels = []
+
+for model, model_name in zip(result_models, results['Model']):
+    scores = cross_val_score(model, X, y, cv=5, scoring='r2')
+    all_scores.append(scores)
+    labels.append(model_name)
+
+# 设置中文字体
+plt.rcParams['font.sans-serif'] = ['SimHei']
+plt.rcParams['axes.unicode_minus'] = False
+
+# 绘制箱线图
+plt.figure()
+plt.boxplot(all_scores, labels=labels)
+plt.xlabel("模型")
+plt.ylabel("R2")
+plt.title("不同模型交叉验证 R2 分布箱型图")
+plt.show()
+
+# 遍历所有的最优模型
+for i, model in enumerate(result_models):
+    print('模型:', model.__class__.__name__)
+    print('最优参数：', results['Best parameter'][i])
+    print('R²:', results['R2'][i])
+    print('MAE(平均绝对误差):', results['MAE'][i])
+    print('RMSE(均方根误差):', results['RMSE'][i])
+    print('\n')
+
+
+# 保最优模型
 with open('fingerprint_model.pkl', 'wb') as f:
     pickle.dump(result_model, f)
 print("最优模型已储存为 fingerprint_model.pkl")
