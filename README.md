@@ -45,6 +45,8 @@ Graduation-project/
 ├── Sklearn.py                 # Step 4b: Sklearn 传统机器学习建模
 ├── DNN_模型验证.py             # Step 5a: DNN 模型验证
 ├── Sklearn_模型验证.py         # Step 5b: Sklearn 模型验证
+├── DNN特征贡献分析.py          # Step 6a: DNN SHAP 特征贡献分析
+├── RF特征贡献分析.py           # Step 6b: 随机森林特征重要性分析
 │
 ├── Huggins.xlsx               # 原始数据：化合物名称 + 哈金斯参数
 │
@@ -61,7 +63,9 @@ Graduation-project/
 │   ├── DNN_validation_results.xlsx   # DNN 验证结果
 │   ├── Sklearn_validation_results.xlsx  # Sklearn 验证结果
 │   ├── DNN_v2_loss.png        # 训练损失曲线图
-│   └── DNN_v2_results.png     # 预测结果散点图
+│   ├── DNN_v2_results.png     # 预测结果散点图
+│   ├── DNN_SHAP_analysis.png  # Step 6a: DNN SHAP 特征贡献分析图
+│   └── RF_feature_importance.png  # Step 6b: 随机森林特征重要性图
 │
 ├── requirements.txt           # Python 依赖清单
 ├── README.md                  # 本文件
@@ -334,16 +338,34 @@ python Sklearn_模型验证.py
 
 **输出**: `Sklearn_validation_results.xlsx`（含预测值和残差列）
 
-#### 特征贡献分析
+### Step 6：特征贡献分析（模型可解释性）
 
-**DNN-SHAP 分析**: [`测试/DNN特征贡献分析.py`](测试/DNN特征贡献分析.py)
+#### DNN SHAP 分析
 
-- 使用 SHAP GradientExplainer 计算各特征对 DNN 模型预测的贡献度
-- 输出：平均绝对 SHAP 值柱状图 + 平均 SHAP 值柱状图
+**脚本**: [`DNN特征贡献分析.py`](DNN特征贡献分析.py)
 
-**随机森林特征重要性**: [`测试/RF特征贡献分析.py`](测试/RF特征贡献分析.py)
+**功能**: 使用 SHAP GradientExplainer 计算各特征对 DNN 模型预测的贡献度，输出:
 
-- 利用 RandomForest 的 `feature_importances_` 绘制特征重要性排序图
+- 平均绝对 SHAP 值柱状图（特征重要性排序）
+- 平均 SHAP 值柱状图（带正负方向，反映特征对预测的推高/拉低效应）
+
+```bash
+python DNN特征贡献分析.py
+```
+
+**输出**: `results/DNN_SHAP_analysis.png`
+
+#### 随机森林特征重要性
+
+**脚本**: [`RF特征贡献分析.py`](RF特征贡献分析.py)
+
+**功能**: 从训练好的 RandomForest 模型中提取 `feature_importances_`，按重要性排序绘制柱状图，并打印特征排名。
+
+```bash
+python RF特征贡献分析.py
+```
+
+**输出**: `results/RF_feature_importance.png`
 
 ---
 
@@ -360,6 +382,8 @@ python Sklearn_模型验证.py
 | `fingerprint_model.pkl` | `results/` | Sklearn 最优模型 | Step 4b 输出 |
 | `DNN_validation_results.xlsx` | `results/` | DNN 验证结果（含预测值与残差） | Step 5 输出 |
 | `Sklearn_validation_results.xlsx` | `results/` | Sklearn 验证结果（含预测值与残差） | Step 5 输出 |
+| `DNN_SHAP_analysis.png` | `results/` | DNN SHAP 特征贡献分析图 | Step 6a 输出 |
+| `RF_feature_importance.png` | `results/` | 随机森林特征重要性图 | Step 6b 输出 |
 
 ---
 
