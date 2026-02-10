@@ -17,7 +17,7 @@ from skopt.space import Real, Categorical, Integer
 target_name = 'χ-result'  # 哈金斯参数的表头
 
 # 读取数据文件
-data = pd.read_excel('计算结果.xlsx')
+data = pd.read_excel('data/molecular_features.xlsx')
 
 # 定义特征矩阵
 featere_cols = ['MolWt1', 'logP1', 'TPSA1', #'n_h_donor1', 'n_h_acceptor1', 'total_charge1', 'bond_count1',
@@ -155,7 +155,7 @@ best_model_index = results['R2'].idxmax()
 result_model = result_models[best_model_index]
 
 # 保存最优的模型
-with open('fingerprint_model.pkl', 'wb') as f:
+with open('results/fingerprint_model.pkl', 'wb') as f:
     pickle.dump(result_model, f)
 print("最优模型已储存为 fingerprint_model.pkl")
 

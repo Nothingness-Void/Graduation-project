@@ -71,4 +71,4 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
     #df['SMILES 2'] = list(tqdm(executor.map(CIRconvert, df['Compound 2']), total=df.shape[0]))
 
 # 新存储为csv文件
-df.to_csv('SMILES-测试.csv', index=False,encoding='utf_8_sig')
+df.to_csv('data/smiles_raw.csv', index=False,encoding='utf_8_sig')

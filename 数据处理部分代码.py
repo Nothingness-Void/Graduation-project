@@ -8,7 +8,7 @@ import numpy as np
 import re
 
 # 读取csv文件
-df = pd.read_csv('Smiles.csv')
+df = pd.read_csv('data/smiles_raw.csv')
 
 # 对χ列进行处理
 
@@ -91,4 +91,4 @@ for index, row in df.iterrows():
 df = pd.concat(frames).sort_index()
 
 # 保存处理后的数据
-df.to_excel('processed_and_split_Smiles.xlsx', index=False)
+df.to_excel('data/huggins_preprocessed.xlsx', index=False)

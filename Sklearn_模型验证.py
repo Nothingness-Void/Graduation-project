@@ -11,9 +11,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 
 # ========== 配置 ==========
-MODEL_PATH = "fingerprint_model.pkl"  # 模型文件路径
-DATA_PATH = "计算结果.xlsx"            # 验证数据文件路径
-OUTPUT_PATH = "Sklearn_validation_results.xlsx"  # 输出文件路径
+MODEL_PATH = "results/fingerprint_model.pkl"  # 模型文件路径
+DATA_PATH = "data/molecular_features.xlsx"            # 验证数据文件路径
+OUTPUT_PATH = "results/Sklearn_validation_results.xlsx"  # 输出文件路径
 
 # 读取数据文件
 data = pd.read_excel(DATA_PATH)

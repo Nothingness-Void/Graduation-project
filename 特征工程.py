@@ -13,7 +13,7 @@ smiles1_name = 'SMILES 1'
 smiles2_name = 'SMILES 2'
 
 # 读取输入数据
-data = pd.read_excel('processed_and_split_Smiles.xlsx')
+data = pd.read_excel('data/huggins_preprocessed.xlsx')
 
 # 初始化结果列表
 results = []
@@ -183,4 +183,4 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
 result = pd.DataFrame(results)
 
 # 保存结果到 Excel 文件
-result.to_excel('计算结果.xlsx', index=False)
+result.to_excel('data/molecular_features.xlsx', index=False)

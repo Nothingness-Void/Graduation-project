@@ -1,8 +1,0 @@
-curl -s https://gemini.nvoid.pp.ua/v1/chat/completions \
-  -H "Authorization: Bearer $AIzaSyDbl1LKPE5xuTFrfhbxNjcm4mwwnIh54uE" \
-  -H "Content-Type: application/json" \
-  -d '{
-      "model": "gpt-3.5-turbo",
-      "messages": [{"role": "user", "content": "Hello, Who are you?"}],
-      "temperature": 0.7
-      }'

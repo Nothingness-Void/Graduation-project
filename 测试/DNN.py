@@ -1,18 +1,22 @@
 # 导入所需的 Python 包
 import pandas as pd
 import numpy as np
+import os, random
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, RobustScaler
-from sklearn.metrics import r2_score, mean_squared_error,mean_absolute_error,mean_absolute_percentage_error
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import tensorflow as tf
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from tensorflow import keras
+from tensorflow.keras import layers, regularizers
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau, ModelCheckpoint
 import matplotlib.pyplot as plt
-from tensorflow.keras import regularizers
-from keras.layers import BatchNormalization
-from keras.layers import LeakyReLU
-from keras import backend as K
 
+# ======== 可复现性 ========
+SEED = 42
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+random.seed(SEED)
+np.random.seed(SEED)
+tf.random.set_seed(SEED)
 
 # 读取数据文件
 data = pd.read_excel('计算结果.xlsx')
@@ -26,91 +30,128 @@ featere_cols = ['MolWt1', 'logP1', 'TPSA1',
                 'CalcSpherocityIndex2','CalcRadiusOfGyration2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
-
-
 # 将编码后的指纹特征和数值特征合并
-X = pd.concat([data[featere_cols],
-# data[fingerprints]
-], axis=1)
+X = pd.concat([data[featere_cols]], axis=1)
 
 # 定义目标参数
 y = data['χ-result'].values
 
 # 划分训练集和测试集
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=SEED)
 
 # 标准化数据
-scaler_X = StandardScaler() 
+scaler_X = StandardScaler()
 X_train = scaler_X.fit_transform(X_train)
 X_test = scaler_X.transform(X_test)
 
-'''
-scaler_y = StandardScaler() 
-y_train = scaler_y.fit_transform(y_train.reshape(-1, 1))  
-y_test = scaler_y.transform(y_test.reshape(-1, 1))  
-'''
 ##### 数据处理部分↑ ##### 分割线 ##### 模型训练部分↓ #####
 
-# 构建 DNN 模型
-model = keras.Sequential([
-    keras.layers.Dense(128, activation='relu', input_shape=(X_train.shape[1],),),#输入层
-    BatchNormalization(),
-    keras.layers.Dense(64, activation='relu'),#隐藏层2
-    keras.layers.Dense(32, activation='relu'),#隐藏层3
-    #keras.layers.Dense(32, activation='relu'),#隐藏层4
-    #keras.layers.Dense(32, activation='relu'),#隐藏层5
-    keras.layers.Dense(16, activation='relu'),#隐藏层6
-    keras.layers.Dense(8, activation='relu'),#隐藏层7
-    keras.layers.Dense(4, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层5
-    #keras.layers.Dense(2, activation='relu',kernel_regularizer=regularizers.l2(0.01)),#隐藏层6
-    keras.layers.Dense(1, activation='linear') #输出层
-])
+# ======== 优化后的 DNN 模型 ========
+# 改进点：
+#   1. 使用 keras.Input 替代 input_shape（消除 Keras 3 警告）
+#   2. 每层都加 BatchNorm + Dropout 防止过拟合
+#   3. 使用 L2 正则化（不仅限于最后一层）
+#   4. 使用 Huber Loss（比 MAE 更平滑，对异常值鲁棒）
+#   5. ModelCheckpoint 自动保存验证集上表现最好的权重
 
-def rmse(y_true, y_pred):
-    return tf.sqrt(tf.reduce_mean(tf.square(y_pred - y_true)))
+inputs = keras.Input(shape=(X_train.shape[1],))
+x = layers.Dense(256, kernel_regularizer=regularizers.l2(0.001))(inputs)
+x = layers.BatchNormalization()(x)
+x = layers.ReLU()(x)
+x = layers.Dropout(0.3)(x)
 
-# 编译模型
-#model.compile(optimizer='adam', loss=rmse)  # 使用 Adam 优化器和平均绝对误差作为损失函数
-model.compile(optimizer='Adam', loss= 'mae')  # 使用 Adam 优化器和平均绝对误差作为损失函数
-#model.compile(optimizer='Adam', loss= 'mape')
+x = layers.Dense(128, kernel_regularizer=regularizers.l2(0.001))(x)
+x = layers.BatchNormalization()(x)
+x = layers.ReLU()(x)
+x = layers.Dropout(0.25)(x)
 
+x = layers.Dense(64, kernel_regularizer=regularizers.l2(0.001))(x)
+x = layers.BatchNormalization()(x)
+x = layers.ReLU()(x)
+x = layers.Dropout(0.2)(x)
 
-# 创建早停回调
-early_stopping = EarlyStopping(monitor='val_loss', patience=15)
+x = layers.Dense(32, kernel_regularizer=regularizers.l2(0.001))(x)
+x = layers.BatchNormalization()(x)
+x = layers.ReLU()(x)
 
-# 创建学习率衰减回调
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=5, min_lr=0.00001)
+x = layers.Dense(16)(x)
+x = layers.ReLU()(x)
 
-# 训练与评估模型
-history = model.fit(X_train, y_train, epochs=1000, validation_data=(X_test, y_test), callbacks=[early_stopping, reduce_lr])
+outputs = layers.Dense(1, activation='linear')(x)
+model = keras.Model(inputs, outputs)
+
+# 编译模型 - 使用 Huber Loss（比 MAE 更平滑收敛，比 MSE 对异常值更鲁棒）
+model.compile(
+    optimizer=keras.optimizers.Adam(learning_rate=1e-3),
+    loss='huber',
+    metrics=['mae']
+)
+
+model.summary()
+
+# 创建回调
+early_stopping = EarlyStopping(
+    monitor='val_loss',
+    patience=30,                # 增加耐心，给模型更多机会收敛
+    restore_best_weights=True   # 自动恢复最佳权重
+)
+reduce_lr = ReduceLROnPlateau(
+    monitor='val_loss',
+    factor=0.5,
+    patience=10,
+    min_lr=1e-6
+)
+checkpoint = ModelCheckpoint(
+    'best_dnn_model.keras',
+    monitor='val_loss',
+    save_best_only=True,
+    mode='min'
+)
+
+# 训练模型
+history = model.fit(
+    X_train, y_train,
+    epochs=500,
+    batch_size=32,
+    validation_data=(X_test, y_test),
+    callbacks=[early_stopping, reduce_lr, checkpoint]
+)
 
 # 预测
 y_pred = model.predict(X_test)
 
-'''
-# 反标准化
-y_pred = scaler_y.inverse_transform(y_pred)
-y_test = scaler_y.inverse_transform(y_test)
-'''
-
-# 计算并打印模型的R^2值
+# 计算并打印模型的评估指标
 r2 = r2_score(y_test, y_pred)
 mae = mean_absolute_error(y_test, y_pred)
-rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-#mape = mean_absolute_percentage_error(y_test, y_pred)
-print(f'R^2值为：{r2}')
-print(f'MAE(平均绝对误差)值为：{mae}')
-print(f'RMSE(均方根误差)值为：{rmse}')
-#print(f'MAPE(平均绝对百分比误差)值为：{mape}')
+rmse_val = np.sqrt(mean_squared_error(y_test, y_pred))
+
+print(f'\n============ 模型评估结果 ============')
+print(f'R²值为：{r2:.4f}')
+print(f'MAE(平均绝对误差)值为：{mae:.4f}')
+print(f'RMSE(均方根误差)值为：{rmse_val:.4f}')
 
 model.save('DNN.h5')
 
 # 绘制训练误差和验证误差
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('Model loss')
-plt.ylabel('Loss')
-plt.xlabel('Epoch')
-plt.legend(['Train', 'Test'], loc='upper right')
+fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+axes[0].plot(history.history['loss'], label='Train Loss')
+axes[0].plot(history.history['val_loss'], label='Val Loss')
+axes[0].set_title('Model Loss')
+axes[0].set_ylabel('Huber Loss')
+axes[0].set_xlabel('Epoch')
+axes[0].legend()
+
+# 预测 vs 真实值散点图
+axes[1].scatter(y_test, y_pred, alpha=0.6, s=20)
+min_val = min(y_test.min(), y_pred.min())
+max_val = max(y_test.max(), y_pred.max())
+axes[1].plot([min_val, max_val], [min_val, max_val], 'r--', label='y=x (理想)')
+axes[1].set_title(f'Predicted vs Actual (R²={r2:.4f})')
+axes[1].set_xlabel('实际 χ')
+axes[1].set_ylabel('预测 χ')
+axes[1].legend()
+
+plt.tight_layout()
+plt.savefig('dnn_training_history.png', dpi=150)
 plt.show()

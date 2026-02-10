@@ -1,0 +1,17 @@
+{
+  "rows": 315,
+  "cols": 29,
+  "features_used": 28,
+  "missing_features": [],
+  "target_col": "¦Ö-result",
+  "train_size": 252,
+  "test_size": 63,
+  "y_mean": 0.3186962870912246,
+  "y_std": 0.5613537367986237,
+  "y_min": -1.06,
+  "y_max": 3.5,
+  "y_median": 0.1358329090178213,
+  "y_na": 0,
+  "current_params": 14753,
+  "params_per_sample": 58.5
+}

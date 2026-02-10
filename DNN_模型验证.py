@@ -12,9 +12,9 @@ from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import StandardScaler
 
 # ========== 配置 ==========
-MODEL_PATH = "DNN.h5"               # 模型文件路径（可替换为任意 .h5 / .keras 模型）
-DATA_PATH = "计算结果.xlsx"           # 验证数据文件路径
-OUTPUT_PATH = "DNN_validation_results.xlsx"  # 输出文件路径
+MODEL_PATH = "results/DNN.h5"               # 模型文件路径（可替换为任意 .h5 / .keras 模型）
+DATA_PATH = "data/molecular_features.xlsx"           # 验证数据文件路径
+OUTPUT_PATH = "results/DNN_validation_results.xlsx"  # 输出文件路径
 
 # 加载模型
 model = keras.models.load_model(MODEL_PATH)

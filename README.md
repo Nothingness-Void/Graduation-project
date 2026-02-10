@@ -42,51 +42,34 @@ Graduation-project/
 ├── 数据处理部分代码.py          # Step 2: 处理哈金斯参数中的浮动值与温度
 ├── 特征工程.py                 # Step 3: 计算分子描述符与指纹相似度
 ├── DNN.py                     # Step 4a: DNN 深度神经网络建模
-├── Sklearn.py                 # Step 4b: Sklearn 传统机器学习建模（含贝叶斯超参数优化）
-├── 模型验证.py                 # Step 5: 加载模型对新数据进行预测验证
+├── Sklearn.py                 # Step 4b: Sklearn 传统机器学习建模
+├── DNN_模型验证.py             # Step 5a: DNN 模型验证
+├── Sklearn_模型验证.py         # Step 5b: Sklearn 模型验证
 │
 ├── Huggins.xlsx               # 原始数据：化合物名称 + 哈金斯参数
-├── SMILES.csv                 # Step 1 输出：含 SMILES 的数据
-├── Smiles-处理后.xlsx          # Step 2 中间产物（手动清洗）
-├── processed_and_split_Smiles.xlsx  # Step 2 输出：预处理后的数据
-├── 计算结果.xlsx               # Step 3 输出：特征工程计算完成的建模数据
 │
-├── DNN.h5                     # Step 4a 输出：DNN 模型文件
-├── DNN_v2.h5 / DNN_v2.keras   # DNN 优化版模型文件
-├── DNN_v2_loss.png            # DNN_v2 训练损失图
-├── DNN_v2_results.png         # DNN_v2 预测结果图
-├── DNN_validation_results.xlsx # DNN 验证结果
-├── Sklearn_validation_results.xlsx  # Sklearn 验证结果
+├── data/                      # 中间过程数据（流水线各步骤产物）
+│   ├── smiles_raw.csv         # Step 1 输出：含 SMILES 的原始数据
+│   ├── smiles_cleaned.xlsx    # 手动清洗后的 SMILES 数据
+│   ├── huggins_preprocessed.xlsx  # Step 2 输出：温度裂变后的预处理数据
+│   └── molecular_features.xlsx    # Step 3 输出：28维分子描述符特征矩阵
 │
-├── 网络测试.py                 # 工具脚本：测试 NCI 网络接口连通性
+├── results/                   # 最终成果（模型 + 验证结果 + 可视化）
+│   ├── DNN.h5                 # DNN 训练模型
+│   ├── DNN_v2.h5 / DNN_v2.keras  # DNN 优化版模型
+│   ├── fingerprint_model.pkl  # Sklearn 最优模型
+│   ├── DNN_validation_results.xlsx   # DNN 验证结果
+│   ├── Sklearn_validation_results.xlsx  # Sklearn 验证结果
+│   ├── DNN_v2_loss.png        # 训练损失曲线图
+│   └── DNN_v2_results.png     # 预测结果散点图
+│
 ├── requirements.txt           # Python 依赖清单
 ├── README.md                  # 本文件
 │
-├── 测试/                      # 实验性脚本（不同版本的模型与分析）
-│   ├── DNN.py                 # DNN 优化版（Huber Loss + Dropout + BN）
-│   ├── DNN_v2.py              # DNN 架构精简版（匹配小数据集）
-│   ├── DNN_Map.py             # DNN 超参数网格搜索版
-│   ├── Sklearn.py             # Sklearn 扩展版（含 XGBoost + 箱线图）
-│   ├── GPR.py                 # 高斯过程回归模型
-│   ├── DNN_模型验证.py         # DNN 模型验证
-│   ├── Sklearn_模型验证.py     # Sklearn 模型验证
-│   ├── DNN特征贡献分析.py      # SHAP 特征重要性分析（DNN）
-│   ├── RF特征贡献分析.py       # 随机森林特征重要性分析
-│   ├── 获取SMILES.py          # 获取 SMILES 早期版本
-│   ├── 处理哈金斯参数-test.py   # 数据处理测试版
-│   ├── 特征工程_test.py        # 特征工程测试版
-│   ├── 聚合物处理.py           # 聚合物名称预处理（去除 poly 前缀）
-│   ├── 寻找创建分子指纹.py     # 分子指纹生成示例
-│   └── ...
-│
-├── 模型/                      # 存储的模型文件
-│   ├── DNN_0.706.h5           # DNN 模型（R²=0.706）
-│   └── fingerprint_model.pkl  # Sklearn 最优模型
-│
-└── 参考/                      # 参考代码
-    ├── develop_model1.py      # SVR 参考实现
-    ├── develop_model2.py
-    └── develop_model3.py
+├── 测试/                      # 实验性脚本
+├── 模型/                      # 历史模型存档
+├── 参考/                      # 参考代码
+└── 废弃文件存档/               # 已归档的废弃文件
 ```
 
 ---
@@ -325,41 +308,31 @@ python Sklearn.py
 
 ### Step 5：模型验证与分析
 
-#### 模型预测验证
+#### DNN 模型验证
 
-**脚本**: [`模型验证.py`](模型验证.py)
+**脚本**: [`DNN_模型验证.py`](DNN_模型验证.py)
 
-**功能**: 加载已训练模型，对新数据进行预测，输出验证结果。
+**功能**: 加载训练好的 DNN 模型，在全量数据上进行预测，输出评估指标（R²、MAE、RMSE）和预测结果。
 
-```bash
-python 模型验证.py
-```
-
-**输出**: `模型验证.xlsx`
-
-#### DNN 模型验证（测试目录）
-
-**脚本**: [`测试/DNN_模型验证.py`](测试/DNN_模型验证.py)
-
-**功能**: 加载 DNN 模型，在全量数据上进行预测，输出预测值与真实值的对比。
+模型路径通过脚本顶部的 `MODEL_PATH` 变量配置，默认为 `DNN.h5`，可替换为任意 `.h5` / `.keras` 模型文件。
 
 ```bash
-cd 测试
 python DNN_模型验证.py
 ```
 
-**输出**: `DNN_validation_results.xlsx`
+**输出**: `DNN_validation_results.xlsx`（含预测值和残差列）
 
-#### Sklearn 模型验证（测试目录）
+#### Sklearn 模型验证
 
-**脚本**: [`测试/Sklearn_模型验证.py`](测试/Sklearn_模型验证.py)
+**脚本**: [`Sklearn_模型验证.py`](Sklearn_模型验证.py)
+
+**功能**: 加载训练好的 Sklearn 模型，在全量数据上进行预测，输出评估指标和预测结果。
 
 ```bash
-cd 测试
 python Sklearn_模型验证.py
 ```
 
-**输出**: `Sklearn_validation_results.xlsx`
+**输出**: `Sklearn_validation_results.xlsx`（含预测值和残差列）
 
 #### 特征贡献分析
 
@@ -376,19 +349,17 @@ python Sklearn_模型验证.py
 
 ## 数据文件说明
 
-| 文件 | 描述 | 产生阶段 |
-|------|------|----------|
-| `Huggins.xlsx` | 原始数据，包含化合物名称、χ 参数表达式、温度 | 输入数据 |
-| `SMILES.csv` | 补充了 SMILES 分子结构的数据 | Step 1 输出 |
-| `SMILES-测试.csv` | SMILES 获取测试结果（仅 Compound 1） | Step 1 测试 |
-| `Smiles-处理后.xlsx` | 手动清洗后的中间数据 | 手动处理 |
-| `processed_and_split_Smiles.xlsx` | 预处理完成、温度裂变后的数据 | Step 2 输出 |
-| `计算结果.xlsx` | 特征工程完成的建模数据（28 特征 + 目标值） | Step 3 输出 |
-| `DNN.h5` / `DNN_v2.h5` | DNN 模型文件 | Step 4a 输出 |
-| `fingerprint_model.pkl` | Sklearn 最优模型 | Step 4b 输出 |
-| `模型验证.xlsx` | 模型验证预测结果 | Step 5 输出 |
-| `DNN_validation_results.xlsx` | DNN 验证结果 | Step 5 输出 |
-| `Sklearn_validation_results.xlsx` | Sklearn 验证结果 | Step 5 输出 |
+| 文件 | 位置 | 描述 | 产生阶段 |
+|------|------|------|----------|
+| `Huggins.xlsx` | 根目录 | 原始数据，包含化合物名称、χ 参数表达式、温度 | 输入数据 |
+| `smiles_raw.csv` | `data/` | 化合物名称 + SMILES 分子结构 | Step 1 输出 |
+| `smiles_cleaned.xlsx` | `data/` | 手动清洗后的 SMILES 数据 | 手动处理 |
+| `huggins_preprocessed.xlsx` | `data/` | 温度裂变后的预处理数据 | Step 2 输出 |
+| `molecular_features.xlsx` | `data/` | 28维分子描述符特征矩阵 + 目标值 | Step 3 输出 |
+| `DNN.h5` / `DNN_v2.h5` | `results/` | DNN 训练模型 | Step 4a 输出 |
+| `fingerprint_model.pkl` | `results/` | Sklearn 最优模型 | Step 4b 输出 |
+| `DNN_validation_results.xlsx` | `results/` | DNN 验证结果（含预测值与残差） | Step 5 输出 |
+| `Sklearn_validation_results.xlsx` | `results/` | Sklearn 验证结果（含预测值与残差） | Step 5 输出 |
 
 ---
 
@@ -403,7 +374,8 @@ python Sklearn_模型验证.py
 | `测试/DNN_Map.py` | DNN 超参数搜索：使用 GridSearchCV + KerasRegressor 搜索层结构和学习率 |
 | `测试/Sklearn.py` | Sklearn 扩展版：增加 XGBoost 和 MLPRegressor，绘制交叉验证箱线图 |
 | `测试/GPR.py` | 高斯过程回归（Gaussian Process Regression）模型 |
-| `测试/聚合物处理.py` | 聚合物名称去 poly 前缀的独立工具 |
+| `测试/DNN特征贡献分析.py` | SHAP 特征重要性分析（DNN 模型可解释性） |
+| `测试/RF特征贡献分析.py` | 随机森林特征重要性排序图 |
 
 ---
 
