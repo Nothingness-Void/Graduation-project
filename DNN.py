@@ -121,11 +121,7 @@ print(f'MAE(平均绝对误差)值为：{mae}')
 print(f'RMSE(均方根误差)值为：{rmse}')
 #print(f'MAPE(平均绝对百分比误差)值为：{mape}')
 
-<<<<<<< HEAD
 model.save('results/DNN.h5')
-=======
-model.save('DNN.h5')
->>>>>>> 66a7cffd688e0bd48cd16f82014c9a5edcd7d571
 
 # 绘制训练误差和验证误差
 plt.plot(history.history['loss'])

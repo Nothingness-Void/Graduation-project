@@ -17,7 +17,7 @@ DATA_PATH = "data/molecular_features.xlsx"           # 验证数据文件路径
 OUTPUT_PATH = "results/DNN_validation_results.xlsx"  # 输出文件路径
 
 # 加载模型
-model = keras.models.load_model(MODEL_PATH)
+model = keras.models.load_model(MODEL_PATH, compile=False)
 print(f"已加载模型: {MODEL_PATH}")
 
 # 加载验证数据

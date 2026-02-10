@@ -58,5 +58,5 @@ print(f'RMSE(均方根误差)值为：{rmse:.4f}')
 # 将预测结果保存到 Excel 文件
 data["Predicted χ-result"] = y_pred
 data["Residual"] = y_val - y_pred
-data.to_excel(OUTPUT_PATH, index=False, encoding='utf_8_sig')
+data.to_excel(OUTPUT_PATH, index=False)
 print(f'\n验证结果已保存至: {OUTPUT_PATH}')
