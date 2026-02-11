@@ -1,5 +1,12 @@
 # 屏蔽 Python 自动生成的缓存目录
 __pycache__/
+# 屏蔽虚拟环境目录
+venv/
+# 屏蔽 results 下的所有内容
+results/*
+
+# 但排除（不屏蔽） .gitkeep 文件，从而保留文件夹结构
+!results/.gitkeep
 
 # 屏蔽所有编译后的字节码文件
 *.pyc
