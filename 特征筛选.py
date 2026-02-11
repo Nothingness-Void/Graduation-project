@@ -20,6 +20,9 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import RFECV
+from sklearn.model_selection import KFold, RepeatedKFold
+from sklearn.metrics import r2_score
+from sklearn.dummy import DummyRegressor
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -28,11 +31,9 @@ df = pd.read_excel('data/molecular_features.xlsx')
 
 # 所有特征列（排除目标列）
 feature_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'MaxAbsPartialCharge1', 'LabuteASA1',
-                'CalcSpherocityIndex1','CalcRadiusOfGyration1',
+                'MaxAbsPartialCharge1', 'LabuteASA1',
                 'MolWt2', 'logP2', 'TPSA2', 
-                'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'MaxAbsPartialCharge2', 'LabuteASA2',
-                'CalcSpherocityIndex2','CalcRadiusOfGyration2',
+                'MaxAbsPartialCharge2', 'LabuteASA2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity',
                 'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']
 
@@ -41,6 +42,15 @@ y = df['χ-result']
 
 print(f"原始特征数: {len(feature_cols)}")
 print(f"样本数: {len(y)}")
+
+# ========== 1.1 目标值分布诊断 ==========
+print("\n" + "="*60)
+print("Step 0: 目标值分布诊断")
+print("="*60)
+print(y.describe())
+q = y.quantile([0.01, 0.05, 0.5, 0.95, 0.99])
+print("\n关键分位数:")
+print(q)
 
 # ========== 2. 随机森林特征重要性 ==========
 print("\n" + "="*60)
@@ -87,10 +97,12 @@ print("  正在运行 5 折交叉验证...")
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
+kf_shuffle = KFold(n_splits=5, shuffle=True, random_state=42)
+
 rfecv = RFECV(
     estimator=RandomForestRegressor(n_estimators=200, random_state=42, n_jobs=-1),
     step=1,
-    cv=5,
+    cv=kf_shuffle,
     scoring='r2',
     min_features_to_select=5,
     n_jobs=-1
@@ -120,14 +132,55 @@ print("Step 4: 交叉验证对比")
 print("="*60)
 
 rf_full = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=-1)
-scores_full = cross_val_score(rf_full, X_scaled, y, cv=5, scoring='r2')
+rkf = RepeatedKFold(n_splits=5, n_repeats=5, random_state=42)
+scores_full = cross_val_score(rf_full, X_scaled, y, cv=rkf, scoring='r2')
 
 X_selected = X_scaled[:, selected_mask]
 rf_sel = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=-1)
-scores_sel = cross_val_score(rf_sel, X_selected, y, cv=5, scoring='r2')
+scores_sel = cross_val_score(rf_sel, X_selected, y, cv=rkf, scoring='r2')
 
 print(f"\n  全部 {len(feature_cols)} 特征 → CV R²: {scores_full.mean():.4f} ± {scores_full.std():.4f}")
 print(f"  筛选 {len(selected_features)} 特征 → CV R²: {scores_sel.mean():.4f} ± {scores_sel.std():.4f}")
+
+# ========== 5.1 交叉验证诊断 ==========
+print("\n" + "="*60)
+print("Step 4.1: 交叉验证诊断 (每折 R² + 基线)")
+print("="*60)
+
+kf = KFold(n_splits=5, shuffle=True, random_state=42)
+
+full_fold_scores = []
+sel_fold_scores = []
+dummy_fold_scores = []
+
+for fold, (train_idx, test_idx) in enumerate(kf.split(X_scaled), 1):
+    X_tr, X_te = X_scaled[train_idx], X_scaled[test_idx]
+    y_tr, y_te = y[train_idx], y[test_idx]
+
+    rf_full = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=-1)
+    rf_full.fit(X_tr, y_tr)
+    y_pred_full = rf_full.predict(X_te)
+    r2_full = r2_score(y_te, y_pred_full)
+    full_fold_scores.append(r2_full)
+
+    rf_sel = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=-1)
+    rf_sel.fit(X_tr[:, selected_mask], y_tr)
+    y_pred_sel = rf_sel.predict(X_te[:, selected_mask])
+    r2_sel = r2_score(y_te, y_pred_sel)
+    sel_fold_scores.append(r2_sel)
+
+    dummy = DummyRegressor(strategy='mean')
+    dummy.fit(X_tr, y_tr)
+    y_pred_dummy = dummy.predict(X_te)
+    r2_dummy = r2_score(y_te, y_pred_dummy)
+    dummy_fold_scores.append(r2_dummy)
+
+    print(f"  Fold {fold}: Full={r2_full:.4f}, Selected={r2_sel:.4f}, Dummy={r2_dummy:.4f}")
+
+print("\n  每折 R² 统计:")
+print(f"  Full     mean={np.mean(full_fold_scores):.4f}, std={np.std(full_fold_scores):.4f}")
+print(f"  Selected mean={np.mean(sel_fold_scores):.4f}, std={np.std(sel_fold_scores):.4f}")
+print(f"  Dummy    mean={np.mean(dummy_fold_scores):.4f}, std={np.std(dummy_fold_scores):.4f}")
 
 if scores_sel.mean() >= scores_full.mean():
     print(f"\n  ✅ 筛选后性能 ≥ 全特征，推荐使用 {len(selected_features)} 个特征")

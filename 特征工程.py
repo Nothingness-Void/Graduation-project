@@ -58,41 +58,12 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
 
 
 
-        #创建分子3D结构
-        AllChem.EmbedMolecule(mol1)
-        AllChem.EmbedMolecule(mol2)
-        #优化分子3D结构
-        AllChem.MMFFOptimizeMolecule(mol1)
-        AllChem.MMFFOptimizeMolecule(mol2)
-
-
-        # 计算立体描述符
-        # 计算分子的不对称性
-        asphericity1 = rdMolDescriptors.CalcAsphericity(mol1)
-        asphericity2 = rdMolDescriptors.CalcAsphericity(mol2)
-        # 计算分子的偏心率
-        eccentricity1 = rdMolDescriptors.CalcEccentricity(mol1)
-        eccentricity2 = rdMolDescriptors.CalcEccentricity(mol2)
-        # 计算分子的惯性形状因子
-        inertial_shape_factor1 = rdMolDescriptors.CalcInertialShapeFactor(mol1)
-        inertial_shape_factor2 = rdMolDescriptors.CalcInertialShapeFactor(mol2)
-        # 计算分子的主惯性比
-        mol1_npr1 = rdMolDescriptors.CalcNPR1(mol1)
-        mol1_npr2 = rdMolDescriptors.CalcNPR2(mol1)
-        mol2_npr1 = rdMolDescriptors.CalcNPR1(mol2)
-        mol2_npr2 = rdMolDescriptors.CalcNPR2(mol2)
         # 计算最大绝对偏电荷（极性描述符）
         MaxAbsPartialCharge1 = Descriptors.MaxAbsPartialCharge(mol1)
         MaxAbsPartialCharge2 = Descriptors.MaxAbsPartialCharge(mol2)
         # 计算可旋转键的数量
         rotatable_bonds1 = rdMolDescriptors.CalcNumRotatableBonds(mol1)
         rotatable_bonds2 = rdMolDescriptors.CalcNumRotatableBonds(mol2)
-        # 计算分子的球形度指数
-        CalcSpherocityIndex1 = rdMolDescriptors.CalcSpherocityIndex(mol1)
-        CalcSpherocityIndex2 = rdMolDescriptors.CalcSpherocityIndex(mol2)
-        # 计算分子的回旋半径    
-        CalcRadiusOfGyration1 = rdMolDescriptors.CalcRadiusOfGyration(mol1)
-        CalcRadiusOfGyration2 = rdMolDescriptors.CalcRadiusOfGyration(mol2)
 
 
 
@@ -150,27 +121,13 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
             'MolWt1': mol_wt1,
             'logP1': logp1,
             'TPSA1': tpsa1,
-            'asphericity1': asphericity1,
-            'eccentricity1': eccentricity1,
-            'inertial_shape_factor1': inertial_shape_factor1,
-            'mol1_npr1': mol1_npr1,
-            'mol1_npr2': mol1_npr2,
             'MaxAbsPartialCharge1': MaxAbsPartialCharge1,
             'LabuteASA1': LabuteASA1,
-            'CalcSpherocityIndex1': CalcSpherocityIndex1,
-            'CalcRadiusOfGyration1': CalcRadiusOfGyration1,
             'MolWt2': mol_wt2,
             'logP2': logp2,
             'TPSA2': tpsa2,
-            'asphericity2': asphericity2,
-            'eccentricity2': eccentricity2,
-            'inertial_shape_factor2': inertial_shape_factor2,
-            'mol2_npr1': mol2_npr1,
-            'mol2_npr2': mol2_npr2,
             'MaxAbsPartialCharge2': MaxAbsPartialCharge2,
             'LabuteASA2': LabuteASA2,
-            'CalcSpherocityIndex2': CalcSpherocityIndex2,
-            'CalcRadiusOfGyration2': CalcRadiusOfGyration2,
             'Avalon Similarity': Avalon_Similar,
             'Morgan Similarity': Morgan_Similar,
             'Topological Similarity': Topological_Similar,

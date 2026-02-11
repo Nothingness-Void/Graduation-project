@@ -14,11 +14,9 @@ data = pd.read_excel("计算结果.xlsx")  # 将文件名替换为实际文件�
 
 #定义特征矩阵
 feature_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
-                'CalcSpherocityIndex1','CalcRadiusOfGyration1',
+                'dipole1', 'LabuteASA1',
                 'MolWt2', 'logP2', 'TPSA2', 
-                'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
-                'CalcSpherocityIndex2','CalcRadiusOfGyration2',
+                'dipole2', 'LabuteASA2',
                 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
 
 # 获取特征和目标参数
