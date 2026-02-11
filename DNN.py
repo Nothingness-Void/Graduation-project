@@ -43,12 +43,13 @@ if use_baseline_features:
     feature_cols = ['Similarity', 'MolWt1', 'logP1', 'TPSA1', 'MolWt2', 'logP2', 'TPSA2']
 else:
     feature_cols = ['MolWt1', 'logP1', 'TPSA1',
-                    'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
+                    'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'MaxAbsPartialCharge1', 'LabuteASA1',
                     'CalcSpherocityIndex1','CalcRadiusOfGyration1',
                     'MolWt2', 'logP2', 'TPSA2', 
-                    'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
+                    'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'MaxAbsPartialCharge2', 'LabuteASA2',
                     'CalcSpherocityIndex2','CalcRadiusOfGyration2',
-                    'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
+                    'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity',
+                    'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']
 
 # 将编码后的指纹特征和数值特征合并
 X = pd.concat([data[feature_cols],

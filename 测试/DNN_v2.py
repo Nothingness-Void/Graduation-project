@@ -34,16 +34,17 @@ from keras.layers import BatchNormalization
 import matplotlib.pyplot as plt
 
 # 读取数据文件
-data = pd.read_excel('计算结果.xlsx')
+data = pd.read_excel('data/molecular_features.xlsx')
 
-# 定义特征矩阵（与原始 DNN.py 完全一致）
+# 定义特征矩阵（含新增交互特征，共 35 维）
 featere_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'dipole1', 'LabuteASA1',
+                'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'MaxAbsPartialCharge1', 'LabuteASA1',
                 'CalcSpherocityIndex1','CalcRadiusOfGyration1',
                 'MolWt2', 'logP2', 'TPSA2', 
-                'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'dipole2', 'LabuteASA2',
+                'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'MaxAbsPartialCharge2', 'LabuteASA2',
                 'CalcSpherocityIndex2','CalcRadiusOfGyration2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
+                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity',
+                'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']
 
 X = pd.concat([data[featere_cols]], axis=1)
 y = data['χ-result'].values
@@ -160,8 +161,8 @@ results_df = pd.DataFrame(all_results)
 print(results_df.to_string(index=False))
 print(f'\nR² 平均: {results_df["R2"].mean():.4f}, 最高: {results_df["R2"].max():.4f}')
 
-best_model.save('DNN_v2.h5')
-print("\n最优模型已保存为 DNN_v2.h5")
+best_model.save('results/DNN_v2.h5')
+print("\n最优模型已保存为 results/DNN_v2.h5")
 
 # ======== 绘图 ========
 plt.plot(best_history.history['loss'], label='Train')
@@ -170,5 +171,5 @@ plt.title('Model loss (Best Run)')
 plt.ylabel('Loss')
 plt.xlabel('Epoch')
 plt.legend(loc='upper right')
-plt.savefig('DNN_v2_loss.png', dpi=150)
+plt.savefig('results/DNN_v2_loss.png', dpi=150)
 plt.show()

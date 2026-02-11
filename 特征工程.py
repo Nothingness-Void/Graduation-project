@@ -26,11 +26,11 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
 
     # 从 SMILES 字符串创建分子对象
     mol1 = Chem.MolFromSmiles(smiles1)
-    mol1 = Chem.AddHs(mol1)
     mol2 = Chem.MolFromSmiles(smiles2)
-    mol2 = Chem.AddHs(mol2)
 
     if mol1 is not None and mol2 is not None:
+        mol1 = Chem.AddHs(mol1)
+        mol2 = Chem.AddHs(mol2)
         
         #计算分子指纹
 
@@ -81,9 +81,9 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         mol1_npr2 = rdMolDescriptors.CalcNPR2(mol1)
         mol2_npr1 = rdMolDescriptors.CalcNPR1(mol2)
         mol2_npr2 = rdMolDescriptors.CalcNPR2(mol2)
-        # 计算分子的偶极矩
-        dipole1 = rdMolDescriptors.CalcCrippenDescriptors(mol1)[0]
-        dipole2 = rdMolDescriptors.CalcCrippenDescriptors(mol2)[0]
+        # 计算最大绝对偏电荷（极性描述符）
+        MaxAbsPartialCharge1 = Descriptors.MaxAbsPartialCharge(mol1)
+        MaxAbsPartialCharge2 = Descriptors.MaxAbsPartialCharge(mol2)
         # 计算可旋转键的数量
         rotatable_bonds1 = rdMolDescriptors.CalcNumRotatableBonds(mol1)
         rotatable_bonds2 = rdMolDescriptors.CalcNumRotatableBonds(mol2)
@@ -128,52 +128,60 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         atom_count1 = Descriptors.NumHeteroatoms(mol1)
         atom_count2 = Descriptors.NumHeteroatoms(mol2)
 
+        # ===== 新增交互特征 =====
+        # 热力学驱动力：疏水性差异（χ ∝ (δ₁-δ₂)²，LogP 差异近似）
+        Delta_LogP = abs(logp1 - logp2)
+        # 极性不匹配度
+        Delta_TPSA = abs(tpsa1 - tpsa2)
+        # 氢键匹配性：交叉项（供体1×受体2 + 受体1×供体2）
+        HB_Match = n_h_donor1 * n_h_acceptor2 + n_h_acceptor1 * n_h_donor2
+        # 分子体积差异（摩尔折射率 MolMR，与分子体积强相关）
+        MolMR1 = Descriptors.MolMR(mol1)
+        MolMR2 = Descriptors.MolMR(mol2)
+        Delta_MolMR = abs(MolMR1 - MolMR2)
+        # 分子柔性（sp3 碳比例）
+        CSP3_1 = Descriptors.FractionCSP3(mol1)
+        CSP3_2 = Descriptors.FractionCSP3(mol2)
+        # 温度物理项（χ = A + B/T，1/T 更符合物理规律）
+        Inv_T = 1000.0 / row['Measured at T (K)']
+
         # 将结果添加到结果列表中
         results.append({
-            #'AvalonFP1': Avalon_fingerprint1.ToBitString(),
-            #'MorganFP1': Morgan_fingerprint1.ToBitString(),
-            #'TopologicalFP1': Topological_fingerprint1.ToBitString(),
             'MolWt1': mol_wt1,
             'logP1': logp1,
             'TPSA1': tpsa1,
-            #'n_h_donor1': n_h_donor1,
-            #'n_h_acceptor1': n_h_acceptor1,
-            #'total_charge1': total_charge1,
-            #'bond_count1': bond_count1,
             'asphericity1': asphericity1,
             'eccentricity1': eccentricity1,
             'inertial_shape_factor1': inertial_shape_factor1,
             'mol1_npr1': mol1_npr1,
             'mol1_npr2': mol1_npr2,
-            'dipole1': dipole1,
+            'MaxAbsPartialCharge1': MaxAbsPartialCharge1,
             'LabuteASA1': LabuteASA1,
             'CalcSpherocityIndex1': CalcSpherocityIndex1,
             'CalcRadiusOfGyration1': CalcRadiusOfGyration1,
-            #'atom_count1': atom_count1,
-            # 'AvalonFP2': Avalon_fingerprint2.ToBitString(),
-            # 'MorganFP2': Morgan_fingerprint2.ToBitString(),
-            # 'TopologicalFP2': Topological_fingerprint2.ToBitString(),
             'MolWt2': mol_wt2,
             'logP2': logp2,
             'TPSA2': tpsa2,
-            #'n_h_donor2': n_h_donor2,
-            #'n_h_acceptor2': n_h_acceptor2,
-            #'total_charge2': total_charge2,
-            #'bond_count2': bond_count2,
             'asphericity2': asphericity2,
             'eccentricity2': eccentricity2,
             'inertial_shape_factor2': inertial_shape_factor2,
             'mol2_npr1': mol2_npr1,
             'mol2_npr2': mol2_npr2,
-            'dipole2': dipole2,
+            'MaxAbsPartialCharge2': MaxAbsPartialCharge2,
             'LabuteASA2': LabuteASA2,
             'CalcSpherocityIndex2': CalcSpherocityIndex2,
             'CalcRadiusOfGyration2': CalcRadiusOfGyration2,
-            #'atom_count2': atom_count2,
             'Avalon Similarity': Avalon_Similar,
             'Morgan Similarity': Morgan_Similar,
             'Topological Similarity': Topological_Similar,
-            'Measured at T (K)': row['Measured at T (K)'],
+            # ===== 交互特征 =====
+            'Delta_LogP': Delta_LogP,
+            'Delta_TPSA': Delta_TPSA,
+            'HB_Match': HB_Match,
+            'Delta_MolMR': Delta_MolMR,
+            'CSP3_1': CSP3_1,
+            'CSP3_2': CSP3_2,
+            'Inv_T': Inv_T,
             'χ-result': row[target_name],
         })
     else:

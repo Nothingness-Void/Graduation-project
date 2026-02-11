@@ -1,0 +1,50 @@
+特征筛选结果
+============================================================
+
+原始特征数: 34
+筛选后特征数: 34
+
+保留的特征:
+  MolWt1
+  logP1
+  TPSA1
+  asphericity1
+  eccentricity1
+  inertial_shape_factor1
+  mol1_npr1
+  mol1_npr2
+  MaxAbsPartialCharge1
+  LabuteASA1
+  CalcSpherocityIndex1
+  CalcRadiusOfGyration1
+  MolWt2
+  logP2
+  TPSA2
+  asphericity2
+  eccentricity2
+  inertial_shape_factor2
+  mol2_npr1
+  mol2_npr2
+  MaxAbsPartialCharge2
+  LabuteASA2
+  CalcSpherocityIndex2
+  CalcRadiusOfGyration2
+  Avalon Similarity
+  Morgan Similarity
+  Topological Similarity
+  Delta_LogP
+  Delta_TPSA
+  HB_Match
+  Delta_MolMR
+  CSP3_1
+  CSP3_2
+  Inv_T
+
+淘汰的特征:
+
+CV R² 对比:
+  全特征: -0.4237 ± 0.6207
+  筛选后: -0.4237 ± 0.6207
+
+可直接复制到代码中的特征列表:
+feature_cols = ['MolWt1', 'logP1', 'TPSA1', 'asphericity1', 'eccentricity1', 'inertial_shape_factor1', 'mol1_npr1', 'mol1_npr2', 'MaxAbsPartialCharge1', 'LabuteASA1', 'CalcSpherocityIndex1', 'CalcRadiusOfGyration1', 'MolWt2', 'logP2', 'TPSA2', 'asphericity2', 'eccentricity2', 'inertial_shape_factor2', 'mol2_npr1', 'mol2_npr2', 'MaxAbsPartialCharge2', 'LabuteASA2', 'CalcSpherocityIndex2', 'CalcRadiusOfGyration2', 'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']

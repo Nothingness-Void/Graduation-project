@@ -90,5 +90,10 @@ for index, row in df.iterrows():
     frames.append(split_row(row, index))
 df = pd.concat(frames).sort_index()
 
+# 过滤离群值 (χ > 5 或 χ < -1)
+print(f"过滤前数据行数: {len(df)}")
+df = df[(df['χ'] >= -1) & (df['χ'] <= 5)]
+print(f"过滤后数据行数: {len(df)}")
+
 # 保存处理后的数据
 df.to_excel('data/huggins_preprocessed.xlsx', index=False)
