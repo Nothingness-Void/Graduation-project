@@ -16,6 +16,7 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from pathlib import Path
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
@@ -26,8 +27,50 @@ from sklearn.dummy import DummyRegressor
 import warnings
 warnings.filterwarnings('ignore')
 
+
+def resolve_target_col(columns, preferred='χ-result'):
+    cols = list(columns)
+    if preferred in cols:
+        return preferred
+    candidates = [c for c in cols if 'result' in str(c).lower()]
+    if candidates:
+        return candidates[0]
+    raise KeyError("未找到目标列：χ-result（或包含 result 的列名）")
+
+
+def write_feature_config(selected_features, output_path='feature_config.py'):
+    config_text = '\n'.join([
+        '"""Unified feature configuration for training/validation scripts."""',
+        '',
+        'from __future__ import annotations',
+        '',
+        'from typing import Iterable',
+        '',
+        '# Selected features from results/feature_ranking.txt (特征筛选结果)',
+        'SELECTED_FEATURE_COLS = [',
+        *[f'    "{feat}",' for feat in selected_features],
+        ']',
+        '',
+        '',
+        'def resolve_target_col(columns: Iterable[str], preferred: str = "χ-result") -> str:',
+        '    """Resolve target column with fallback for encoding variations."""',
+        '    cols = list(columns)',
+        '    if preferred in cols:',
+        '        return preferred',
+        '',
+        '    candidates = [c for c in cols if "result" in str(c).lower()]',
+        '    if candidates:',
+        '        return candidates[0]',
+        '',
+        '    raise KeyError("未找到目标列：χ-result（或包含 result 的列名）")',
+        '',
+    ])
+    Path(output_path).write_text(config_text, encoding='utf-8')
+    print(f"统一特征配置已自动更新: {output_path}")
+
 # ========== 1. 数据加载 ==========
 df = pd.read_excel('data/molecular_features.xlsx')
+target_col = resolve_target_col(df.columns)
 
 # 所有特征列（排除目标列）
 feature_cols = ['MolWt1', 'logP1', 'TPSA1',
@@ -38,7 +81,7 @@ feature_cols = ['MolWt1', 'logP1', 'TPSA1',
                 'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']
 
 X = df[feature_cols]
-y = df['χ-result']
+y = df[target_col]
 
 print(f"原始特征数: {len(feature_cols)}")
 print(f"样本数: {len(y)}")
@@ -218,7 +261,7 @@ ax2.legend()
 
 # 图3：对比柱状图
 ax3 = axes[2]
-bars = ax3.bar(['All Features\n(35)', f'Selected\n({len(selected_features)})'],
+bars = ax3.bar([f'All Features\n({len(feature_cols)})', f'Selected\n({len(selected_features)})'],
                [scores_full.mean(), scores_sel.mean()],
                yerr=[scores_full.std(), scores_sel.std()],
                color=['#3498db', '#2ecc71'], capsize=10)
@@ -231,10 +274,13 @@ print(f"\n可视化已保存至 results/feature_selection.png")
 
 # ========== 7. 保存结果 ==========
 # 保存筛选后的数据
-optimized_cols = selected_features + ['χ-result']
+optimized_cols = selected_features + [target_col]
 df_optimized = df[optimized_cols]
 df_optimized.to_excel('data/features_optimized.xlsx', index=False)
 print(f"筛选后数据已保存至 data/features_optimized.xlsx ({len(selected_features)} 特征 + 目标值)")
+
+# 自动同步统一特征配置
+write_feature_config(selected_features, output_path='feature_config.py')
 
 # 保存排名详情
 with open('results/feature_ranking.txt', 'w', encoding='utf-8') as f:

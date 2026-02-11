@@ -8,6 +8,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
+from feature_config import SELECTED_FEATURE_COLS
 
 # ========== 配置 ==========
 MODEL_PATH = "results/fingerprint_model.pkl"        # 模型文件路径
@@ -19,12 +20,7 @@ with open(MODEL_PATH, "rb") as f:
 print(f"已加载模型: {MODEL_PATH} ({model.__class__.__name__})")
 
 # 定义特征矩阵
-feature_cols = np.array(['MolWt1', 'logP1', 'TPSA1',
-                'MaxAbsPartialCharge1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'MaxAbsPartialCharge2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity',
-                'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T'])
+feature_cols = np.array(SELECTED_FEATURE_COLS)
 
 # 获取特征重要性
 importances = model.feature_importances_

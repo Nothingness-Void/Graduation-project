@@ -11,6 +11,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+from feature_config import SELECTED_FEATURE_COLS
 
 # ========== 配置 ==========
 MODEL_PATH = "results/DNN.h5"                  # DNN 模型文件路径
@@ -25,12 +26,7 @@ print(f"已加载模型: {MODEL_PATH}")
 data = pd.read_excel(DATA_PATH)
 
 # 定义特征矩阵
-feature_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'MaxAbsPartialCharge1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'MaxAbsPartialCharge2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity',
-                'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']
+feature_cols = SELECTED_FEATURE_COLS
 
 # 获取特征并标准化
 X_val = data[feature_cols]

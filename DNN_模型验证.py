@@ -1,63 +1,72 @@
 """
-
 DNN 模型验证脚本
-加载训练好的 DNN 模型，在数据上进行预测，并输出评估指标
-
+优先使用训练阶段保存的预处理器，确保特征与标准化完全一致
 """
-import tensorflow as tf
-from tensorflow import keras
-import pandas as pd
+
+import pickle
+from pathlib import Path
 import numpy as np
+import pandas as pd
+from tensorflow import keras
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import StandardScaler
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # ========== 配置 ==========
-MODEL_PATH = "results/DNN.h5"               # 模型文件路径（可替换为任意 .h5 / .keras 模型）
-DATA_PATH = "data/molecular_features.xlsx"           # 验证数据文件路径
-OUTPUT_PATH = "results/DNN_validation_results.xlsx"  # 输出文件路径
+MODEL_PATH = "results/DNN.h5"
+PREPROCESS_PATH = "results/DNN_preprocess.pkl"
+DATA_PATH = "data/molecular_features.xlsx"
+OUTPUT_PATH = "results/DNN_validation_results.xlsx"
 
-# 加载模型
-model = keras.models.load_model(MODEL_PATH, compile=False)
-print(f"已加载模型: {MODEL_PATH}")
 
-# 加载验证数据
-data = pd.read_excel(DATA_PATH)
+def main():
+    model = keras.models.load_model(MODEL_PATH, compile=False)
+    print(f"已加载模型: {MODEL_PATH}")
 
-# 定义特征矩阵
-feature_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'MaxAbsPartialCharge1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'MaxAbsPartialCharge2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity',
-                'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']
+    data = pd.read_excel(DATA_PATH)
 
-# 获取特征和目标参数
-X_val = data[feature_cols]
-y_val = data["χ-result"].values
+    preprocess_file = Path(PREPROCESS_PATH)
+    if preprocess_file.exists():
+        with preprocess_file.open("rb") as f:
+            meta = pickle.load(f)
+        feature_cols = meta["feature_cols"]
+        target_col = meta.get("target_col", resolve_target_col(data.columns))
+        scaler_X = meta["scaler_X"]
+        scaler_y = meta.get("scaler_y")
+        print(f"已加载预处理器: {PREPROCESS_PATH} (features={len(feature_cols)})")
+        X_val_scaled = scaler_X.transform(data[feature_cols].values)
+    else:
+        # 兼容旧模型：若无预处理器文件，回退到当前统一配置
+        feature_cols = SELECTED_FEATURE_COLS
+        target_col = resolve_target_col(data.columns)
+        scaler_X = StandardScaler()
+        scaler_y = None
+        X_val_scaled = scaler_X.fit_transform(data[feature_cols].values)
+        print("未找到预处理器文件，已使用回退模式（fit_transform 全量数据）")
 
-# 对验证数据进行标准化
-scaler_X = StandardScaler()
-X_val_scaled = scaler_X.fit_transform(X_val)
+    y_true = data[target_col].values
+    y_pred_scaled = model.predict(X_val_scaled, verbose=0).reshape(-1, 1)
+    if scaler_y is not None:
+        y_pred = scaler_y.inverse_transform(y_pred_scaled).ravel()
+    else:
+        y_pred = y_pred_scaled.ravel()
 
-# 进行预测
-y_pred = model.predict(X_val_scaled).flatten()
+    r2 = r2_score(y_true, y_pred)
+    mae = mean_absolute_error(y_true, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_true, y_pred))
 
-# 计算评估指标
-r2 = r2_score(y_val, y_pred)
-mae = mean_absolute_error(y_val, y_pred)
-rmse = np.sqrt(mean_squared_error(y_val, y_pred))
+    print("\n============ 模型验证结果 ============")
+    print(f"模型文件: {MODEL_PATH}")
+    print(f"验证样本数: {len(y_true)}")
+    print(f"R2值为：{r2:.4f}")
+    print(f"MAE(平均绝对误差)值为：{mae:.4f}")
+    print(f"RMSE(均方根误差)值为：{rmse:.4f}")
 
-print(f'\n============ 模型验证结果 ============')
-print(f'模型文件: {MODEL_PATH}')
-print(f'验证样本数: {len(y_val)}')
-print(f'R²值为：{r2:.4f}')
-print(f'MAE(平均绝对误差)值为：{mae:.4f}')
-print(f'RMSE(均方根误差)值为：{rmse:.4f}')
+    data["Predicted χ-result"] = y_pred
+    data["Residual"] = y_true - y_pred
+    data.to_excel(OUTPUT_PATH, index=False)
+    print(f"\n验证结果已保存至: {OUTPUT_PATH}")
 
-# 将预测结果添加到 DataFrame
-data["Predicted χ-result"] = y_pred
-data["Residual"] = y_val - y_pred
 
-# 将 DataFrame 输出到新的 Excel 文件
-data.to_excel(OUTPUT_PATH, index=False)
-print(f'\n验证结果已保存至: {OUTPUT_PATH}')
+if __name__ == "__main__":
+    main()

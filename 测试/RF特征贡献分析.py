@@ -2,17 +2,21 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
 import numpy as np
+import sys
+from pathlib import Path
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from feature_config import SELECTED_FEATURE_COLS
 
 # 加载最优的随机森林模型 (假设已保存为 fingerprint_model.pkl)
 with open("fingerprint_model.pkl", "rb") as f:
     model = pickle.load(f)
 
 # 定义特征矩阵
-feature_cols = np.array(['MolWt1', 'logP1', 'TPSA1',
-                'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'dipole2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)'])
+feature_cols = np.array(SELECTED_FEATURE_COLS)
 
 # 获取特征重要性
 importances = model.feature_importances_

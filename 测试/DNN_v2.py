@@ -23,6 +23,8 @@ DNN_v2.py - 基于数据量分析的架构优化版本
 import pandas as pd
 import numpy as np
 import os, random
+import sys
+from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
@@ -33,19 +35,21 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from keras.layers import BatchNormalization
 import matplotlib.pyplot as plt
 
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
+
 # 读取数据文件
 data = pd.read_excel('data/molecular_features.xlsx')
 
-# 定义特征矩阵（含新增交互特征）
-featere_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'MaxAbsPartialCharge1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'MaxAbsPartialCharge2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity',
-                'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']
+# 定义特征矩阵（来自统一配置）
+feature_cols = SELECTED_FEATURE_COLS
+target_col = resolve_target_col(data.columns)
 
-X = pd.concat([data[featere_cols]], axis=1)
-y = data['χ-result'].values
+X = pd.concat([data[feature_cols]], axis=1)
+y = data[target_col].values
 
 # 划分训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -61,25 +65,24 @@ print(f"训练集: {X_train.shape[0]} 样本, 测试集: {X_test.shape[0]} 样�
 
 def build_model(seed):
     """
-    针对小数据集优化的 DNN 架构
+    针对 6 个特征 + 小数据集优化的 DNN 架构 (v3-restored)
     
-    原始: 128→BN→64→32→16→8→4(L2)→1  = ~14,753 参数
-    优化: 64→BN→Dropout→32→16→1       = ~2,769 参数
-    
-    参数/样本比: 58.5 → 11.0（合理范围）
+    结构: 64→BN→Dropout→32→16(L2)→1
+    参数量: ~2800 (参数/样本比 < 10，安全)
+    原因: 6特征虽然少，但非线性关系复杂，需要一定深度
     """
     tf.random.set_seed(seed)
     np.random.seed(seed)
 
     model = keras.Sequential([
-        # 第一隐藏层：64 神经元（原始的一半）
+        # 第一隐藏层：64 神经元
         keras.layers.Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
         BatchNormalization(),
         keras.layers.Dropout(0.1),
         
         # 第二隐藏层：32 神经元
         keras.layers.Dense(32, activation='relu'),
-        
+
         # 第三隐藏层：16 神经元 + L2 正则化
         keras.layers.Dense(16, activation='relu', kernel_regularizer=regularizers.l2(0.01)),
         
@@ -89,7 +92,7 @@ def build_model(seed):
     
     # 参数统计
     total_params = model.count_params()
-    print(f"  [seed={seed}] 模型参数量: {total_params}, 参数/样本比: {total_params/X_train.shape[0]:.1f}")
+    # print(f"  [seed={seed}] 模型参数量: {total_params}")
 
     model.compile(optimizer='Adam', loss='mae')
     return model

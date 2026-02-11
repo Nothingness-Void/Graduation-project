@@ -1,23 +1,27 @@
 import pandas as pd
 import pickle
 import numpy as np
+import sys
+from pathlib import Path
 from sklearn.preprocessing import StandardScaler  # 用于标准化数据
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from feature_config import SELECTED_FEATURE_COLS
 
 
 # 读取数据文件
-data = pd.read_excel('计算结果.xlsx')  # 从包含七个特征的文件中读取数据
+data = pd.read_excel(ROOT_DIR / 'data/molecular_features.xlsx')  # 从统一特征文件中读取数据
 
 #定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'dipole2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
+feature_cols = SELECTED_FEATURE_COLS
 
 
 
 # 将编码后的指纹特征和数值特征合并
-X = pd.concat([data[featere_cols],
+X = pd.concat([data[feature_cols],
 # data[fingerprints]
 ], axis=1)
 

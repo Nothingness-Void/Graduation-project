@@ -1,6 +1,8 @@
 # 导入所需的 Python 包
 import pandas as pd
 import numpy as np
+import sys
+from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_squared_error,mean_absolute_error,mean_absolute_percentage_error
@@ -11,15 +13,23 @@ import matplotlib.pyplot as plt
 from tensorflow.keras import regularizers
 from keras.layers import BatchNormalization
 
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
+
 
 # 读取数据文件
-data = pd.read_excel('计算结果.xlsx')
+data = pd.read_excel(ROOT_DIR / 'data/molecular_features.xlsx')
 
 # 定义特征矩阵
-X = data[['Similarity', 'MolWt1', 'logP1', 'TPSA1', 'MolWt2', 'logP2', 'TPSA2']].values
+feature_cols = SELECTED_FEATURE_COLS
+target_col = resolve_target_col(data.columns)
+X = data[feature_cols].values
 
 # 定义目标参数
-y = data['χ-result'].values
+y = data[target_col].values
 
 # 划分训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

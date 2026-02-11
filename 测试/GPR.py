@@ -1,6 +1,8 @@
 # 导入所需的 Python 包
 import pandas as pd
 import numpy as np
+import sys
+from pathlib import Path
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, mean_absolute_percentage_error
 from sklearn.preprocessing import StandardScaler
@@ -10,26 +12,26 @@ from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF, ConstantKernel as C
 import pickle
 
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
+
 # 读取数据
-data = pd.read_excel('计算结果.xlsx')
+data = pd.read_excel(ROOT_DIR / 'data/molecular_features.xlsx')
 
 # 定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'dipole2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
-
-# 定义指纹特征矩阵
-fingerprints = ['AvalonFP1', 'AvalonFP2', 'TopologicalFP1', 'TopologicalFP2', 'MorganFP1', 'MorganFP2']
+feature_cols = SELECTED_FEATURE_COLS
+target_col = resolve_target_col(data.columns)
 
 # 将编码后的指纹特征和数值特征合并
-X = pd.concat([data[featere_cols], 
+X = pd.concat([data[feature_cols], 
 # data[fingerprints]
 ], axis=1)
 
 # 定义目标参数
-y = data['χ-result'].values
+y = data[target_col].values
 
 # 划分训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

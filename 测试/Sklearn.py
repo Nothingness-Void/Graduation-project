@@ -19,28 +19,31 @@ from skopt.plots import plot_convergence
 import os
 from sklearn.model_selection import learning_curve
 from sklearn.model_selection import cross_val_score
+import sys
+from pathlib import Path
 
-target_name = 'χ-result'  # 哈金斯参数的表头
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # 读取数据文件
-data = pd.read_excel('计算结果.xlsx')
+data = pd.read_excel(ROOT_DIR / 'data/molecular_features.xlsx')
 
 # 定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'dipole2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
+feature_cols = SELECTED_FEATURE_COLS
+target_col = resolve_target_col(data.columns)
 
 
 # 将编码后的指纹特征和数值特征合并
-X = pd.concat([data[featere_cols], 
+X = pd.concat([data[feature_cols], 
 # data[fingerprints]
 ], axis=1)
 
 
 # 定义目标参数
-y = data[target_name].values
+y = data[target_col].values
 
 # 划分训练集和测试集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)

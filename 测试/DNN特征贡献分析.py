@@ -3,21 +3,25 @@ from keras.models import load_model
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
+from pathlib import Path
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import StandardScaler
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from feature_config import SELECTED_FEATURE_COLS
 
 # 加载模型
 model = load_model("DNN_0.706.h5")
 
 # 加载数据
-data = pd.read_excel("计算结果.xlsx")  # 将文件名替换为实际文件名
+data = pd.read_excel(ROOT_DIR / "data/molecular_features.xlsx")  # 将文件名替换为实际文件名
 
 #定义特征矩阵
-feature_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'dipole2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
+feature_cols = SELECTED_FEATURE_COLS
 
 # 获取特征和目标参数
 X_val = data[feature_cols]

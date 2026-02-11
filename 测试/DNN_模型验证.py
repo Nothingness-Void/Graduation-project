@@ -1,32 +1,37 @@
 import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
+import sys
+from pathlib import Path
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.preprocessing import StandardScaler
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.append(str(ROOT_DIR))
+
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # 加载模型
 model = keras.models.load_model("DNN_0.706.h5")
 
 # 加载验证数据 
-data = pd.read_excel('计算结果.xlsx')
+data = pd.read_excel(ROOT_DIR / 'data/molecular_features.xlsx')
 
 #定义特征矩阵
-featere_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'dipole1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'dipole2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity', 'Measured at T (K)']
+feature_cols = SELECTED_FEATURE_COLS
+target_col = resolve_target_col(data.columns)
 
 
 
 # 将编码后的指纹特征和数值特征合并
-X = pd.concat([data[featere_cols],
+X = pd.concat([data[feature_cols],
 # data[fingerprints]
 ], axis=1)
 
 # 获取特征和目标参数
-X_val = data[featere_cols]
-y_val = data["χ-result"].values
+X_val = data[feature_cols]
+y_val = data[target_col].values
 
 # 对验证数据进行标准化
 scaler_X = StandardScaler()

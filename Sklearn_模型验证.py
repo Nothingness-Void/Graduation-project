@@ -1,61 +1,63 @@
 """
-
 Sklearn 模型验证脚本
-加载训练好的 Sklearn 模型，在数据上进行预测，并输出评估指标
-
+优先读取模型包（含特征配置），保证训练/验证使用同一套特征定义
 """
-import pandas as pd
+
 import pickle
+from pathlib import Path
 import numpy as np
-from sklearn.preprocessing import StandardScaler
+import pandas as pd
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # ========== 配置 ==========
-MODEL_PATH = "results/fingerprint_model.pkl"  # 模型文件路径
-DATA_PATH = "data/molecular_features.xlsx"            # 验证数据文件路径
-OUTPUT_PATH = "results/Sklearn_validation_results.xlsx"  # 输出文件路径
+BUNDLE_PATH = "results/sklearn_model_bundle.pkl"
+LEGACY_MODEL_PATH = "results/fingerprint_model.pkl"
+DATA_PATH = "data/molecular_features.xlsx"
+OUTPUT_PATH = "results/Sklearn_validation_results.xlsx"
 
-# 读取数据文件
-data = pd.read_excel(DATA_PATH)
 
-# 定义特征矩阵
-feature_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'MaxAbsPartialCharge1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'MaxAbsPartialCharge2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity',
-                'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']
+def main():
+    data = pd.read_excel(DATA_PATH)
 
-X = data[feature_cols]
-y_val = data["χ-result"].values
+    # 优先加载新模型包；如果不存在则回退到旧模型格式
+    if Path(BUNDLE_PATH).exists():
+        with open(BUNDLE_PATH, "rb") as f:
+            bundle = pickle.load(f)
+        model = bundle["model"]
+        feature_cols = bundle["feature_cols"]
+        target_col = bundle.get("target_col", resolve_target_col(data.columns))
+        print(f"已加载模型包: {BUNDLE_PATH} ({model.__class__.__name__})")
+    else:
+        with open(LEGACY_MODEL_PATH, "rb") as f:
+            model = pickle.load(f)
+        feature_cols = SELECTED_FEATURE_COLS
+        target_col = resolve_target_col(data.columns)
+        print(f"已加载旧模型: {LEGACY_MODEL_PATH} ({model.__class__.__name__})")
+        print("提示: 未找到模型包，已回退到默认特征配置")
 
-# 加载模型
-with open(MODEL_PATH, 'rb') as f:
-    model = pickle.load(f)
-print(f"已加载模型: {MODEL_PATH} ({model.__class__.__name__})")
+    X_val = data[feature_cols]
+    y_val = data[target_col].values
 
-# 标准化数据
-scaler = StandardScaler()
-X_scaled = scaler.fit_transform(X)
+    # 若模型是 Pipeline，会自动处理缩放；若不是，也直接按模型定义预测
+    y_pred = model.predict(X_val)
 
-# 对特征进行预测
-y_pred = model.predict(X_scaled)
+    r2 = r2_score(y_val, y_pred)
+    mae = mean_absolute_error(y_val, y_pred)
+    rmse = np.sqrt(mean_squared_error(y_val, y_pred))
 
-# 计算评估指标
-r2 = r2_score(y_val, y_pred)
-mae = mean_absolute_error(y_val, y_pred)
-rmse = np.sqrt(mean_squared_error(y_val, y_pred))
+    print("\n============ 模型验证结果 ============")
+    print(f"模型类型: {model.__class__.__name__}")
+    print(f"验证样本数: {len(y_val)}")
+    print(f"R2值为：{r2:.4f}")
+    print(f"MAE(平均绝对误差)值为：{mae:.4f}")
+    print(f"RMSE(均方根误差)值为：{rmse:.4f}")
 
-print(f'\n============ 模型验证结果 ============')
-print(f'模型文件: {MODEL_PATH}')
-print(f'模型类型: {model.__class__.__name__}')
-print(f'验证样本数: {len(y_val)}')
-print(f'R²值为：{r2:.4f}')
-print(f'MAE(平均绝对误差)值为：{mae:.4f}')
-print(f'RMSE(均方根误差)值为：{rmse:.4f}')
+    data["Predicted χ-result"] = y_pred
+    data["Residual"] = y_val - y_pred
+    data.to_excel(OUTPUT_PATH, index=False)
+    print(f"\n验证结果已保存至: {OUTPUT_PATH}")
 
-# 将预测结果保存到 Excel 文件
-data["Predicted χ-result"] = y_pred
-data["Residual"] = y_val - y_pred
-data.to_excel(OUTPUT_PATH, index=False)
-print(f'\n验证结果已保存至: {OUTPUT_PATH}')
+
+if __name__ == "__main__":
+    main()
