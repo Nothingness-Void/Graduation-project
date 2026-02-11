@@ -65,9 +65,9 @@ def split_row(row, index):
         return pd.DataFrame([row], index=[index])
     # 否则，需要裂变
     rows = []
-    if pd.isnull(T):  # 如果T是空值
-        temperatures = [273.15, 323.15, 348.15, 373.15]  # 0, 50, 75, 100摄氏度对应的开尔文温度
-        types = ['0摄氏度', '50摄氏度', '75摄氏度', '100摄氏度']
+    if pd.isnull(T):  # 如果T是空值，在常见实验室温度范围内插值
+        temperatures = [293.15, 303.15, 313.15, 323.15]  # 20, 30, 40, 50摄氏度对应的开尔文温度
+        types = ['20摄氏度', '30摄氏度', '40摄氏度', '50摄氏度']
     elif '-' in T:  # 如果T是浮动值
         T1, T2 = map(float, T.split('-'))
         temperatures = [T1, T1 + (T2 - T1) * 0.25, T1 + (T2 - T1) * 0.75, T2]
