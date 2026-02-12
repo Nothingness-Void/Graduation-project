@@ -1,0 +1,1896 @@
+﻿Polymer,Solvent,Polymer_SMILES,Solvent_SMILES,chi,temperature,source
+poly(lactic acid),poly(6-methyl-ε-caprolactone),CC(C(=O)O)O,CC1CCCCC(=O)O1,0.04294055821557866,428.15,old_dataset
+poly(methyl acrylate),silicon dioxide,COC(=O)C=C,O=[Si]=O,-0.3,423.15,old_dataset
+poly(methyl acrylate),2-butanone,COC(=O)C=C,CCC(=O)C,-0.45,423.15,old_dataset
+water,poly(ethylene oxide),O,C1CO1,0.464598356531947,298.15,old_dataset
+polythiophene,tetrahydrofuran,C1=CSC=C1,C1CCOC1,3.34,300.0,old_dataset
+poly(3-hexylthiophene),tetrahydrofuran,CCCCCCC1=CSC=C1,C1CCOC1,0.39,300.0,old_dataset
+poly(3-dodecylthiophene),tetrahydrofuran,CCCCCCCCCCCCC1=CSC=C1,C1CCOC1,-0.38,300.0,old_dataset
+polystyrene,poly(4-hydroxystyrene),C=CC1=CC=CC=C1,C=CC1=CC=C(C=C1)O,0.68,298.15,old_dataset
+poly(ethylene oxide),poly(methyl acrylate),C1CO1,COC(=O)C=C,-0.04,313.15,old_dataset
+polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.399,298.15,old_dataset
+polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.403,313.15,old_dataset
+polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.4,328.15,old_dataset
+polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.4,298.15,old_dataset
+polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.411,313.15,old_dataset
+polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.42,328.15,old_dataset
+polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.394,298.15,old_dataset
+polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.373,313.15,old_dataset
+polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.395,328.15,old_dataset
+polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.437,298.15,old_dataset
+polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.438,313.15,old_dataset
+polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.44,328.15,old_dataset
+poly(4-tert-butylstyrene),poly(methyl methacrylate),CC(C)(C)C1=CC=C(C=C1)C=C,CC(=C)C(=O)OC,0.09654238444482348,293.15,old_dataset
+poly(4-tert-butylstyrene),poly(methyl methacrylate),CC(C)(C)C1=CC=C(C=C1)C=C,CC(=C)C(=O)OC,0.09190631700478312,303.15,old_dataset
+poly(4-tert-butylstyrene),poly(methyl methacrylate),CC(C)(C)C1=CC=C(C=C1)C=C,CC(=C)C(=O)OC,0.08756634200862208,313.15,old_dataset
+poly(4-tert-butylstyrene),poly(methyl methacrylate),CC(C)(C)C1=CC=C(C=C1)C=C,CC(=C)C(=O)OC,0.08349497137552221,323.15,old_dataset
+polystyrene,poly(methacrylic acid),C=CC1=CC=CC=C1,CC(=C)C(=O)O,1.1,293.15,old_dataset
+poly(acrylic acid),polyacrylamide,C=CC(=O)O,C=CC(=O)N,0.505,293.15,old_dataset
+tetrahydrofuran,poly(3-hexylthiophene),C1CCOC1,CCCCCCC1=CSC=C1,1.04,296.15,old_dataset
+chloroform,poly(3-hexylthiophene),C(Cl)(Cl)Cl,CCCCCCC1=CSC=C1,0.99,296.15,old_dataset
+tetrahydrofuran,polystyrene,C1CCOC1,C=CC1=CC=CC=C1,0.41,296.15,old_dataset
+chloroform,polystyrene,C(Cl)(Cl)Cl,C=CC1=CC=CC=C1,0.39,296.15,old_dataset
+polystyrene,poly(3-hexylthiophene),C=CC1=CC=CC=C1,CCCCCCC1=CSC=C1,0.48,296.15,old_dataset
+poly(trimethylsilylstyrene),poly(lactic acid),C[Si](C)(C)C=CC1=CC=CC=C1,CC(C(=O)O)O,0.4620610430991112,298.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.02784662955343096,413.15,old_dataset
+polystyrene,poly(ε-caprolactone),C=CC1=CC=CC=C1,O=C1CCCCCO1,1.554065868263473,167.0,old_dataset
+poly(cyclohexylethylene),poly(methyl methacrylate),C=CC1CCCCC1,CC(=C)C(=O)OC,0.3305805901415658,293.15,old_dataset
+poly(cyclohexylethylene),poly(methyl methacrylate),C=CC1CCCCC1,CC(=C)C(=O)OC,0.3143318489196768,303.15,old_dataset
+poly(cyclohexylethylene),poly(methyl methacrylate),C=CC1CCCCC1,CC(=C)C(=O)OC,0.299120868593326,313.15,old_dataset
+poly(cyclohexylethylene),poly(methyl methacrylate),C=CC1CCCCC1,CC(=C)C(=O)OC,0.2848513074423643,323.15,old_dataset
+poly(methyl methacrylate),carbon dioxide,CC(=C)C(=O)OC,C(=O)=O,1.499,313.0,old_dataset
+poly(hydroxyethyl acrylate),poly(methyl acrylate),C=CC(=O)OCCO,COC(=O)C=C,0.06,293.0,old_dataset
+poly(hydroxyethyl acrylate),poly(octyl acrylate),C=CC(=O)OCCO,CCCCCCCCOC(=O)C=C,0.13,293.0,old_dataset
+poly(methyl acrylate),poly(octyl acrylate),COC(=O)C=C,CCCCCCCCOC(=O)C=C,0.07,293.0,old_dataset
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.5940644721132526,293.15,old_dataset
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.5068684973563022,293.15,old_dataset
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.53322360566263,293.15,old_dataset
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.5617277844107113,293.15,old_dataset
+deuterated poly(butylene oxide),poly(butylene oxide),C1CCOC1,C1CCOC1,-2.25e-05,320.0,old_dataset
+deuterated poly(butylene oxide),poly(butylene oxide),C1CCOC1,C1CCOC1,4e-05,320.0,old_dataset
+poly(ethylene oxide),1-ethyl-3-methylimidazolium bis(trifluoromethanesulfonyl)amide,C1CO1,CCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.43,298.15,old_dataset
+poly(ethylene oxide),1-ethyl-3-methylimidazolium bis(fluorosulfonyl)amide,C1CO1,CCN1C=C[N+](=C1)C.[N-](S(=O)(=O)F)S(=O)(=O)F,0.48,298.15,old_dataset
+poly(ethylene oxide),water,C1CO1,O,0.3144847916387511,373.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.35,150.0,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.261578947368421,190.0,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1633333333333333,270.0,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1332258064516129,310.0,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.047,313.15,old_dataset
+poly(butyl acrylate),poly(benzyl methacrylate),CCCCOC(=O)C=C,CC(=C)C(=O)OCC1=CC=CC=C1,0.03441427155599603,353.15,old_dataset
+poly(butyl acrylate),poly(benzyl methacrylate),CCCCOC(=O)C=C,CC(=C)C(=O)OCC1=CC=CC=C1,0.03457560727457713,393.15,old_dataset
+poly(butyl acrylate),poly(benzyl methacrylate),CCCCOC(=O)C=C,CC(=C)C(=O)OCC1=CC=CC=C1,0.03481644298848145,473.15,old_dataset
+poly(butyl acrylate),poly(benzyl methacrylate),CCCCOC(=O)C=C,CC(=C)C(=O)OCC1=CC=CC=C1,0.03490870115950501,513.15,old_dataset
+poly(lactic acid),polybutadiene,CC(C(=O)O)O,C=CC=C,0.192,428.15,old_dataset
+diethyl phthalate,polyisoprene,CCOC(=O)C1=CC=CC=C1C(=O)OCC,CC(=C)C=C,1.899727102166127,293.15,old_dataset
+diethyl phthalate,polyisoprene,CCOC(=O)C1=CC=CC=C1C(=O)OCC,CC(=C)C=C,1.794177799769092,303.15,old_dataset
+diethyl phthalate,polyisoprene,CCOC(=O)C1=CC=CC=C1C(=O)OCC,CC(=C)C=C,1.695369631167172,313.15,old_dataset
+diethyl phthalate,polyisoprene,CCOC(=O)C1=CC=CC=C1C(=O)OCC,CC(=C)C=C,1.602676775491258,323.15,old_dataset
+dibutyl phthalate,polyisoprene,CCCCOC(=O)C1=CC=CC=C1C(=O)OCCCC,CC(=C)C=C,1.036452328159645,293.15,old_dataset
+dibutyl phthalate,polyisoprene,CCCCOC(=O)C1=CC=CC=C1C(=O)OCCCC,CC(=C)C=C,0.9837902028698664,303.15,old_dataset
+dibutyl phthalate,polyisoprene,CCCCOC(=O)C1=CC=CC=C1C(=O)OCCCC,CC(=C)C=C,0.9344914577678429,313.15,old_dataset
+dibutyl phthalate,polyisoprene,CCCCOC(=O)C1=CC=CC=C1C(=O)OCCCC,CC(=C)C=C,0.8882438496054463,323.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.1319404059355279,293.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.1319489691571829,303.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.1319569854702219,313.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.1319645056475321,323.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.05630180794814942,293.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.05584652812139206,303.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.05542032572249721,313.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.05502050131517872,323.15,old_dataset
+poly(allylamine hydrochloride),water,C=CCN.Cl,O,-0.0513,298.15,old_dataset
+poly(acrylic acid),water,C=CC(=O)O,O,0.729,298.15,old_dataset
+"poly(N,N-dimethylacrylamide)",polyethylene,CN(C)C(=O)C=C,C=C,0.2749146798983421,413.15,old_dataset
+poly(3-hexylthiophene),poly(methyl methacrylate),CCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1569148342235211,496.15,old_dataset
+poly(3-hexylthiophene),poly(methyl methacrylate),CCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1565155051215103,497.9,old_dataset
+poly(3-hexylthiophene),poly(methyl methacrylate),CCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1557252094136418,501.4,old_dataset
+poly(3-hexylthiophene),poly(methyl methacrylate),CCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1553341846367882,503.15,old_dataset
+poly(3-dodecylthiophene),poly(methyl methacrylate),CCCCCCCCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1579865926142454,513.15,old_dataset
+poly(3-dodecylthiophene),poly(methyl methacrylate),CCCCCCCCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1576220692330069,515.65,old_dataset
+poly(3-dodecylthiophene),poly(methyl methacrylate),CCCCCCCCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1569035244406031,520.65,old_dataset
+poly(3-dodecylthiophene),poly(methyl methacrylate),CCCCCCCCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1565494026569818,523.15,old_dataset
+"poly[N-(4-vinylbenzyl)-N,N-diethylamine]",polystyrene,CCN(CC)Cc1ccc(C=C)cc1,C=CC1=CC=CC=C1,0.033,298.15,old_dataset
+"poly(N,N-dimethylacrylamide)","poly[N-(4-vinylbenzyl)-N,N-diethylamine]",CN(C)C(=O)C=C,CCN(CC)Cc1ccc(C=C)cc1,0.287,298.15,old_dataset
+"poly(N,N-dimethylacrylamide)",polystyrene,CN(C)C(=O)C=C,C=CC1=CC=CC=C1,0.096,298.15,old_dataset
+poly(vinylidene fluoride),poly(methyl methacrylate),C=C(F)F,CC(=C)C(=O)OC,-0.295,433.15,old_dataset
+polystyrene,"poly(2,6-dimethyl-1,4-phenylene oxide)",C=CC1=CC=CC=C1,CC1=CC2=CC(=C1O2)C,-0.09949582125191882,293.15,old_dataset
+polystyrene,"poly(2,6-dimethyl-1,4-phenylene oxide)",C=CC1=CC=CC=C1,CC1=CC2=CC(=C1O2)C,-0.09251921491011052,303.15,old_dataset
+polystyrene,"poly(2,6-dimethyl-1,4-phenylene oxide)",C=CC1=CC=CC=C1,CC1=CC2=CC(=C1O2)C,-0.08598818457608177,313.15,old_dataset
+polystyrene,"poly(2,6-dimethyl-1,4-phenylene oxide)",C=CC1=CC=CC=C1,CC1=CC2=CC(=C1O2)C,-0.07986136469131984,323.15,old_dataset
+polyacrylamide,water,C=CC(=O)N,O,0.47,298.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.03889230769230769,390.0,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.03241739130434782,431.25,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.02258686131386861,513.75,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.01876756756756757,555.0,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05,393.15,old_dataset
+polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.1746641025641026,390.0,old_dataset
+polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.1524188405797101,431.25,old_dataset
+polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.1186450121654501,513.75,old_dataset
+polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.1055234234234234,555.0,old_dataset
+polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.0535102564102564,390.0,old_dataset
+polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.04620144927536232,431.25,old_dataset
+polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.03510486618004867,513.75,old_dataset
+polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.03079369369369369,555.0,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.3173984308374553,293.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2999681675738084,303.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2836511256586302,313.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2683439579142813,323.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1306032747740065,293.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1239529935675408,303.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1177274469104263,313.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1118872040847904,323.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03393928023196316,293.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.0335454395513772,303.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03317675235510139,313.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03283088349063902,323.15,old_dataset
+poly(propylene),carbon monofluoride,CC=C,[CH2]F,0.394,298.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1095366877025414,293.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1061609104403761,303.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1030007344722976,313.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1000361442054773,323.15,old_dataset
+poly(methyl methacrylate),chloroform,CC(=C)C(=O)OC,C(Cl)(Cl)Cl,0.39,298.15,old_dataset
+polystyrene,chloroform,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl,0.45,298.15,old_dataset
+acetone,poly(methyl methacrylate),CC(=O)C,CC(=C)C(=O)OC,0.18,298.15,old_dataset
+acetone,polystyrene,CC(=O)C,C=CC1=CC=CC=C1,1.1,298.15,old_dataset
+toluene,poly(methyl methacrylate),CC1=CC=CC=C1,CC(=C)C(=O)OC,0.45,298.15,old_dataset
+toluene,polystyrene,CC1=CC=CC=C1,C=CC1=CC=CC=C1,0.34,298.15,old_dataset
+carbon disulfide,poly(methyl methacrylate),C(=S)=S,CC(=C)C(=O)OC,1.2,298.15,old_dataset
+carbon disulfide,polystyrene,C(=S)=S,C=CC1=CC=CC=C1,0.01,298.15,old_dataset
+polystyrene,poly(butyl acrylate),C=CC1=CC=CC=C1,CCCCOC(=O)C=C,0.034,423.15,old_dataset
+poly(methyl methacrylate),poly(vinylidene fluoride),CC(=C)C(=O)OC,C=C(F)F,-0.07,473.0,old_dataset
+polyisoprene,poly(methyl methacrylate),CC(=C)C=C,CC(=C)C(=O)OC,0.077,413.15,old_dataset
+polystyrene,poly(n-butyl acrylate),C=CC1=CC=CC=C1,CCCCOC(=O)C=C,0.087,503.15,old_dataset
+chloroform,silicon oxide,C(Cl)(Cl)Cl,O=[Si]=O,3.4,298.15,old_dataset
+poly(acrylic acid),acetone,C=CC(=O)O,CC(=O)C,1.057,298.15,old_dataset
+poly(acrylic acid),water,C=CC(=O)O,O,4.333,298.15,old_dataset
+poly(butyl acrylate),acetone,CCCCOC(=O)C=C,CC(=O)C,0.49,298.15,old_dataset
+poly(trifluoroethyl methacrylate),acetone,CC(=C)C(=O)OCC(F)(F)F,CC(=O)C,0.542,298.15,old_dataset
+polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,-0.011,298.15,old_dataset
+polystyrene,poly(acrylic acid),C=CC1=CC=CC=C1,C=CC(=O)O,0.45,298.15,old_dataset
+polyisoprene,polystyrene,CC(=C)C=C,C=CC1=CC=CC=C1,0.1142676786628006,293.15,old_dataset
+polyisoprene,polystyrene,CC(=C)C=C,C=CC1=CC=CC=C1,0.108776414316345,303.15,old_dataset
+polyisoprene,polystyrene,CC(=C)C=C,C=CC1=CC=CC=C1,0.1036358614082708,313.15,old_dataset
+polyisoprene,polystyrene,CC(=C)C=C,C=CC1=CC=CC=C1,0.09881346124090981,323.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03191591335493775,293.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03155583044697345,303.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03121874501037842,313.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03090252204858425,323.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1733333333333333,180.0,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2226409687873103,293.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2116021771400297,303.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2012684017244132,313.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.1915741915519109,323.15,old_dataset
+polystyrene,poly(4-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=NC=C1,-0.04999999999999999,433.15,old_dataset
+polystyrene,poly(tert-butoxystyrene),C=CC1=CC=CC=C1,CC(C)(C)OC=Cc1ccccc1,-0.003000000000000003,298.15,old_dataset
+poly(4-vinylpyridine),poly(tert-butoxystyrene),C=CC1=CC=NC=C1,CC(C)(C)OC=Cc1ccccc1,-0.03999999999999998,298.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04130376940133038,293.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04086491835724889,303.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04045409548139869,313.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04006869874671205,323.15,old_dataset
+poly(4-tert-butylstyrene),poly(2-vinylpyridine),CC(C)(C)C1=CC=C(C=C1)C=C,C=CC1=CC=CC=N1,0.1173922497840306,405.15,old_dataset
+poly(4-tert-butylstyrene),poly(2-vinylpyridine),CC(C)(C)C1=CC=C(C=C1)C=C,C=CC1=CC=CC=N1,0.1069213698947125,432.15,old_dataset
+poly(4-tert-butylstyrene),poly(2-vinylpyridine),CC(C)(C)C1=CC=C(C=C1)C=C,C=CC1=CC=CC=N1,0.08946882649388052,486.15,old_dataset
+poly(4-tert-butylstyrene),poly(2-vinylpyridine),CC(C)(C)C1=CC=C(C=C1)C=C,C=CC1=CC=CC=N1,0.08211998441001658,513.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1819070441753369,293.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1748179119247897,303.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.168181542391825,313.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1619559028315024,323.15,old_dataset
+water,polyacrylamide,O,C=CC(=O)N,0.45,298.15,old_dataset
+water,polyacrylamide,O,C=CC(=O)N,0.47,298.15,old_dataset
+poly(ethylene oxide),water,C1CO1,O,-0.04000000000000004,298.15,old_dataset
+polystyrene,poly(4-vinylbenzyltrimethylammonium chloride),C=CC1=CC=CC=C1,C[N+](C)(C)CC1=CC=C(C=C1)C=C.[Cl-],0.197,301.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.07,463.15,old_dataset
+methanol,poly(N-isopropylacrylamide),CO,CC(C)NC(=O)C=C,0.45,298.15,old_dataset
+water,poly(N-isopropylacrylamide),O,CC(C)NC(=O)C=C,-0.1,298.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.055,298.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.217468019785093,293.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.2071606465446149,303.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.197511575922082,313.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1884596936407241,323.15,old_dataset
+polystyrene,deuterated poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04007497867985673,293.15,old_dataset
+polystyrene,deuterated poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03971624608279729,303.15,old_dataset
+polystyrene,deuterated poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03938042471658949,313.15,old_dataset
+polystyrene,deuterated poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03906538759090206,323.15,old_dataset
+poly(lactic acid),tetrahydrofuran,CC(C(=O)O)O,C1CCOC1,0.11,298.15,old_dataset
+poly(norbornene),tetrahydrofuran,"C1CC2CC1C=C2
+C1CC2CC1C=C2",C1CCOC1,0.42,298.15,old_dataset
+poly(lactic acid),poly(norbornene),CC(C(=O)O)O,"C1CC2CC1C=C2
+C1CC2CC1C=C2",0.72,298.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1578613167320485,293.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.149826966848095,303.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1423057480440684,313.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1352500232090361,323.15,old_dataset
+polyisoprene,poly(methyl methacrylate),CC(=C)C=C,CC(=C)C(=O)OC,0.077,295.15,old_dataset
+polystyrene,polycarbonate,C=CC1=CC=CC=C1,C(=O)([O-])[O-],0.0304,523.15,old_dataset
+polystyrene,poly(vinyl chloride),C=CC1=CC=CC=C1,C=CCl,0.099,298.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.0044,298.15,old_dataset
+polystyrene,poly(tert-butyl acrylate),C=CC1=CC=CC=C1,CC(C)(C)OC(=O)C=C,0.09,298.15,old_dataset
+polystyrene,poly(butyl methacrylate),C=CC1=CC=CC=C1,CCCCOC(=O)C(=C)C,-0.002999999999999999,393.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.06467402524304965,293.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.06128283193138712,303.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05810822449305446,313.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05513009593068235,323.15,old_dataset
+poly(n-hexyl methacrylate),polystyrene,CCCCCCOC(=O)C(=C)C,C=CC1=CC=CC=C1,-0.003500000000000001,428.15,old_dataset
+polyvinyl alcohol,water,C=CO,O,0.506,298.15,old_dataset
+poly(cyclohexylethylene),polyethylene,C=CC1CCCCC1,C=C,0.08288995394849054,293.15,old_dataset
+poly(cyclohexylethylene),polyethylene,C=CC1CCCCC1,C=C,0.07958169223156854,303.15,old_dataset
+poly(cyclohexylethylene),polyethylene,C=CC1CCCCC1,C=C,0.07648471978285168,313.15,old_dataset
+poly(cyclohexylethylene),polyethylene,C=CC1CCCCC1,C=C,0.07357942132136779,323.15,old_dataset
+polystyrene,acetone,C=CC1=CC=CC=C1,CC(=O)C,0.68,297.15,old_dataset
+polystyrene,acetone,C=CC1=CC=CC=C1,CC(=O)C,0.73,275.15,old_dataset
+poly(methyl methacrylate),acetone,CC(=C)C(=O)OC,CC(=O)C,0.32,297.15,old_dataset
+poly(methyl methacrylate),acetone,CC(=C)C(=O)OC,CC(=O)C,0.35,275.15,old_dataset
+poly(trimethylsilylstyrene),poly(lactic acid),C[Si](C)(C)C=CC1=CC=CC=C1,CC(C(=O)O)O,0.4649957359713457,293.15,old_dataset
+poly(trimethylsilylstyrene),poly(lactic acid),C[Si](C)(C)C=CC1=CC=CC=C1,CC(C(=O)O)O,0.459223156853043,303.15,old_dataset
+poly(trimethylsilylstyrene),poly(lactic acid),C[Si](C)(C)C=CC1=CC=CC=C1,CC(C(=O)O)O,0.453819255947629,313.15,old_dataset
+poly(trimethylsilylstyrene),poly(lactic acid),C[Si](C)(C)C=CC1=CC=CC=C1,CC(C(=O)O)O,0.4487498065913662,323.15,old_dataset
+polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.07865444311785777,293.15,old_dataset
+polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.07530117103744022,303.15,old_dataset
+polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.07216206290914898,313.15,old_dataset
+polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.06921723657744083,323.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04341405423844448,293.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04291218868546924,303.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04244237585821491,313.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.0420016401052143,323.15,old_dataset
+poly(ethylene oxide),polyisoprene,C1CO1,CC(=C)C=C,0.346729490022173,293.15,old_dataset
+poly(ethylene oxide),polyisoprene,C1CO1,CC(=C)C=C,0.3394153059541481,303.15,old_dataset
+poly(ethylene oxide),polyisoprene,C1CO1,CC(=C)C=C,0.3325682580233115,313.15,old_dataset
+poly(ethylene oxide),polyisoprene,C1CO1,CC(=C)C=C,0.3261449791118676,323.15,old_dataset
+polystyrene,polyethylene,C=CC1=CC=CC=C1,C=C,0.07,298.15,old_dataset
+poly(methyl methacrylate),poly(vinylidene fluoride),CC(=C)C(=O)OC,C=C(F)F,-0.07,298.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.02,433.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.001451564557393826,293.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.001397777173016659,303.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.001347425035925276,313.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.001300189231007272,323.15,old_dataset
+poly(ethylene oxide),water,C1CO1,O,0.426,298.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.06149363806924783,293.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.05895055253174997,303.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.05656988663579755,313.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.05433656196812627,323.15,old_dataset
+polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.324743476036159,293.15,old_dataset
+polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.3178906481939634,303.15,old_dataset
+polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.3114754909787642,313.15,old_dataset
+polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.305457372737119,323.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.09148322147651007,298.0,old_dataset
+polystyrene,carbon tetrachloride,C=CC1=CC=CC=C1,C(Cl)(Cl)(Cl)Cl,0.72,298.15,old_dataset
+polystyrene,benzene,C=CC1=CC=CC=C1,C1=CC=CC=C1,0.28,298.15,old_dataset
+polystyrene,chlorobenzene,C=CC1=CC=CC=C1,C1=CC=C(C=C1)Cl,0.33,338.15,old_dataset
+polystyrene,toluene,C=CC1=CC=CC=C1,CC1=CC=CC=C1,0.35,338.15,old_dataset
+polystyrene,"1,1,2-trichloroethane",C=CC1=CC=CC=C1,C(C(Cl)Cl)Cl,0.38,338.15,old_dataset
+poly(lactic acid),benzene,CC(C(=O)O)O,C1=CC=CC=C1,2.03,298.15,old_dataset
+poly(lactic acid),carbon tetrachloride,CC(C(=O)O)O,C(Cl)(Cl)(Cl)Cl,3.18,298.15,old_dataset
+poly(lactic acid),chlorobenzene,CC(C(=O)O)O,C1=CC=C(C=C1)Cl,2.37,338.15,old_dataset
+poly(lactic acid),toluene,CC(C(=O)O)O,CC1=CC=CC=C1,2.45,338.15,old_dataset
+poly(lactic acid),"1,1,2-trichloroethane",CC(C(=O)O)O,C(C(Cl)Cl)Cl,2.38,338.15,old_dataset
+polystyrene,chloroform,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl,0.04,338.15,old_dataset
+polystyrene,dichloromethane,C=CC1=CC=CC=C1,C(Cl)Cl,0.03,298.15,old_dataset
+polystyrene,xylene,C=CC1=CC=CC=C1,CC1=CC=CC=C1C,0.22,298.15,old_dataset
+poly(lactic acid),chloroform,CC(C(=O)O)O,C(Cl)(Cl)Cl,0.58,338.15,old_dataset
+poly(lactic acid),dichloromethane,CC(C(=O)O)O,C(Cl)Cl,0.37,298.15,old_dataset
+poly(lactic acid),ethylene dichloride,CC(C(=O)O)O,C(CCl)Cl,1.02,298.15,old_dataset
+poly(lactic acid),xylene,CC(C(=O)O)O,CC1=CC=CC=C1C,2.19,298.15,old_dataset
+polystyrene,poly(n-hexyl methacrylate),C=CC1=CC=CC=C1,CCCCCCOC(=O)C(=C)C,0.04429078014184398,423.0,old_dataset
+polystyrene,poly(n-hexyl methacrylate),C=CC1=CC=CC=C1,CCCCCCOC(=O)C(=C)C,0.0439470688673876,439.25,old_dataset
+polystyrene,poly(n-hexyl methacrylate),C=CC1=CC=CC=C1,CCCCCCOC(=O)C(=C)C,0.04333068362480128,471.75,old_dataset
+polystyrene,poly(n-hexyl methacrylate),C=CC1=CC=CC=C1,CCCCCCOC(=O)C(=C)C,0.04305327868852459,488.0,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05298263175848542,293.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05145227939963715,303.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05001966629410826,313.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.04867571870648306,323.15,old_dataset
+polystyrene,"1,2-dichloroethane",C=CC1=CC=CC=C1,C(CCl)Cl,0.03,298.15,old_dataset
+poly(ethyl methacrylate),poly(butyl acrylate),CCOC(=O)C(=C)C,CCCCOC(=O)C=C,0.013,503.15,old_dataset
+polystyrene,poly(butyl methacrylate),C=CC1=CC=CC=C1,CCCCOC(=O)C(=C)C,-0.0009999999999999974,298.15,old_dataset
+polystyrene,chloroform,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl,0.29,298.15,old_dataset
+polybutadiene,chloroform,C=CC=C,C(Cl)(Cl)Cl,0.21,298.15,old_dataset
+poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,CCCCCCOc1ccc(cc1CC)C#CCC,CC(=C)C=C,0.02771055773494797,293.15,old_dataset
+poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,CCCCCCOc1ccc(cc1CC)C#CCC,CC(=C)C=C,0.02379465611083623,303.15,old_dataset
+poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,CCCCCCOc1ccc(cc1CC)C#CCC,CC(=C)C=C,0.02012885198786524,313.15,old_dataset
+poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,CCCCCCOc1ccc(cc1CC)C#CCC,CC(=C)C=C,0.01668992727835371,323.15,old_dataset
+polystyrene,chloroform,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl,0.35,298.15,old_dataset
+polystyrene,toluene,C=CC1=CC=CC=C1,CC1=CC=CC=C1,0.35,298.15,old_dataset
+poly(4-vinylpyridine),chloroform,C=CC1=CC=NC=C1,C(Cl)(Cl)Cl,0.67,298.15,old_dataset
+poly(4-vinylpyridine),toluene,C=CC1=CC=NC=C1,CC1=CC=CC=C1,1.01,298.15,old_dataset
+carbon tetrachloride,polystyrene,C(Cl)(Cl)(Cl)Cl,C=CC1=CC=CC=C1,0.396,298.15,old_dataset
+cyclohexane,polystyrene,C1CCCCC1,C=CC1=CC=CC=C1,0.505,298.15,old_dataset
+polystyrene,benzene,C=CC1=CC=CC=C1,C1=CC=CC=C1,0.438,298.15,old_dataset
+polystyrene,toluene,C=CC1=CC=CC=C1,CC1=CC=CC=C1,0.432,298.15,old_dataset
+poly(propylene oxide),"2,6-diaminotriazine",CC1CO1,C1=CNN(N=C1N)N,3.5,298.15,old_dataset
+polyethylene,"2,6-diaminotriazine",C=C,C1=CNN(N=C1N)N,3.0,298.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.8196759338222754,293.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.776803562592776,303.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.73666932779818,313.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.6990190314095621,323.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.7120126215248168,293.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.665764473033152,303.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.6224700622704775,313.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.5818551756150396,323.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.4325720620842573,293.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.4047781626257629,303.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.3787593804885839,313.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.3543509206250968,323.15,old_dataset
+polybutadiene,methyl acetate,[*]C=CCC[*],CC(=O)OC,1.03,368.0,new_dataset
+polybutadiene,tetrahydrofuran,[*]C=CCC[*],C1CCOC1,0.32,368.0,new_dataset
+polybutadiene,2-butanone,[*]C=CCC[*],CCC(=O)C,1.08,368.0,new_dataset
+polybutadiene,acetonitrile,[*]C=CCC[*],CC#N,2.61,368.0,new_dataset
+polybutadiene,butyl acetate,[*]C=CCC[*],CCCCOC(=O)C,0.485,368.0,new_dataset
+polybutadiene,ethyl acetate,[*]C=CCC[*],CCOC(=O)C,0.775,368.0,new_dataset
+polybutadiene,n-propyl acetate,[*]C=CCC[*],CCCOC(=O)C,0.61,368.0,new_dataset
+polybutadiene,benzene,[*]C=CCC[*],C1=CC=CC=C1,0.225,368.0,new_dataset
+polybutadiene,ethanol,[*]C=CCC[*],CCO,2.855,368.0,new_dataset
+polybutadiene,n-heptane ,[*]C=CCC[*],CCCCCCC,0.335,368.0,new_dataset
+polybutadiene,n-octane,[*]C=CCC[*],CCCCCCCC,0.31,368.0,new_dataset
+polybutadiene,1-propanol,[*]C=CCC[*],CCCO,2.47,368.0,new_dataset
+polybutadiene,2-propanol ,[*]C=CCC[*],CC(C)O,2.4,368.0,new_dataset
+polybutadiene,3-pentanone ,[*]C=CCC[*],CCC(=O)CC,0.745,368.0,new_dataset
+polybutadiene,n-hexane,[*]C=CCC[*],CCCCCC,0.375,368.0,new_dataset
+polybutadiene,n-pentane,[*]C=CCC[*],CCCCC,0.4,368.0,new_dataset
+polybutadiene,1-butanol,[*]C=CCC[*],CCCCO,2.2,368.0,new_dataset
+polybutadiene,1-chlorobutane,[*]C=CCC[*],CCCCCl,0.29,368.0,new_dataset
+polybutadiene,methanol,[*]C=CCC[*],CO,3.275,368.0,new_dataset
+polybutadiene,1-chloropropane,[*]C=CCC[*],CCCCl,0.33,368.0,new_dataset
+polybutadiene,1-octene,[*]C=CCC[*],CCCCCCC=C,0.215,368.0,new_dataset
+polybutadiene,1-heptene,[*]C=CCC[*],CCCCCC=C,0.24,368.0,new_dataset
+polybutadiene,1-hexene,[*]C=CCC[*],CCCCC=C,0.3,368.0,new_dataset
+polybutadiene,butyronitrile,[*]C=CCC[*],CCCC#N,1.735,368.0,new_dataset
+polybutadiene,dibutylether,[*]C=CCC[*],CCCCOCCCC,0.355,368.0,new_dataset
+polybutadiene,diethyl ether,[*]C=CCC[*],CCOCC,0.415,368.0,new_dataset
+polybutadiene,ethylcyclohexane,[*]C=CCC[*],CCC1CCCCC1,0.065,368.0,new_dataset
+polybutadiene,methyl isobutyl ketone,[*]C=CCC[*],CC(C)CC(=O)C,0.835,368.0,new_dataset
+polybutadiene,propionitrile,[*]C=CCC[*],CCC#N,2.035,368.0,new_dataset
+polybutadiene,acetone,[*]C=CCC[*],CC(=O)C,1.32,373.0,new_dataset
+polybutadiene,acetone,[*]C=CCC[*],CC(=O)C,1.402,353.0,new_dataset
+polybutadiene,acetone,[*]C=CCC[*],CC(=O)C,1.48,368.0,new_dataset
+polybutadiene,acetone,[*]C=CCC[*],CC(=O)C,1.506,333.0,new_dataset
+polybutadiene,acetone,[*]C=CCC[*],CC(=O)C,1.64,313.0,new_dataset
+polybutadiene,chloroform,[*]C=CCC[*],C(Cl)(Cl)Cl,0.032,333.0,new_dataset
+polybutadiene,chloroform,[*]C=CCC[*],C(Cl)(Cl)Cl,0.042,353.0,new_dataset
+polybutadiene,chloroform,[*]C=CCC[*],C(Cl)(Cl)Cl,0.051,313.0,new_dataset
+polybutadiene,chloroform,[*]C=CCC[*],C(Cl)(Cl)Cl,0.07,373.0,new_dataset
+polybutadiene,methyl acetate,[*]C=CCC[*],CC(=O)OC,0.917,373.0,new_dataset
+polybutadiene,methyl acetate,[*]C=CCC[*],CC(=O)OC,0.965,353.0,new_dataset
+polybutadiene,methyl acetate,[*]C=CCC[*],CC(=O)OC,1.036,333.0,new_dataset
+polybutadiene,methyl acetate,[*]C=CCC[*],CC(=O)OC,1.138,313.0,new_dataset
+polybutadiene,tetrahydrofuran,[*]C=CCC[*],C1CCOC1,0.289,373.0,new_dataset
+polybutadiene,tetrahydrofuran,[*]C=CCC[*],C1CCOC1,0.293,353.0,new_dataset
+polybutadiene,tetrahydrofuran,[*]C=CCC[*],C1CCOC1,0.313,333.0,new_dataset
+polybutadiene,tetrahydrofuran,[*]C=CCC[*],C1CCOC1,0.352,313.0,new_dataset
+polybutadiene,2-butanone,[*]C=CCC[*],CCC(=O)C,0.967,373.0,new_dataset
+polybutadiene,2-butanone,[*]C=CCC[*],CCC(=O)C,1.018,353.0,new_dataset
+polybutadiene,2-butanone,[*]C=CCC[*],CCC(=O)C,1.091,333.0,new_dataset
+polybutadiene,2-butanone,[*]C=CCC[*],CCC(=O)C,1.194,313.0,new_dataset
+polybutadiene,acetonitrile,[*]C=CCC[*],CC#N,2.355,373.0,new_dataset
+polybutadiene,acetonitrile,[*]C=CCC[*],CC#N,2.493,353.0,new_dataset
+polybutadiene,acetonitrile,[*]C=CCC[*],CC#N,2.66,333.0,new_dataset
+polybutadiene,acetonitrile,[*]C=CCC[*],CC#N,2.862,313.0,new_dataset
+polybutadiene,butyl acetate,[*]C=CCC[*],CCCCOC(=O)C,0.445,353.0,new_dataset
+polybutadiene,butyl acetate,[*]C=CCC[*],CCCCOC(=O)C,0.445,373.0,new_dataset
+polybutadiene,butyl acetate,[*]C=CCC[*],CCCCOC(=O)C,0.468,333.0,new_dataset
+polybutadiene,butyl acetate,[*]C=CCC[*],CCCCOC(=O)C,0.52,313.0,new_dataset
+polybutadiene,ethyl acetate,[*]C=CCC[*],CCOC(=O)C,0.691,373.0,new_dataset
+polybutadiene,ethyl acetate,[*]C=CCC[*],CCOC(=O)C,0.721,353.0,new_dataset
+polybutadiene,ethyl acetate,[*]C=CCC[*],CCOC(=O)C,0.775,333.0,new_dataset
+polybutadiene,ethyl acetate,[*]C=CCC[*],CCOC(=O)C,0.861,313.0,new_dataset
+polybutadiene,n-propyl acetate,[*]C=CCC[*],CCCOC(=O)C,0.548,373.0,new_dataset
+polybutadiene,n-propyl acetate,[*]C=CCC[*],CCCOC(=O)C,0.563,353.0,new_dataset
+polybutadiene,n-propyl acetate,[*]C=CCC[*],CCCOC(=O)C,0.601,333.0,new_dataset
+polybutadiene,n-propyl acetate,[*]C=CCC[*],CCCOC(=O)C,0.669,313.0,new_dataset
+polybutadiene,benzene,[*]C=CCC[*],C1=CC=CC=C1,0.186,373.0,new_dataset
+polybutadiene,benzene,[*]C=CCC[*],C1=CC=CC=C1,0.191,353.0,new_dataset
+polybutadiene,benzene,[*]C=CCC[*],C1=CC=CC=C1,0.212,333.0,new_dataset
+polybutadiene,benzene,[*]C=CCC[*],C1=CC=CC=C1,0.255,313.0,new_dataset
+polybutadiene,carbon tetrachloride,[*]C=CCC[*],C(Cl)(Cl)(Cl)Cl,0.097,313.0,new_dataset
+polybutadiene,carbon tetrachloride,[*]C=CCC[*],C(Cl)(Cl)(Cl)Cl,0.1,333.0,new_dataset
+polybutadiene,carbon tetrachloride,[*]C=CCC[*],C(Cl)(Cl)(Cl)Cl,0.12,353.0,new_dataset
+polybutadiene,carbon tetrachloride,[*]C=CCC[*],C(Cl)(Cl)(Cl)Cl,0.152,373.0,new_dataset
+polybutadiene,toluene,[*]C=CCC[*],CC1=CC=CC=C1,0.107,353.0,new_dataset
+polybutadiene,toluene,[*]C=CCC[*],CC1=CC=CC=C1,0.112,333.0,new_dataset
+polybutadiene,toluene,[*]C=CCC[*],CC1=CC=CC=C1,0.117,373.0,new_dataset
+polybutadiene,toluene,[*]C=CCC[*],CC1=CC=CC=C1,0.14,313.0,new_dataset
+polybutadiene,ethanol,[*]C=CCC[*],CCO,2.298,373.0,new_dataset
+polybutadiene,ethanol,[*]C=CCC[*],CCO,2.611,353.0,new_dataset
+polybutadiene,ethanol,[*]C=CCC[*],CCO,2.987,333.0,new_dataset
+polybutadiene,ethanol,[*]C=CCC[*],CCO,3.411,313.0,new_dataset
+polybutadiene,cyclohexane,[*]C=CCC[*],C1CCCCC1,0.154,373.0,new_dataset
+polybutadiene,cyclohexane,[*]C=CCC[*],C1CCCCC1,0.157,353.0,new_dataset
+polybutadiene,cyclohexane,[*]C=CCC[*],C1CCCCC1,0.177,333.0,new_dataset
+polybutadiene,cyclohexane,[*]C=CCC[*],C1CCCCC1,0.218,313.0,new_dataset
+polybutadiene,cyclohexane,[*]C=CCC[*],C1CCCCC1,0.2225,368.0,new_dataset
+polybutadiene,n-heptane ,[*]C=CCC[*],CCCCCCC,0.305,353.0,new_dataset
+polybutadiene,n-heptane ,[*]C=CCC[*],CCCCCCC,0.31,373.0,new_dataset
+polybutadiene,n-heptane ,[*]C=CCC[*],CCCCCCC,0.319,333.0,new_dataset
+polybutadiene,n-heptane ,[*]C=CCC[*],CCCCCCC,0.357,313.0,new_dataset
+polybutadiene,n-octane,[*]C=CCC[*],CCCCCCCC,0.277,353.0,new_dataset
+polybutadiene,n-octane,[*]C=CCC[*],CCCCCCCC,0.281,373.0,new_dataset
+polybutadiene,n-octane,[*]C=CCC[*],CCCCCCCC,0.294,333.0,new_dataset
+polybutadiene,n-octane,[*]C=CCC[*],CCCCCCCC,0.342,313.0,new_dataset
+polybutadiene,1-propanol,[*]C=CCC[*],CCCO,1.97,373.0,new_dataset
+polybutadiene,1-propanol,[*]C=CCC[*],CCCO,2.233,353.0,new_dataset
+polybutadiene,1-propanol,[*]C=CCC[*],CCCO,2.561,333.0,new_dataset
+polybutadiene,1-propanol,[*]C=CCC[*],CCCO,2.973,313.0,new_dataset
+polybutadiene,2-propanol ,[*]C=CCC[*],CC(C)O,1.855,373.0,new_dataset
+polybutadiene,2-propanol ,[*]C=CCC[*],CC(C)O,2.145,333.0,new_dataset
+polybutadiene,2-propanol ,[*]C=CCC[*],CC(C)O,2.145,353.0,new_dataset
+polybutadiene,2-propanol ,[*]C=CCC[*],CC(C)O,2.943,313.0,new_dataset
+polybutadiene,3-pentanone ,[*]C=CCC[*],CCC(=O)CC,0.667,373.0,new_dataset
+polybutadiene,3-pentanone ,[*]C=CCC[*],CCC(=O)CC,0.7,353.0,new_dataset
+polybutadiene,3-pentanone ,[*]C=CCC[*],CCC(=O)CC,0.749,333.0,new_dataset
+polybutadiene,3-pentanone ,[*]C=CCC[*],CCC(=O)CC,0.82,313.0,new_dataset
+polybutadiene,ethylbenzene,[*]C=CCC[*],CCC1=CC=CC=C1,0.34,378.0,new_dataset
+polybutadiene,n-hexane,[*]C=CCC[*],CCCCCC,0.365,353.0,new_dataset
+polybutadiene,n-hexane,[*]C=CCC[*],CCCCCC,0.366,333.0,new_dataset
+polybutadiene,n-hexane,[*]C=CCC[*],CCCCCC,0.379,373.0,new_dataset
+polybutadiene,n-hexane,[*]C=CCC[*],CCCCCC,0.385,313.0,new_dataset
+polybutadiene,n-pentane,[*]C=CCC[*],CCCCC,0.361,373.0,new_dataset
+polybutadiene,n-pentane,[*]C=CCC[*],CCCCC,0.374,353.0,new_dataset
+polybutadiene,n-pentane,[*]C=CCC[*],CCCCC,0.399,333.0,new_dataset
+polybutadiene,n-pentane,[*]C=CCC[*],CCCCC,0.442,313.0,new_dataset
+polybutadiene,1-butanol,[*]C=CCC[*],CCCCO,1.637,373.0,new_dataset
+polybutadiene,1-butanol,[*]C=CCC[*],CCCCO,1.929,353.0,new_dataset
+polybutadiene,1-butanol,[*]C=CCC[*],CCCCO,2.294,333.0,new_dataset
+polybutadiene,1-butanol,[*]C=CCC[*],CCCCO,2.756,313.0,new_dataset
+polybutadiene,1-chlorobutane,[*]C=CCC[*],CCCCCl,0.248,373.0,new_dataset
+polybutadiene,1-chlorobutane,[*]C=CCC[*],CCCCCl,0.257,353.0,new_dataset
+polybutadiene,1-chlorobutane,[*]C=CCC[*],CCCCCl,0.282,333.0,new_dataset
+polybutadiene,1-chlorobutane,[*]C=CCC[*],CCCCCl,0.331,313.0,new_dataset
+polybutadiene,methanol,[*]C=CCC[*],CO,2.702,373.0,new_dataset
+polybutadiene,methanol,[*]C=CCC[*],CO,3.03,353.0,new_dataset
+polybutadiene,methanol,[*]C=CCC[*],CO,3.409,333.0,new_dataset
+polybutadiene,methanol,[*]C=CCC[*],CO,3.85,313.0,new_dataset
+polybutadiene,1-chloropropane,[*]C=CCC[*],CCCCl,0.301,373.0,new_dataset
+polybutadiene,1-chloropropane,[*]C=CCC[*],CCCCl,0.305,353.0,new_dataset
+polybutadiene,1-chloropropane,[*]C=CCC[*],CCCCl,0.323,333.0,new_dataset
+polybutadiene,1-chloropropane,[*]C=CCC[*],CCCCl,0.359,313.0,new_dataset
+polybutadiene,1-octene,[*]C=CCC[*],CCCCCCC=C,0.193,353.0,new_dataset
+polybutadiene,1-octene,[*]C=CCC[*],CCCCCCC=C,0.196,333.0,new_dataset
+polybutadiene,1-octene,[*]C=CCC[*],CCCCCCC=C,0.208,373.0,new_dataset
+polybutadiene,1-octene,[*]C=CCC[*],CCCCCCC=C,0.226,313.0,new_dataset
+polybutadiene,1-heptene,[*]C=CCC[*],CCCCCC=C,0.218,353.0,new_dataset
+polybutadiene,1-heptene,[*]C=CCC[*],CCCCCC=C,0.224,333.0,new_dataset
+polybutadiene,1-heptene,[*]C=CCC[*],CCCCCC=C,0.229,373.0,new_dataset
+polybutadiene,1-heptene,[*]C=CCC[*],CCCCCC=C,0.253,313.0,new_dataset
+polybutadiene,1-hexene,[*]C=CCC[*],CCCCC=C,0.277,353.0,new_dataset
+polybutadiene,1-hexene,[*]C=CCC[*],CCCCC=C,0.28,373.0,new_dataset
+polybutadiene,1-hexene,[*]C=CCC[*],CCCCC=C,0.289,333.0,new_dataset
+polybutadiene,1-hexene,[*]C=CCC[*],CCCCC=C,0.319,313.0,new_dataset
+polybutadiene,butyronitrile,[*]C=CCC[*],CCCC#N,1.566,373.0,new_dataset
+polybutadiene,butyronitrile,[*]C=CCC[*],CCCC#N,1.647,353.0,new_dataset
+polybutadiene,butyronitrile,[*]C=CCC[*],CCCC#N,1.756,333.0,new_dataset
+polybutadiene,butyronitrile,[*]C=CCC[*],CCCC#N,1.901,313.0,new_dataset
+polybutadiene,diethyl ether,[*]C=CCC[*],CCOCC,0.402,373.0,new_dataset
+polybutadiene,diethyl ether,[*]C=CCC[*],CCOCC,0.404,353.0,new_dataset
+polybutadiene,diethyl ether,[*]C=CCC[*],CCOCC,0.411,333.0,new_dataset
+polybutadiene,diethyl ether,[*]C=CCC[*],CCOCC,0.425,313.0,new_dataset
+polybutadiene,ethylcyclohexane,[*]C=CCC[*],CCC1CCCCC1,0.03,353.0,new_dataset
+polybutadiene,ethylcyclohexane,[*]C=CCC[*],CCC1CCCCC1,0.035,373.0,new_dataset
+polybutadiene,ethylcyclohexane,[*]C=CCC[*],CCC1CCCCC1,0.044,333.0,new_dataset
+polybutadiene,ethylcyclohexane,[*]C=CCC[*],CCC1CCCCC1,0.085,313.0,new_dataset
+polybutadiene,methyl isobutyl ketone,[*]C=CCC[*],CC(C)CC(=O)C,0.715,373.0,new_dataset
+polybutadiene,methyl isobutyl ketone,[*]C=CCC[*],CC(C)CC(=O)C,0.756,353.0,new_dataset
+polybutadiene,methyl isobutyl ketone,[*]C=CCC[*],CC(C)CC(=O)C,0.832,333.0,new_dataset
+polybutadiene,methyl isobutyl ketone,[*]C=CCC[*],CC(C)CC(=O)C,0.953,313.0,new_dataset
+polybutadiene,methylcyclohexane,[*]C=CCC[*],CC1CCCCC1,0.126,353.0,new_dataset
+polybutadiene,methylcyclohexane,[*]C=CCC[*],CC1CCCCC1,0.131,373.0,new_dataset
+polybutadiene,methylcyclohexane,[*]C=CCC[*],CC1CCCCC1,0.136,333.0,new_dataset
+polybutadiene,methylcyclohexane,[*]C=CCC[*],CC1CCCCC1,0.168,313.0,new_dataset
+polybutadiene,n-propyl ether,[*]C=CCC[*],CCCOCCC,0.51,313.0,new_dataset
+polybutadiene,n-propyl ether,[*]C=CCC[*],CCCOCCC,1.142,333.0,new_dataset
+polybutadiene,n-propyl ether,[*]C=CCC[*],CCCOCCC,1.722,353.0,new_dataset
+polybutadiene,n-propyl ether,[*]C=CCC[*],CCCOCCC,2.257,373.0,new_dataset
+polybutadiene,propionitrile,[*]C=CCC[*],CCC#N,1.821,373.0,new_dataset
+polybutadiene,propionitrile,[*]C=CCC[*],CCC#N,1.93,353.0,new_dataset
+polybutadiene,propionitrile,[*]C=CCC[*],CCC#N,2.069,333.0,new_dataset
+polybutadiene,propionitrile,[*]C=CCC[*],CCC#N,2.246,313.0,new_dataset
+poly(3-hexylthiophene),chloroform,[*]c1cc(CCCCCC)c([*])s1,C(Cl)(Cl)Cl,0.99,296.15,new_dataset
+poly(3-hexylthiophene),tetrahydrofuran,[*]c1cc(CCCCCC)c([*])s1,C1CCOC1,1.04,296.15,new_dataset
+poly(3-hexylthiophene),tetrahydrofuran,[*]c1cc(CCCCCC)c([*])s1,C1CCOC1,0.39,300.0,new_dataset
+polyisobutylene,chloroform,[*]CC([*])(C)C,C(Cl)(Cl)Cl,0.78,373.0,new_dataset
+polyisobutylene,2-butanone,[*]CC([*])(C)C,CCC(=O)C,1.55,373.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.7,273.7,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.73,273.73,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.82,325.5,new_dataset
+polyisobutylene,carbon tetrachloride,[*]CC([*])(C)C,C(Cl)(Cl)(Cl)Cl,0.48,373.0,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.415,310.5,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.445,325.5,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.48,318.0,new_dataset
+polyisobutylene,n-heptane ,[*]CC([*])(C)C,CCCCCCC,0.52,318.0,new_dataset
+polyisobutylene,n-heptane ,[*]CC([*])(C)C,CCCCCCC,0.57,298.0,new_dataset
+polyisobutylene,n-octane,[*]CC([*])(C)C,CCCCCCCC,0.475,318.0,new_dataset
+polyisobutylene,n-hexane,[*]CC([*])(C)C,CCCCCC,0.565,318.0,new_dataset
+polyisobutylene,n-pentane,[*]CC([*])(C)C,CCCCC,0.65,310.5,new_dataset
+polyisobutylene,2-methylbutane,[*]CC([*])(C)C,CCC(C)C,0.65,303.0,new_dataset
+polyisobutylene,2-methylbutane,[*]CC([*])(C)C,CCC(C)C,0.665,313.5,new_dataset
+polyisobutylene,n-butane,[*]CC([*])(C)C,CCCC,0.65,373.0,new_dataset
+polyisobutylene,"2,2-dimethylpropane",[*]CC([*])(C)C,CC(C)(C)C,0.845,308.5,new_dataset
+polyisobutylene,"1,4-dioxane",[*]CC([*])(C)C,C1COCCO1,1.26,373.0,new_dataset
+polyisobutylene,acetone,[*]CC([*])(C)C,CC(=O)C,1.9,373.0,new_dataset
+polyisobutylene,dichloromethane,[*]CC([*])(C)C,C(Cl)Cl,1.0,373.0,new_dataset
+polyisobutylene,methyl acetate,[*]CC([*])(C)C,CC(=O)OC,1.55,373.0,new_dataset
+polyisobutylene,tetrahydrofuran,[*]CC([*])(C)C,C1CCOC1,0.68,373.0,new_dataset
+polyisobutylene,butyl acetate,[*]CC([*])(C)C,CCCCOC(=O)C,1.06,373.0,new_dataset
+polyisobutylene,ethyl acetate,[*]CC([*])(C)C,CCOC(=O)C,1.35,373.0,new_dataset
+polyisobutylene,n-propyl acetate,[*]CC([*])(C)C,CCCOC(=O)C,1.19,373.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.49,353.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.495,303.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.534,323.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.6033,333.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.7,373.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.7262,298.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.735,313.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.7383,338.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.7667,312.6,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.7907,283.0,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.86,299.9,new_dataset
+polyisobutylene,benzene,[*]CC([*])(C)C,C1=CC=CC=C1,0.9,300.0,new_dataset
+polyisobutylene,toluene,[*]CC([*])(C)C,CC1=CC=CC=C1,0.6,373.0,new_dataset
+polyisobutylene,ethanol,[*]CC([*])(C)C,CCO,3.3,373.0,new_dataset
+polyisobutylene,"2,2,4-trimethylpentane ",[*]CC([*])(C)C,CC(C)CC(C)(C)C,0.475,296.5,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.355,338.0,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.39,373.0,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.4125,313.0,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.4318,298.0,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.437,281.0,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.44,303.0,new_dataset
+polyisobutylene,cyclohexane,[*]CC([*])(C)C,C1CCCCC1,0.445,333.0,new_dataset
+polyisobutylene,n-heptane ,[*]CC([*])(C)C,CCCCCCC,0.53,373.0,new_dataset
+polyisobutylene,n-nonane,[*]CC([*])(C)C,CCCCCCCCC,0.49,373.0,new_dataset
+polyisobutylene,n-nonane,[*]CC([*])(C)C,CCCCCCCCC,0.49,298.0,new_dataset
+polyisobutylene,n-octane,[*]CC([*])(C)C,CCCCCCCC,0.475,298.0,new_dataset
+polyisobutylene,n-octane,[*]CC([*])(C)C,CCCCCCCC,0.5,373.0,new_dataset
+polyisobutylene,chlorobenzene,[*]CC([*])(C)C,C1=CC=C(C=C1)Cl,0.7,373.0,new_dataset
+polyisobutylene,ethylbenzene,[*]CC([*])(C)C,CCC1=CC=CC=C1,0.59,373.0,new_dataset
+polyisobutylene,ethylbenzene,[*]CC([*])(C)C,CCC1=CC=CC=C1,0.445,298.0,new_dataset
+polyisobutylene,ethylbenzene,[*]CC([*])(C)C,CCC1=CC=CC=C1,0.45,313.0,new_dataset
+polyisobutylene,n-hexane,[*]CC([*])(C)C,CCCCCC,0.4833,298.0,new_dataset
+polyisobutylene,n-hexane,[*]CC([*])(C)C,CCCCCC,0.56,373.0,new_dataset
+polyisobutylene,n-pentane,[*]CC([*])(C)C,CCCCC,0.5433,313.0,new_dataset
+polyisobutylene,n-pentane,[*]CC([*])(C)C,CCCCC,0.5984,298.0,new_dataset
+polyisobutylene,n-pentane,[*]CC([*])(C)C,CCCCC,0.6,373.0,new_dataset
+polyisobutylene,n-pentane,[*]CC([*])(C)C,CCCCC,0.6138,318.0,new_dataset
+polyisobutylene,n-pentane,[*]CC([*])(C)C,CCCCC,0.6175,308.0,new_dataset
+polyisobutylene,n-pentane,[*]CC([*])(C)C,CCCCC,0.63,328.0,new_dataset
+polyisobutylene,n-butylcyclohexane,[*]CC([*])(C)C,CCCCC1CCCCC1,0.48,373.0,new_dataset
+polyisobutylene,1-butanol,[*]CC([*])(C)C,CCCCO,2.45,373.0,new_dataset
+polyisobutylene,1-chlorobutane,[*]CC([*])(C)C,CCCCCl,0.68,373.0,new_dataset
+polyisobutylene,1-chloropentane,[*]CC([*])(C)C,CCCCCCl,0.59,373.0,new_dataset
+polyisobutylene,1-pentanol,[*]CC([*])(C)C,CCCCCO,2.2,373.0,new_dataset
+polyisobutylene,"1,1-dichloroethane",[*]CC([*])(C)C,CC(Cl)Cl,0.87,373.0,new_dataset
+polyisobutylene,"1,1,1-trichloroethane",[*]CC([*])(C)C,CC(Cl)(Cl)Cl,0.56,373.0,new_dataset
+polyisobutylene,"1,2-dichloroethane",[*]CC([*])(C)C,C(CCl)Cl,1.13,373.0,new_dataset
+polyisobutylene,chloromethane,[*]CC([*])(C)C,CCl,0.91,373.0,new_dataset
+polyisobutylene,cycloheptane,[*]CC([*])(C)C,C1CCCCCC1,0.29,373.0,new_dataset
+polyisobutylene,cyclohexene,[*]CC([*])(C)C,C1CCC=CC1,0.4,373.0,new_dataset
+polyisobutylene,cyclooctane,[*]CC([*])(C)C,C1CCCCCCC1,0.24,373.0,new_dataset
+polyisobutylene,cyclopentane,[*]CC([*])(C)C,C1CCCC1,0.41,373.0,new_dataset
+polyisobutylene,n-undecane,[*]CC([*])(C)C,CCCCCCCCCCC,0.48,373.0,new_dataset
+polyisobutylene,propane,[*]CC([*])(C)C,CCC,0.61,308.0,new_dataset
+polyisobutylene,propane,[*]CC([*])(C)C,CCC,0.79,373.0,new_dataset
+polyisobutylene,trichloroethylene,[*]CC([*])(C)C,C(=C(Cl)Cl)Cl,0.54,373.0,new_dataset
+polyisobutylene,"2,2-dimethylbutane",[*]CC([*])(C)C,CCC(C)(C)C,0.475,296.5,new_dataset
+polyisobutylene,"2,2-dimethylpropane",[*]CC([*])(C)C,CC(C)(C)C,0.82,308.0,new_dataset
+polyisobutylene,2-butanone,[*]CC([*])(C)C,CCC(=O)C,0.495,298.0,new_dataset
+polyisobutylene,pentene,[*]CC([*])(C)C,CCCC=C,0.445,298.0,new_dataset
+poly(vinyl acetate),benzene,	[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.26,323.0,new_dataset
+poly(vinyl acetate),benzene,	[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.36,313.0,new_dataset
+poly(methyl methacrylate),acetone,[*]CC([*])(C)C(=O)OC,CC(=O)C,0.32,297.15,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.45,296.5,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.89,433.0,new_dataset
+poly(methyl methacrylate),"1,4-dioxane",[*]CC([*])(C)C(=O)OC,C1COCCO1,0.42,300.0,new_dataset
+poly(methyl methacrylate),acetone,[*]CC([*])(C)C(=O)OC,CC(=O)C,0.48,299.0,new_dataset
+poly(methyl methacrylate),chloroform,[*]CC([*])(C)C(=O)OC,C(Cl)(Cl)Cl,0.44,300.0,new_dataset
+poly(methyl methacrylate),tetrahydrofuran,[*]CC([*])(C)C(=O)OC,C1CCOC1,0.477,299.0,new_dataset
+poly(methyl methacrylate),2-butanone,[*]CC([*])(C)C(=O)OC,CCC(=O)C,0.545,342.3,new_dataset
+poly(methyl methacrylate),2-butanone,[*]CC([*])(C)C(=O)OC,CCC(=O)C,0.5667,323.2,new_dataset
+poly(methyl methacrylate),2-butanone,[*]CC([*])(C)C(=O)OC,CCC(=O)C,0.655,343.3,new_dataset
+poly(methyl methacrylate),3-methylbutyl acetate,[*]CC([*])(C)C(=O)OC,CC(C)CCOC(=O)C,1.023,313.0,new_dataset
+poly(methyl methacrylate),"3,3-dimethyl-2-butanone",[*]CC([*])(C)C(=O)OC,CC(=O)C(C)(C)C,0.46,323.0,new_dataset
+poly(methyl methacrylate),butyl acetate,[*]CC([*])(C)C(=O)OC,CCCCOC(=O)C,0.4915,304.0,new_dataset
+poly(methyl methacrylate),benzene,[*]CC([*])(C)C(=O)OC,C1=CC=CC=C1,0.455,294.5,new_dataset
+poly(methyl methacrylate),carbon tetrachloride,[*]CC([*])(C)C(=O)OC,C(Cl)(Cl)(Cl)Cl,0.56,323.0,new_dataset
+poly(methyl methacrylate),carbon tetrachloride,[*]CC([*])(C)C(=O)OC,C(Cl)(Cl)(Cl)Cl,0.595,342.7,new_dataset
+poly(methyl methacrylate),carbon tetrachloride,[*]CC([*])(C)C(=O)OC,C(Cl)(Cl)(Cl)Cl,0.595,343.7,new_dataset
+poly(methyl methacrylate),carbon tetrachloride,[*]CC([*])(C)C(=O)OC,C(Cl)(Cl)(Cl)Cl,0.625,323.2,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.45,300.0,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.475,343.0,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.5125,323.0,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.5333,321.5,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.5633,342.6,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.61,343.4,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.645,322.8,new_dataset
+poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.655,323.1,new_dataset
+poly(methyl methacrylate),3-pentanone ,[*]CC([*])(C)C(=O)OC,CCC(=O)CC,0.49,300.0,new_dataset
+poly(methyl methacrylate),p-xylene,[*]CC([*])(C)C(=O)OC,CC1=CC=C(C=C1)C,0.545,409.2,new_dataset
+poly(methyl methacrylate),p-xylene,[*]CC([*])(C)C(=O)OC,CC1=CC=C(C=C1)C,0.75,373.0,new_dataset
+poly(methyl methacrylate),p-xylene,[*]CC([*])(C)C(=O)OC,CC1=CC=C(C=C1)C,0.7567,323.0,new_dataset
+poly(methyl methacrylate),p-xylene,[*]CC([*])(C)C(=O)OC,CC1=CC=C(C=C1)C,0.865,343.0,new_dataset
+poly(methyl methacrylate),1-chlorobutane,[*]CC([*])(C)C(=O)OC,CCCCCl,0.505,304.0,new_dataset
+poly(methyl methacrylate),"1,2-dichloroethane",[*]CC([*])(C)C(=O)OC,C(CCl)Cl,0.238,343.0,new_dataset
+poly(methyl methacrylate),"1,3,5-trimethylbenzene",[*]CC([*])(C)C(=O)OC,CC1=CC(=CC(=C1)C)C,0.92,403.0,new_dataset
+poly(methyl methacrylate),m-xylene,[*]CC([*])(C)C(=O)OC,CC1=CC(=CC=C1)C,0.5,300.0,new_dataset
+poly(methyl methacrylate),4-heptanone,[*]CC([*])(C)C(=O)OC,CCCC(=O)CCC,0.5025,312.0,new_dataset
+poly(methyl methacrylate),acetone,[*]CC([*])(C)C(=O)OC,CC(=O)C,0.48,298.0,new_dataset
+poly(methyl methacrylate),tetrahydrofuran,[*]CC([*])(C)C(=O)OC,C1CCOC1,0.494,298.0,new_dataset
+poly(methyl methacrylate),benzene,[*]CC([*])(C)C(=O)OC,C1=CC=CC=C1,0.445,298.0,new_dataset
+poly(tert-butyl methacrylate),chloroform,[*]CC([*])(C)C(=O)OC(C)(C)C,C(Cl)(Cl)Cl,0.14,323.0,new_dataset
+poly(tert-butyl methacrylate),2-butanone,[*]CC([*])(C)C(=O)OC(C)(C)C,CCC(=O)C,0.425,323.0,new_dataset
+poly(tert-butyl methacrylate),2-butanone,[*]CC([*])(C)C(=O)OC(C)(C)C,CCC(=O)C,0.525,342.5,new_dataset
+poly(tert-butyl methacrylate),benzene,[*]CC([*])(C)C(=O)OC(C)(C)C,C1=CC=CC=C1,0.335,342.5,new_dataset
+poly(tert-butyl methacrylate),benzene,[*]CC([*])(C)C(=O)OC(C)(C)C,C1=CC=CC=C1,0.375,323.0,new_dataset
+poly(tert-butyl methacrylate),carbon tetrachloride,[*]CC([*])(C)C(=O)OC(C)(C)C,C(Cl)(Cl)(Cl)Cl,0.42,323.0,new_dataset
+poly(tert-butyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC(C)(C)C,CC1=CC=CC=C1,0.405,342.6,new_dataset
+poly(tert-butyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC(C)(C)C,CC1=CC=CC=C1,0.44,323.0,new_dataset
+poly(tert-butyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC(C)(C)C,CC1=CC=CC=C1,0.455,373.0,new_dataset
+poly(tert-butyl methacrylate),3-pentanone ,[*]CC([*])(C)C(=O)OC(C)(C)C,CCC(=O)CC,0.605,323.0,new_dataset
+poly(tert-butyl methacrylate),ethylbenzene,[*]CC([*])(C)C(=O)OC(C)(C)C,CCC1=CC=CC=C1,0.655,342.5,new_dataset
+poly(tert-butyl methacrylate),p-xylene,[*]CC([*])(C)C(=O)OC(C)(C)C,CC1=CC=C(C=C1)C,0.495,342.5,new_dataset
+poly(tert-butyl methacrylate),"1,3,5-trimethylbenzene",[*]CC([*])(C)C(=O)OC(C)(C)C,CC1=CC(=CC(=C1)C)C,0.705,373.0,new_dataset
+poly(tert-butyl methacrylate),m-xylene,[*]CC([*])(C)C(=O)OC(C)(C)C,CC1=CC(=CC=C1)C,0.645,342.5,new_dataset
+poly(tert-butyl methacrylate),o-xylene,[*]CC([*])(C)C(=O)OC(C)(C)C,CC1=CC=CC=C1C,0.59,342.5,new_dataset
+poly(2-hydroxyethyl methacrylate),di(ethylene glycol),[*]CC([*])(C)C(=O)OCCO,C(COCCO)O,0.445,298.0,new_dataset
+polypropylene,chloroform,[*]CC([*])C,C(Cl)(Cl)Cl,0.61,373.0,new_dataset
+polypropylene,butyl acetate,[*]CC([*])C,CCCCOC(=O)C,0.73,468.5,new_dataset
+polypropylene,carbon tetrachloride,[*]CC([*])C,C(Cl)(Cl)(Cl)Cl,0.29,373.0,new_dataset
+polypropylene,n-butylcyclohexane,[*]CC([*])C,CCCCC1CCCCC1,0.74,443.0,new_dataset
+polypropylene,1-butanol,[*]CC([*])C,CCCCO,1.145,468.5,new_dataset
+polypropylene,2-butanol,[*]CC([*])C,CCC(C)O,1.26,468.5,new_dataset
+polypropylene,n-butylbenzene,[*]CC([*])C,CCCCC1=CC=CC=C1,0.365,466.0,new_dataset
+polypropylene,tert-butyl  acetate,[*]CC([*])C,CC(=O)OC(C)(C)C,0.625,436.0,new_dataset
+polypropylene,"1,4-dioxane",[*]CC([*])C,C1COCCO1,1.15,373.0,new_dataset
+polypropylene,acetone,[*]CC([*])C,CC(=O)C,1.42,373.0,new_dataset
+polypropylene,dichloromethane,[*]CC([*])C,C(Cl)Cl,0.86,373.0,new_dataset
+polypropylene,methyl acetate,[*]CC([*])C,CC(=O)OC,1.37,373.0,new_dataset
+polypropylene,tetrahydrofuran,[*]CC([*])C,C1CCOC1,0.55,373.0,new_dataset
+polypropylene,2-butanone,[*]CC([*])C,CCC(=O)C,1.36,373.0,new_dataset
+polypropylene,"2,4-dimethyl-3-pentanone",[*]CC([*])C,CC(C)C(=O)C(C)C,0.716,277.5,new_dataset
+polypropylene,"2,4-dimethyl-3-pentanone",[*]CC([*])C,CC(C)C(=O)C(C)C,0.766,298.0,new_dataset
+polypropylene,butyl acetate,[*]CC([*])C,CCCCOC(=O)C,0.84,373.0,new_dataset
+polypropylene,ethyl acetate,[*]CC([*])C,CCOC(=O)C,1.14,373.0,new_dataset
+polypropylene,n-propyl acetate,[*]CC([*])C,CCCOC(=O)C,0.96,373.0,new_dataset
+polypropylene,benzene,[*]CC([*])C,C1=CC=CC=C1,0.498,298.0,new_dataset
+polypropylene,benzene,[*]CC([*])C,C1=CC=CC=C1,0.51,373.0,new_dataset
+polypropylene,toluene,[*]CC([*])C,CC1=CC=CC=C1,0.43,373.0,new_dataset
+polypropylene,ethanol,[*]CC([*])C,CCO,3.0,373.0,new_dataset
+polypropylene,cyclohexane,[*]CC([*])C,C1CCCCC1,0.195,373.0,new_dataset
+polypropylene,cyclohexane,[*]CC([*])C,C1CCCCC1,0.42,298.0,new_dataset
+polypropylene,n-heptane ,[*]CC([*])C,CCCCCCC,0.24,373.0,new_dataset
+polypropylene,n-nonane,[*]CC([*])C,CCCCCCCCC,0.2,373.0,new_dataset
+polypropylene,n-octane,[*]CC([*])C,CCCCCCCC,0.22,373.0,new_dataset
+polypropylene,3-pentanone ,[*]CC([*])C,CCC(=O)CC,0.9825,318.0,new_dataset
+polypropylene,3-pentanone ,[*]CC([*])C,CCC(=O)CC,1.065,298.0,new_dataset
+polypropylene,chlorobenzene,[*]CC([*])C,C1=CC=C(C=C1)Cl,0.54,373.0,new_dataset
+polypropylene,ethylbenzene,[*]CC([*])C,CCC1=CC=CC=C1,0.4,373.0,new_dataset
+polypropylene,n-hexane,[*]CC([*])C,CCCCCC,0.18,353.0,new_dataset
+polypropylene,n-hexane,[*]CC([*])C,CCCCCC,0.28,373.0,new_dataset
+polypropylene,n-pentane,[*]CC([*])C,CCCCC,0.35,373.0,new_dataset
+polypropylene,n-butylcyclohexane,[*]CC([*])C,CCCCC1CCCCC1,0.18,373.0,new_dataset
+polypropylene,1-butanol,[*]CC([*])C,CCCCO,2.23,373.0,new_dataset
+polypropylene,1-chlorobutane,[*]CC([*])C,CCCCCl,0.48,373.0,new_dataset
+polypropylene,1-chloropentane,[*]CC([*])C,CCCCCCl,0.39,373.0,new_dataset
+polypropylene,1-pentanol,[*]CC([*])C,CCCCCO,1.99,373.0,new_dataset
+polypropylene,"1,1-dichloroethane",[*]CC([*])C,CC(Cl)Cl,0.7,373.0,new_dataset
+polypropylene,"1,1,1-trichloroethane",[*]CC([*])C,CC(Cl)(Cl)Cl,0.37,373.0,new_dataset
+polypropylene,"1,2-dichloroethane",[*]CC([*])C,C(CCl)Cl,0.97,373.0,new_dataset
+polypropylene,chloromethane,[*]CC([*])C,CCl,0.76,373.0,new_dataset
+polypropylene,cycloheptane,[*]CC([*])C,C1CCCCCC1,0.1,373.0,new_dataset
+polypropylene,cyclohexene,[*]CC([*])C,C1CCC=CC1,0.22,373.0,new_dataset
+polypropylene,cyclooctane,[*]CC([*])C,C1CCCCCCC1,0.06,373.0,new_dataset
+polypropylene,cyclopentane,[*]CC([*])C,C1CCCC1,0.21,373.0,new_dataset
+polypropylene,n-butane,[*]CC([*])C,CCCC,0.37,373.0,new_dataset
+polypropylene,n-undecane,[*]CC([*])C,CCCCCCCCCCC,0.17,373.0,new_dataset
+polypropylene,propane,[*]CC([*])C,CCC,0.46,373.0,new_dataset
+polypropylene,trichloroethylene,[*]CC([*])C,C(=C(Cl)Cl)Cl,0.39,373.0,new_dataset
+poly(N-ethylacrylamide) ,water,[*]CC([*])C(=O)NCC,O,0.42,276.0,new_dataset
+poly(N-ethylacrylamide) ,water,[*]CC([*])C(=O)NCC,O,0.46,303.0,new_dataset
+poly(N-ethylacrylamide) ,water,[*]CC([*])C(=O)NCC,O,0.51,333.0,new_dataset
+poly(N-ethylacrylamide) ,water,[*]CC([*])C(=O)NCC,O,0.49,298.0,new_dataset
+poly(acrylic acid),water,[*]CC([*])C(=O)O,O,0.729,299.1,new_dataset
+poly(acrylic acid),acetone,[*]CC([*])C(=O)O,CC(=O)C,1.057,298.15,new_dataset
+poly(acrylic acid),"n,n-dimethylformide",[*]CC([*])C(=O)O,CN(C)C=O,0.34,298.15,new_dataset
+poly(methyl acrylate),toluene,[*]CC([*])C(=O)OC,CC1=CC=CC=C1,0.34,313.0,new_dataset
+poly(methyl acrylate),2-methylhexane ,[*]CC([*])C(=O)OC,CCCCC(C)C,0.51,313.0,new_dataset
+poly(methyl acrylate),"2,2,4-trimethylpentane ",[*]CC([*])C(=O)OC,CC(C)CC(C)(C)C,0.475,313.0,new_dataset
+poly(methyl acrylate),n-heptane ,[*]CC([*])C(=O)OC,CCCCCCC,0.495,313.0,new_dataset
+poly(methyl acrylate),n-octane,[*]CC([*])C(=O)OC,CCCCCCCC,0.475,313.0,new_dataset
+poly(methyl acrylate),ethylbenzene,[*]CC([*])C(=O)OC,CCC1=CC=CC=C1,0.32,313.0,new_dataset
+poly(methyl acrylate),p-xylene,[*]CC([*])C(=O)OC,CC1=CC=C(C=C1)C,0.27,313.0,new_dataset
+poly(methyl acrylate),n-hexane,[*]CC([*])C(=O)OC,CCCCCC,0.52,313.0,new_dataset
+poly(methyl acrylate),n-pentane,[*]CC([*])C(=O)OC,CCCCC,0.57,313.0,new_dataset
+poly(methyl acrylate),2-methylheptane,[*]CC([*])C(=O)OC,CCCCCC(C)C,0.485,313.0,new_dataset
+poly(methyl acrylate),2-methylpentane,[*]CC([*])C(=O)OC,CCCC(C)C,0.54,313.0,new_dataset
+poly(methyl acrylate),"1,4-dioxane",[*]CC([*])C(=O)OC,C1COCCO1,0.2,373.0,new_dataset
+poly(methyl acrylate),acetone,[*]CC([*])C(=O)OC,CC(=O)C,0.4,373.0,new_dataset
+poly(methyl acrylate),chloroform,[*]CC([*])C(=O)OC,C(Cl)(Cl)Cl,0.1,373.0,new_dataset
+poly(methyl acrylate),chloroform,[*]CC([*])C(=O)OC,C(Cl)(Cl)Cl,0.205,296.5,new_dataset
+poly(methyl acrylate),methyl acetate,[*]CC([*])C(=O)OC,CC(=O)OC,0.38,373.0,new_dataset
+poly(methyl acrylate),tetrahydrofuran,[*]CC([*])C(=O)OC,C1CCOC1,0.34,373.0,new_dataset
+poly(methyl acrylate),2-butanone,[*]CC([*])C(=O)OC,CCC(=O)C,0.4,373.0,new_dataset
+poly(methyl acrylate),2-butanone,[*]CC([*])C(=O)OC,CCC(=O)C,1.0067,318.0,new_dataset
+poly(methyl acrylate),2-butanone,[*]CC([*])C(=O)OC,CCC(=O)C,1.1133,298.0,new_dataset
+poly(methyl acrylate),butyl acetate,[*]CC([*])C(=O)OC,CCCCOC(=O)C,0.58,373.0,new_dataset
+poly(methyl acrylate),ethyl acetate,[*]CC([*])C(=O)OC,CCOC(=O)C,0.43,373.0,new_dataset
+poly(methyl acrylate),ethyl acetate,[*]CC([*])C(=O)OC,CCOC(=O)C,0.7917,323.0,new_dataset
+poly(methyl acrylate),ethyl acetate,[*]CC([*])C(=O)OC,CCOC(=O)C,0.9586,298.0,new_dataset
+poly(methyl acrylate),n-propyl acetate,[*]CC([*])C(=O)OC,CCCOC(=O)C,0.49,373.0,new_dataset
+poly(methyl acrylate),benzene,[*]CC([*])C(=O)OC,C1=CC=CC=C1,0.429,313.0,new_dataset
+poly(methyl acrylate),carbon tetrachloride,[*]CC([*])C(=O)OC,C(Cl)(Cl)(Cl)Cl,0.15,296.5,new_dataset
+poly(methyl acrylate),carbon tetrachloride,[*]CC([*])C(=O)OC,C(Cl)(Cl)(Cl)Cl,0.68,373.0,new_dataset
+poly(methyl acrylate),toluene,[*]CC([*])C(=O)OC,CC1=CC=CC=C1,0.42,303.0,new_dataset
+poly(methyl acrylate),toluene,[*]CC([*])C(=O)OC,CC1=CC=CC=C1,0.53,373.0,new_dataset
+poly(methyl acrylate),ethanol,[*]CC([*])C(=O)OC,CCO,1.01,373.0,new_dataset
+poly(methyl acrylate),"2,2,4-trimethylpentane ",[*]CC([*])C(=O)OC,CC(C)CC(C)(C)C,2.25,273.0,new_dataset
+poly(methyl acrylate),n-heptane ,[*]CC([*])C(=O)OC,CCCCCCC,2.1,373.0,new_dataset
+poly(methyl acrylate),n-nonane,[*]CC([*])C(=O)OC,CCCCCCCCC,2.4,373.0,new_dataset
+poly(methyl acrylate),1-propanol,[*]CC([*])C(=O)OC,CCCO,0.82,373.0,new_dataset
+poly(methyl acrylate),chlorobenzene,[*]CC([*])C(=O)OC,C1=CC=C(C=C1)Cl,0.31,373.0,new_dataset
+poly(methyl acrylate),n-hexane,[*]CC([*])C(=O)OC,CCCCCC,2.08,373.0,new_dataset
+poly(methyl acrylate),n-pentane,[*]CC([*])C(=O)OC,CCCCC,1.92,373.0,new_dataset
+poly(methyl acrylate),1-butanol,[*]CC([*])C(=O)OC,CCCCO,0.79,373.0,new_dataset
+poly(methyl acrylate),1-chlorobutane,[*]CC([*])C(=O)OC,CCCCCl,0.74,373.0,new_dataset
+poly(methyl acrylate),1-chloropentane,[*]CC([*])C(=O)OC,CCCCCCl,0.84,373.0,new_dataset
+poly(methyl acrylate),1-pentanol,[*]CC([*])C(=O)OC,CCCCCO,0.76,373.0,new_dataset
+poly(methyl acrylate),"1,1-dichloroethane",[*]CC([*])C(=O)OC,CC(Cl)Cl,0.2,373.0,new_dataset
+poly(methyl acrylate),"1,1,1-trichloroethane",[*]CC([*])C(=O)OC,CC(Cl)(Cl)Cl,0.43,373.0,new_dataset
+poly(methyl acrylate),"1,2-dichloroethane",[*]CC([*])C(=O)OC,C(CCl)Cl,0.02,373.0,new_dataset
+poly(methyl acrylate),chloromethane,[*]CC([*])C(=O)OC,CCl,0.34,373.0,new_dataset
+poly(methyl acrylate),cycloheptane,[*]CC([*])C(=O)OC,C1CCCCCC1,1.56,373.0,new_dataset
+poly(methyl acrylate),cyclohexene,[*]CC([*])C(=O)OC,C1CCC=CC1,1.31,373.0,new_dataset
+poly(methyl acrylate),cyclooctane,[*]CC([*])C(=O)OC,C1CCCCCCC1,1.61,373.0,new_dataset
+poly(methyl acrylate),cyclopentane,[*]CC([*])C(=O)OC,C1CCCC1,1.47,373.0,new_dataset
+poly(methyl acrylate),n-butane,[*]CC([*])C(=O)OC,CCCC,1.86,373.0,new_dataset
+poly(methyl acrylate),n-undecane,[*]CC([*])C(=O)OC,CCCCCCCCCCC,2.7,373.0,new_dataset
+poly(methyl acrylate),propane,[*]CC([*])C(=O)OC,CCC,2.5,373.0,new_dataset
+poly(methyl acrylate),trichloroethylene,[*]CC([*])C(=O)OC,C(=C(Cl)Cl)Cl,0.45,373.0,new_dataset
+poly(butyl acrylate),acetone,[*]CC([*])C(=O)OCCCC,CC(=O)C,0.49,298.15,new_dataset
+poly(butyl acrylate),"n,n-dimethylformide",[*]CC([*])C(=O)OCCCC,CN(C)C=O,1.766,298.15,new_dataset
+poly(vinyl methyl ketone),n-heptane ,[*]CC([*])C(C)=O,CCCCCCC,3.305,391.0,new_dataset
+poly(vinyl methyl ketone),n-nonane,[*]CC([*])C(C)=O,CCCCCCCCC,3.34,391.0,new_dataset
+poly(vinyl methyl ketone),n-octane,[*]CC([*])C(C)=O,CCCCCCCC,3.33,391.0,new_dataset
+poly(vinyl methyl ketone),n-dodecane,[*]CC([*])C(C)=O,CCCCCCCCCCCC,3.525,416.0,new_dataset
+poly(vinyl methyl ketone),n-undecane,[*]CC([*])C(C)=O,CCCCCCCCCCC,3.77,396.0,new_dataset
+polyacrylamide,water,[*]CC([*])C(N)=O,O,0.49,333.0,new_dataset
+polyacrylamide,water,[*]CC([*])C(N)=O,O,0.5067,298.0,new_dataset
+poly(p-bromostyrene),toluene,[*]CC([*])c1ccc(Br)cc1,CC1=CC=CC=C1,0.645,293.0,new_dataset
+poly(4-hydroxystyrene),"1,4-dioxane",[*]CC([*])c1ccc(O)cc1,C1COCCO1,0.0021,463.0,new_dataset
+poly(4-hydroxystyrene),acetone,[*]CC([*])c1ccc(O)cc1,CC(=O)C,0.415,453.0,new_dataset
+poly(4-hydroxystyrene),2-butanone,[*]CC([*])c1ccc(O)cc1,CCC(=O)C,0.57,453.0,new_dataset
+poly(4-hydroxystyrene),butyl acetate,[*]CC([*])c1ccc(O)cc1,CCCCOC(=O)C,2.67,453.0,new_dataset
+poly(4-hydroxystyrene),ethyl acetate,[*]CC([*])c1ccc(O)cc1,CCOC(=O)C,1.065,453.0,new_dataset
+poly(4-hydroxystyrene),n-propyl acetate,[*]CC([*])c1ccc(O)cc1,CCCOC(=O)C,1.16,453.0,new_dataset
+poly(4-hydroxystyrene),toluene,[*]CC([*])c1ccc(O)cc1,CC1=CC=CC=C1,0.565,298.0,new_dataset
+poly(4-hydroxystyrene),toluene,[*]CC([*])c1ccc(O)cc1,CC1=CC=CC=C1,2.21,453.0,new_dataset
+poly(4-hydroxystyrene),1-propanol,[*]CC([*])c1ccc(O)cc1,CCCO,1.01,463.0,new_dataset
+poly(4-hydroxystyrene),2-methyl-1-propanol,[*]CC([*])c1ccc(O)cc1,CC(C)CO,1.1,463.0,new_dataset
+poly(4-hydroxystyrene),2-propanol ,[*]CC([*])c1ccc(O)cc1,CC(C)O,0.9,453.0,new_dataset
+poly(4-hydroxystyrene),3-pentanone ,[*]CC([*])c1ccc(O)cc1,CCC(=O)CC,0.92,453.0,new_dataset
+poly(4-hydroxystyrene),chlorobenzene,[*]CC([*])c1ccc(O)cc1,C1=CC=C(C=C1)Cl,1.99,463.0,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,0.04,338.15,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,1.1,298.15,new_dataset
+polystyrene,tetrahydrofuran,[*]CC([*])c1ccccc1,C1CCOC1,0.41,296.15,new_dataset
+polystyrene,"1,4-dioxane",[*]CC([*])c1ccccc1,C1COCCO1,0.455,425.0,new_dataset
+polystyrene,"1,4-dioxane",[*]CC([*])c1ccccc1,C1COCCO1,0.685,468.5,new_dataset
+polystyrene,acetic acid,[*]CC([*])c1ccccc1,CC(=O)O,2.575,468.5,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,0.65,423.0,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,0.93,468.5,new_dataset
+polystyrene,aniline,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)N,0.895,468.5,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,0.22,468.5,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,1.44,433.0,new_dataset
+polystyrene,dichloromethane,[*]CC([*])c1ccccc1,C(Cl)Cl,0.415,468.5,new_dataset
+polystyrene,pyridine,[*]CC([*])c1ccccc1,C1=CC=NC=C1,0.625,468.5,new_dataset
+polystyrene,tetrahydrofuran,[*]CC([*])c1ccccc1,C1CCOC1,0.43,468.5,new_dataset
+polystyrene,2-butanone,[*]CC([*])c1ccccc1,CCC(=O)C,0.735,425.0,new_dataset
+polystyrene,2-butanone,[*]CC([*])c1ccccc1,CCC(=O)C,0.76,468.5,new_dataset
+polystyrene,2-butanone,[*]CC([*])c1ccccc1,CCC(=O)C,1.015,433.0,new_dataset
+polystyrene,acetonitrile,[*]CC([*])c1ccccc1,CC#N,1.475,468.5,new_dataset
+polystyrene,ethyl acetate,[*]CC([*])c1ccccc1,CCOC(=O)C,0.46,423.0,new_dataset
+polystyrene,ethyl acetate,[*]CC([*])c1ccccc1,CCOC(=O)C,0.745,468.5,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.265,444.5,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.355,468.5,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.37,338.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.565,443.0,new_dataset
+polystyrene,water,[*]CC([*])c1ccccc1,O,3.75,468.5,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.47,423.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.56,276.5,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.785,468.5,new_dataset
+polystyrene,n-heptane ,[*]CC([*])c1ccccc1,CCCCCCC,0.79,468.5,new_dataset
+polystyrene,n-heptane ,[*]CC([*])c1ccccc1,CCCCCCC,1.315,443.0,new_dataset
+polystyrene,n-nonane,[*]CC([*])c1ccccc1,CCCCCCCCC,0.985,425.5,new_dataset
+polystyrene,n-octane,[*]CC([*])c1ccccc1,CCCCCCCC,1.035,468.5,new_dataset
+polystyrene,n-octane,[*]CC([*])c1ccccc1,CCCCCCCC,1.24,423.0,new_dataset
+polystyrene,1-propanol,[*]CC([*])c1ccccc1,CCCO,1.44,433.0,new_dataset
+polystyrene,2-propanol ,[*]CC([*])c1ccccc1,CC(C)O,0.9455,468.5,new_dataset
+polystyrene,chlorobenzene,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)Cl,0.48,468.5,new_dataset
+polystyrene,"n,n-dimethylformide",[*]CC([*])c1ccccc1,CN(C)C=O,1.225,443.0,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.18,425.5,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.27,423.0,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.315,444.5,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.46,413.0,new_dataset
+polystyrene,n-dodecane,[*]CC([*])c1ccccc1,CCCCCCCCCCCC,1.045,466.0,new_dataset
+polystyrene,o-dichlorobenzene,[*]CC([*])c1ccccc1,C1=CC=C(C(=C1)Cl)Cl,0.445,444.5,new_dataset
+polystyrene,tetralin,[*]CC([*])c1ccccc1,C1CCC2=CC=CC=C2C1,0.155,466.0,new_dataset
+polystyrene,n-hexane,[*]CC([*])c1ccccc1,CCCCCC,0.69,468.5,new_dataset
+polystyrene,n-pentane,[*]CC([*])c1ccccc1,CCCCC,0.975,468.5,new_dataset
+polystyrene,n-butylcyclohexane,[*]CC([*])c1ccccc1,CCCCC1CCCCC1,1.32,443.0,new_dataset
+polystyrene,1-pentanol,[*]CC([*])c1ccccc1,CCCCCO,1.305,468.5,new_dataset
+polystyrene,"1,2-dichloroethane",[*]CC([*])c1ccccc1,C(CCl)Cl,0.535,468.5,new_dataset
+polystyrene,m-xylene,[*]CC([*])c1ccccc1,CC1=CC(=CC=C1)C,0.37,346.75,new_dataset
+polystyrene,o-xylene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1C,0.315,444.5,new_dataset
+polystyrene,o-xylene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1C,0.49,468.5,new_dataset
+polystyrene,trichloroethylene,[*]CC([*])c1ccccc1,C(=C(Cl)Cl)Cl,0.405,468.5,new_dataset
+polystyrene,methanol,[*]CC([*])c1ccccc1,CO,1.315,468.5,new_dataset
+polystyrene,1-octanol,[*]CC([*])c1ccccc1,CCCCCCCCO,0.845,468.5,new_dataset
+polystyrene,n-tetradecane,[*]CC([*])c1ccccc1,CCCCCCCCCCCCCC,1.11,466.0,new_dataset
+polystyrene,cyclohexanone,[*]CC([*])c1ccccc1,C1CCC(=O)CC1,0.785,468.5,new_dataset
+polystyrene,isopropyl ether,[*]CC([*])c1ccccc1,CC(C)OC(C)C,0.915,468.5,new_dataset
+polystyrene,diethyl ether,[*]CC([*])c1ccccc1,CCOCC,0.745,468.5,new_dataset
+polystyrene,"3,3,4,4-tetramethyl-hexane",[*]CC([*])c1ccccc1,CCC(C)(C)C(C)(C)CC,0.83,443.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.26,444.5,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.295,338.78,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.33,393.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.38,448.0,new_dataset
+polystyrene,benzene alchohol,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)CO,1.035,468.5,new_dataset
+polystyrene,ethylene glycol,[*]CC([*])c1ccccc1,C(CO)O,3.0,468.5,new_dataset
+polystyrene,formamide,[*]CC([*])c1ccccc1,C(=O)N,3.635,468.5,new_dataset
+polystyrene,naphthalene,[*]CC([*])c1ccccc1,C1=CC=C2C=CC=CC2=C1,0.12,466.0,new_dataset
+polystyrene,nitrobenzene,[*]CC([*])c1ccccc1,c1ccc(cc1)[N+](=O)[O-],0.95,468.5,new_dataset
+polystyrene,styrene,[*]CC([*])c1ccccc1,C=CC1=CC=CC=C1,0.2467,444.5,new_dataset
+polystyrene,styrene,[*]CC([*])c1ccccc1,C=CC1=CC=CC=C1,0.31,296.5,new_dataset
+polystyrene,styrene,[*]CC([*])c1ccccc1,C=CC1=CC=CC=C1,0.34,425.0,new_dataset
+polystyrene,styrene,[*]CC([*])c1ccccc1,C=CC1=CC=CC=C1,0.58,468.5,new_dataset
+polystyrene,"1,4-dioxane",[*]CC([*])c1ccccc1,C1COCCO1,0.42,503.0,new_dataset
+polystyrene,"1,4-dioxane",[*]CC([*])c1ccccc1,C1COCCO1,0.81,493.0,new_dataset
+polystyrene,"1,4-dioxane",[*]CC([*])c1ccccc1,C1COCCO1,0.86,445.0,new_dataset
+polystyrene,"1,4-dioxane",[*]CC([*])c1ccccc1,C1COCCO1,0.95,435.0,new_dataset
+polystyrene,acetic acid,[*]CC([*])c1ccccc1,CC(=O)O,2.08,493.0,new_dataset
+polystyrene,acetic acid,[*]CC([*])c1ccccc1,CC(=O)O,2.15,503.0,new_dataset
+polystyrene,acetic acid,[*]CC([*])c1ccccc1,CC(=O)O,2.85,445.0,new_dataset
+polystyrene,acetic acid,[*]CC([*])c1ccccc1,CC(=O)O,3.0,435.0,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,0.56,503.0,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,0.6,493.0,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,1.18,445.0,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,1.3,435.0,new_dataset
+polystyrene,aniline,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)N,0.68,503.0,new_dataset
+polystyrene,aniline,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)N,0.81,493.0,new_dataset
+polystyrene,aniline,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)N,1.08,445.0,new_dataset
+polystyrene,aniline,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)N,1.11,435.0,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,0.43,435.0,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,0.44,445.0,new_dataset
+polystyrene,dichloromethane,[*]CC([*])c1ccccc1,C(Cl)Cl,0.03,493.0,new_dataset
+polystyrene,dichloromethane,[*]CC([*])c1ccccc1,C(Cl)Cl,0.51,445.0,new_dataset
+polystyrene,dichloromethane,[*]CC([*])c1ccccc1,C(Cl)Cl,0.62,435.0,new_dataset
+polystyrene,pyridine,[*]CC([*])c1ccccc1,C1=CC=NC=C1,0.23,503.0,new_dataset
+polystyrene,pyridine,[*]CC([*])c1ccccc1,C1=CC=NC=C1,0.43,493.0,new_dataset
+polystyrene,pyridine,[*]CC([*])c1ccccc1,C1=CC=NC=C1,0.65,445.0,new_dataset
+polystyrene,pyridine,[*]CC([*])c1ccccc1,C1=CC=NC=C1,1.02,435.0,new_dataset
+polystyrene,tetrahydrofuran,[*]CC([*])c1ccccc1,C1CCOC1,0.33,493.0,new_dataset
+polystyrene,tetrahydrofuran,[*]CC([*])c1ccccc1,C1CCOC1,0.61,445.0,new_dataset
+polystyrene,tetrahydrofuran,[*]CC([*])c1ccccc1,C1CCOC1,0.7,435.0,new_dataset
+polystyrene,acetonitrile,[*]CC([*])c1ccccc1,CC#N,0.93,503.0,new_dataset
+polystyrene,acetonitrile,[*]CC([*])c1ccccc1,CC#N,1.37,493.0,new_dataset
+polystyrene,acetonitrile,[*]CC([*])c1ccccc1,CC#N,1.79,445.0,new_dataset
+polystyrene,acetonitrile,[*]CC([*])c1ccccc1,CC#N,2.02,435.0,new_dataset
+polystyrene,butyl acetate,[*]CC([*])c1ccccc1,CCCCOC(=O)C,0.45,503.0,new_dataset
+polystyrene,butyl acetate,[*]CC([*])c1ccccc1,CCCCOC(=O)C,0.466,303.0,new_dataset
+polystyrene,butyl acetate,[*]CC([*])c1ccccc1,CCCCOC(=O)C,0.74,443.0,new_dataset
+polystyrene,butyl acetate,[*]CC([*])c1ccccc1,CCCCOC(=O)C,0.9,445.0,new_dataset
+polystyrene,butyl acetate,[*]CC([*])c1ccccc1,CCCCOC(=O)C,0.93,493.0,new_dataset
+polystyrene,butyl acetate,[*]CC([*])c1ccccc1,CCCCOC(=O)C,1.01,435.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.13,503.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.46,493.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.61,445.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.66,435.0,new_dataset
+polystyrene,carbon tetrachloride,[*]CC([*])c1ccccc1,C(Cl)(Cl)(Cl)Cl,0.26,503.0,new_dataset
+polystyrene,carbon tetrachloride,[*]CC([*])c1ccccc1,C(Cl)(Cl)(Cl)Cl,0.56,493.0,new_dataset
+polystyrene,carbon tetrachloride,[*]CC([*])c1ccccc1,C(Cl)(Cl)(Cl)Cl,0.81,445.0,new_dataset
+polystyrene,carbon tetrachloride,[*]CC([*])c1ccccc1,C(Cl)(Cl)(Cl)Cl,0.9,435.0,new_dataset
+polystyrene,ethanol,[*]CC([*])c1ccccc1,CCO,0.43,503.0,new_dataset
+polystyrene,ethanol,[*]CC([*])c1ccccc1,CCO,0.88,493.0,new_dataset
+polystyrene,ethanol,[*]CC([*])c1ccccc1,CCO,1.54,445.0,new_dataset
+polystyrene,ethanol,[*]CC([*])c1ccccc1,CCO,1.8,435.0,new_dataset
+polystyrene,"2,2,4-trimethylpentane ",[*]CC([*])c1ccccc1,CC(C)CC(C)(C)C,0.35,503.0,new_dataset
+polystyrene,"2,2,4-trimethylpentane ",[*]CC([*])c1ccccc1,CC(C)CC(C)(C)C,0.87,493.0,new_dataset
+polystyrene,"2,2,4-trimethylpentane ",[*]CC([*])c1ccccc1,CC(C)CC(C)(C)C,1.035,435.0,new_dataset
+polystyrene,"2,2,4-trimethylpentane ",[*]CC([*])c1ccccc1,CC(C)CC(C)(C)C,1.44,445.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.46,503.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.78,493.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,1.04,445.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,1.11,435.0,new_dataset
+polystyrene,n-heptane ,[*]CC([*])c1ccccc1,CCCCCCC,0.25,503.0,new_dataset
+polystyrene,n-heptane ,[*]CC([*])c1ccccc1,CCCCCCC,1.15,445.0,new_dataset
+polystyrene,n-heptane ,[*]CC([*])c1ccccc1,CCCCCCC,1.21,493.0,new_dataset
+polystyrene,n-heptane ,[*]CC([*])c1ccccc1,CCCCCCC,1.33,435.0,new_dataset
+polystyrene,n-octane,[*]CC([*])c1ccccc1,CCCCCCCC,0.8,503.0,new_dataset
+polystyrene,n-octane,[*]CC([*])c1ccccc1,CCCCCCCC,1.26,493.0,new_dataset
+polystyrene,n-octane,[*]CC([*])c1ccccc1,CCCCCCCC,1.93,445.0,new_dataset
+polystyrene,n-octane,[*]CC([*])c1ccccc1,CCCCCCCC,2.19,435.0,new_dataset
+polystyrene,1-propanol,[*]CC([*])c1ccccc1,CCCO,0.27,503.0,new_dataset
+polystyrene,1-propanol,[*]CC([*])c1ccccc1,CCCO,0.78,493.0,new_dataset
+polystyrene,1-propanol,[*]CC([*])c1ccccc1,CCCO,0.99,435.0,new_dataset
+polystyrene,1-propanol,[*]CC([*])c1ccccc1,CCCO,1.45,445.0,new_dataset
+polystyrene,2-methyl-1-propanol,[*]CC([*])c1ccccc1,CC(C)CO,0.81,503.0,new_dataset
+polystyrene,2-methyl-1-propanol,[*]CC([*])c1ccccc1,CC(C)CO,1.21,493.0,new_dataset
+polystyrene,2-methyl-1-propanol,[*]CC([*])c1ccccc1,CC(C)CO,1.55,445.0,new_dataset
+polystyrene,2-methyl-1-propanol,[*]CC([*])c1ccccc1,CC(C)CO,1.71,435.0,new_dataset
+polystyrene,2-propanol ,[*]CC([*])c1ccccc1,CC(C)O,0.5,493.0,new_dataset
+polystyrene,2-propanol ,[*]CC([*])c1ccccc1,CC(C)O,1.42,445.0,new_dataset
+polystyrene,2-propanol ,[*]CC([*])c1ccccc1,CC(C)O,1.74,435.0,new_dataset
+polystyrene,chlorobenzene,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)Cl,0.28,503.0,new_dataset
+polystyrene,chlorobenzene,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)Cl,0.44,493.0,new_dataset
+polystyrene,chlorobenzene,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)Cl,0.61,445.0,new_dataset
+polystyrene,chlorobenzene,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)Cl,0.68,435.0,new_dataset
+polystyrene,n-hexane,[*]CC([*])c1ccccc1,CCCCCC,0.42,493.0,new_dataset
+polystyrene,n-hexane,[*]CC([*])c1ccccc1,CCCCCC,1.09,445.0,new_dataset
+polystyrene,n-hexane,[*]CC([*])c1ccccc1,CCCCCC,1.35,435.0,new_dataset
+polystyrene,n-pentane,[*]CC([*])c1ccccc1,CCCCC,0.83,445.0,new_dataset
+polystyrene,n-pentane,[*]CC([*])c1ccccc1,CCCCC,0.83,493.0,new_dataset
+polystyrene,n-pentane,[*]CC([*])c1ccccc1,CCCCC,0.83,503.0,new_dataset
+polystyrene,n-pentane,[*]CC([*])c1ccccc1,CCCCC,1.12,435.0,new_dataset
+polystyrene,1-pentanol,[*]CC([*])c1ccccc1,CCCCCO,0.86,503.0,new_dataset
+polystyrene,1-pentanol,[*]CC([*])c1ccccc1,CCCCCO,1.06,493.0,new_dataset
+polystyrene,1-pentanol,[*]CC([*])c1ccccc1,CCCCCO,1.64,445.0,new_dataset
+polystyrene,1-pentanol,[*]CC([*])c1ccccc1,CCCCCO,1.75,435.0,new_dataset
+polystyrene,"1,2-dichloroethane",[*]CC([*])c1ccccc1,C(CCl)Cl,0.22,503.0,new_dataset
+polystyrene,"1,2-dichloroethane",[*]CC([*])c1ccccc1,C(CCl)Cl,0.39,493.0,new_dataset
+polystyrene,"1,2-dichloroethane",[*]CC([*])c1ccccc1,C(CCl)Cl,0.74,445.0,new_dataset
+polystyrene,o-xylene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1C,0.26,503.0,new_dataset
+polystyrene,o-xylene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1C,0.61,493.0,new_dataset
+polystyrene,o-xylene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1C,0.68,445.0,new_dataset
+polystyrene,o-xylene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1C,0.72,435.0,new_dataset
+polystyrene,methanol,[*]CC([*])c1ccccc1,CO,0.44,503.0,new_dataset
+polystyrene,methanol,[*]CC([*])c1ccccc1,CO,0.97,493.0,new_dataset
+polystyrene,methanol,[*]CC([*])c1ccccc1,CO,1.98,445.0,new_dataset
+polystyrene,methanol,[*]CC([*])c1ccccc1,CO,2.19,435.0,new_dataset
+polystyrene,1-octanol,[*]CC([*])c1ccccc1,CCCCCCCCO,0.55,503.0,new_dataset
+polystyrene,1-octanol,[*]CC([*])c1ccccc1,CCCCCCCCO,0.7,493.0,new_dataset
+polystyrene,1-octanol,[*]CC([*])c1ccccc1,CCCCCCCCO,1.23,445.0,new_dataset
+polystyrene,1-octanol,[*]CC([*])c1ccccc1,CCCCCCCCO,1.41,435.0,new_dataset
+polystyrene,isopropyl ether,[*]CC([*])c1ccccc1,CC(C)OC(C)C,0.41,493.0,new_dataset
+polystyrene,isopropyl ether,[*]CC([*])c1ccccc1,CC(C)OC(C)C,0.41,503.0,new_dataset
+polystyrene,isopropyl ether,[*]CC([*])c1ccccc1,CC(C)OC(C)C,1.03,445.0,new_dataset
+polystyrene,diethyl ether,[*]CC([*])c1ccccc1,CCOCC,0.71,445.0,new_dataset
+polystyrene,diethyl ether,[*]CC([*])c1ccccc1,CCOCC,0.71,493.0,new_dataset
+polystyrene,diethyl ether,[*]CC([*])c1ccccc1,CCOCC,0.71,503.0,new_dataset
+polystyrene,diethyl ether,[*]CC([*])c1ccccc1,CCOCC,0.78,435.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.8,503.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.85,493.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,1.16,445.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,1.22,435.0,new_dataset
+polystyrene,benzene alchohol,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)CO,0.65,503.0,new_dataset
+polystyrene,benzene alchohol,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)CO,0.76,493.0,new_dataset
+polystyrene,benzene alchohol,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)CO,1.3,445.0,new_dataset
+polystyrene,benzene alchohol,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)CO,1.42,435.0,new_dataset
+polystyrene,ethylene glycol,[*]CC([*])c1ccccc1,C(CO)O,2.23,503.0,new_dataset
+polystyrene,ethylene glycol,[*]CC([*])c1ccccc1,C(CO)O,2.59,493.0,new_dataset
+polystyrene,ethylene glycol,[*]CC([*])c1ccccc1,C(CO)O,3.7,445.0,new_dataset
+polystyrene,formamide,[*]CC([*])c1ccccc1,C(=O)N,3.16,503.0,new_dataset
+polystyrene,formamide,[*]CC([*])c1ccccc1,C(=O)N,3.53,493.0,new_dataset
+polystyrene,formamide,[*]CC([*])c1ccccc1,C(=O)N,4.0,445.0,new_dataset
+polystyrene,formamide,[*]CC([*])c1ccccc1,C(=O)N,4.11,435.0,new_dataset
+polystyrene,nitrobenzene,[*]CC([*])c1ccccc1,c1ccc(cc1)[N+](=O)[O-],0.72,503.0,new_dataset
+polystyrene,nitrobenzene,[*]CC([*])c1ccccc1,c1ccc(cc1)[N+](=O)[O-],0.79,493.0,new_dataset
+polystyrene,nitrobenzene,[*]CC([*])c1ccccc1,c1ccc(cc1)[N+](=O)[O-],1.07,445.0,new_dataset
+polystyrene,nitrobenzene,[*]CC([*])c1ccccc1,c1ccc(cc1)[N+](=O)[O-],1.18,435.0,new_dataset
+polystyrene,"1,4-dioxane",[*]CC([*])c1ccccc1,C1COCCO1,0.395,293.0,new_dataset
+polystyrene,"1,4-dioxane",[*]CC([*])c1ccccc1,C1COCCO1,0.43,313.0,new_dataset
+polystyrene,"1,4-dioxane",[*]CC([*])c1ccccc1,C1COCCO1,0.79,323.0,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,0.86,323.0,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,0.9513,298.0,new_dataset
+polystyrene,acetone,[*]CC([*])c1ccccc1,CC(=O)C,1.08,313.0,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,0.13,313.0,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,-0.15,296.5,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,-0.01,502.0,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,0.29,323.0,new_dataset
+polystyrene,chloroform,[*]CC([*])c1ccccc1,C(Cl)(Cl)Cl,0.31,298.0,new_dataset
+polystyrene,dichloromethane,[*]CC([*])c1ccccc1,C(Cl)Cl,0.17,296.5,new_dataset
+polystyrene,dichloromethane,[*]CC([*])c1ccccc1,C(Cl)Cl,0.34,313.0,new_dataset
+polystyrene,dichloromethane,[*]CC([*])c1ccccc1,C(Cl)Cl,-0.21,502.0,new_dataset
+polystyrene,tetrahydrofuran,[*]CC([*])c1ccccc1,C1CCOC1,-0.16,502.0,new_dataset
+polystyrene,2-butanone,[*]CC([*])c1ccccc1,CCC(=O)C,0.595,298.0,new_dataset
+polystyrene,2-butanone,[*]CC([*])c1ccccc1,CCC(=O)C,0.675,343.0,new_dataset
+polystyrene,2-butanone,[*]CC([*])c1ccccc1,CCC(=O)C,0.6767,321.5,new_dataset
+polystyrene,2-butanone,[*]CC([*])c1ccccc1,CCC(=O)C,0.84,313.0,new_dataset
+polystyrene,n-propyl acetate,[*]CC([*])c1ccccc1,CCCOC(=O)C,0.52,313.0,new_dataset
+polystyrene,n-propyl acetate,[*]CC([*])c1ccccc1,CCCOC(=O)C,0.6,343.0,new_dataset
+polystyrene,n-propyl acetate,[*]CC([*])c1ccccc1,CCCOC(=O)C,0.66,298.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.26,313.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.33,288.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.33,303.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.33,318.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.33,333.0,new_dataset
+polystyrene,carbon tetrachloride,[*]CC([*])c1ccccc1,C(Cl)(Cl)(Cl)Cl,0.23,296.5,new_dataset
+polystyrene,carbon tetrachloride,[*]CC([*])c1ccccc1,C(Cl)(Cl)(Cl)Cl,0.29,313.0,new_dataset
+polystyrene,carbon tetrachloride,[*]CC([*])c1ccccc1,C(Cl)(Cl)(Cl)Cl,0.398,296.15,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.195,403.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.32,410.6,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.32,296.5,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.335,313.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.335,321.5,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.3467,333.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.3583,298.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.375,353.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.38,318.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.39,373.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.4,293.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.4025,295.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.41,383.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.452,341.0,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.49,322.8,new_dataset
+polystyrene,toluene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1,0.57,342.5,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.5375,318.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.544,297.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.5464,338.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.598,328.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.6063,323.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.645,343.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.6492,308.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.65,277.5,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.6753,317.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.6842,307.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.7525,333.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.7625,443.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.77,288.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.775,303.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.798,313.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.8,293.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.8,353.0,new_dataset
+polystyrene,n-heptane ,[*]CC([*])c1ccccc1,CCCCCCC,0.95,313.0,new_dataset
+polystyrene,n-octane,[*]CC([*])c1ccccc1,CCCCCCCC,0.95,313.0,new_dataset
+polystyrene,2-propanol ,[*]CC([*])c1ccccc1,CC(C)O,2.6,313.0,new_dataset
+polystyrene,2-propanol ,[*]CC([*])c1ccccc1,CC(C)O,-0.15,502.0,new_dataset
+polystyrene,3-pentanone ,[*]CC([*])c1ccccc1,CCC(=O)CC,0.75,293.0,new_dataset
+polystyrene,chlorobenzene,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)Cl,0.3,410.6,new_dataset
+polystyrene,chlorobenzene,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)Cl,0.454,303.0,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.332,403.0,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.4,303.0,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.43,443.0,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.45,298.0,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.726,323.0,new_dataset
+polystyrene,ethylbenzene,[*]CC([*])c1ccccc1,CCC1=CC=CC=C1,0.7325,343.0,new_dataset
+polystyrene,n-hexane,[*]CC([*])c1ccccc1,CCCCCC,0.97,313.0,new_dataset
+polystyrene,n-hexane,[*]CC([*])c1ccccc1,CCCCCC,-0.03,502.0,new_dataset
+polystyrene,n-butylcyclohexane,[*]CC([*])c1ccccc1,CCCCC1CCCCC1,0.975,466.0,new_dataset
+polystyrene,n-hexadecane,[*]CC([*])c1ccccc1,CCCCCCCCCCCCCCCC,1.18,466.0,new_dataset
+polystyrene,"1,2-dichloroethane",[*]CC([*])c1ccccc1,C(CCl)Cl,0.85,435.0,new_dataset
+polystyrene,cyclopentane,[*]CC([*])c1ccccc1,C1CCCC1,0.64,313.0,new_dataset
+polystyrene,m-xylene,[*]CC([*])c1ccccc1,CC1=CC(=CC=C1)C,0.565,373.0,new_dataset
+polystyrene,o-xylene,[*]CC([*])c1ccccc1,CC1=CC=CC=C1C,0.4633,373.0,new_dataset
+polystyrene,trichloroethylene,[*]CC([*])c1ccccc1,C(=C(Cl)Cl)Cl,0.19,313.0,new_dataset
+polystyrene,fluorobenzene,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)F,0.37,313.0,new_dataset
+polystyrene,isopropyl ether,[*]CC([*])c1ccccc1,CC(C)OC(C)C,0.78,313.0,new_dataset
+polystyrene,isopropyl ether,[*]CC([*])c1ccccc1,CC(C)OC(C)C,1.42,435.0,new_dataset
+polystyrene,tetrachloroethylene,[*]CC([*])c1ccccc1,C(=C(Cl)Cl)(Cl)Cl,0.36,313.0,new_dataset
+polystyrene,methylcyclohexane,[*]CC([*])c1ccccc1,CC1CCCCC1,0.58,345.0,new_dataset
+polystyrene,n-propyl ether,[*]CC([*])c1ccccc1,CCCOCCC,0.81,293.0,new_dataset
+polystyrene,decahydronaphthalene,[*]CC([*])c1ccccc1,C1CCC2CCCCC2C1,0.45,466.0,new_dataset
+polystyrene,tert-butyl  acetate,[*]CC([*])c1ccccc1,CC(=O)OC(C)(C)C,0.55,323.0,new_dataset
+polystyrene,tert-butyl  acetate,[*]CC([*])c1ccccc1,CC(=O)OC(C)(C)C,0.56,283.0,new_dataset
+polystyrene,tert-butyl  acetate,[*]CC([*])c1ccccc1,CC(=O)OC(C)(C)C,0.56,303.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.185,353.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.245,296.5,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.27,313.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.28,333.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.335,343.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.3425,298.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.3625,323.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.4,303.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.4267,293.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.43,443.0,new_dataset
+polystyrene,benzaldehyde,[*]CC([*])c1ccccc1,C1=CC=C(C=C1)C=O,0.7025,468.5,new_dataset
+polystyrene,cumene,[*]CC([*])c1ccccc1,CC(C)C1=CC=CC=C1,0.444,298.0,new_dataset
+polystyrene,ethylene glycol,[*]CC([*])c1ccccc1,C(CO)O,0.085,296.5,new_dataset
+polystyrene,ethylene glycol,[*]CC([*])c1ccccc1,C(CO)O,3.777,435.0,new_dataset
+polystyrene,styrene,[*]CC([*])c1ccccc1,C=CC1=CC=CC=C1,0.37,293.0,new_dataset
+polystyrene,benzene,[*]CC([*])c1ccccc1,C1=CC=CC=C1,0.465,298.0,new_dataset
+polystyrene,cyclohexane,[*]CC([*])c1ccccc1,C1CCCCC1,0.509,298.0,new_dataset
+poly(1-butene),benzene,[*]CC([*])CC,C1=CC=CC=C1,0.49,408.0,new_dataset
+poly(1-butene),toluene,[*]CC([*])CC,CC1=CC=CC=C1,0.47,398.0,new_dataset
+poly(1-butene),2-methylhexane ,[*]CC([*])CC,CCCCC(C)C,0.39,398.0,new_dataset
+poly(1-butene),"2,2,4-trimethylpentane ",[*]CC([*])CC,CC(C)CC(C)(C)C,0.35,398.0,new_dataset
+poly(1-butene),"2,3-dimethylpentane",[*]CC([*])CC,CCC(C)C(C)C,0.35,398.0,new_dataset
+poly(1-butene),"2,4-dimethylpentane ",[*]CC([*])CC,CCC(C)CC(C)C,0.4,398.0,new_dataset
+poly(1-butene),"2,5-dimethylhexane ",[*]CC([*])CC,CC(C)CCC(C)C,0.36,398.0,new_dataset
+poly(1-butene),3-ethylpentane,[*]CC([*])CC,CCC(CC)CC,0.34,398.0,new_dataset
+poly(1-butene),cyclohexane,[*]CC([*])CC,C1CCCCC1,0.2,408.0,new_dataset
+poly(1-butene),n-heptane ,[*]CC([*])CC,CCCCCCC,0.38,398.0,new_dataset
+poly(1-butene),n-nonane,[*]CC([*])CC,CCCCCCCCC,0.32,398.0,new_dataset
+poly(1-butene),n-octane,[*]CC([*])CC,CCCCCCCC,0.36,398.0,new_dataset
+poly(vinyl chloride),"1,4-dioxane",[*]CC([*])Cl,C1COCCO1,0.155,405.5,new_dataset
+poly(vinyl chloride),"1,4-dioxane",[*]CC([*])Cl,C1COCCO1,0.486,318.5,new_dataset
+poly(vinyl chloride),acetone,[*]CC([*])Cl,CC(=O)C,0.65,403.0,new_dataset
+poly(vinyl chloride),chloroform,[*]CC([*])Cl,C(Cl)(Cl)Cl,0.91,393.0,new_dataset
+poly(vinyl chloride),dichloromethane,[*]CC([*])Cl,C(Cl)Cl,1.63,393.0,new_dataset
+poly(vinyl chloride),nitromethane,[*]CC([*])Cl,C[N+](=O)[O-],0.65,405.5,new_dataset
+poly(vinyl chloride),tetrahydrofuran,[*]CC([*])Cl,C1CCOC1,0.39,405.5,new_dataset
+poly(vinyl chloride),2-butanone,[*]CC([*])Cl,CCC(=O)C,0.408,298.0,new_dataset
+poly(vinyl chloride),2-butanone,[*]CC([*])Cl,CCC(=O)C,0.59,403.0,new_dataset
+poly(vinyl chloride),acetonitrile,[*]CC([*])Cl,CC#N,0.95,405.5,new_dataset
+poly(vinyl chloride),ethyl acetate,[*]CC([*])Cl,CCOC(=O)C,0.94,393.0,new_dataset
+poly(vinyl chloride),benzene,[*]CC([*])Cl,C1=CC=CC=C1,0.39,405.5,new_dataset
+poly(vinyl chloride),benzene,[*]CC([*])Cl,C1=CC=CC=C1,0.75,393.0,new_dataset
+poly(vinyl chloride),carbon tetrachloride,[*]CC([*])Cl,C(Cl)(Cl)(Cl)Cl,1.14,393.0,new_dataset
+poly(vinyl chloride),cyclohexane,[*]CC([*])Cl,C1CCCCC1,1.15,405.5,new_dataset
+poly(vinyl chloride),n-heptane ,[*]CC([*])Cl,CCCCCCC,2.0,393.0,new_dataset
+poly(vinyl chloride),2-propanol ,[*]CC([*])Cl,CC(C)O,1.04,405.5,new_dataset
+poly(vinyl chloride),n-hexane,[*]CC([*])Cl,CCCCCC,2.1,393.0,new_dataset
+poly(vinyl chloride),n-pentane,[*]CC([*])Cl,CCCCC,1.7,393.0,new_dataset
+poly(vinyl chloride),"1,2-dichloroethane",[*]CC([*])Cl,C(CCl)Cl,0.52,405.5,new_dataset
+poly(vinyl chloride),methanol,[*]CC([*])Cl,CO,1.33,405.5,new_dataset
+poly(vinyl chloride),acetaldehyde,[*]CC([*])Cl,CC=O,0.725,405.5,new_dataset
+poly(vinyl chloride),cyclohexanone,[*]CC([*])Cl,C1CCC(=O)CC1,0.252,322.5,new_dataset
+poly(vinyl alcohol),water,[*]CC([*])O,O,0.494,298.0,new_dataset
+poly(vinyl methyl ether),acetone,[*]CC([*])OC,CC(=O)C,0.54,423.0,new_dataset
+poly(vinyl methyl ether),ethyl acetate,[*]CC([*])OC,CCOC(=O)C,0.21,423.0,new_dataset
+poly(vinyl methyl ether),cyclohexane,[*]CC([*])OC,C1CCCCC1,0.47,423.0,new_dataset
+poly(vinyl methyl ether),n-octane,[*]CC([*])OC,CCCCCCCC,0.97,423.0,new_dataset
+poly(vinyl methyl ether),ethylbenzene,[*]CC([*])OC,CCC1=CC=CC=C1,0.1,423.0,new_dataset
+poly(vinyl methyl ether),n-butylcyclohexane,[*]CC([*])OC,CCCCC1CCCCC1,3.725,396.0,new_dataset
+poly(vinyl methyl ether),"1,4-dioxane",[*]CC([*])OC,C1COCCO1,0.2,313.0,new_dataset
+poly(vinyl methyl ether),acetone,[*]CC([*])OC,CC(=O)C,0.75,313.0,new_dataset
+poly(vinyl methyl ether),chloroform,[*]CC([*])OC,C(Cl)(Cl)Cl,0.92,313.0,new_dataset
+poly(vinyl methyl ether),dichloromethane,[*]CC([*])OC,C(Cl)Cl,0.39,313.0,new_dataset
+poly(vinyl methyl ether),2-butanone,[*]CC([*])OC,CCC(=O)C,0.5,313.0,new_dataset
+poly(vinyl methyl ether),n-propyl acetate,[*]CC([*])OC,CCCOC(=O)C,0.25,313.0,new_dataset
+poly(vinyl methyl ether),benzene,[*]CC([*])OC,C1=CC=CC=C1,0.15,313.0,new_dataset
+poly(vinyl methyl ether),carbon tetrachloride,[*]CC([*])OC,C(Cl)(Cl)(Cl)Cl,0.06,313.0,new_dataset
+poly(vinyl methyl ether),toluene,[*]CC([*])OC,CC1=CC=CC=C1,0.14,313.0,new_dataset
+poly(vinyl methyl ether),cyclohexane,[*]CC([*])OC,C1CCCCC1,1.16,313.0,new_dataset
+poly(vinyl methyl ether),n-heptane ,[*]CC([*])OC,CCCCCCC,1.15,313.0,new_dataset
+poly(vinyl methyl ether),n-octane,[*]CC([*])OC,CCCCCCCC,1.16,313.0,new_dataset
+poly(vinyl methyl ether),2-propanol ,[*]CC([*])OC,CC(C)O,0.9,313.0,new_dataset
+poly(vinyl methyl ether),n-hexane,[*]CC([*])OC,CCCCCC,1.16,313.0,new_dataset
+poly(vinyl methyl ether),cyclopentane,[*]CC([*])OC,C1CCCC1,1.14,313.0,new_dataset
+poly(vinyl methyl ether),trichloroethylene,[*]CC([*])OC,C(=C(Cl)Cl)Cl,0.26,313.0,new_dataset
+poly(vinyl methyl ether),isopropyl ether,[*]CC([*])OC,CC(C)OC(C)C,0.76,313.0,new_dataset
+poly(vinyl methyl ether),tetrachloroethylene,[*]CC([*])OC,C(=C(Cl)Cl)(Cl)Cl,0.34,313.0,new_dataset
+poly(vinyl methyl ether),fluorobenzene,[*]CC([*])OC,C1=CC=C(C=C1)F,0.0,313.0,new_dataset
+poly(vinyl acetate),"1,4-dioxane",[*]CC([*])OC(C)=O,C1COCCO1,0.407,298.0,new_dataset
+poly(vinyl acetate),acetone,[*]CC([*])OC(C)=O,CC(=O)C,0.345,313.0,new_dataset
+poly(vinyl acetate),chloroform,[*]CC([*])OC(C)=O,C(Cl)(Cl)Cl,-0.17,408.0,new_dataset
+poly(vinyl acetate),chloroform,[*]CC([*])OC(C)=O,C(Cl)(Cl)Cl,-0.09,353.0,new_dataset
+poly(vinyl acetate),dichloromethane,[*]CC([*])OC(C)=O,C(Cl)Cl,0.14,373.0,new_dataset
+poly(vinyl acetate),methyl acetate,[*]CC([*])OC(C)=O,CC(=O)OC,0.3,373.0,new_dataset
+poly(vinyl acetate),butyl acetate,[*]CC([*])OC(C)=O,CCCCOC(=O)C,0.51,373.0,new_dataset
+poly(vinyl acetate),ethyl acetate,[*]CC([*])OC(C)=O,CCOC(=O)C,0.36,373.0,new_dataset
+poly(vinyl acetate),ethyl acetate,[*]CC([*])OC(C)=O,CCOC(=O)C,0.415,293.0,new_dataset
+poly(vinyl acetate),ethyl acetate,[*]CC([*])OC(C)=O,CCOC(=O)C,0.3067,303.0,new_dataset
+poly(vinyl acetate),n-propyl acetate,[*]CC([*])OC(C)=O,CCCOC(=O)C,0.42,373.0,new_dataset
+poly(vinyl acetate),2-pentanone,[*]CC([*])OC(C)=O,CCCC(=O)C,0.38,408.0,new_dataset
+poly(vinyl acetate),benzene,[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.335,303.0,new_dataset
+poly(vinyl acetate),benzene,[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.42,293.0,new_dataset
+poly(vinyl acetate),benzene,[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.46,278.0,new_dataset
+poly(vinyl acetate),ethanol,[*]CC([*])OC(C)=O,CCO,0.47,323.0,new_dataset
+poly(vinyl acetate),ethanol,[*]CC([*])OC(C)=O,CCO,0.8,373.0,new_dataset
+poly(vinyl acetate),water,[*]CC([*])OC(C)=O,O,2.5,313.0,new_dataset
+poly(vinyl acetate),1-propanol,[*]CC([*])OC(C)=O,CCCO,1.04,323.0,new_dataset
+poly(vinyl acetate),1-propanol,[*]CC([*])OC(C)=O,CCCO,1.13,313.0,new_dataset
+poly(vinyl acetate),2-methyl-1-propanol,[*]CC([*])OC(C)=O,CC(C)CO,0.3,408.0,new_dataset
+poly(vinyl acetate),n-pentane,[*]CC([*])OC(C)=O,CCCCC,2.06,373.0,new_dataset
+poly(vinyl acetate),n-hexadecane,[*]CC([*])OC(C)=O,CCCCCCCCCCCCCCCC,2.99,408.0,new_dataset
+poly(vinyl acetate),1-chloropentane,[*]CC([*])OC(C)=O,CCCCCCl,0.82,373.0,new_dataset
+poly(vinyl acetate),"1,1-dichloroethane",[*]CC([*])OC(C)=O,CC(Cl)Cl,0.19,373.0,new_dataset
+poly(vinyl acetate),"1,1,1-trichloroethane",[*]CC([*])OC(C)=O,CC(Cl)(Cl)Cl,0.49,373.0,new_dataset
+poly(vinyl acetate),"1,2-dichloroethane",[*]CC([*])OC(C)=O,C(CCl)Cl,-0.04,413.0,new_dataset
+poly(vinyl acetate),chloromethane,[*]CC([*])OC(C)=O,CCl,0.25,373.0,new_dataset
+poly(vinyl acetate),cycloheptane,[*]CC([*])OC(C)=O,C1CCCCCC1,1.63,373.0,new_dataset
+poly(vinyl acetate),cyclohexene,[*]CC([*])OC(C)=O,C1CCC=CC1,1.18,373.0,new_dataset
+poly(vinyl acetate),cyclooctane,[*]CC([*])OC(C)=O,C1CCCCCCC1,1.67,373.0,new_dataset
+poly(vinyl acetate),cyclopentane,[*]CC([*])OC(C)=O,C1CCCC1,1.53,373.0,new_dataset
+poly(vinyl acetate),n-butane,[*]CC([*])OC(C)=O,CCCC,1.97,373.0,new_dataset
+poly(vinyl acetate),propane,[*]CC([*])OC(C)=O,CCC,3.2,373.0,new_dataset
+poly(vinyl acetate),trichloroethylene,[*]CC([*])OC(C)=O,C(=C(Cl)Cl)Cl,0.4,373.0,new_dataset
+poly(vinyl acetate),1-chloropropane,[*]CC([*])OC(C)=O,CCCCl,0.75,313.0,new_dataset
+poly(vinyl acetate),1-decanol,[*]CC([*])OC(C)=O,CCCCCCCCCCO,0.81,408.0,new_dataset
+poly(vinyl acetate),1-heptanol,[*]CC([*])OC(C)=O,CCCCCCCO,0.55,408.0,new_dataset
+poly(vinyl acetate),1-hexanol,[*]CC([*])OC(C)=O,CCCCCCO,0.49,408.0,new_dataset
+poly(vinyl acetate),1-octanol,[*]CC([*])OC(C)=O,CCCCCCCCO,0.65,408.0,new_dataset
+poly(vinyl acetate),1-octene,[*]CC([*])OC(C)=O,CCCCCCC=C,1.55,408.0,new_dataset
+poly(vinyl acetate),2-butanol,[*]CC([*])OC(C)=O,CCC(C)O,0.31,408.0,new_dataset
+poly(vinyl acetate),allyl chloride,[*]CC([*])OC(C)=O,C=CCCl,0.27,313.0,new_dataset
+poly(vinyl acetate),cyclohexanol,[*]CC([*])OC(C)=O,C1CCC(CC1)O,0.44,408.0,new_dataset
+poly(vinyl acetate),dimethylphthalate,[*]CC([*])OC(C)=O,COC(=O)C1=CC=CC=C1C(=O)OC,0.4035,298.0,new_dataset
+poly(vinyl acetate),isopropylamine,[*]CC([*])OC(C)=O,CC(C)N,0.66,313.0,new_dataset
+poly(vinyl acetate),n-tetradecane,[*]CC([*])OC(C)=O,CCCCCCCCCCCCCC,2.7,408.0,new_dataset
+poly(vinyl acetate),propylamine,[*]CC([*])OC(C)=O,CCCN,0.61,313.0,new_dataset
+poly(vinyl acetate),acetone,[*]CC([*])OC(C)=O,CC(=O)C,0.425,298.0,new_dataset
+poly(vinyl acetate),2-butanone,[*]CC([*])OC(C)=O,CCC(=O)C,0.43,298.0,new_dataset
+poly(vinyl acetate),benzene,[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.42,298.0,new_dataset
+poly(vinyl acetate),acetone,[*]CC([*])OC(C)=O,CC(=O)C,0.32,303.0,new_dataset
+poly(vinyl acetate),acetone,[*]CC([*])OC(C)=O,CC(=O)C,0.38,323.0,new_dataset
+poly(vinyl acetate),1-propanol,[*]CC([*])OC(C)=O,CCCO,1.3,303.0,new_dataset
+polyepichlorohydrin,chloroform,[*]CC(CCl)O[*],C(Cl)(Cl)Cl,0.25,373.0,new_dataset
+polyepichlorohydrin,2-butanone,[*]CC(CCl)O[*],CCC(=O)C,0.2,373.0,new_dataset
+polyepichlorohydrin,carbon tetrachloride,[*]CC(CCl)O[*],C(Cl)(Cl)(Cl)Cl,0.69,373.0,new_dataset
+polyepichlorohydrin,"1,4-dioxane",[*]CC(CCl)O[*],C1COCCO1,0.04,373.0,new_dataset
+polyepichlorohydrin,acetone,[*]CC(CCl)O[*],CC(=O)C,0.28,373.0,new_dataset
+polyepichlorohydrin,dichloromethane,[*]CC(CCl)O[*],C(Cl)Cl,0.18,373.0,new_dataset
+polyepichlorohydrin,methyl acetate,[*]CC(CCl)O[*],CC(=O)OC,0.39,373.0,new_dataset
+polyepichlorohydrin,tetrahydrofuran,[*]CC(CCl)O[*],C1CCOC1,0.01,373.0,new_dataset
+polyepichlorohydrin,butyl acetate,[*]CC(CCl)O[*],CCCCOC(=O)C,0.36,373.0,new_dataset
+polyepichlorohydrin,ethyl acetate,[*]CC(CCl)O[*],CCOC(=O)C,0.35,373.0,new_dataset
+polyepichlorohydrin,n-propyl acetate,[*]CC(CCl)O[*],CCCOC(=O)C,0.33,373.0,new_dataset
+polyepichlorohydrin,benzene,[*]CC(CCl)O[*],C1=CC=CC=C1,0.25,373.0,new_dataset
+polyepichlorohydrin,toluene,[*]CC(CCl)O[*],CC1=CC=CC=C1,0.31,373.0,new_dataset
+polyepichlorohydrin,ethanol,[*]CC(CCl)O[*],CCO,1.58,373.0,new_dataset
+polyepichlorohydrin,cyclohexane,[*]CC(CCl)O[*],C1CCCCC1,1.25,373.0,new_dataset
+polyepichlorohydrin,n-heptane ,[*]CC(CCl)O[*],CCCCCCC,1.79,373.0,new_dataset
+polyepichlorohydrin,n-nonane,[*]CC(CCl)O[*],CCCCCCCCC,1.99,373.0,new_dataset
+polyepichlorohydrin,n-octane,[*]CC(CCl)O[*],CCCCCCCC,1.89,373.0,new_dataset
+polyepichlorohydrin,1-propanol,[*]CC(CCl)O[*],CCCO,1.22,373.0,new_dataset
+polyepichlorohydrin,chlorobenzene,[*]CC(CCl)O[*],C1=CC=C(C=C1)Cl,0.24,373.0,new_dataset
+polyepichlorohydrin,ethylbenzene,[*]CC(CCl)O[*],CCC1=CC=CC=C1,0.44,373.0,new_dataset
+polyepichlorohydrin,n-hexane,[*]CC(CCl)O[*],CCCCCC,1.72,373.0,new_dataset
+polyepichlorohydrin,n-pentane,[*]CC(CCl)O[*],CCCCC,1.64,373.0,new_dataset
+polyepichlorohydrin,n-butylcyclohexane,[*]CC(CCl)O[*],CCCCC1CCCCC1,2.12,373.0,new_dataset
+polyepichlorohydrin,1-butanol,[*]CC(CCl)O[*],CCCCO,1.12,373.0,new_dataset
+polyepichlorohydrin,1-chlorobutane,[*]CC(CCl)O[*],CCCCCl,0.62,373.0,new_dataset
+polyepichlorohydrin,1-chloropentane,[*]CC(CCl)O[*],CCCCCCl,0.65,373.0,new_dataset
+polyepichlorohydrin,1-pentanol,[*]CC(CCl)O[*],CCCCCO,1.03,373.0,new_dataset
+polyepichlorohydrin,"1,1-dichloroethane",[*]CC(CCl)O[*],CC(Cl)Cl,0.33,373.0,new_dataset
+polyepichlorohydrin,"1,1,1-trichloroethane",[*]CC(CCl)O[*],CC(Cl)(Cl)Cl,0.46,373.0,new_dataset
+polyepichlorohydrin,"1,2-dichloroethane",[*]CC(CCl)O[*],C(CCl)Cl,0.2,373.0,new_dataset
+polyepichlorohydrin,chloromethane,[*]CC(CCl)O[*],CCl,0.36,373.0,new_dataset
+polyepichlorohydrin,cycloheptane,[*]CC(CCl)O[*],C1CCCCCC1,1.19,373.0,new_dataset
+polyepichlorohydrin,cyclohexene,[*]CC(CCl)O[*],C1CCC=CC1,0.84,373.0,new_dataset
+polyepichlorohydrin,cyclooctane,[*]CC(CCl)O[*],C1CCCCCCC1,1.2,373.0,new_dataset
+polyepichlorohydrin,cyclopentane,[*]CC(CCl)O[*],C1CCCC1,1.16,373.0,new_dataset
+polyepichlorohydrin,n-butane,[*]CC(CCl)O[*],CCCC,1.65,373.0,new_dataset
+polyepichlorohydrin,n-undecane,[*]CC(CCl)O[*],CCCCCCCCCCC,2.24,373.0,new_dataset
+polyepichlorohydrin,propane,[*]CC(CCl)O[*],CCC,1.71,373.0,new_dataset
+polyepichlorohydrin,trichloroethylene,[*]CC(CCl)O[*],C(=C(Cl)Cl)Cl,0.53,373.0,new_dataset
+polyethylene,chloroform,[*]CC[*],C(Cl)(Cl)Cl,0.41,408.0,new_dataset
+polyethylene,2-pentanone,[*]CC[*],CCCC(=O)C,0.88,408.0,new_dataset
+polyethylene,benzene,[*]CC[*],C1=CC=CC=C1,0.34,358.0,new_dataset
+polyethylene,benzene,[*]CC[*],C1=CC=CC=C1,0.395,403.0,new_dataset
+polyethylene,benzene,[*]CC[*],C1=CC=CC=C1,0.49,355.5,new_dataset
+polyethylene,carbon tetrachloride,[*]CC[*],C(Cl)(Cl)(Cl)Cl,0.24,408.0,new_dataset
+polyethylene,toluene,[*]CC[*],CC1=CC=CC=C1,0.34,405.5,new_dataset
+polyethylene,toluene,[*]CC[*],CC1=CC=CC=C1,0.39,422.0,new_dataset
+polyethylene,"2,2,4-trimethylpentane ",[*]CC[*],CC(C)CC(C)(C)C,0.34,405.5,new_dataset
+polyethylene,"2,2,4-trimethylpentane ",[*]CC[*],CC(C)CC(C)(C)C,0.4,422.0,new_dataset
+polyethylene,"2,4-dimethylpentane ",[*]CC[*],CCC(C)CC(C)C,0.33,405.5,new_dataset
+polyethylene,"2,4-dimethylpentane ",[*]CC[*],CCC(C)CC(C)C,0.38,422.0,new_dataset
+polyethylene,"2,5-dimethylhexane ",[*]CC[*],CC(C)CCC(C)C,0.35,405.5,new_dataset
+polyethylene,"2,5-dimethylhexane ",[*]CC[*],CC(C)CCC(C)C,0.4,422.0,new_dataset
+polyethylene,cyclohexane,[*]CC[*],C1CCCCC1,0.18,403.0,new_dataset
+polyethylene,n-heptane ,[*]CC[*],CCCCCCC,0.63,382.0,new_dataset
+polyethylene,n-nonane,[*]CC[*],CCCCCCCCC,0.28,405.5,new_dataset
+polyethylene,n-nonane,[*]CC[*],CCCCCCCCC,0.34,422.0,new_dataset
+polyethylene,n-octane,[*]CC[*],CCCCCCCC,0.3,405.5,new_dataset
+polyethylene,n-octane,[*]CC[*],CCCCCCCC,0.36,422.0,new_dataset
+polyethylene,chlorobenzene,[*]CC[*],C1=CC=C(C=C1)Cl,0.34,408.0,new_dataset
+polyethylene,ethylbenzene,[*]CC[*],CCC1=CC=CC=C1,0.33,405.5,new_dataset
+polyethylene,ethylbenzene,[*]CC[*],CCC1=CC=CC=C1,0.37,422.0,new_dataset
+polyethylene,n-dodecane,[*]CC[*],CCCCCCCCCCCC,0.28,422.0,new_dataset
+polyethylene,p-xylene,[*]CC[*],CC1=CC=C(C=C1)C,0.22,378.0,new_dataset
+polyethylene,p-xylene,[*]CC[*],CC1=CC=C(C=C1)C,0.28,405.5,new_dataset
+polyethylene,p-xylene,[*]CC[*],CC1=CC=C(C=C1)C,0.32,422.0,new_dataset
+polyethylene,p-xylene,[*]CC[*],CC1=CC=C(C=C1)C,0.45,354.0,new_dataset
+polyethylene,tetralin,[*]CC[*],C1CCC2=CC=CC=C2C1,0.28,405.5,new_dataset
+polyethylene,tetralin,[*]CC[*],C1CCC2=CC=CC=C2C1,0.32,422.0,new_dataset
+polyethylene,tetralin,[*]CC[*],C1CCC2=CC=CC=C2C1,0.495,378.0,new_dataset
+polyethylene,n-butylcyclohexane,[*]CC[*],CCCCC1CCCCC1,0.12,458.0,new_dataset
+polyethylene,n-butylcyclohexane,[*]CC[*],CCCCC1CCCCC1,0.18,440.5,new_dataset
+polyethylene,n-butylcyclohexane,[*]CC[*],CCCCC1CCCCC1,0.27,405.5,new_dataset
+polyethylene,n-butylcyclohexane,[*]CC[*],CCCCC1CCCCC1,0.31,422.0,new_dataset
+polyethylene,2-methylheptane,[*]CC[*],CCCCCC(C)C,0.39,422.0,new_dataset
+polyethylene,1-butanol,[*]CC[*],CCCCO,1.38,408.0,new_dataset
+polyethylene,1-chlorobutane,[*]CC[*],CCCCCl,0.44,408.0,new_dataset
+polyethylene,"1,3,5-trimethylbenzene",[*]CC[*],CC1=CC(=CC(=C1)C)C,0.24,405.5,new_dataset
+polyethylene,"1,3,5-trimethylbenzene",[*]CC[*],CC1=CC(=CC(=C1)C)C,0.28,422.0,new_dataset
+polyethylene,3-methylhexane ,[*]CC[*],CCCC(C)CC,0.34,405.5,new_dataset
+polyethylene,3-methylhexane ,[*]CC[*],CCCC(C)CC,0.4,422.0,new_dataset
+polyethylene,m-xylene,[*]CC[*],CC1=CC(=CC=C1)C,0.29,405.5,new_dataset
+polyethylene,m-xylene,[*]CC[*],CC1=CC(=CC=C1)C,0.34,422.0,new_dataset
+polyethylene,o-xylene,[*]CC[*],CC1=CC=CC=C1C,0.31,383.0,new_dataset
+polyethylene,1-octene,[*]CC[*],CCCCCCC=C,0.31,408.0,new_dataset
+polyethylene,cyclohexanol,[*]CC[*],C1CCC(CC1)O,1.22,408.0,new_dataset
+polyethylene,"2,2,4-trimethylhexane",[*]CC[*],CCC(C)CC(C)(C)C,0.28,405.5,new_dataset
+polyethylene,"2,2,4-trimethylhexane",[*]CC[*],CCC(C)CC(C)(C)C,0.35,422.0,new_dataset
+polyethylene,3-methylheptane,[*]CC[*],CCCCC(C)CC,0.3,405.5,new_dataset
+polyethylene,"3,4-dimethylhexane",[*]CC[*],CCC(C)C(C)CC,0.25,405.5,new_dataset
+polyethylene,"3,4-dimethylhexane",[*]CC[*],CCC(C)C(C)CC,0.31,422.0,new_dataset
+polyethylene,decahydronaphthalene,[*]CC[*],C1CCC2CCCCC2C1,0.01,405.5,new_dataset
+polyethylene,decahydronaphthalene,[*]CC[*],C1CCC2CCCCC2C1,0.05,422.0,new_dataset
+polyethylene,phenol,[*]CC[*],C1=CC=C(C=C1)O,1.5,408.0,new_dataset
+polyethylene,n-dodecane,[*]CC[*],CCCCCCCCCCCC,0.21,405.5,new_dataset
+polyisoprene,acetone,[*]CCC=C([*])C,CC(=O)C,1.535,298.0,new_dataset
+polyisoprene,chloroform,[*]CCC=C([*])C,C(Cl)(Cl)Cl,0.205,296.5,new_dataset
+polyisoprene,2-butanone,[*]CCC=C([*])C,CCC(=O)C,1.0067,318.0,new_dataset
+polyisoprene,2-butanone,[*]CCC=C([*])C,CCC(=O)C,1.1133,298.0,new_dataset
+polyisoprene,ethyl acetate,[*]CCC=C([*])C,CCOC(=O)C,0.7917,323.0,new_dataset
+polyisoprene,ethyl acetate,[*]CCC=C([*])C,CCOC(=O)C,0.9585,298.0,new_dataset
+polyisoprene,benzene,[*]CCC=C([*])C,C1=CC=CC=C1,0.4157,298.0,new_dataset
+polyisoprene,benzene,[*]CCC=C([*])C,C1=CC=CC=C1,0.425,283.0,new_dataset
+polyisoprene,benzene,[*]CCC=C([*])C,C1=CC=CC=C1,0.4413,313.0,new_dataset
+polyisoprene,carbon tetrachloride,[*]CCC=C([*])C,C(Cl)(Cl)(Cl)Cl,0.15,296.5,new_dataset
+polyisoprene,toluene,[*]CCC=C([*])C,CC1=CC=CC=C1,0.34,313.0,new_dataset
+polyisoprene,toluene,[*]CCC=C([*])C,CC1=CC=CC=C1,0.42,303.0,new_dataset
+polyisoprene,2-methylhexane ,[*]CCC=C([*])C,CCCCC(C)C,0.51,313.0,new_dataset
+polyisoprene,"2,2,4-trimethylpentane ",[*]CCC=C([*])C,CC(C)CC(C)(C)C,0.475,313.0,new_dataset
+polyisoprene,n-heptane ,[*]CCC=C([*])C,CCCCCCC,0.495,313.0,new_dataset
+polyisoprene,n-octane,[*]CCC=C([*])C,CCCCCCCC,0.475,313.0,new_dataset
+polyisoprene,ethylbenzene,[*]CCC=C([*])C,CCC1=CC=CC=C1,0.32,313.0,new_dataset
+polyisoprene,p-xylene,[*]CCC=C([*])C,CC1=CC=C(C=C1)C,0.27,313.0,new_dataset
+polyisoprene,n-hexane,[*]CCC=C([*])C,CCCCCC,0.52,313.0,new_dataset
+polyisoprene,n-pentane,[*]CCC=C([*])C,CCCCC,0.57,313.0,new_dataset
+polyisoprene,2-methylheptane,[*]CCC=C([*])C,CCCCCC(C)C,0.485,313.0,new_dataset
+polyisoprene,2-methylpentane,[*]CCC=C([*])C,CCCC(C)C,0.54,313.0,new_dataset
+polychloroprene,"1,4-dioxane",[*]CCC=C([*])Cl,C1COCCO1,0.46,373.0,new_dataset
+polychloroprene,acetone,[*]CCC=C([*])Cl,CC(=O)C,0.87,373.0,new_dataset
+polychloroprene,chloroform,[*]CCC=C([*])Cl,C(Cl)(Cl)Cl,0.28,373.0,new_dataset
+polychloroprene,dichloromethane,[*]CCC=C([*])Cl,C(Cl)Cl,0.43,373.0,new_dataset
+polychloroprene,methyl acetate,[*]CCC=C([*])Cl,CC(=O)OC,0.81,373.0,new_dataset
+polychloroprene,tetrahydrofuran,[*]CCC=C([*])Cl,C1CCOC1,0.06,373.0,new_dataset
+polychloroprene,2-butanone,[*]CCC=C([*])Cl,CCC(=O)C,0.61,373.0,new_dataset
+polychloroprene,butyl acetate,[*]CCC=C([*])Cl,CCCCOC(=O)C,0.44,373.0,new_dataset
+polychloroprene,ethyl acetate,[*]CCC=C([*])Cl,CCOC(=O)C,0.64,373.0,new_dataset
+polychloroprene,n-propyl acetate,[*]CCC=C([*])Cl,CCCOC(=O)C,0.51,373.0,new_dataset
+polychloroprene,benzene,[*]CCC=C([*])Cl,C1=CC=CC=C1,0.18,373.0,new_dataset
+polychloroprene,carbon tetrachloride,[*]CCC=C([*])Cl,C(Cl)(Cl)(Cl)Cl,0.23,373.0,new_dataset
+polychloroprene,toluene,[*]CCC=C([*])Cl,CC1=CC=CC=C1,0.14,373.0,new_dataset
+polychloroprene,ethanol,[*]CCC=C([*])Cl,CCO,2.27,373.0,new_dataset
+polychloroprene,cyclohexane,[*]CCC=C([*])Cl,C1CCCCC1,0.55,373.0,new_dataset
+polychloroprene,n-heptane ,[*]CCC=C([*])Cl,CCCCCCC,0.88,373.0,new_dataset
+polychloroprene,n-nonane,[*]CCC=C([*])Cl,CCCCCCCCC,0.92,373.0,new_dataset
+polychloroprene,n-octane,[*]CCC=C([*])Cl,CCCCCCCC,0.9,373.0,new_dataset
+polychloroprene,1-propanol,[*]CCC=C([*])Cl,CCCO,1.83,373.0,new_dataset
+polychloroprene,chlorobenzene,[*]CCC=C([*])Cl,C1=CC=C(C=C1)Cl,0.1,373.0,new_dataset
+polychloroprene,ethylbenzene,[*]CCC=C([*])Cl,CCC1=CC=CC=C1,0.16,373.0,new_dataset
+polychloroprene,n-hexane,[*]CCC=C([*])Cl,CCCCCC,0.91,373.0,new_dataset
+polychloroprene,n-pentane,[*]CCC=C([*])Cl,CCCCC,0.96,373.0,new_dataset
+polychloroprene,n-butylcyclohexane,[*]CCC=C([*])Cl,CCCCC1CCCCC1,0.94,373.0,new_dataset
+polychloroprene,1-butanol,[*]CCC=C([*])Cl,CCCCO,1.61,373.0,new_dataset
+polychloroprene,1-chlorobutane,[*]CCC=C([*])Cl,CCCCCl,0.39,373.0,new_dataset
+polychloroprene,1-chloropentane,[*]CCC=C([*])Cl,CCCCCCl,0.33,373.0,new_dataset
+polychloroprene,1-pentanol,[*]CCC=C([*])Cl,CCCCCO,1.41,373.0,new_dataset
+polychloroprene,"1,1-dichloroethane",[*]CCC=C([*])Cl,CC(Cl)Cl,0.37,373.0,new_dataset
+polychloroprene,"1,1,1-trichloroethane",[*]CCC=C([*])Cl,CC(Cl)(Cl)Cl,0.21,373.0,new_dataset
+polychloroprene,"1,2-dichloroethane",[*]CCC=C([*])Cl,C(CCl)Cl,0.48,373.0,new_dataset
+polychloroprene,chloromethane,[*]CCC=C([*])Cl,CCl,0.52,373.0,new_dataset
+polychloroprene,cycloheptane,[*]CCC=C([*])Cl,C1CCCCCC1,0.45,373.0,new_dataset
+polychloroprene,cyclohexene,[*]CCC=C([*])Cl,C1CCC=CC1,0.38,373.0,new_dataset
+polychloroprene,cyclooctane,[*]CCC=C([*])Cl,C1CCCCCCC1,0.4,373.0,new_dataset
+polychloroprene,cyclopentane,[*]CCC=C([*])Cl,C1CCCC1,0.55,373.0,new_dataset
+polychloroprene,n-butane,[*]CCC=C([*])Cl,CCCC,0.99,373.0,new_dataset
+polychloroprene,n-undecane,[*]CCC=C([*])Cl,CCCCCCCCCCC,0.96,373.0,new_dataset
+polychloroprene,propane,[*]CCC=C([*])Cl,CCC,1.36,373.0,new_dataset
+polychloroprene,trichloroethylene,[*]CCC=C([*])Cl,C(=C(Cl)Cl)Cl,0.24,373.0,new_dataset
+poly(hexamethylene sebacate),acetone,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],CC(=O)C,0.82,393.0,new_dataset
+poly(hexamethylene sebacate),chloroform,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],C(Cl)(Cl)Cl,0.06,393.0,new_dataset
+poly(hexamethylene sebacate),dichloromethane,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],C(Cl)Cl,0.81,393.0,new_dataset
+poly(hexamethylene sebacate),2-butanone,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],CCC(=O)C,0.58,393.0,new_dataset
+poly(hexamethylene sebacate),ethyl acetate,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],CCOC(=O)C,0.57,393.0,new_dataset
+poly(hexamethylene sebacate),benzene,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],C1=CC=CC=C1,0.21,393.0,new_dataset
+poly(hexamethylene sebacate),carbon tetrachloride,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],C(Cl)(Cl)(Cl)Cl,0.37,393.0,new_dataset
+poly(hexamethylene sebacate),n-heptane ,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],CCCCCCC,1.0,393.0,new_dataset
+poly(hexamethylene sebacate),n-hexane,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],CCCCCC,1.2,393.0,new_dataset
+poly(hexamethylene sebacate),n-pentane,[*]CCCCCCOC(=O)CCCCCCCCC(=O)O[*],CCCCC,1.1,393.0,new_dataset
+"poly(1,3-dioxocane)",tetrahydrofuran,[*]CCCCCOCO[*],C1CCOC1,0.38,298.0,new_dataset
+"poly(1,3-dioxocane)",toluene,[*]CCCCCOCO[*],CC1=CC=CC=C1,0.37,298.0,new_dataset
+poly(tetramethylene oxide),"1,4-dioxane",[*]CCCCO[*],C1COCCO1,0.39,373.0,new_dataset
+poly(tetramethylene oxide),acetone,[*]CCCCO[*],CC(=O)C,0.73,373.0,new_dataset
+poly(tetramethylene oxide),chloroform,[*]CCCCO[*],C(Cl)(Cl)Cl,0.38,373.0,new_dataset
+poly(tetramethylene oxide),dichloromethane,[*]CCCCO[*],C(Cl)Cl,0.12,373.0,new_dataset
+poly(tetramethylene oxide),methyl acetate,[*]CCCCO[*],CC(=O)OC,0.58,373.0,new_dataset
+poly(tetramethylene oxide),tetrahydrofuran,[*]CCCCO[*],C1CCOC1,0.13,373.0,new_dataset
+poly(tetramethylene oxide),2-butanone,[*]CCCCO[*],CCC(=O)C,0.53,373.0,new_dataset
+poly(tetramethylene oxide),butyl acetate,[*]CCCCO[*],CCCCOC(=O)C,0.3,373.0,new_dataset
+poly(tetramethylene oxide),ethyl acetate,[*]CCCCO[*],CCOC(=O)C,0.45,373.0,new_dataset
+poly(tetramethylene oxide),n-propyl acetate,[*]CCCCO[*],CCCOC(=O)C,0.36,373.0,new_dataset
+poly(tetramethylene oxide),benzene,[*]CCCCO[*],C1=CC=CC=C1,0.04,373.0,new_dataset
+poly(tetramethylene oxide),carbon tetrachloride,[*]CCCCO[*],C(Cl)(Cl)(Cl)Cl,0.1,373.0,new_dataset
+poly(tetramethylene oxide),toluene,[*]CCCCO[*],CC1=CC=CC=C1,0.04,373.0,new_dataset
+poly(tetramethylene oxide),ethanol,[*]CCCCO[*],CCO,1.08,373.0,new_dataset
+poly(tetramethylene oxide),cyclohexane,[*]CCCCO[*],C1CCCCC1,1.23,373.0,new_dataset
+poly(tetramethylene oxide),n-heptane ,[*]CCCCO[*],CCCCCCC,0.73,373.0,new_dataset
+poly(tetramethylene oxide),n-nonane,[*]CCCCO[*],CCCCCCCCC,0.78,373.0,new_dataset
+poly(tetramethylene oxide),n-octane,[*]CCCCO[*],CCCCCCCC,0.75,373.0,new_dataset
+poly(tetramethylene oxide),1-propanol,[*]CCCCO[*],CCCO,0.71,373.0,new_dataset
+poly(tetramethylene oxide),chlorobenzene,[*]CCCCO[*],C1=CC=C(C=C1)Cl,0.09,373.0,new_dataset
+poly(tetramethylene oxide),ethylbenzene,[*]CCCCO[*],CCC1=CC=CC=C1,0.07,373.0,new_dataset
+poly(tetramethylene oxide),n-hexane,[*]CCCCO[*],CCCCCC,0.74,373.0,new_dataset
+poly(tetramethylene oxide),n-pentane,[*]CCCCO[*],CCCCC,0.76,373.0,new_dataset
+poly(tetramethylene oxide),n-butylcyclohexane,[*]CCCCO[*],CCCCC1CCCCC1,0.8,373.0,new_dataset
+poly(tetramethylene oxide),1-butanol,[*]CCCCO[*],CCCCO,0.54,373.0,new_dataset
+poly(tetramethylene oxide),1-chlorobutane,[*]CCCCO[*],CCCCCl,0.22,373.0,new_dataset
+poly(tetramethylene oxide),1-chloropentane,[*]CCCCO[*],CCCCCCl,0.18,373.0,new_dataset
+poly(tetramethylene oxide),1-pentanol,[*]CCCCO[*],CCCCCO,0.37,373.0,new_dataset
+poly(tetramethylene oxide),"1,2-dichloroethane",[*]CCCCO[*],C(CCl)Cl,0.05,373.0,new_dataset
+poly(tetramethylene oxide),chloromethane,[*]CCCCO[*],CCl,0.19,373.0,new_dataset
+poly(tetramethylene oxide),cycloheptane,[*]CCCCO[*],C1CCCCCC1,0.41,373.0,new_dataset
+poly(tetramethylene oxide),cyclohexene,[*]CCCCO[*],C1CCC=CC1,0.28,373.0,new_dataset
+poly(tetramethylene oxide),cyclooctane,[*]CCCCO[*],C1CCCCCCC1,0.4,373.0,new_dataset
+poly(tetramethylene oxide),cyclopentane,[*]CCCCO[*],C1CCCC1,0.45,373.0,new_dataset
+poly(tetramethylene oxide),n-butane,[*]CCCCO[*],CCCC,0.76,373.0,new_dataset
+poly(tetramethylene oxide),n-undecane,[*]CCCCO[*],CCCCCCCCCCC,0.83,373.0,new_dataset
+poly(tetramethylene oxide),propane,[*]CCCCO[*],CCC,0.9,373.0,new_dataset
+poly(tetramethylene oxide),trichloroethylene,[*]CCCCO[*],C(=C(Cl)Cl)Cl,-0.06,373.0,new_dataset
+poly(tetramethylene oxide),"1,1,1-trichloroethane",[*]CCCCO[*],CC(Cl)(Cl)Cl,-0.02,373.0,new_dataset
+poly(tetramethylene oxide),"1,1-dichloroethane",[*]CCCCO[*],CC(Cl)Cl,0.0,373.0,new_dataset
+poly(ethylene oxide),water,[*]CCO[*],O,0.426,373.15,new_dataset
+poly(ethylene oxide),water,[*]CCO[*],O,0.43,298.15,new_dataset
+poly(ethylene oxide),toluene,[*]CCO[*],CC1=CC=CC=C1,0.3,373.8,new_dataset
+poly(ethylene oxide),toluene,[*]CCO[*],CC1=CC=CC=C1,0.41,372.8,new_dataset
+poly(ethylene oxide),"1,4-dioxane",[*]CCO[*],C1COCCO1,0.2,373.0,new_dataset
+poly(ethylene oxide),acetone,[*]CCO[*],CC(=O)C,0.47,373.0,new_dataset
+poly(ethylene oxide),chloroform,[*]CCO[*],C(Cl)(Cl)Cl,0.55,373.0,new_dataset
+poly(ethylene oxide),dichloromethane,[*]CCO[*],C(Cl)Cl,0.51,373.0,new_dataset
+poly(ethylene oxide),methyl acetate,[*]CCO[*],CC(=O)OC,0.36,373.0,new_dataset
+poly(ethylene oxide),tetrahydrofuran,[*]CCO[*],C1CCOC1,0.3,373.0,new_dataset
+poly(ethylene oxide),2-butanone,[*]CCO[*],CCC(=O)C,0.43,373.0,new_dataset
+poly(ethylene oxide),butyl acetate,[*]CCO[*],CCCCOC(=O)C,0.48,373.0,new_dataset
+poly(ethylene oxide),ethyl acetate,[*]CCO[*],CCOC(=O)C,0.39,373.0,new_dataset
+poly(ethylene oxide),n-propyl acetate,[*]CCO[*],CCCOC(=O)C,0.43,373.0,new_dataset
+poly(ethylene oxide),benzene,[*]CCO[*],C1=CC=CC=C1,0.13,373.0,new_dataset
+poly(ethylene oxide),benzene,[*]CCO[*],C1=CC=CC=C1,0.14,323.0,new_dataset
+poly(ethylene oxide),benzene,[*]CCO[*],C1=CC=CC=C1,0.14,323.3,new_dataset
+poly(ethylene oxide),benzene,[*]CCO[*],C1=CC=CC=C1,0.1614,343.0,new_dataset
+poly(ethylene oxide),carbon tetrachloride,[*]CCO[*],C(Cl)(Cl)(Cl)Cl,0.38,373.0,new_dataset
+poly(ethylene oxide),toluene,[*]CCO[*],CC1=CC=CC=C1,0.26,373.0,new_dataset
+poly(ethylene oxide),ethanol,[*]CCO[*],CCO,0.7,373.0,new_dataset
+poly(ethylene oxide),cyclohexane,[*]CCO[*],C1CCCCC1,1.23,373.0,new_dataset
+poly(ethylene oxide),n-heptane ,[*]CCO[*],CCCCCCC,1.75,373.0,new_dataset
+poly(ethylene oxide),n-nonane,[*]CCO[*],CCCCCCCCC,1.97,373.0,new_dataset
+poly(ethylene oxide),n-octane,[*]CCO[*],CCCCCCCC,1.85,373.0,new_dataset
+poly(ethylene oxide),1-propanol,[*]CCO[*],CCCO,0.47,373.0,new_dataset
+poly(ethylene oxide),chlorobenzene,[*]CCO[*],C1=CC=C(C=C1)Cl,0.04,373.0,new_dataset
+poly(ethylene oxide),ethylbenzene,[*]CCO[*],CCC1=CC=CC=C1,0.6567,348.0,new_dataset
+poly(ethylene oxide),ethylbenzene,[*]CCO[*],CCC1=CC=CC=C1,0.4,373.0,new_dataset
+poly(ethylene oxide),n-hexane,[*]CCO[*],CCCCCC,1.7,373.0,new_dataset
+poly(ethylene oxide),n-pentane,[*]CCO[*],CCCCC,1.66,373.0,new_dataset
+poly(ethylene oxide),n-butylcyclohexane,[*]CCO[*],CCCCC1CCCCC1,2.1,373.0,new_dataset
+poly(ethylene oxide),1-butanol,[*]CCO[*],CCCCO,0.41,373.0,new_dataset
+poly(ethylene oxide),1-chlorobutane,[*]CCO[*],CCCCCl,0.57,373.0,new_dataset
+poly(ethylene oxide),1-chloropentane,[*]CCO[*],CCCCCCl,0.63,373.0,new_dataset
+poly(ethylene oxide),1-pentanol,[*]CCO[*],CCCCCO,0.34,373.0,new_dataset
+poly(ethylene oxide),"1,1-dichloroethane",[*]CCO[*],CC(Cl)Cl,0.04,373.0,new_dataset
+poly(ethylene oxide),"1,1,1-trichloroethane",[*]CCO[*],CC(Cl)(Cl)Cl,0.2,373.0,new_dataset
+poly(ethylene oxide),"1,2-dichloroethane",[*]CCO[*],C(CCl)Cl,0.31,373.0,new_dataset
+poly(ethylene oxide),chloromethane,[*]CCO[*],CCl,0.12,373.0,new_dataset
+poly(ethylene oxide),cycloheptane,[*]CCO[*],C1CCCCCC1,1.23,373.0,new_dataset
+poly(ethylene oxide),cyclohexene,[*]CCO[*],C1CCC=CC1,0.85,373.0,new_dataset
+poly(ethylene oxide),cyclooctane,[*]CCO[*],C1CCCCCCC1,1.26,373.0,new_dataset
+poly(ethylene oxide),cyclopentane,[*]CCO[*],C1CCCC1,1.12,373.0,new_dataset
+poly(ethylene oxide),n-butane,[*]CCO[*],CCCC,1.64,373.0,new_dataset
+poly(ethylene oxide),n-undecane,[*]CCO[*],CCCCCCCCCCC,2.22,373.0,new_dataset
+poly(ethylene oxide),propane,[*]CCO[*],CCC,2.17,373.0,new_dataset
+poly(ethylene oxide),trichloroethylene,[*]CCO[*],C(=C(Cl)Cl)Cl,0.08,373.0,new_dataset
+poly(ethylene succinate),acetone,[*]CCOC(=O)CCC(=O)O[*],CC(=O)C,0.61,393.0,new_dataset
+poly(ethylene succinate),chloroform,[*]CCOC(=O)CCC(=O)O[*],C(Cl)(Cl)Cl,0.49,393.0,new_dataset
+poly(ethylene succinate),dichloromethane,[*]CCOC(=O)CCC(=O)O[*],C(Cl)Cl,1.09,393.0,new_dataset
+poly(ethylene succinate),2-butanone,[*]CCOC(=O)CCC(=O)O[*],CCC(=O)C,0.69,393.0,new_dataset
+poly(ethylene succinate),ethyl acetate,[*]CCOC(=O)CCC(=O)O[*],CCOC(=O)C,0.7,393.0,new_dataset
+poly(ethylene succinate),benzene,[*]CCOC(=O)CCC(=O)O[*],C1=CC=CC=C1,0.79,393.0,new_dataset
+poly(ethylene succinate),carbon tetrachloride,[*]CCOC(=O)CCC(=O)O[*],C(Cl)(Cl)(Cl)Cl,1.32,393.0,new_dataset
+poly(ethylene succinate),n-heptane ,[*]CCOC(=O)CCC(=O)O[*],CCCCCCC,1.9,393.0,new_dataset
+poly(ethylene succinate),n-hexane,[*]CCOC(=O)CCC(=O)O[*],CCCCCC,1.9,393.0,new_dataset
+poly(ethylene succinate),n-pentane,[*]CCOC(=O)CCC(=O)O[*],CCCCC,2.6,393.0,new_dataset
+poly(ethylene adipate),acetone,[*]CCOC(=O)CCCCC(=O)O[*],CC(=O)C,0.53,393.0,new_dataset
+poly(ethylene adipate),chloroform,[*]CCOC(=O)CCCCC(=O)O[*],C(Cl)(Cl)Cl,0.29,393.0,new_dataset
+poly(ethylene adipate),dichloromethane,[*]CCOC(=O)CCCCC(=O)O[*],C(Cl)Cl,0.96,393.0,new_dataset
+poly(ethylene adipate),2-butanone,[*]CCOC(=O)CCCCC(=O)O[*],CCC(=O)C,0.88,393.0,new_dataset
+poly(ethylene adipate),ethyl acetate,[*]CCOC(=O)CCCCC(=O)O[*],CCOC(=O)C,0.55,393.0,new_dataset
+poly(ethylene adipate),benzene,[*]CCOC(=O)CCCCC(=O)O[*],C1=CC=CC=C1,0.58,393.0,new_dataset
+poly(ethylene adipate),carbon tetrachloride,[*]CCOC(=O)CCCCC(=O)O[*],C(Cl)(Cl)(Cl)Cl,0.88,393.0,new_dataset
+poly(ethylene adipate),n-heptane ,[*]CCOC(=O)CCCCC(=O)O[*],CCCCCCC,2.1,393.0,new_dataset
+poly(ethylene adipate),n-hexane,[*]CCOC(=O)CCCCC(=O)O[*],CCCCCC,2.0,393.0,new_dataset
+poly(ethylene adipate),n-pentane,[*]CCOC(=O)CCCCC(=O)O[*],CCCCC,1.8,393.0,new_dataset
+poly(ethylene adipate) ,chloroform,[*]CCOC(=O)CCCCC(=O)O[*],C(Cl)(Cl)Cl,-0.55,373.0,new_dataset
+poly(ethylene adipate) ,dichloromethane,[*]CCOC(=O)CCCCC(=O)O[*],C(Cl)Cl,-0.51,373.0,new_dataset
+poly(ethylene adipate) ,chlorobenzene,[*]CCOC(=O)CCCCC(=O)O[*],C1=CC=C(C=C1)Cl,-0.04,373.0,new_dataset
+poly(ethylene adipate) ,"1,1-dichloroethane",[*]CCOC(=O)CCCCC(=O)O[*],CC(Cl)Cl,-0.04,373.0,new_dataset
+poly(ethylene adipate) ,"1,2-dichloroethane",[*]CCOC(=O)CCCCC(=O)O[*],C(CCl)Cl,-0.31,373.0,new_dataset
+polycarbonate ,benzene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,C1=CC=CC=C1,0.39,526.0,new_dataset
+polycarbonate ,benzene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,C1=CC=CC=C1,0.4,505.0,new_dataset
+polycarbonate ,benzene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,C1=CC=CC=C1,0.48,484.0,new_dataset
+polycarbonate ,benzene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,C1=CC=CC=C1,0.49,452.0,new_dataset
+polycarbonate ,toluene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CC1=CC=CC=C1,0.37,526.0,new_dataset
+polycarbonate ,toluene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CC1=CC=CC=C1,0.44,505.0,new_dataset
+polycarbonate ,toluene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CC1=CC=CC=C1,0.46,452.0,new_dataset
+polycarbonate ,toluene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CC1=CC=CC=C1,0.47,484.0,new_dataset
+polycarbonate ,cyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,C1CCCCC1,0.77,526.0,new_dataset
+polycarbonate ,cyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,C1CCCCC1,0.9,505.0,new_dataset
+polycarbonate ,cyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,C1CCCCC1,1.03,484.0,new_dataset
+polycarbonate ,cyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,C1CCCCC1,1.15,463.0,new_dataset
+polycarbonate ,cyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,C1CCCCC1,1.23,452.0,new_dataset
+polycarbonate ,n-heptane ,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCC,1.26,505.0,new_dataset
+polycarbonate ,n-heptane ,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCC,1.34,526.0,new_dataset
+polycarbonate ,n-heptane ,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCC,1.38,484.0,new_dataset
+polycarbonate ,n-heptane ,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCC,1.6,463.0,new_dataset
+polycarbonate ,n-heptane ,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCC,1.73,452.0,new_dataset
+polycarbonate ,n-nonane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCC,1.43,526.0,new_dataset
+polycarbonate ,n-nonane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCC,1.5,484.0,new_dataset
+polycarbonate ,n-nonane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCC,1.52,505.0,new_dataset
+polycarbonate ,n-nonane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCC,1.65,463.0,new_dataset
+polycarbonate ,n-nonane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCC,1.69,452.0,new_dataset
+polycarbonate ,n-octane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCC,1.4,505.0,new_dataset
+polycarbonate ,n-octane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCC,1.44,484.0,new_dataset
+polycarbonate ,n-octane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCC,1.45,526.0,new_dataset
+polycarbonate ,n-octane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCC,1.6,452.0,new_dataset
+polycarbonate ,n-octane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCC,1.6,463.0,new_dataset
+polycarbonate ,ethylbenzene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCC1=CC=CC=C1,0.44,505.0,new_dataset
+polycarbonate ,ethylbenzene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCC1=CC=CC=C1,0.47,526.0,new_dataset
+polycarbonate ,ethylbenzene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCC1=CC=CC=C1,0.49,452.0,new_dataset
+polycarbonate ,ethylbenzene,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCC1=CC=CC=C1,0.52,484.0,new_dataset
+polycarbonate ,n-dodecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCC,1.46,526.0,new_dataset
+polycarbonate ,n-dodecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCC,1.54,505.0,new_dataset
+polycarbonate ,n-dodecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCC,1.61,484.0,new_dataset
+polycarbonate ,n-dodecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCC,1.69,463.0,new_dataset
+polycarbonate ,n-dodecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCC,1.74,452.0,new_dataset
+polycarbonate ,n-hexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCC,1.19,505.0,new_dataset
+polycarbonate ,n-hexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCC,1.2,484.0,new_dataset
+polycarbonate ,n-hexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCC,1.71,463.0,new_dataset
+polycarbonate ,n-hexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCC,1.87,452.0,new_dataset
+polycarbonate ,n-hexadecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCCCCCC,1.57,526.0,new_dataset
+polycarbonate ,n-hexadecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCCCCCC,1.67,505.0,new_dataset
+polycarbonate ,n-hexadecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCCCCCC,1.73,484.0,new_dataset
+polycarbonate ,n-undecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCC,1.53,526.0,new_dataset
+polycarbonate ,n-undecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCC,1.54,505.0,new_dataset
+polycarbonate ,n-undecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCC,1.58,484.0,new_dataset
+polycarbonate ,n-undecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCC,1.66,463.0,new_dataset
+polycarbonate ,n-undecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCC,1.73,452.0,new_dataset
+polycarbonate ,n-tetradecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCCCC,1.54,526.0,new_dataset
+polycarbonate ,n-tetradecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCCCC,1.58,505.0,new_dataset
+polycarbonate ,n-tetradecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCCCC,1.64,484.0,new_dataset
+polycarbonate ,n-tetradecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCCCC,1.76,463.0,new_dataset
+polycarbonate ,n-tetradecane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCCCCCC,1.82,452.0,new_dataset
+polycarbonate ,ethylcyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCC1CCCCC1,0.92,526.0,new_dataset
+polycarbonate ,ethylcyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCC1CCCCC1,0.99,505.0,new_dataset
+polycarbonate ,ethylcyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCC1CCCCC1,1.04,484.0,new_dataset
+polycarbonate ,ethylcyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCC1CCCCC1,1.12,452.0,new_dataset
+polycarbonate ,methylcyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CC1CCCCC1,0.82,526.0,new_dataset
+polycarbonate ,methylcyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CC1CCCCC1,0.92,505.0,new_dataset
+polycarbonate ,methylcyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CC1CCCCC1,1.03,484.0,new_dataset
+polycarbonate ,methylcyclohexane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CC1CCCCC1,1.19,452.0,new_dataset
+polycarbonate ,decane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCC,1.48,505.0,new_dataset
+polycarbonate ,decane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCC,1.52,526.0,new_dataset
+polycarbonate ,decane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCC,1.53,484.0,new_dataset
+polycarbonate ,decane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCC,1.66,463.0,new_dataset
+polycarbonate ,decane,[*]Oc1ccc(Oc2ccc(OC([*])=O)cc2)cc1,CCCCCCCCCC,1.67,452.0,new_dataset
+"poly(cis-1,4-butadiene)",chloroform,C(=C/C[*])/C[*],C(Cl)(Cl)Cl,-0.13,296.5,new_dataset
+"poly(cis-1,4-butadiene)",benzene,C(=C/C[*])/C[*],C1=CC=CC=C1,0.28,308.0,new_dataset
+"poly(cis-1,4-butadiene)",cyclohexane,C(=C/C[*])/C[*],C1CCCCC1,0.4,300.5,new_dataset
+"poly(cis-1,4-butadiene)",n-hexane,C(=C/C[*])/C[*],CCCCCC,1.06,300.5,new_dataset
+"poly(cis-1,4-butadiene)",n-butylcyclohexane,C(=C/C[*])/C[*],CCCCC1CCCCC1,0.46,308.0,new_dataset
+"poly(cis-1,4-butadiene)",n-hexadecane,C(=C/C[*])/C[*],CCCCCCCCCCCCCCCC,0.54,308.0,new_dataset
+poly(dimethyl siloxane),"1,4-dioxane",C[Si](C)(O[*])[*],C1COCCO1,1.25,320.5,new_dataset
+poly(dimethyl siloxane),chloroform,C[Si](C)(O[*])[*],C(Cl)(Cl)Cl,0.6,373.0,new_dataset
+poly(dimethyl siloxane),2-butanone,C[Si](C)(O[*])[*],CCC(=O)C,0.5,298.0,new_dataset
+poly(dimethyl siloxane),2-butanone,C[Si](C)(O[*])[*],CCC(=O)C,0.57,308.0,new_dataset
+poly(dimethyl siloxane),carbon tetrachloride,C[Si](C)(O[*])[*],C(Cl)(Cl)(Cl)Cl,0.36,373.0,new_dataset
+poly(dimethyl siloxane),"2,2,4-trimethylpentane ",C[Si](C)(O[*])[*],CC(C)CC(C)(C)C,0.43,293.0,new_dataset
+poly(dimethyl siloxane),"2,2,4-trimethylpentane ",C[Si](C)(O[*])[*],CC(C)CC(C)(C)C,0.44,320.5,new_dataset
+poly(dimethyl siloxane),cyclohexane,C[Si](C)(O[*])[*],C1CCCCC1,0.475,320.5,new_dataset
+poly(dimethyl siloxane),n-octane,C[Si](C)(O[*])[*],CCCCCCCC,0.54,320.5,new_dataset
+poly(dimethyl siloxane),p-xylene,C[Si](C)(O[*])[*],CC1=CC=C(C=C1)C,0.785,320.5,new_dataset
+poly(dimethyl siloxane),n-pentane,C[Si](C)(O[*])[*],CCCCC,0.45,298.0,new_dataset
+poly(dimethyl siloxane),n-butylcyclohexane,C[Si](C)(O[*])[*],CCCCC1CCCCC1,0.64,293.0,new_dataset
+poly(dimethyl siloxane),"1,3,5-trimethylbenzene",C[Si](C)(O[*])[*],CC1=CC(=CC(=C1)C)C,0.905,320.5,new_dataset
+poly(dimethyl siloxane),cycloheptane,C[Si](C)(O[*])[*],C1CCCCCC1,0.545,320.5,new_dataset
+poly(dimethyl siloxane),cyclooctane,C[Si](C)(O[*])[*],C1CCCCCCC1,0.635,320.5,new_dataset
+poly(dimethyl siloxane),cyclopentane,C[Si](C)(O[*])[*],C1CCCC1,0.44,320.5,new_dataset
+poly(dimethyl siloxane),hexamethyl disiloxane,C[Si](C)(O[*])[*],C[Si](C)(C)O[Si](C)(C)C,0.31,320.5,new_dataset
+poly(dimethyl siloxane),m-xylene,C[Si](C)(O[*])[*],CC1=CC(=CC=C1)C,0.79,320.5,new_dataset
+poly(dimethyl siloxane),o-xylene,C[Si](C)(O[*])[*],CC1=CC=CC=C1C,0.83,320.5,new_dataset
+poly(dimethyl siloxane),"1,4-dioxane",C[Si](C)(O[*])[*],C1COCCO1,1.06,373.0,new_dataset
+poly(dimethyl siloxane),acetone,C[Si](C)(O[*])[*],CC(=O)C,0.7033,303.0,new_dataset
+poly(dimethyl siloxane),acetone,C[Si](C)(O[*])[*],CC(=O)C,0.7081,298.0,new_dataset
+poly(dimethyl siloxane),acetone,C[Si](C)(O[*])[*],CC(=O)C,0.7425,293.0,new_dataset
+poly(dimethyl siloxane),acetone,C[Si](C)(O[*])[*],CC(=O)C,0.7725,320.5,new_dataset
+poly(dimethyl siloxane),acetone,C[Si](C)(O[*])[*],CC(=O)C,0.785,313.0,new_dataset
+poly(dimethyl siloxane),acetone,C[Si](C)(O[*])[*],CC(=O)C,1.33,373.0,new_dataset
+poly(dimethyl siloxane),chloroform,C[Si](C)(O[*])[*],C(Cl)(Cl)Cl,0.645,303.0,new_dataset
+poly(dimethyl siloxane),dichloromethane,C[Si](C)(O[*])[*],C(Cl)Cl,0.69,373.0,new_dataset
+poly(dimethyl siloxane),methyl acetate,C[Si](C)(O[*])[*],CC(=O)OC,1.01,373.0,new_dataset
+poly(dimethyl siloxane),tetrahydrofuran,C[Si](C)(O[*])[*],C1CCOC1,0.48,373.0,new_dataset
+poly(dimethyl siloxane),2-butanone,C[Si](C)(O[*])[*],CCC(=O)C,0.54,323.0,new_dataset
+poly(dimethyl siloxane),2-butanone,C[Si](C)(O[*])[*],CCC(=O)C,0.55,303.0,new_dataset
+poly(dimethyl siloxane),2-butanone,C[Si](C)(O[*])[*],CCC(=O)C,0.565,293.0,new_dataset
+poly(dimethyl siloxane),butyl acetate,C[Si](C)(O[*])[*],CCCCOC(=O)C,0.68,373.0,new_dataset
+poly(dimethyl siloxane),ethyl acetate,C[Si](C)(O[*])[*],CCOC(=O)C,0.82,373.0,new_dataset
+poly(dimethyl siloxane),n-propyl acetate,C[Si](C)(O[*])[*],CCCOC(=O)C,0.72,373.0,new_dataset
+poly(dimethyl siloxane),benzene,C[Si](C)(O[*])[*],C1=CC=CC=C1,0.591,303.0,new_dataset
+poly(dimethyl siloxane),benzene,C[Si](C)(O[*])[*],C1=CC=CC=C1,0.69,298.0,new_dataset
+poly(dimethyl siloxane),benzene,C[Si](C)(O[*])[*],C1=CC=CC=C1,0.745,293.0,new_dataset
+poly(dimethyl siloxane),toluene,C[Si](C)(O[*])[*],CC1=CC=CC=C1,0.52,303.0,new_dataset
+poly(dimethyl siloxane),toluene,C[Si](C)(O[*])[*],CC1=CC=CC=C1,0.59,373.0,new_dataset
+poly(dimethyl siloxane),toluene,C[Si](C)(O[*])[*],CC1=CC=CC=C1,0.6218,293.0,new_dataset
+poly(dimethyl siloxane),toluene,C[Si](C)(O[*])[*],CC1=CC=CC=C1,0.625,298.0,new_dataset
+poly(dimethyl siloxane),toluene,C[Si](C)(O[*])[*],CC1=CC=CC=C1,0.655,313.0,new_dataset
+poly(dimethyl siloxane),toluene,C[Si](C)(O[*])[*],CC1=CC=CC=C1,0.7525,273.0,new_dataset
+poly(dimethyl siloxane),toluene,C[Si](C)(O[*])[*],CC1=CC=CC=C1,0.7525,320.5,new_dataset
+poly(dimethyl siloxane),ethanol,C[Si](C)(O[*])[*],CCO,2.6,373.0,new_dataset
+poly(dimethyl siloxane),2-methylhexane ,C[Si](C)(O[*])[*],CCCCC(C)C,0.45,320.5,new_dataset
+poly(dimethyl siloxane),"2,2,4-trimethylpentane ",C[Si](C)(O[*])[*],CC(C)CC(C)(C)C,0.36,298.0,new_dataset
+poly(dimethyl siloxane),cyclohexane,C[Si](C)(O[*])[*],C1CCCCC1,0.35,373.0,new_dataset
+poly(dimethyl siloxane),cyclohexane,C[Si](C)(O[*])[*],C1CCCCC1,0.4248,293.0,new_dataset
+poly(dimethyl siloxane),cyclohexane,C[Si](C)(O[*])[*],C1CCCCC1,0.4329,303.0,new_dataset
+poly(dimethyl siloxane),cyclohexane,C[Si](C)(O[*])[*],C1CCCCC1,0.475,298.0,new_dataset
+poly(dimethyl siloxane),n-heptane ,C[Si](C)(O[*])[*],CCCCCCC,0.35,373.0,new_dataset
+poly(dimethyl siloxane),n-heptane ,C[Si](C)(O[*])[*],CCCCCCC,0.42,308.0,new_dataset
+poly(dimethyl siloxane),n-heptane ,C[Si](C)(O[*])[*],CCCCCCC,0.43,323.0,new_dataset
+poly(dimethyl siloxane),n-heptane ,C[Si](C)(O[*])[*],CCCCCCC,0.44,303.0,new_dataset
+poly(dimethyl siloxane),n-heptane ,C[Si](C)(O[*])[*],CCCCCCC,0.4667,293.0,new_dataset
+poly(dimethyl siloxane),n-heptane ,C[Si](C)(O[*])[*],CCCCCCC,0.49,273.0,new_dataset
+poly(dimethyl siloxane),n-heptane ,C[Si](C)(O[*])[*],CCCCCCC,0.4925,320.5,new_dataset
+poly(dimethyl siloxane),n-nonane,C[Si](C)(O[*])[*],CCCCCCCCC,0.45,373.0,new_dataset
+poly(dimethyl siloxane),n-nonane,C[Si](C)(O[*])[*],CCCCCCCCC,0.475,323.0,new_dataset
+poly(dimethyl siloxane),n-nonane,C[Si](C)(O[*])[*],CCCCCCCCC,0.485,293.0,new_dataset
+poly(dimethyl siloxane),n-octane,C[Si](C)(O[*])[*],CCCCCCCC,0.4,313.0,new_dataset
+poly(dimethyl siloxane),n-octane,C[Si](C)(O[*])[*],CCCCCCCC,0.43,298.0,new_dataset
+poly(dimethyl siloxane),n-octane,C[Si](C)(O[*])[*],CCCCCCCC,0.44,323.0,new_dataset
+poly(dimethyl siloxane),n-octane,C[Si](C)(O[*])[*],CCCCCCCC,0.48,308.0,new_dataset
+poly(dimethyl siloxane),n-octane,C[Si](C)(O[*])[*],CCCCCCCC,0.4988,293.0,new_dataset
+poly(dimethyl siloxane),1-propanol,C[Si](C)(O[*])[*],CCCO,2.06,373.0,new_dataset
+poly(dimethyl siloxane),chlorobenzene,C[Si](C)(O[*])[*],C1=CC=C(C=C1)Cl,0.4875,333.0,new_dataset
+poly(dimethyl siloxane),chlorobenzene,C[Si](C)(O[*])[*],C1=CC=C(C=C1)Cl,0.5075,293.0,new_dataset
+poly(dimethyl siloxane),chlorobenzene,C[Si](C)(O[*])[*],C1=CC=C(C=C1)Cl,0.76,373.0,new_dataset
+poly(dimethyl siloxane),ethylbenzene,C[Si](C)(O[*])[*],CCC1=CC=CC=C1,0.62,373.0,new_dataset
+poly(dimethyl siloxane),ethylbenzene,C[Si](C)(O[*])[*],CCC1=CC=CC=C1,0.6233,296.5,new_dataset
+poly(dimethyl siloxane),ethylbenzene,C[Si](C)(O[*])[*],CCC1=CC=CC=C1,0.655,297.0,new_dataset
+poly(dimethyl siloxane),ethylbenzene,C[Si](C)(O[*])[*],CCC1=CC=CC=C1,0.7775,273.0,new_dataset
+poly(dimethyl siloxane),ethylbenzene,C[Si](C)(O[*])[*],CCC1=CC=CC=C1,0.7775,320.5,new_dataset
+poly(dimethyl siloxane),p-xylene,C[Si](C)(O[*])[*],CC1=CC=C(C=C1)C,0.692,298.0,new_dataset
+poly(dimethyl siloxane),n-hexane,C[Si](C)(O[*])[*],CCCCCC,0.3,373.0,new_dataset
+poly(dimethyl siloxane),n-hexane,C[Si](C)(O[*])[*],CCCCCC,0.3963,303.0,new_dataset
+poly(dimethyl siloxane),n-hexane,C[Si](C)(O[*])[*],CCCCCC,0.41,323.0,new_dataset
+poly(dimethyl siloxane),n-hexane,C[Si](C)(O[*])[*],CCCCCC,0.415,276.5,new_dataset
+poly(dimethyl siloxane),n-hexane,C[Si](C)(O[*])[*],CCCCCC,0.42,298.0,new_dataset
+poly(dimethyl siloxane),n-hexane,C[Si](C)(O[*])[*],CCCCCC,0.426,293.0,new_dataset
+poly(dimethyl siloxane),n-hexane,C[Si](C)(O[*])[*],CCCCCC,0.4575,320.5,new_dataset
+poly(dimethyl siloxane),n-pentane,C[Si](C)(O[*])[*],CCCCC,0.31,373.0,new_dataset
+poly(dimethyl siloxane),n-pentane,C[Si](C)(O[*])[*],CCCCC,0.4225,293.0,new_dataset
+poly(dimethyl siloxane),n-pentane,C[Si](C)(O[*])[*],CCCCC,0.445,320.5,new_dataset
+poly(dimethyl siloxane),n-butylcyclohexane,C[Si](C)(O[*])[*],CCCCC1CCCCC1,0.51,373.0,new_dataset
+poly(dimethyl siloxane),2-methylheptane,C[Si](C)(O[*])[*],CCCCCC(C)C,0.4967,320.5,new_dataset
+poly(dimethyl siloxane),2-methylpentane,C[Si](C)(O[*])[*],CCCC(C)C,0.44,320.5,new_dataset
+poly(dimethyl siloxane),1-butanol,C[Si](C)(O[*])[*],CCCCO,1.91,373.0,new_dataset
+poly(dimethyl siloxane),1-chlorobutane,C[Si](C)(O[*])[*],CCCCCl,0.49,373.0,new_dataset
+poly(dimethyl siloxane),1-chloropentane,C[Si](C)(O[*])[*],CCCCCCl,0.48,373.0,new_dataset
+poly(dimethyl siloxane),1-pentanol,C[Si](C)(O[*])[*],CCCCCO,1.75,373.0,new_dataset
+poly(dimethyl siloxane),"1,1-dichloroethane",C[Si](C)(O[*])[*],CC(Cl)Cl,0.6,373.0,new_dataset
+poly(dimethyl siloxane),"1,1,1-trichloroethane",C[Si](C)(O[*])[*],CC(Cl)(Cl)Cl,0.37,373.0,new_dataset
+poly(dimethyl siloxane),"1,2-dichloroethane",C[Si](C)(O[*])[*],C(CCl)Cl,0.96,373.0,new_dataset
+poly(dimethyl siloxane),2-methylbutane,C[Si](C)(O[*])[*],CCC(C)C,0.39,298.0,new_dataset
+poly(dimethyl siloxane),2-methylbutane,C[Si](C)(O[*])[*],CCC(C)C,1.1,373.0,new_dataset
+poly(dimethyl siloxane),"2,6-dimethyl-4-heptanone",C[Si](C)(O[*])[*],CC(C)CC(=O)CC(C)C,0.47,308.0,new_dataset
+poly(dimethyl siloxane),3-heptanone,C[Si](C)(O[*])[*],CCCCC(=O)CC,0.5,323.0,new_dataset
+poly(dimethyl siloxane),3-heptanone,C[Si](C)(O[*])[*],CCCCC(=O)CC,0.52,308.0,new_dataset
+poly(dimethyl siloxane),3-methylhexane ,C[Si](C)(O[*])[*],CCCC(C)CC,0.44,320.5,new_dataset
+poly(dimethyl siloxane),4-methyl-2-pentanone,C[Si](C)(O[*])[*],CC(C)CC(C)=O,0.505,308.0,new_dataset
+poly(dimethyl siloxane),4-methyl-2-pentanone,C[Si](C)(O[*])[*],CC(C)CC(C)=O,0.52,293.0,new_dataset
+poly(dimethyl siloxane),carbon dioxide,C[Si](C)(O[*])[*],C(=O)=O,0.45,318.0,new_dataset
+poly(dimethyl siloxane),carbon dioxide,C[Si](C)(O[*])[*],C(=O)=O,0.75,308.0,new_dataset
+poly(dimethyl siloxane),chloromethane,C[Si](C)(O[*])[*],CCl,0.44,373.0,new_dataset
+poly(dimethyl siloxane),cycloheptane,C[Si](C)(O[*])[*],C1CCCCCC1,0.42,373.0,new_dataset
+poly(dimethyl siloxane),cyclohexene,C[Si](C)(O[*])[*],C1CCC=CC1,0.36,373.0,new_dataset
+poly(dimethyl siloxane),cyclooctane,C[Si](C)(O[*])[*],C1CCCCCCC1,0.5,373.0,new_dataset
+poly(dimethyl siloxane),cyclopentane,C[Si](C)(O[*])[*],C1CCCC1,0.28,373.0,new_dataset
+poly(dimethyl siloxane),hexamethyl disiloxane,C[Si](C)(O[*])[*],C[Si](C)(C)O[Si](C)(C)C,0.2457,298.0,new_dataset
+poly(dimethyl siloxane),hexamethyl disiloxane,C[Si](C)(O[*])[*],C[Si](C)(C)O[Si](C)(C)C,0.2725,296.2,new_dataset
+poly(dimethyl siloxane),n-butane,C[Si](C)(O[*])[*],CCCC,0.25,373.0,new_dataset
+poly(dimethyl siloxane),n-undecane,C[Si](C)(O[*])[*],CCCCCCCCCCC,0.58,373.0,new_dataset
+poly(dimethyl siloxane),octamethylcyclotetrasiloxane,C[Si](C)(O[*])[*],C[Si]1(O[Si](O[Si](O[Si](O1)(C)C)(C)C)(C)C)C,0.18,296.2,new_dataset
+poly(dimethyl siloxane),octamethylcyclotetrasiloxane,C[Si](C)(O[*])[*],C[Si]1(O[Si](O[Si](O[Si](O1)(C)C)(C)C)(C)C)C,0.34,298.0,new_dataset
+poly(dimethyl siloxane),octamethylcyclotetrasiloxane,C[Si](C)(O[*])[*],C[Si]1(O[Si](O[Si](O[Si](O1)(C)C)(C)C)(C)C)C,0.38,413.0,new_dataset
+poly(dimethyl siloxane),propane,C[Si](C)(O[*])[*],CCC,0.21,373.0,new_dataset
+poly(dimethyl siloxane),trichloroethylene,C[Si](C)(O[*])[*],C(=C(Cl)Cl)Cl,0.53,373.0,new_dataset
+poly(dimethyl siloxane),chloromethane,C[Si](C)(O[*])[*],CCl,0.475,298.0,new_dataset
+poly(cis-isoprene),acetone,C/C(=C/C[*])C[*],CC(=O)C,1.535,298.0,new_dataset
+poly(cis-isoprene),acetone,C/C(=C/C[*])C[*],CC(=O)C,2.1,273.0,new_dataset
+poly(cis-isoprene),chloroform,C/C(=C/C[*])C[*],C(Cl)(Cl)Cl,-0.01,296.5,new_dataset
+poly(cis-isoprene),dichloromethane,C/C(=C/C[*])C[*],C(Cl)Cl,0.475,296.5,new_dataset
+poly(cis-isoprene),2-butanone,C/C(=C/C[*])C[*],CCC(=O)C,1.015,318.0,new_dataset
+poly(cis-isoprene),2-butanone,C/C(=C/C[*])C[*],CCC(=O)C,1.145,298.0,new_dataset
+poly(cis-isoprene),ethyl acetate,C/C(=C/C[*])C[*],CCOC(=O)C,0.84,323.0,new_dataset
+poly(cis-isoprene),ethyl acetate,C/C(=C/C[*])C[*],CCOC(=O)C,0.9025,313.0,new_dataset
+poly(cis-isoprene),ethyl acetate,C/C(=C/C[*])C[*],CCOC(=O)C,0.965,298.0,new_dataset
+poly(cis-isoprene),benzene,C/C(=C/C[*])C[*],C1=CC=CC=C1,0.42,283.0,new_dataset
+poly(cis-isoprene),benzene,C/C(=C/C[*])C[*],C1=CC=CC=C1,0.4275,313.0,new_dataset
+poly(cis-isoprene),carbon tetrachloride,C/C(=C/C[*])C[*],C(Cl)(Cl)(Cl)Cl,0.765,296.5,new_dataset
+poly(cis-isoprene),toluene,C/C(=C/C[*])C[*],CC1=CC=CC=C1,0.34,313.0,new_dataset
+poly(cis-isoprene),2-methylhexane ,C/C(=C/C[*])C[*],CCCCC(C)C,0.51,313.0,new_dataset
+poly(cis-isoprene),"2,2,4-trimethylpentane ",C/C(=C/C[*])C[*],CC(C)CC(C)(C)C,0.475,313.0,new_dataset
+poly(cis-isoprene),cyclohexane,C/C(=C/C[*])C[*],C1CCCCC1,0.31,293.0,new_dataset
+poly(cis-isoprene),cyclohexane,C/C(=C/C[*])C[*],C1CCCCC1,0.74,296.5,new_dataset
+poly(cis-isoprene),n-heptane ,C/C(=C/C[*])C[*],CCCCCCC,0.33,296.5,new_dataset
+poly(cis-isoprene),n-heptane ,C/C(=C/C[*])C[*],CCCCCCC,0.5,313.0,new_dataset
+poly(cis-isoprene),n-octane,C/C(=C/C[*])C[*],CCCCCCCC,0.475,313.0,new_dataset
+poly(cis-isoprene),ethylbenzene,C/C(=C/C[*])C[*],CCC1=CC=CC=C1,0.32,313.0,new_dataset
+poly(cis-isoprene),n-hexane,C/C(=C/C[*])C[*],CCCCCC,0.52,313.0,new_dataset
+poly(cis-isoprene),n-pentane,C/C(=C/C[*])C[*],CCCCC,0.57,313.0,new_dataset
+poly(cis-isoprene),2-methylheptane,C/C(=C/C[*])C[*],CCCCCC(C)C,0.485,313.0,new_dataset
+poly(cis-isoprene),2-methylpentane,C/C(=C/C[*])C[*],CCCC(C)C,0.54,313.0,new_dataset
+poly(cis-isoprene),benzene,C/C(=C/C[*])C[*],C1=CC=CC=C1,0.4,298.0,new_dataset
+poly(cis-isoprene),cyclohexane,C/C(=C/C[*])C[*],C1CCCCC1,0.31,298.0,new_dataset
+poly(methacrylamide),water,C=C(N)C(C)(C[*])[*],O,0.5,313.0,new_dataset
+poly(methacrylamide),water,C=C(N)C(C)(C[*])[*],O,0.5,298.0,new_dataset
+cellulose acetate,"1,4-dioxane",CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C1COCCO1,0.38,308.0,new_dataset
+cellulose acetate,"1,4-dioxane",CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C1COCCO1,0.41,303.0,new_dataset
+cellulose acetate,2-picoline,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],CC1=CC=CC=N1,0.36,298.0,new_dataset
+cellulose acetate,3-methylpyridine,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],CC1=CN=CC=C1,0.285,298.0,new_dataset
+cellulose acetate,4-methylpyridine,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],CC1=CC=NC=C1,0.26,308.0,new_dataset
+cellulose acetate,acetic acid,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],CC(=O)O,0.4,308.0,new_dataset
+cellulose acetate,acetone,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],CC(=O)C,0.405,303.0,new_dataset
+cellulose acetate,acetone,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],CC(=O)C,0.44,308.0,new_dataset
+cellulose acetate,aniline,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C1=CC=C(C=C1)N,0.3575,308.0,new_dataset
+cellulose acetate,chloroform,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C(Cl)(Cl)Cl,0.34,298.0,new_dataset
+cellulose acetate,chloroform,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C(Cl)(Cl)Cl,0.435,303.0,new_dataset
+cellulose acetate,dichloromethane,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C(Cl)Cl,0.4,298.0,new_dataset
+cellulose acetate,methyl acetate,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],CC(=O)OC,0.45,308.0,new_dataset
+cellulose acetate,methyl acetate,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],CC(=O)OC,0.56,303.0,new_dataset
+cellulose acetate,nitromethane,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C[N+](=O)[O-],0.43,308.0,new_dataset
+cellulose acetate,pyridine,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C1=CC=NC=C1,0.08,303.0,new_dataset
+cellulose acetate,pyridine,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C1=CC=NC=C1,0.28,298.0,new_dataset
+cellulose acetate,tetrahydrofuran,CC(=O)OCC1OC(O[*])C(O)C(O)C1[*],C1CCOC1,0.442,286.0,new_dataset
+poly(arylate),di(ethylene glycol),CC(C)(c1ccc(O[*])cc1)c3ccc(OC(=O)c2ccc(C(=O)[*])cc2)cc3,C(COCCO)O,0.32,443.0,new_dataset
+poly(arylate),chlorobenzene,CC(C)(c1ccc(O[*])cc1)c3ccc(OC(=O)c2ccc(C(=O)[*])cc2)cc3,C1=CC=C(C=C1)Cl,0.42,443.0,new_dataset
+poly(arylate),ethylbenzene,CC(C)(c1ccc(O[*])cc1)c3ccc(OC(=O)c2ccc(C(=O)[*])cc2)cc3,CCC1=CC=CC=C1,0.65,443.0,new_dataset
+poly(arylate),n-dodecane,CC(C)(c1ccc(O[*])cc1)c3ccc(OC(=O)c2ccc(C(=O)[*])cc2)cc3,CCCCCCCCCCCC,1.29,443.0,new_dataset
+poly(arylate),o-dichlorobenzene,CC(C)(c1ccc(O[*])cc1)c3ccc(OC(=O)c2ccc(C(=O)[*])cc2)cc3,C1=CC=C(C(=C1)Cl)Cl,0.43,443.0,new_dataset
+poly(arylate),p-xylene,CC(C)(c1ccc(O[*])cc1)c3ccc(OC(=O)c2ccc(C(=O)[*])cc2)cc3,CC1=CC=C(C=C1)C,0.615,443.0,new_dataset
+poly(arylate),tetralin,CC(C)(c1ccc(O[*])cc1)c3ccc(OC(=O)c2ccc(C(=O)[*])cc2)cc3,C1CCC2=CC=CC=C2C1,0.66,443.0,new_dataset
+poly(N -acryloylpyrrolidine) ,water,CC(C)NC(=O)C(C[*])[*],O,0.53,303.0,new_dataset
+poly(N -acryloylpyrrolidine) ,water,CC(C)NC(=O)C(C[*])[*],O,0.66,333.0,new_dataset
+poly(DL-lactide),acetone,CC(O[*])C(=O)O[*],CC(=O)C,0.56,393.0,new_dataset
+poly(DL-lactide),chloroform,CC(O[*])C(=O)O[*],C(Cl)(Cl)Cl,0.32,393.0,new_dataset
+poly(DL-lactide),dichloromethane,CC(O[*])C(=O)O[*],C(Cl)Cl,0.99,393.0,new_dataset
+poly(DL-lactide),2-butanone,CC(O[*])C(=O)O[*],CCC(=O)C,0.53,393.0,new_dataset
+poly(DL-lactide),ethyl acetate,CC(O[*])C(=O)O[*],CCOC(=O)C,0.46,393.0,new_dataset
+poly(DL-lactide),benzene,CC(O[*])C(=O)O[*],C1=CC=CC=C1,0.52,393.0,new_dataset
+poly(DL-lactide),carbon tetrachloride,CC(O[*])C(=O)O[*],C(Cl)(Cl)(Cl)Cl,0.89,393.0,new_dataset
+poly(DL-lactide),n-heptane ,CC(O[*])C(=O)O[*],CCCCCCC,2.0,393.0,new_dataset
+poly(DL-lactide),n-hexane,CC(O[*])C(=O)O[*],CCCCCC,2.0,393.0,new_dataset
+poly(DL-lactide),n-pentane,CC(O[*])C(=O)O[*],CCCCC,1.6,393.0,new_dataset
+poly(p-methyl styrene),benzene,Cc1ccc(C(C[*])[*])cc1,C1=CC=CC=C1,0.095,320.2,new_dataset
+poly(p-methyl styrene),benzene,Cc1ccc(C(C[*])[*])cc1,C1=CC=CC=C1,0.115,347.7,new_dataset
+poly(p-methyl styrene),toluene,Cc1ccc(C(C[*])[*])cc1,CC1=CC=CC=C1,0.3867,293.0,new_dataset
+poly(p-methyl styrene),methanol,Cc1ccc(C(C[*])[*])cc1,CO,0.465,298.0,new_dataset
+matrimid,water,CC7(C)CC(C)(c5ccc(n4c(=O)c3ccc(C(=O)c2ccc1c(=O)n([*])c(=O)c1c2)cc3c4=O)cc5)c6ccc([*])cc67,O,3.04,303.15,new_dataset
+poly(heptene),toluene,CCCCC(C[*]C)[*],CC1=CC=CC=C1,0.43,305.0,new_dataset
+poly(heptene),toluene,CCCCC(C[*]C)[*],CC1=CC=CC=C1,0.45,304.0,new_dataset
+poly(heptene),toluene,CCCCC(C[*]C)[*],CC1=CC=CC=C1,0.48,303.0,new_dataset
+poly(decene),toluene,CCCCCCCCC(C[*]C)[*],CC1=CC=CC=C1,0.398,303.0,new_dataset
+poly(octadecene),toluene,CCCCCCCCCCCCCCCCC(C[*]C)[*],CC1=CC=CC=C1,0.5833,303.0,new_dataset
+poly(n-butyl methacrylate),acetone,CCCCOC(=O)C(C)(C[*])[*],CC(=O)C,0.93,393.0,new_dataset
+poly(n-butyl methacrylate),chloroform,CCCCOC(=O)C(C)(C[*])[*],C(Cl)(Cl)Cl,0.01,323.5,new_dataset
+poly(n-butyl methacrylate),chloroform,CCCCOC(=O)C(C)(C[*])[*],C(Cl)(Cl)Cl,0.1,393.0,new_dataset
+poly(n-butyl methacrylate),2-butanone,CCCCOC(=O)C(C)(C[*])[*],CCC(=O)C,0.62,393.0,new_dataset
+poly(n-butyl methacrylate),acetonitrile,CCCCOC(=O)C(C)(C[*])[*],CC#N,1.4,393.0,new_dataset
+poly(n-butyl methacrylate),ethyl acetate,CCCCOC(=O)C(C)(C[*])[*],CCOC(=O)C,0.67,393.0,new_dataset
+poly(n-butyl methacrylate),1-propanol,CCCCOC(=O)C(C)(C[*])[*],CCCO,1.01,393.0,new_dataset
+poly(n-butyl methacrylate),n-hexane,CCCCOC(=O)C(C)(C[*])[*],CCCCCC,0.78,393.0,new_dataset
+poly(n-butyl methacrylate),"1,3,5-trimethylbenzene",CCCCOC(=O)C(C)(C[*])[*],CC1=CC(=CC(=C1)C)C,0.41,373.0,new_dataset
+poly(n-butyl methacrylate),2-butanone,CCCCOC(=O)C(C)(C[*])[*],CCC(=O)C,0.37,323.5,new_dataset
+poly(n-butyl methacrylate),benzene,CCCCOC(=O)C(C)(C[*])[*],C1=CC=CC=C1,0.175,323.5,new_dataset
+poly(n-butyl methacrylate),toluene,CCCCOC(=O)C(C)(C[*])[*],CC1=CC=CC=C1,0.205,323.2,new_dataset
+poly(n-butyl methacrylate),ethanol,CCCCOC(=O)C(C)(C[*])[*],CCO,0.6745,359.0,new_dataset
+poly(n-butyl methacrylate),ethanol,CCCCOC(=O)C(C)(C[*])[*],CCO,0.7162,353.0,new_dataset
+poly(n-butyl methacrylate),ethanol,CCCCOC(=O)C(C)(C[*])[*],CCO,0.779,333.0,new_dataset
+poly(n-butyl methacrylate),ethanol,CCCCOC(=O)C(C)(C[*])[*],CCO,0.8482,313.0,new_dataset
+poly(n-butyl methacrylate),ethanol,CCCCOC(=O)C(C)(C[*])[*],CCO,0.891,300.0,new_dataset
+poly(n-butyl methacrylate),2-propanol ,CCCCOC(=O)C(C)(C[*])[*],CC(C)O,0.6265,359.0,new_dataset
+poly(n-butyl methacrylate),2-propanol ,CCCCOC(=O)C(C)(C[*])[*],CC(C)O,0.7037,329.0,new_dataset
+poly(n-butyl methacrylate),2-propanol ,CCCCOC(=O)C(C)(C[*])[*],CC(C)O,0.7385,353.0,new_dataset
+poly(n-butyl methacrylate),2-propanol ,CCCCOC(=O)C(C)(C[*])[*],CC(C)O,0.8037,300.0,new_dataset
+poly(n-butyl methacrylate),2-propanol ,CCCCOC(=O)C(C)(C[*])[*],CC(C)O,0.9545,313.0,new_dataset
+poly(n-butyl methacrylate),"1,2-dichloroethane",CCCCOC(=O)C(C)(C[*])[*],C(CCl)Cl,0.39,323.8,new_dataset
+poly(n-butyl methacrylate),m-xylene,CCCCOC(=O)C(C)(C[*])[*],CC1=CC(=CC=C1)C,0.44,343.8,new_dataset
+poly(n-butyl methacrylate),o-xylene,CCCCOC(=O)C(C)(C[*])[*],CC1=CC=CC=C1C,0.265,344.3,new_dataset
+poly(n-butyl methacrylate),ethanol,CCCCOC(=O)C(C)(C[*])[*],CCO,0.492,298.0,new_dataset
+poly(n-butyl methacrylate),2-propanol ,CCCCOC(=O)C(C)(C[*])[*],CC(C)O,0.494,298.0,new_dataset
+"poly(N, N-diethylacrylamide) ",water,CCN(CC)C(=O)C(C[*])[*],O,0.5,276.0,new_dataset
+"poly(N, N-diethylacrylamide) ",water,CCN(CC)C(=O)C(C[*])[*],O,0.62,303.0,new_dataset
+"poly(N, N-diethylacrylamide) ",water,CCN(CC)C(=O)C(C[*])[*],O,1.16,333.0,new_dataset
+poly(p-chlorostyrene),butyl acetate,Clc1ccc(C(C[*])[*])cc1,CCCCOC(=O)C,0.448,303.0,new_dataset
+poly(p-chlorostyrene),toluene,Clc1ccc(C(C[*])[*])cc1,CC1=CC=CC=C1,0.5525,295.0,new_dataset
+poly(p-chlorostyrene),chlorobenzene,Clc1ccc(C(C[*])[*])cc1,C1=CC=C(C=C1)Cl,0.465,303.0,new_dataset
+poly(p-chlorostyrene),butyl acetate,Clc1ccc(C(C[*])[*])cc1,CCCCOC(=O)C,0.49,298.0,new_dataset
+poly(o-chlorostyrene),2-butanone,Clc1ccccc1C(C[*])[*],CCC(=O)C,0.925,313.0,new_dataset
+poly(o-chlorostyrene),benzene,Clc1ccccc1C(C[*])[*],C1=CC=CC=C1,0.59,298.0,new_dataset
+poly(o-chlorostyrene),benzene,Clc1ccccc1C(C[*])[*],C1=CC=CC=C1,0.645,313.0,new_dataset
+poly(o-chlorostyrene),toluene,Clc1ccccc1C(C[*])[*],CC1=CC=CC=C1,0.47,303.0,new_dataset
+poly(o-chlorostyrene),toluene,Clc1ccccc1C(C[*])[*],CC1=CC=CC=C1,0.47,298.0,new_dataset
+"poly(N,N-dimethylacrylamide) ",water,CN(C)C(=O)C(C[*])[*],O,0.48,276.0,new_dataset
+"poly(N,N-dimethylacrylamide) ",water,CN(C)C(=O)C(C[*])[*],O,0.52,333.0,new_dataset
+poly(butylene adipate),acetone,O=C(CCCCC(=O)[*])OCCCCO[*],CC(=O)C,0.54,393.0,new_dataset
+poly(butylene adipate),chloroform,O=C(CCCCC(=O)[*])OCCCCO[*],C(Cl)(Cl)Cl,0.06,393.0,new_dataset
+poly(butylene adipate),dichloromethane,O=C(CCCCC(=O)[*])OCCCCO[*],C(Cl)Cl,0.7,393.0,new_dataset
+poly(butylene adipate),2-butanone,O=C(CCCCC(=O)[*])OCCCCO[*],CCC(=O)C,0.43,393.0,new_dataset
+poly(butylene adipate),ethyl acetate,O=C(CCCCC(=O)[*])OCCCCO[*],CCOC(=O)C,0.43,393.0,new_dataset
+poly(butylene adipate),benzene,O=C(CCCCC(=O)[*])OCCCCO[*],C1=CC=CC=C1,0.27,393.0,new_dataset
+poly(butylene adipate),carbon tetrachloride,O=C(CCCCC(=O)[*])OCCCCO[*],C(Cl)(Cl)(Cl)Cl,0.55,393.0,new_dataset
+poly(butylene adipate),n-heptane ,O=C(CCCCC(=O)[*])OCCCCO[*],CCCCCCC,1.5,393.0,new_dataset
+poly(butylene adipate),n-hexane,O=C(CCCCC(=O)[*])OCCCCO[*],CCCCCC,1.4,393.0,new_dataset
+poly(butylene adipate),n-pentane,O=C(CCCCC(=O)[*])OCCCCO[*],CCCCC,1.3,393.0,new_dataset
+poly(µ-caprolactone),"1,4-dioxane",O=C(CCCCCO[*])[*],C1COCCO1,0.13,373.0,new_dataset
+poly(µ-caprolactone),acetone,O=C(CCCCCO[*])[*],CC(=O)C,0.5,483.0,new_dataset
+poly(µ-caprolactone),chloroform,O=C(CCCCCO[*])[*],C(Cl)(Cl)Cl,-0.4,393.0,new_dataset
+poly(µ-caprolactone),chloroform,O=C(CCCCCO[*])[*],C(Cl)(Cl)Cl,-0.22,373.0,new_dataset
+poly(µ-caprolactone),dichloromethane,O=C(CCCCCO[*])[*],C(Cl)Cl,0.26,373.0,new_dataset
+poly(µ-caprolactone),methyl acetate,O=C(CCCCCO[*])[*],CC(=O)OC,0.39,373.0,new_dataset
+poly(µ-caprolactone),tetrahydrofuran,O=C(CCCCCO[*])[*],C1CCOC1,0.13,373.0,new_dataset
+poly(µ-caprolactone),butyl acetate,O=C(CCCCCO[*])[*],CCCCOC(=O)C,0.31,373.0,new_dataset
+poly(µ-caprolactone),n-propyl acetate,O=C(CCCCCO[*])[*],CCCOC(=O)C,0.33,373.0,new_dataset
+poly(µ-caprolactone),benzene,O=C(CCCCCO[*])[*],C1=CC=CC=C1,-0.04,413.0,new_dataset
+poly(µ-caprolactone),toluene,O=C(CCCCCO[*])[*],CC1=CC=CC=C1,0.08,373.0,new_dataset
+poly(µ-caprolactone),toluene,O=C(CCCCCO[*])[*],CC1=CC=CC=C1,-0.01,413.0,new_dataset
+poly(µ-caprolactone),ethanol,O=C(CCCCCO[*])[*],CCO,1.01,373.0,new_dataset
+poly(µ-caprolactone),cyclohexane,O=C(CCCCCO[*])[*],C1CCCCC1,0.88,373.0,new_dataset
+poly(µ-caprolactone),n-heptane ,O=C(CCCCCO[*])[*],CCCCCCC,1.2,483.0,new_dataset
+poly(µ-caprolactone),n-nonane,O=C(CCCCCO[*])[*],CCCCCCCCC,1.37,373.0,new_dataset
+poly(µ-caprolactone),n-octane,O=C(CCCCCO[*])[*],CCCCCCCC,1.3,373.0,new_dataset
+poly(µ-caprolactone),1-propanol,O=C(CCCCCO[*])[*],CCCO,0.72,373.0,new_dataset
+poly(µ-caprolactone),chlorobenzene,O=C(CCCCCO[*])[*],C1=CC=C(C=C1)Cl,0.08,373.0,new_dataset
+poly(µ-caprolactone),chlorobenzene,O=C(CCCCCO[*])[*],C1=CC=C(C=C1)Cl,-0.18,413.0,new_dataset
+poly(µ-caprolactone),chlorobenzene,O=C(CCCCCO[*])[*],C1=CC=C(C=C1)Cl,-0.06,353.0,new_dataset
+poly(µ-caprolactone),ethylbenzene,O=C(CCCCCO[*])[*],CCC1=CC=CC=C1,0.16,373.0,new_dataset
+poly(µ-caprolactone),n-hexane,O=C(CCCCCO[*])[*],CCCCCC,1.2,483.0,new_dataset
+poly(µ-caprolactone),n-butylcyclohexane,O=C(CCCCCO[*])[*],CCCCC1CCCCC1,1.44,373.0,new_dataset
+poly(µ-caprolactone),1-butanol,O=C(CCCCCO[*])[*],CCCCO,0.59,373.0,new_dataset
+poly(µ-caprolactone),1-chlorobutane,O=C(CCCCCO[*])[*],CCCCCl,0.33,373.0,new_dataset
+poly(µ-caprolactone),1-chloropentane,O=C(CCCCCO[*])[*],CCCCCCl,0.33,373.0,new_dataset
+poly(µ-caprolactone),1-pentanol,O=C(CCCCCO[*])[*],CCCCCO,0.46,373.0,new_dataset
+poly(µ-caprolactone),"1,1-dichloroethane",O=C(CCCCCO[*])[*],CC(Cl)Cl,0.04,373.0,new_dataset
+poly(µ-caprolactone),"1,1,1-trichloroethane",O=C(CCCCCO[*])[*],CC(Cl)(Cl)Cl,0.07,373.0,new_dataset
+poly(µ-caprolactone),"1,2-dichloroethane",O=C(CCCCCO[*])[*],C(CCl)Cl,0.14,373.0,new_dataset
+poly(µ-caprolactone),chloromethane,O=C(CCCCCO[*])[*],CCl,0.16,373.0,new_dataset
+poly(µ-caprolactone),cycloheptane,O=C(CCCCCO[*])[*],C1CCCCCC1,0.83,373.0,new_dataset
+poly(µ-caprolactone),cyclohexene,O=C(CCCCCO[*])[*],C1CCC=CC1,0.6,373.0,new_dataset
+poly(µ-caprolactone),cyclooctane,O=C(CCCCCO[*])[*],C1CCCCCCC1,0.83,373.0,new_dataset
+poly(µ-caprolactone),cyclopentane,O=C(CCCCCO[*])[*],C1CCCC1,0.82,373.0,new_dataset
+poly(µ-caprolactone),n-butane,O=C(CCCCCO[*])[*],CCCC,1.22,373.0,new_dataset
+poly(µ-caprolactone),n-undecane,O=C(CCCCCO[*])[*],CCCCCCCCCCC,1.52,373.0,new_dataset
+poly(µ-caprolactone),propane,O=C(CCCCCO[*])[*],CCC,1.21,373.0,new_dataset
+poly(µ-caprolactone),trichloroethylene,O=C(CCCCCO[*])[*],C(=C(Cl)Cl)Cl,0.02,373.0,new_dataset
+poly(valerlactone),acetone,O=C(CCCCO[*])[*],CC(=O)C,0.64,393.0,new_dataset
+poly(valerlactone),chloroform,O=C(CCCCO[*])[*],C(Cl)(Cl)Cl,-0.02,393.0,new_dataset
+poly(valerlactone),dichloromethane,O=C(CCCCO[*])[*],C(Cl)Cl,0.86,393.0,new_dataset
+poly(valerlactone),2-butanone,O=C(CCCCO[*])[*],CCC(=O)C,0.43,393.0,new_dataset
+poly(valerlactone),ethyl acetate,O=C(CCCCO[*])[*],CCOC(=O)C,0.54,393.0,new_dataset
+poly(valerlactone),benzene,O=C(CCCCO[*])[*],C1=CC=CC=C1,0.34,393.0,new_dataset
+poly(valerlactone),carbon tetrachloride,O=C(CCCCO[*])[*],C(Cl)(Cl)(Cl)Cl,0.61,393.0,new_dataset
+poly(valerlactone),n-heptane ,O=C(CCCCO[*])[*],CCCCCCC,1.6,393.0,new_dataset
+poly(valerlactone),n-hexane,O=C(CCCCO[*])[*],CCCCCC,1.6,393.0,new_dataset
+poly(valerlactone),n-pentane,O=C(CCCCO[*])[*],CCCCC,1.5,393.0,new_dataset
+poly(N-vinyl pyrrolidone),water,O=C1CCCN1C(C[*])[*],O,0.48,298.0,new_dataset
+cellulose nitrate,"1,4-dioxane",O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],C1COCCO1,0.725,293.0,new_dataset
+cellulose nitrate,acetone,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC(=O)C,0.15,303.0,new_dataset
+cellulose nitrate,acetone,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC(=O)C,0.27,298.0,new_dataset
+cellulose nitrate,acetone,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC(=O)C,0.345,293.0,new_dataset
+cellulose nitrate,methyl acetate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC(=O)OC,0.11,303.0,new_dataset
+cellulose nitrate,methyl acetate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC(=O)OC,0.3,298.0,new_dataset
+cellulose nitrate,nitromethane,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],C[N+](=O)[O-],0.2775,293.0,new_dataset
+cellulose nitrate,2-butanone,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCC(=O)C,0.21,298.0,new_dataset
+cellulose nitrate,2-heptanone,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCCCCC(=O)C,0.02,298.0,new_dataset
+cellulose nitrate,2-hexanone,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCCCC(=O)C,0.15,298.0,new_dataset
+cellulose nitrate,2-octanone,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCCCCCC(=O)C,0.16,298.0,new_dataset
+cellulose nitrate,"2,4-dimethyl-3-pentanone",O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC(C)C(=O)C(C)C,0.58,293.0,new_dataset
+cellulose nitrate,3-methylbutanone,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC(C)C(=O)C,0.525,293.0,new_dataset
+cellulose nitrate,3-methylbutyl acetate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC(C)CCOC(=O)C,1.0475,293.0,new_dataset
+cellulose nitrate,"3,3-dimethyl-2-butanone",O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC(=O)C(C)(C)C,0.965,293.0,new_dataset
+cellulose nitrate,acetonitrile,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CC#N,0.1725,293.0,new_dataset
+cellulose nitrate,butyl acetate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCCCOC(=O)C,0.015,298.0,new_dataset
+cellulose nitrate,cyclopentanone,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],C1CCC(=O)C1,0.705,293.0,new_dataset
+cellulose nitrate,ethyl acetate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCOC(=O)C,0.22,298.0,new_dataset
+cellulose nitrate,ethyl acetate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCOC(=O)C,0.3475,293.0,new_dataset
+cellulose nitrate,ethyl formate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCOC=O,0.82,293.0,new_dataset
+cellulose nitrate,ethyl n-propyl ether,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCCOCC,0.3,293.0,new_dataset
+cellulose nitrate,n-propyl acetate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCCOC(=O)C,0.13,298.0,new_dataset
+cellulose nitrate,n-propyl acetate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCCOC(=O)C,1.12,293.0,new_dataset
+cellulose nitrate,pentyl acetate,O=N(=O)OCC1CC(O[*])C(ON(=O)=O)C(O)C1[*],CCCCCOC(=O)C,0.02,298.0,new_dataset
+hydroxypropyl cellulose,water,OC(O[*])C1=C(O)C(=NC2=CC=CC=C12)C1=CC=CC=C1[*],O,0.5195,313.0,new_dataset
+hydroxypropyl cellulose,acetone,OC(O[*])C1=C(O)C(=NC2=CC=CC=C12)C1=CC=CC=C1[*],CC(=O)C,0.6317,298.0,new_dataset
+hydroxypropyl cellulose,tetrahydrofuran,OC(O[*])C1=C(O)C(=NC2=CC=CC=C12)C1=CC=CC=C1[*],C1CCOC1,0.49,298.0,new_dataset
+hydroxypropyl cellulose,ethanol,OC(O[*])C1=C(O)C(=NC2=CC=CC=C12)C1=CC=CC=C1[*],CCO,0.45,298.0,new_dataset
+hydroxypropyl cellulose,water,OC(O[*])C1=C(O)C(=NC2=CC=CC=C12)C1=CC=CC=C1[*],O,0.69,298.0,new_dataset
+ethyl cellulose,acetone,OCC1OC(O[*])C(O)C(O)C1[*],CC(=O)C,0.46,298.0,new_dataset
+ethyl cellulose,chloroform,OCC1OC(O[*])C(O)C(O)C1[*],C(Cl)(Cl)Cl,0.34,298.0,new_dataset
+ethyl cellulose,methyl acetate,OCC1OC(O[*])C(O)C(O)C1[*],CC(=O)OC,0.41,298.0,new_dataset
+ethyl cellulose,2-heptanone,OCC1OC(O[*])C(O)C(O)C1[*],CCCCCC(=O)C,0.38,298.0,new_dataset
+ethyl cellulose,butyl acetate,OCC1OC(O[*])C(O)C(O)C1[*],CCCCOC(=O)C,0.24,298.0,new_dataset
+ethyl cellulose,ethyl acetate,OCC1OC(O[*])C(O)C(O)C1[*],CCOC(=O)C,0.395,298.0,new_dataset
+ethyl cellulose,n-propyl acetate,OCC1OC(O[*])C(O)C(O)C1[*],CCCOC(=O)C,0.33,298.0,new_dataset
+ethyl cellulose,pentyl acetate,OCC1OC(O[*])C(O)C(O)C1[*],CCCCCOC(=O)C,0.28,298.0,new_dataset
+ethyl cellulose,2-pentanone,OCC1OC(O[*])C(O)C(O)C1[*],CCCC(=O)C,0.37,298.0,new_dataset
+ethyl cellulose,benzene,OCC1OC(O[*])C(O)C(O)C1[*],C1=CC=CC=C1,0.48,298.0,new_dataset
+ethyl cellulose,carbon tetrachloride,OCC1OC(O[*])C(O)C(O)C1[*],C(Cl)(Cl)(Cl)Cl,0.46,298.0,new_dataset
+ethyl cellulose,toluene,OCC1OC(O[*])C(O)C(O)C1[*],CC1=CC=CC=C1,0.47,298.0,new_dataset

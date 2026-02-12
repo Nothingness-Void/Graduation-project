@@ -4,7 +4,8 @@ __pycache__/
 venv/
 # 屏蔽 results 下的所有内容
 results/*
-
+# 屏蔽 tuner_logs 目录
+tuner_logs/
 # 但排除（不屏蔽） .gitkeep 文件，从而保留文件夹结构
 !results/.gitkeep
 
