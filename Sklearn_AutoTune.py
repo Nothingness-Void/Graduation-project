@@ -17,7 +17,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.neural_network import MLPRegressor
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.svm import SVR
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.inspection import permutation_importance
 from xgboost import XGBRegressor
@@ -188,15 +187,6 @@ def build_model_search_space():
                 "model__loss": ["squared_error", "huber"],
             },
         },
-        "SVR": {
-            "pipeline": Pipeline([("scaler", StandardScaler()), ("model", SVR())]),
-            "params": {
-                "model__kernel": ["rbf", "linear", "poly"],
-                "model__C": [0.01, 0.1, 1, 10, 50, 100, 500],
-                "model__gamma": ["scale", "auto", 0.001, 0.01, 0.1, 1],
-                "model__epsilon": [0.01, 0.05, 0.1, 0.2, 0.5],
-            },
-        },
     }
 
 
@@ -313,9 +303,13 @@ def main():
     final_mae = mean_absolute_error(y_all, y_all_pred)
     final_rmse = np.sqrt(mean_squared_error(y_all, y_all_pred))
 
-    validation_df = data.copy()
-    validation_df["Predicted χ-result"] = y_all_pred
-    validation_df["Residual"] = y_all - y_all_pred
+    validation_df = pd.DataFrame({
+        "Sample": range(1, len(y_all) + 1),
+        f"Actual ({target_col})": y_all,
+        "Predicted": y_all_pred,
+        "Residual": y_all - y_all_pred,
+        "Abs Error": np.abs(y_all - y_all_pred),
+    })
 
     importance_method, importance_df = compute_feature_importance(
         best_overall["model"], X_all, y_all, feature_cols

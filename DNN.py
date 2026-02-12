@@ -45,11 +45,13 @@ def build_model(input_dim: int, seed: int) -> keras.Model:
     model = keras.Sequential(
         [
             keras.layers.Input(shape=(input_dim,)),
-            keras.layers.Dense(64, activation="relu"),
+            keras.layers.Dense(48, activation="relu"),
+            keras.layers.BatchNormalization(),
+            keras.layers.Dropout(0.15),
+            keras.layers.Dense(24, activation="relu"),
             keras.layers.BatchNormalization(),
             keras.layers.Dropout(0.1),
-            keras.layers.Dense(32, activation="relu"),
-            keras.layers.Dense(16, activation="relu", kernel_regularizer=regularizers.l2(1e-3)),
+            keras.layers.Dense(12, activation="relu", kernel_regularizer=regularizers.l2(1e-3)),
             keras.layers.Dense(1, activation="linear"),
         ]
     )

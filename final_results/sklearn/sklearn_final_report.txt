@@ -1,0 +1,11 @@
+Sklearn 最终结果汇总
+============================================================
+最佳模型: GradientBoosting
+最佳参数: {'model__subsample': 0.9, 'model__n_estimators': 100, 'model__min_samples_split': 10, 'model__min_samples_leaf': 1, 'model__max_features': 'log2', 'model__max_depth': 8, 'model__loss': 'huber', 'model__learning_rate': 0.1}
+CV 最优 R2: 0.7660
+全量验证 R2/MAE/RMSE: 0.9287 / 0.0799 / 0.1753
+特征贡献方法: feature_importances_
+
+模型搜索汇总见: sklearn_tuning_summary.csv
+验证结果见: sklearn_validation_results.xlsx
+特征贡献见: sklearn_feature_importance.csv / sklearn_feature_importance.png

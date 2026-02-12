@@ -4,8 +4,8 @@ DNN_AutoTune.py
 使用 Keras Tuner Hyperband 自动搜索 DNN 架构（无测试集泄漏版本）
 
 改进:
-1. 更宽的搜索空间: 1-4 层, 16-256 节点
-2. 放宽参数预算: ratio 上限 50 (321 样本)
+1. 搜索空间: 1-3 层, 12-64 节点 (适配 18 特征)
+2. 参数预算: ratio 上限 20
 3. 增加 batch_size 搜索
 4. 增加 Hyperband 迭代次数
 5. y 标准化选项
@@ -40,8 +40,8 @@ TEST_SIZE = 0.2
 VAL_SIZE_IN_TRAINVAL = 0.25
 RANDOM_STATE = 42
 
-# 小数据集约束: 参数/样本比上限 (放宽到 50)
-MAX_PARAM_RATIO = 50.0
+# 小数据集约束: 参数/样本比上限
+MAX_PARAM_RATIO = 20.0
 
 # y 标准化 (对 Huggins 参数右偏分布有帮助)
 SCALE_Y = True
@@ -66,12 +66,12 @@ class BoundedHyperModel(kt.HyperModel):
     def build(self, hp):
         model = keras.Sequential()
 
-        n_layers = hp.Int("n_layers", min_value=1, max_value=4, step=1)
+        n_layers = hp.Int("n_layers", min_value=1, max_value=3, step=1)
         use_bn = hp.Boolean("use_batchnorm", default=True)
         l2_val = hp.Choice("l2_reg", values=[0.0, 1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
 
         for i in range(n_layers):
-            units = hp.Choice(f"units_layer_{i}", values=[16, 32, 64, 96, 128, 256])
+            units = hp.Choice(f"units_layer_{i}", values=[12, 16, 24, 32, 48, 64])
             dropout_rate = hp.Choice(f"dropout_layer_{i}", values=[0.0, 0.05, 0.1, 0.15, 0.2, 0.3])
             if i == 0:
                 model.add(
