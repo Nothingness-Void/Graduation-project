@@ -434,7 +434,7 @@ def update_feature_config(all_features, selected_features):
         "",
     ])
     Path("feature_config.py").write_text(config_text, encoding="utf-8")
-    print(f"feature_config.py 已自动更新 (SELECTED={len(selected_features)}, ALL={len(all_features)})")
+    print(f"feature_config.py 已自动更新 (SELECTED={len(selected_features)})")
 
 
 if __name__ == "__main__":
