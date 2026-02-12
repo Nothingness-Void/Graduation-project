@@ -30,7 +30,7 @@ import warnings
 import joblib
 import os
 
-from feature_config import ALL_FEATURE_COLS, SELECTED_FEATURE_COLS, resolve_target_col
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # 忽略警告
 warnings.filterwarnings('ignore')
@@ -46,29 +46,17 @@ DATA_PATH = "data/molecular_features.xlsx"
 MODEL_PATH = "results/best_model_sklearn.pkl"
 SUMMARY_PATH = "results/sklearn_tuning_summary.txt"
 
-# 可选: "selected" (16特征) / "all" (20特征)
-FEATURE_MODE = "selected"
-
 # 训练参数
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
 N_ITER = 50  # 每个模型随机尝试 50 组参数
 
 
-def choose_features(mode: str):
-    """按配置选择特征集合。"""
-    if mode == "all":
-        return ALL_FEATURE_COLS
-    if mode == "selected":
-        return SELECTED_FEATURE_COLS
-    raise ValueError("FEATURE_MODE 仅支持 'all' 或 'selected'")
-
-
 # ========== 1. 数据加载 ==========
 print("正在加载数据...")
 data = pd.read_excel(DATA_PATH)
 target_col = resolve_target_col(data.columns)
-feature_cols = choose_features(FEATURE_MODE)
+feature_cols = SELECTED_FEATURE_COLS
 
 # 确保特征存在
 missing_cols = [c for c in feature_cols if c not in data.columns]
@@ -82,7 +70,7 @@ y = data[target_col].values
 # 划分数据集
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE)
 
-print(f"特征模式: {FEATURE_MODE}, 特征数: {len(feature_cols)}")
+print(f"特征数: {len(feature_cols)}")
 print(f"数据准备完成：训练集 {X_train.shape[0]} 样本，测试集 {X_test.shape[0]} 样本")
 
 # ========== 2. 定义搜索空间（使用 Pipeline 封装标准化） ==========
@@ -244,7 +232,7 @@ if best_overall_model is not None:
     with open(SUMMARY_PATH, 'w', encoding='utf-8') as f:
         f.write("Sklearn 自动寻优结果汇总\n")
         f.write("=" * 60 + "\n\n")
-        f.write(f"特征模式: {FEATURE_MODE}, 特征数: {len(feature_cols)}\n")
+        f.write(f"特征数: {len(feature_cols)}\n")
         f.write(f"训练集: {X_train.shape[0]}, 测试集: {X_test.shape[0]}\n")
         f.write(f"每模型迭代次数: {N_ITER}\n\n")
         f.write(results_df[display_cols].to_string(index=False))

@@ -11,7 +11,7 @@ from sklearn.svm import SVR
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from skopt import BayesSearchCV
 from skopt.space import Real, Categorical, Integer
-from feature_config import ALL_FEATURE_COLS, SELECTED_FEATURE_COLS, resolve_target_col
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # =========================
 # 配置区
@@ -21,23 +21,11 @@ MODEL_BUNDLE_PATH = "results/sklearn_model_bundle.pkl"
 LEGACY_MODEL_PATH = "results/fingerprint_model.pkl"  # 兼容旧脚本
 SUMMARY_PATH = "results/sklearn_search_summary.csv"
 
-# 可选: "selected" (16特征) / "all" (20特征)
-FEATURE_MODE = "selected"
-
 # 训练/搜索参数
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
 CV_FOLDS = 5
 N_ITER = 40
-
-
-def choose_features(mode: str):
-    """按配置选择特征集合。"""
-    if mode == "all":
-        return ALL_FEATURE_COLS
-    if mode == "selected":
-        return SELECTED_FEATURE_COLS
-    raise ValueError("FEATURE_MODE 仅支持 'all' 或 'selected'")
 
 
 def build_search_configs():
@@ -108,7 +96,7 @@ def main():
     # 1) 读取数据与特征
     data = pd.read_excel(DATA_PATH)
     target_col = resolve_target_col(data.columns)
-    feature_cols = choose_features(FEATURE_MODE)
+    feature_cols = SELECTED_FEATURE_COLS
     X = data[feature_cols]
     y = data[target_col].values
 
@@ -116,7 +104,7 @@ def main():
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
     )
-    print(f"特征模式: {FEATURE_MODE}, 特征数: {len(feature_cols)}")
+    print(f"特征数: {len(feature_cols)}")
     print(f"样本划分: train={len(y_train)}, test={len(y_test)}")
 
     # 3) 在训练集上做 BayesSearchCV 选模
@@ -171,7 +159,7 @@ def main():
         "model": best_model,
         "feature_cols": feature_cols,
         "target_col": target_col,
-        "feature_mode": FEATURE_MODE,
+
         "cv_folds": CV_FOLDS,
         "n_iter": N_ITER,
         "random_state": RANDOM_STATE,

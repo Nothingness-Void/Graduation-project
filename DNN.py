@@ -1,17 +1,19 @@
 import os
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 import random
 import pickle
 import numpy as np
 import pandas as pd
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import regularizers
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+import keras
+from keras import regularizers
+from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
-from feature_config import ALL_FEATURE_COLS, SELECTED_FEATURE_COLS, resolve_target_col
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 
 # ========== 配置 ==========
@@ -21,8 +23,7 @@ PREPROCESS_PATH = "results/DNN_preprocess.pkl"
 LOSS_PLOT_PATH = "results/DNN_loss.png"
 RUN_SUMMARY_PATH = "results/DNN_run_summary.csv"
 
-# 可选: "selected" (16特征) / "all" (20特征)
-FEATURE_MODE = "selected"
+
 
 # 训练设置
 SEEDS = [42, 52, 62, 72, 82]
@@ -34,7 +35,7 @@ def set_seed(seed: int) -> None:
     os.environ["PYTHONHASHSEED"] = str(seed)
     random.seed(seed)
     np.random.seed(seed)
-    tf.random.set_seed(seed)
+    keras.utils.set_random_seed(seed)
 
 
 def build_model(input_dim: int, seed: int) -> keras.Model:
@@ -52,18 +53,13 @@ def build_model(input_dim: int, seed: int) -> keras.Model:
     return model
 
 
-def choose_features(mode: str):
-    if mode == "all":
-        return ALL_FEATURE_COLS
-    if mode == "selected":
-        return SELECTED_FEATURE_COLS
-    raise ValueError("FEATURE_MODE 仅支持 'all' 或 'selected'")
+
 
 
 def main():
     data = pd.read_excel(DATA_PATH)
     target_col = resolve_target_col(data.columns)
-    feature_cols = choose_features(FEATURE_MODE)
+    feature_cols = SELECTED_FEATURE_COLS
 
     X = data[feature_cols].values
     y = data[target_col].values
@@ -83,7 +79,7 @@ def main():
     y_train_scaled = scaler_y.fit_transform(y_train.reshape(-1, 1))
     y_val_scaled = scaler_y.transform(y_val.reshape(-1, 1))
 
-    print(f"特征模式: {FEATURE_MODE}, 特征数: {len(feature_cols)}")
+    print(f"特征数: {len(feature_cols)}")
     print(f"样本划分: train={len(y_train)}, val={len(y_val)}, test={len(y_test)}")
 
     all_results = []
@@ -143,7 +139,7 @@ def main():
                 "target_col": target_col,
                 "scaler_X": scaler_X,
                 "scaler_y": scaler_y,
-                "feature_mode": FEATURE_MODE,
+
                 "seeds": SEEDS,
             },
             f,
@@ -162,7 +158,8 @@ def main():
     plt.legend()
     plt.tight_layout()
     plt.savefig(LOSS_PLOT_PATH, dpi=160)
-    plt.show()
+    plt.close()
+    print(f"Loss 曲线已保存: {LOSS_PLOT_PATH}")
 
 
 if __name__ == "__main__":

@@ -23,7 +23,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import keras_tuner as kt
-from feature_config import ALL_FEATURE_COLS, SELECTED_FEATURE_COLS, resolve_target_col
+from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # =========================
 # 配置区
@@ -33,8 +33,7 @@ MODEL_PATH = "results/best_model.keras"
 PREPROCESS_PATH = "results/best_model_preprocess.pkl"
 SUMMARY_PATH = "results/tuner_summary.txt"
 
-# 可选: "selected" (16特征) / "all" (20特征)
-FEATURE_MODE = "selected"
+
 
 # 三段划分: train/val/test = 60/20/20
 TEST_SIZE = 0.2
@@ -54,13 +53,7 @@ HYPERBAND_ITERATIONS = 2
 RETRAIN_RUNS = 8
 
 
-def choose_features(mode: str):
-    """按配置选择特征集合。"""
-    if mode == "all":
-        return ALL_FEATURE_COLS
-    if mode == "selected":
-        return SELECTED_FEATURE_COLS
-    raise ValueError("FEATURE_MODE 仅支持 'all' 或 'selected'")
+
 
 
 class BoundedHyperModel(kt.HyperModel):
@@ -140,7 +133,7 @@ class BoundedHyperModel(kt.HyperModel):
 def main():
     # 1) 数据加载与特征选择
     data = pd.read_excel(DATA_PATH)
-    feature_cols = choose_features(FEATURE_MODE)
+    feature_cols = SELECTED_FEATURE_COLS
     target_col = resolve_target_col(data.columns)
     X = data[feature_cols].values
     y = data[target_col].values
@@ -173,7 +166,7 @@ def main():
     n_train = X_train_scaled.shape[0]
     print(
         f"样本划分: train={len(y_train)}, val={len(y_val)}, test={len(y_test)} | "
-        f"features={n_features}, mode={FEATURE_MODE}, scale_y={SCALE_Y}"
+        f"features={n_features}, scale_y={SCALE_Y}"
     )
 
     hypermodel = BoundedHyperModel(n_features=n_features, n_train=n_train)
@@ -293,7 +286,7 @@ def main():
                 "target_col": target_col,
                 "scaler_X": scaler_X,
                 "scaler_y": scaler_y,
-                "feature_mode": FEATURE_MODE,
+
                 "best_hp": best_hp.values,
                 "best_seed": best_seed,
             },
@@ -305,7 +298,7 @@ def main():
         f.write(f"{'='*70}\n\n")
         f.write(
             f"数据: train={len(y_train)}, val={len(y_val)}, test={len(y_test)}, "
-            f"features={n_features}, mode={FEATURE_MODE}, scale_y={SCALE_Y}\n"
+            f"features={n_features}, scale_y={SCALE_Y}\n"
         )
         f.write(f"参数约束: ratio <= {MAX_PARAM_RATIO}\n\n")
         f.write("Top 5 架构:\n")
