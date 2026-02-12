@@ -12,11 +12,13 @@
 - [完整运行流程](#完整运行流程)
   - [Step 1：获取 SMILES 分子表示](#step-1获取-smiles-分子表示)
   - [Step 2：数据预处理](#step-2数据预处理)
+  - [Step 2.5：数据合并](#step-25数据合并)
   - [Step 3：特征工程](#step-3特征工程)
-  - [Step 4：模型训练](#step-4模型训练)
-  - [Step 5：模型验证与分析](#step-5模型验证与分析)
+  - [Step 4：特征选择](#step-4特征选择)
+  - [Step 5：模型训练与自动调参](#step-5模型训练与自动调参)
+  - [Step 6：模型验证与分析](#step-6模型验证与分析)
 - [数据文件说明](#数据文件说明)
-- [实验版本（测试目录）](#实验版本测试目录)
+- [模型性能基准](#模型性能基准)
 - [依赖列表](#依赖列表)
 
 ---
@@ -28,8 +30,10 @@
 本项目的核心思路是：
 
 1. 从原始文献数据中提取化合物名称，转换为 **SMILES** 分子结构表示
-2. 利用 **RDKit** 计算丰富的分子描述符（QSPR 描述符 + 立体描述符 + 分子指纹相似度）
-3. 基于这些描述符构建机器学习（Sklearn）和深度学习（DNN）模型，预测 χ 值
+2. 合并多来源数据集（旧数据 323 条 + 新数据 1586 条 = **1893 条**）
+3. 利用 **RDKit** 自动计算全部 **~210 个** 2D 分子描述符 + 指纹相似度 + 交互特征，生成 **320 维特征矩阵**
+4. 使用 **遗传算法（GA）** 从 320 维中选出最优特征子集
+5. 基于最优特征，使用 **AutoTune** 自动超参数优化训练 ML / DNN 模型
 
 ---
 
@@ -38,34 +42,45 @@
 ```
 Graduation-project/
 │
-├── 获取SMILES.py              # Step 1: 通过化合物名称获取 SMILES 字符串
-├── 数据处理部分代码.py          # Step 2: 处理哈金斯参数中的浮动值与温度
-├── 特征工程.py                 # Step 3: 计算分子描述符与指纹相似度
-├── DNN.py                     # Step 4a: DNN 深度神经网络建模
-├── Sklearn.py                 # Step 4b: Sklearn 传统机器学习建模
-├── DNN_模型验证.py             # Step 5a: DNN 模型验证
-├── Sklearn_模型验证.py         # Step 5b: Sklearn 模型验证
-├── DNN特征贡献分析.py          # Step 6a: DNN SHAP 特征贡献分析
-├── RF特征贡献分析.py           # Step 6b: 随机森林特征重要性分析
+├── 获取SMILES.py              # Step 1: 化合物名称 → SMILES
+├── 数据处理部分代码.py          # Step 2: χ 表达式解析 + 温度裂变
+├── 合并数据集.py               # Step 2.5: 合并旧数据与新数据
+├── 特征工程.py                 # Step 3: 全量 RDKit 描述符提取 (320 维)
+├── 特征筛选.py                 # Step 4a: RFECV 特征筛选
+├── 遗传.py                    # Step 4b: 遗传算法 (GA) 特征选择
+├── feature_config.py           # 特征配置中心 (统一管理选中的特征列)
+│
+├── DNN.py                     # Step 5a: DNN 深度神经网络建模
+├── DNN_AutoTune.py            # Step 5b: DNN Hyperband 自动调参
+├── Sklearn.py                 # Step 5c: Sklearn 贝叶斯优化建模
+├── Sklearn_AutoTune.py        # Step 5d: Sklearn 随机搜索自动调参
+│
+├── DNN_模型验证.py             # Step 6a: DNN 模型验证
+├── Sklearn_模型验证.py         # Step 6b: Sklearn 模型验证
+├── DNN特征贡献分析.py          # Step 6c: DNN SHAP 特征贡献分析
+├── RF特征贡献分析.py           # Step 6d: 随机森林特征重要性分析
 │
 ├── Huggins.xlsx               # 原始数据：化合物名称 + 哈金斯参数
 │
-├── data/                      # 中间过程数据（流水线各步骤产物）
-│   ├── smiles_raw.csv         # Step 1 输出：含 SMILES 的原始数据
-│   ├── smiles_cleaned.xlsx    # 手动清洗后的 SMILES 数据
-│   ├── huggins_preprocessed.xlsx  # Step 2 输出：温度裂变后的预处理数据
-│   └── molecular_features.xlsx    # Step 3 输出：28维分子描述符特征矩阵
+├── data/                      # 中间过程数据
+│   ├── smiles_raw.csv
+│   ├── smiles_cleaned.xlsx
+│   ├── huggins_preprocessed.xlsx
+│   ├── 43579_2022_237_MOESM1_ESM.csv  # 新增外部数据集 (1586 条)
+│   ├── merged_dataset.csv             # 合并后数据集 (1893 条)
+│   ├── molecular_features.xlsx        # 320 维特征矩阵
+│   └── features_optimized.xlsx        # 筛选后特征子集
 │
-├── results/                   # 最终成果（模型 + 验证结果 + 可视化）
-│   ├── DNN.h5                 # DNN 训练模型
-│   ├── DNN_v2.h5 / DNN_v2.keras  # DNN 优化版模型
-│   ├── fingerprint_model.pkl  # Sklearn 最优模型
-│   ├── DNN_validation_results.xlsx   # DNN 验证结果
-│   ├── Sklearn_validation_results.xlsx  # Sklearn 验证结果
-│   ├── DNN_v2_loss.png        # 训练损失曲线图
-│   ├── DNN_v2_results.png     # 预测结果散点图
-│   ├── DNN_SHAP_analysis.png  # Step 6a: DNN SHAP 特征贡献分析图
-│   └── RF_feature_importance.png  # Step 6b: 随机森林特征重要性图
+├── results/                   # 模型与结果
+│   ├── DNN.h5                 # DNN 模型
+│   ├── DNN_preprocess.pkl     # DNN 预处理器
+│   ├── best_model_sklearn.pkl # Sklearn 最优模型
+│   ├── ga_best_model.pkl      # GA 选出的最优模型
+│   ├── ga_selected_features.txt     # GA 选中的特征列表
+│   ├── ga_evolution_log.csv         # GA 进化日志
+│   ├── sklearn_tuning_summary.txt   # AutoTune 寻优报告
+│   ├── feature_selection.png        # 特征筛选可视化
+│   └── DNN_loss.png                 # 训练损失曲线
 │
 ├── requirements.txt           # Python 依赖清单
 ├── README.md                  # 本文件
@@ -89,6 +104,7 @@ Graduation-project/
 
 ```bash
 pip install -r requirements.txt
+conda install -c conda-forge rdkit  # rdkit 需要通过 conda 安装
 ```
 
 ### 主要依赖
@@ -100,65 +116,52 @@ pip install -r requirements.txt
 | `scikit-learn` | 传统机器学习模型与数据预处理 |
 | `scikit-optimize` | 贝叶斯超参数优化（BayesSearchCV） |
 | `xgboost` | XGBoost 回归模型 |
+| `deap` | 遗传算法特征选择 |
 | `tensorflow` / `keras` | 深度神经网络 (DNN) |
-| `matplotlib` | 数据可视化 |
+| `keras-tuner` | DNN Hyperband 自动调参 |
 | `shap` | 模型可解释性分析（SHAP 值） |
+| `joblib` | 模型序列化 |
+| `matplotlib` | 数据可视化 |
 | `requests` / `tqdm` | 网络请求 / 进度条显示 |
-
-> ⚠️ **注意**：`rdkit` 需要通过 conda 安装：`conda install -c conda-forge rdkit`
 
 ---
 
 ## 完整运行流程
 
-整个项目按以下 **5 个步骤** 依次执行，形成完整的数据处理—建模—验证流水线：
-
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        完 整 流 程 图                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Huggins.xlsx (原始数据)                                        │
-│       │                                                         │
-│       ▼                                                         │
-│  ┌──────────────────┐                                          │
-│  │ Step 1: 获取SMILES │  →  data/smiles_raw.csv                │
-│  │  (获取SMILES.py)   │     (化合物名称→SMILES分子结构)          │
-│  └──────────────────┘                                          │
-│       │                                                         │
-│       ▼                                                         │
-│  ┌────────────────────────┐                                    │
-│  │ Step 2: 数据预处理       │  →  data/huggins_preprocessed.xlsx │
-│  │  (数据处理部分代码.py)    │     (处理χ浮动值、温度裂变20-50°C)  │
-│  └────────────────────────┘                                    │
-│       │                                                         │
-│       ▼                                                         │
-│  ┌──────────────────┐                                          │
-│  │ Step 3: 特征工程   │  →  data/molecular_features.xlsx       │
-│  │  (特征工程.py)     │     (分子描述符 + 指纹相似度 + 目标值)    │
-│  └──────────────────┘                                          │
-│       │                                                         │
-│       ├────────────────────┐                                    │
-│       ▼                    ▼                                    │
-│  ┌─────────────┐   ┌──────────────┐                            │
-│  │ Step 4a: DNN │   │ Step 4b: ML  │                            │
-│  │  (DNN.py)    │   │ (Sklearn.py) │                            │
-│  │  → results/  │   │ → results/   │                            │
-│  └─────────────┘   └──────────────┘                            │
-│       │                    │                                    │
-│       ▼                    ▼                                    │
-│  ┌──────────────────────────────────────┐                       │
-│  │ Step 5: 模型验证                      │                       │
-│  │  (DNN_模型验证.py / Sklearn_模型验证.py) │                      │
-│  └──────────────────────────────────────┘                       │
-│       │                                                         │
-│       ▼                                                         │
-│  ┌──────────────────────────────────────┐                       │
-│  │ Step 6: 特征贡献分析（可解释性）        │                       │
-│  │  (DNN特征贡献分析.py / RF特征贡献分析.py) │                     │
-│  └──────────────────────────────────────┘                       │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────┐
+│                          完 整 流 程 图                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Huggins.xlsx ─────────────────┐                                    │
+│       │                        │                                    │
+│       ▼                        │                                    │
+│  Step 1: 获取SMILES.py         │                                    │
+│       │                        │                                    │
+│       ▼                        │                                    │
+│  Step 2: 数据处理部分代码.py   │                                    │
+│       │                        │                                    │
+│       ▼                        ▼                                    │
+│  Step 2.5: 合并数据集.py ◄─── 新数据 (ESM.csv)                      │
+│       │                                                             │
+│       ▼                                                             │
+│  Step 3: 特征工程.py → 320 维全量 RDKit 描述符                       │
+│       │                                                             │
+│       ▼                                                             │
+│  Step 4a: 遗传.py (GA 粗筛: 320 → ~20-40)                           │
+│       │                                                             │
+│       ▼                                                             │
+│  Step 4b: 特征筛选.py (RFECV 精筛: ~20-40 → ~8-15)                  │
+│       │                                                             │
+│       ├─────────────────────┐                                       │
+│       ▼                     ▼                                       │
+│  Step 5a: Sklearn       Step 5b: DNN                                │
+│  (Sklearn_AutoTune.py)  (DNN.py / DNN_AutoTune.py)                  │
+│       │                     │                                       │
+│       ▼                     ▼                                       │
+│  Step 6: 模型验证 + 特征贡献分析                                     │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -167,27 +170,13 @@ pip install -r requirements.txt
 
 **脚本**: [`获取SMILES.py`](获取SMILES.py)
 
-**功能**: 将 `Huggins.xlsx` 中的化合物名称通过在线 API 转换为 SMILES 分子结构字符串。
-
-**数据流**: `Huggins.xlsx` → `SMILES.csv`
-
-**核心逻辑**:
-
-1. 读取 `Huggins.xlsx` 中的化合物名称列（`Compound 1`、`Compound 2`）
-2. 对聚合物名称进行预处理：
-   - 如 `poly(styrene)` → 提取括号内 `styrene`
-   - 如 `polystyrene` → 去除 `poly` 前缀
-3. 依次通过两个在线数据库查询 SMILES：
-   - **一次查询**: PubChem REST API
-   - **二次查询**（一次失败时）: NCI CACTUS 服务
-4. 使用线程池并发查询，加速处理
-5. 输出结果保存为 `SMILES.csv`
+**功能**: 将 `Huggins.xlsx` 中的化合物名称通过 PubChem / NCI API 转换为 SMILES 分子结构字符串。
 
 ```bash
 python 获取SMILES.py
 ```
 
-> ⚠️ 需要网络连接以访问 PubChem 和 NCI 数据库，查询之间有随机延迟以避免被限流
+> ⚠️ 需要网络连接以访问 PubChem 和 NCI 数据库
 
 ---
 
@@ -195,32 +184,26 @@ python 获取SMILES.py
 
 **脚本**: [`数据处理部分代码.py`](数据处理部分代码.py)
 
-**功能**: 处理原始哈金斯参数数据中的复杂表达式（含浮动值、温度依赖项），计算出确定的 χ 值。
-
-**数据流**: `data/smiles_raw.csv` → `data/huggins_preprocessed.xlsx`
-
-**核心逻辑**:
-
-1. **χ 表达式解析** (`process_chi`):
-   - 处理形如 `0.43+34.7T` 的温度依赖表达式（`T` 项除以温度 K）
-   - 去除误差标识（`±`）和特殊字符
-   - 支持多项加减运算
-2. **温度处理** (`process_T`):
-   - 缺失温度 → 默认 298.15 K
-   - 范围温度（如 `300-400`）→ 取平均值
-3. **数据裂变** (`split_row`):
-   - 固定 χ 值 → 直接计算
-   - 含 `T` 的表达式 + 无温度 → 在 4 个常见实验温度下（**20°C, 30°C, 40°C, 50°C**）分别计算
-   - 含 `T` 的表达式 + 温度范围 → 在 4 个分位点温度下计算
-   - 含 `T` 的表达式 + 固定温度 → 在该温度下计算
-4. **异常值过滤**:
-   - 自动剔除 **χ < -1 或 χ > 5** 的极端离群值（防止训练失真）
-   - 保证数据分布在合理的物理化学范围内，排除非聚合物体系或特殊反应体系的干扰
-
-> **温度选取依据**: 20-50°C 区间覆盖绝大多数有机溶剂的液态稳定区和常见实验室操作温度，既保证了数据多样性，又避免了极端温度（如 0°C 或 100°C）可能违反物理前提的问题。
+**功能**: 处理 χ 表达式中的温度依赖项（如 `0.43+34.7T`），温度裂变（20-50°C），异常值过滤（`-1 < χ < 5`）。
 
 ```bash
 python 数据处理部分代码.py
+```
+
+---
+
+### Step 2.5：数据合并
+
+**脚本**: [`合并数据集.py`](合并数据集.py)
+
+**功能**: 将旧数据（`huggins_preprocessed.xlsx`，323 条）与新外部数据（`43579_2022_237_MOESM1_ESM.csv`，1586 条）合并为统一格式，去重后生成 **1893 条** 的合并数据集。
+
+**数据流**: 旧数据 + 新数据 → `data/merged_dataset.csv`
+
+**统一列格式**: `Polymer, Solvent, Polymer_SMILES, Solvent_SMILES, chi, temperature, source`
+
+```bash
+python 合并数据集.py
 ```
 
 ---
@@ -229,44 +212,19 @@ python 数据处理部分代码.py
 
 **脚本**: [`特征工程.py`](特征工程.py)
 
-**功能**: 基于 SMILES 字符串计算 28 维分子描述符特征，用于后续建模。
+**功能**: 使用 RDKit 的 `CalcMolDescriptors()` 自动提取全部 **~210 个 2D 分子描述符**，对聚合物和溶剂分别计算后拼接，再补充指纹相似度和交互特征。
 
-**数据流**: `processed_and_split_Smiles.xlsx` → `计算结果.xlsx`
+**数据流**: `data/merged_dataset.csv` → `data/molecular_features.xlsx`
 
-**核心逻辑**:
+| 特征类别 | 数量 | 说明 |
+|---------|------|------|
+| 聚合物描述符 (后缀 `_1`) | ~148 | MolWt, LogP, TPSA, 碎片计数, 拓扑指标等 |
+| 溶剂描述符 (后缀 `_2`) | ~155 | 同上 |
+| 指纹相似度 | 3 | Avalon, Morgan, Topological |
+| 交互特征 | 14 | Delta_LogP, Delta_TPSA, HB_Match, Inv_T 等 |
+| **总计** | **~320** | 经清洗后 (去除高缺失 + 常量列) |
 
-对每一对化合物（Compound 1 + Compound 2），利用 **RDKit** 计算以下三类特征：
-
-#### 1. QSPR 描述符（每种化合物各计算一组）
-
-| 特征 | 说明 |
-|------|------|
-| `MolWt` | 精确分子量 |
-| `logP` | 疏水性系数（ClogP） |
-| `TPSA` | 拓扑极性表面积 |
-| `LabuteASA` | Labute 约化表面积 |
-| `dipole` | Crippen 描述符（LogP 相关） |
-
-#### 2. 立体描述符（需 3D 构象优化）
-
-| 特征 | 说明 |
-|------|------|
-| `asphericity` | 分子不对称性 |
-| `eccentricity` | 分子偏心率 |
-| `inertial_shape_factor` | 惯性形状因子 |
-| `NPR1` / `NPR2` | 主惯性矩比 |
-| `CalcSpherocityIndex` | 球形度指数 |
-| `CalcRadiusOfGyration` | 回旋半径 |
-
-#### 3. 分子指纹相似度（化合物对之间的相似性）
-
-| 特征 | 说明 |
-|------|------|
-| `Avalon Similarity` | Avalon 指纹 Tanimoto 相似度 |
-| `Morgan Similarity` | Morgan (ECFP) 指纹 Tanimoto 相似度 |
-| `Topological Similarity` | 拓扑扭转指纹 Tanimoto 相似度 |
-
-加上 `Measured at T (K)` 温度和目标值 `χ-result`，共输出 **28 个特征列 + 1 个目标列**。
+**特殊处理**: 聚合物 SMILES 中的 `[*]` 连接点标记会被替换为 `[H]`，确保 RDKit 正常解析。
 
 ```bash
 python 特征工程.py
@@ -274,109 +232,127 @@ python 特征工程.py
 
 ---
 
-### Step 4：模型训练
+### Step 4：两阶段特征选择
 
-特征工程完成后，可通过两种路径进行建模：
+采用 **GA 粗筛 → RFECV 精筛** 两阶段策略，从 320 维中逐步筛选最优特征子集：
 
-#### Step 4a：DNN 深度神经网络
-
-**脚本**: [`DNN.py`](DNN.py)
-
-**功能**: 使用 TensorFlow/Keras 构建 DNN 回归模型预测 χ 值。
-
-| 配置项 | 值 |
-|--------|------|
-| 网络结构 | 128 → BN → 64 → 32 → 16 → 8 → 4(L2) → 1 |
-| 损失函数 | MAE |
-| 优化器 | Adam |
-| 回调 | EarlyStopping(patience=15) + ReduceLROnPlateau |
-| 数据划分 | 80% 训练 / 20% 测试 |
-| 标准化 | X 和 y 均使用 StandardScaler |
-
-```bash
-python DNN.py
+```
+320 维 ──GA粗筛──→ ~20-40 维 ──RFECV精筛──→ ~8-15 维 ──→ 建模
 ```
 
-**输出**: `DNN.h5`（模型文件）+ 训练损失曲线图
+#### Step 4a：遗传算法 (GA) 粗筛
 
-#### Step 4b：Sklearn 传统机器学习
+**脚本**: [`遗传.py`](遗传.py)
 
-**脚本**: [`Sklearn.py`](Sklearn.py)
+**功能**: 使用 DEAP 遗传算法从 ~320 维特征中全局搜索最优特征子集。GA 能探索特征间的非线性组合效应，适合高维粗筛。
 
-**功能**: 批量训练多种 Sklearn 回归模型，使用 **贝叶斯超参数优化**（BayesSearchCV）搜索最优参数，自动选出最佳模型。
+| 参数 | 值 | 说明 |
+|------|---|------|
+| 种群大小 | 100 | 每代 100 个候选方案 |
+| 最大代数 | 60 | 上限（通常早停） |
+| 早停 | 12 代无改善 | 自动停止 |
+| CV 折数 | 3 | 平衡速度与精度 |
+| 评估器 | RF(n=100, depth=8) | 轻量快速 |
+| 特征数约束 | [5, 40] | 控制模型复杂度 |
 
-| 模型 | 搜索空间 |
-|------|----------|
-| Ridge | alpha, max_iter |
-| Lasso | alpha, max_iter |
-| SVR | kernel, C, gamma, max_iter |
-| RandomForest | n_estimators, max_depth, max_features |
-| GradientBoosting | n_estimators, max_depth, max_features |
+**输出**: `results/ga_selected_features.txt`、`results/ga_evolution_log.csv`，自动更新 `feature_config.py`
 
 ```bash
-python Sklearn.py
+python 遗传.py    # 约 20-40 分钟
 ```
 
-**输出**: `fingerprint_model.pkl`（最优模型 pickle 文件）
+#### Step 4b：RFECV 精筛
+
+**脚本**: [`特征筛选.py`](特征筛选.py)
+
+**功能**: 从 GA 选出的 ~20-40 个特征中，使用 RFECV 逐个淘汰冗余特征，精确定位最优子集。自动从 `feature_config.py` 读取 GA 预选结果。
+
+> ⚠️ 必须先运行 `遗传.py`，否则脚本会报错提示。不会直接对 320 维全量特征运行 RFECV。
+
+**输出**: 自动更新 `feature_config.py` 和 `data/features_optimized.xlsx`
+
+```bash
+python 特征筛选.py
+```
+
+#### 统一特征管理
+
+**脚本**: [`feature_config.py`](feature_config.py)
+
+特征选择结果统一存储在此文件中，定义了 `ALL_FEATURE_COLS`（全部特征）和 `SELECTED_FEATURE_COLS`（选中特征），供下游训练和验证脚本使用。
 
 ---
 
-### Step 5：模型验证与分析
+### Step 5：模型训练与自动调参
 
-#### DNN 模型验证
+#### Step 5a：DNN 深度神经网络
 
-**脚本**: [`DNN_模型验证.py`](DNN_模型验证.py)
+**脚本**: [`DNN.py`](DNN.py)
 
-**功能**: 加载训练好的 DNN 模型，在全量数据上进行预测，输出评估指标（R²、MAE、RMSE）和预测结果。
-
-模型路径通过脚本顶部的 `MODEL_PATH` 变量配置，默认为 `DNN.h5`，可替换为任意 `.h5` / `.keras` 模型文件。
-
-```bash
-python DNN_模型验证.py
-```
-
-**输出**: `DNN_validation_results.xlsx`（含预测值和残差列）
-
-#### Sklearn 模型验证
-
-**脚本**: [`Sklearn_模型验证.py`](Sklearn_模型验证.py)
-
-**功能**: 加载训练好的 Sklearn 模型，在全量数据上进行预测，输出评估指标和预测结果。
+| 配置项 | 值 |
+|--------|------|
+| 网络结构 | 64 → BN → Dropout → 32 → 16(L2) → 1 |
+| 损失函数 | Huber |
+| 训练策略 | 5 个随机种子多次训练，选最优 |
+| 数据划分 | 60% 训练 / 20% 验证 / 20% 测试 |
+| 标准化 | X 和 y 均使用 StandardScaler |
 
 ```bash
-python Sklearn_模型验证.py
+# 需要使用 .venv 中的 Python (Keras 3 兼容)
+.venv\Scripts\python.exe DNN.py
 ```
 
-**输出**: `Sklearn_validation_results.xlsx`（含预测值和残差列）
+#### Step 5b：DNN Hyperband 自动调参
 
-### Step 6：特征贡献分析（模型可解释性）
+**脚本**: [`DNN_AutoTune.py`](DNN_AutoTune.py)
 
-#### DNN SHAP 分析
-
-**脚本**: [`DNN特征贡献分析.py`](DNN特征贡献分析.py)
-
-**功能**: 使用 SHAP GradientExplainer 计算各特征对 DNN 模型预测的贡献度，输出:
-
-- 平均绝对 SHAP 值柱状图（特征重要性排序）
-- 平均 SHAP 值柱状图（带正负方向，反映特征对预测的推高/拉低效应）
+使用 Keras Tuner 的 Hyperband 算法搜索 DNN 最优架构（层数、宽度、学习率、正则化等）。
 
 ```bash
-python DNN特征贡献分析.py
+.venv\Scripts\python.exe DNN_AutoTune.py
 ```
 
-**输出**: `results/DNN_SHAP_analysis.png`
+#### Step 5c：Sklearn 传统机器学习
 
-#### 随机森林特征重要性
+**脚本**: [`Sklearn.py`](Sklearn.py)
 
-**脚本**: [`RF特征贡献分析.py`](RF特征贡献分析.py)
+批量训练多种 Sklearn 回归模型，使用 BayesSearchCV 搜索最优参数。
 
-**功能**: 从训练好的 RandomForest 模型中提取 `feature_importances_`，按重要性排序绘制柱状图，并打印特征排名。
+#### Step 5d：Sklearn AutoTune（推荐）
+
+**脚本**: [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py)
+
+5 个模型 × 50 组参数 × 5 折交叉验证自动寻优：
+
+| 模型 | 搜索维度 |
+|------|---------|
+| GradientBoosting | loss, lr, n_estimators, depth, subsample |
+| XGBRegressor | lr, n_estimators, depth, reg_alpha/lambda |
+| RandomForest | n_estimators, depth, max_features |
+| MLPRegressor | hidden layers, activation, alpha, lr |
+| SVR | kernel, C, gamma, epsilon |
 
 ```bash
-python RF特征贡献分析.py
+python Sklearn_AutoTune.py
 ```
 
-**输出**: `results/RF_feature_importance.png`
+---
+
+### Step 6：模型验证与分析
+
+#### 模型验证
+
+| 脚本 | 功能 |
+|------|------|
+| [`DNN_模型验证.py`](DNN_模型验证.py) | 加载 DNN 模型，在全量数据上评估 R²/MAE/RMSE |
+| [`Sklearn_模型验证.py`](Sklearn_模型验证.py) | 加载 Sklearn 模型，在全量数据上评估 |
+
+#### 特征贡献分析
+
+| 脚本 | 功能 |
+|------|------|
+| [`DNN特征贡献分析.py`](DNN特征贡献分析.py) | SHAP GradientExplainer 分析 DNN 特征贡献 |
+| [`RF特征贡献分析.py`](RF特征贡献分析.py) | RandomForest `feature_importances_` 排序 |
 
 ---
 
@@ -384,72 +360,34 @@ python RF特征贡献分析.py
 
 | 文件 | 位置 | 描述 | 产生阶段 |
 |------|------|------|----------|
-| `Huggins.xlsx` | 根目录 | 原始数据，包含化合物名称、χ 参数表达式、温度 | 输入数据 |
-| `smiles_raw.csv` | `data/` | 化合物名称 + SMILES 分子结构 | Step 1 输出 |
-| `smiles_cleaned.xlsx` | `data/` | 手动清洗后的 SMILES 数据 | 手动处理 |
-| `huggins_preprocessed.xlsx` | `data/` | 温度裂变后的预处理数据 | Step 2 输出 |
-| `molecular_features.xlsx` | `data/` | 28维分子描述符特征矩阵 + 目标值 | Step 3 输出 |
-| `DNN.h5` / `DNN_v2.h5` | `results/` | DNN 训练模型 | Step 4a 输出 |
-| `fingerprint_model.pkl` | `results/` | Sklearn 最优模型 | Step 4b 输出 |
-| `DNN_validation_results.xlsx` | `results/` | DNN 验证结果（含预测值与残差） | Step 5 输出 |
-| `Sklearn_validation_results.xlsx` | `results/` | Sklearn 验证结果（含预测值与残差） | Step 5 输出 |
-| `DNN_SHAP_analysis.png` | `results/` | DNN SHAP 特征贡献分析图 | Step 6a 输出 |
-| `RF_feature_importance.png` | `results/` | 随机森林特征重要性图 | Step 6b 输出 |
+| `Huggins.xlsx` | 根目录 | 原始数据 | 输入 |
+| `43579_2022_237_MOESM1_ESM.csv` | `data/` | 外部数据集 (1586 条) | 新增输入 |
+| `smiles_raw.csv` | `data/` | SMILES 查询结果 | Step 1 |
+| `smiles_cleaned.xlsx` | `data/` | 手动清洗后的 SMILES | 手动处理 |
+| `huggins_preprocessed.xlsx` | `data/` | 预处理数据 (323 条) | Step 2 |
+| `merged_dataset.csv` | `data/` | 合并数据集 (1893 条) | Step 2.5 |
+| `molecular_features.xlsx` | `data/` | 320 维特征矩阵 | Step 3 |
+| `features_optimized.xlsx` | `data/` | 筛选后特征子集 | Step 4 |
+| `ga_selected_features.txt` | `results/` | GA 选中的特征列表 | Step 4b |
+| `ga_evolution_log.csv` | `results/` | GA 进化日志 | Step 4b |
+| `best_model_sklearn.pkl` | `results/` | Sklearn 最优模型 | Step 5 |
+| `DNN.h5` | `results/` | DNN 模型 | Step 5 |
 
 ---
 
-## 实验版本（测试目录）
+## 模型性能基准
 
-`测试/` 目录中包含了多个实验性版本，用于探索不同模型结构和优化策略：
+> 以下为合并数据集 (1886 样本, 6 特征 RFECV) 上的 AutoTune 结果
 
-| 脚本 | 说明 |
-|------|------|
-| `测试/DNN.py` | DNN 改进版：Huber Loss + 全层 BN/Dropout + L2 正则化 + ModelCheckpoint |
-| `测试/DNN_v2.py` | DNN 精简版：针对小数据集优化网络宽度，多次种子训练取最优 |
-| `测试/DNN_Map.py` | DNN 超参数搜索：使用 GridSearchCV + KerasRegressor 搜索层结构和学习率 |
-| `测试/Sklearn.py` | Sklearn 扩展版：增加 XGBoost 和 MLPRegressor，绘制交叉验证箱线图 |
-| `测试/GPR.py` | 高斯过程回归（Gaussian Process Regression）模型 |
-| `测试/DNN特征贡献分析.py` | SHAP 特征重要性分析（DNN 模型可解释性） |
-| `测试/RF特征贡献分析.py` | 随机森林特征重要性排序图 |
+| 模型 | CV Val R² | Test R² | Test MAE | Test RMSE |
+|------|----------|---------|---------|---------|
+| **GradientBoosting** | **0.749** | **0.812** | 0.156 | 0.263 |
+| XGBRegressor | 0.726 | 0.799 | 0.150 | 0.271 |
+| RandomForest | 0.692 | 0.780 | 0.177 | 0.284 |
+| MLPRegressor | 0.616 | 0.725 | 0.208 | 0.318 |
+| DNN (Keras) | — | 0.649 | 0.240 | 0.359 |
 
----
-
-## 依赖列表
-
-详见 [`requirements.txt`](requirements.txt)：
-
-```
-pandas>=1.5.0
-numpy>=1.23.0
-openpyxl>=3.0.0
-scikit-learn>=1.1.0
-scikit-optimize>=0.9.0
-xgboost>=1.7.0
-tensorflow>=2.10.0
-matplotlib>=3.5.0
-requests>=2.28.0
-tqdm>=4.64.0
-```
-
-额外依赖（需 conda 安装）：
-
-```
-rdkit (conda install -c conda-forge rdkit)
-shap  (pip install shap)  # 特征贡献分析所需
-```
-
----
-
-## 评估指标
-
-模型使用以下指标评估预测效果：
-
-| 指标 | 公式 | 说明 |
-|------|------|------|
-| **R²** | 1 - SS_res/SS_tot | 决定系数，越接近 1 越好 |
-| **MAE** | mean(\|y_true - y_pred\|) | 平均绝对误差 |
-| **RMSE** | √(mean((y_true - y_pred)²)) | 均方根误差 |
-| **MAPE** | mean(\|y_true - y_pred\|/\|y_true\|) | 平均绝对百分比误差 |
+> 💡 使用 GA 从 320 维特征中选择最优子集后，性能有望进一步提升。
 
 ---
 
@@ -464,19 +402,26 @@ cd Graduation-project
 pip install -r requirements.txt
 conda install -c conda-forge rdkit
 
-# 3. 按顺序执行流水线
-python 获取SMILES.py            # Step 1: 获取 SMILES（需网络）
-python 数据处理部分代码.py        # Step 2: 数据预处理（温度裂变 20-50°C）
-python 特征工程.py               # Step 3: 特征工程
-python DNN.py                   # Step 4a: DNN 建模
-python Sklearn.py               # Step 4b: Sklearn 建模
-python DNN_模型验证.py           # Step 5a: DNN 模型验证
-python Sklearn_模型验证.py       # Step 5b: Sklearn 模型验证
-python DNN特征贡献分析.py        # Step 6a: SHAP 特征贡献分析
-python RF特征贡献分析.py         # Step 6b: 随机森林特征重要性
+# 3. 数据合并 + 特征工程 + 特征选择 + 建模
+python 合并数据集.py              # 合并旧数据与新数据
+python 特征工程.py                # 全量 RDKit 描述符 (320 维)
+python 遗传.py                   # GA 特征选择 (~20-40 min)
+python Sklearn_AutoTune.py       # Sklearn 自动调参
+
+# 或: 如果已有 data/molecular_features.xlsx, 从 Step 4 开始
+python 遗传.py
+python Sklearn_AutoTune.py
 ```
 
-> 💡 如果已有 `data/molecular_features.xlsx`，可直接从 Step 4 开始运行模型训练。
+---
+
+## 评估指标
+
+| 指标 | 公式 | 说明 |
+|------|------|------|
+| **R²** | 1 - SS_res/SS_tot | 决定系数，越接近 1 越好 |
+| **MAE** | mean(\|y_true - y_pred\|) | 平均绝对误差 |
+| **RMSE** | √(mean((y_true - y_pred)²)) | 均方根误差 |
 
 ---
 

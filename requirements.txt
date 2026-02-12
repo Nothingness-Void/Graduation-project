@@ -11,10 +11,21 @@ openpyxl>=3.0.0              # pandas 读取 .xlsx 文件所需引擎
 # 机器学习 (Sklearn 及相关)
 scikit-learn>=1.1.0
 scikit-optimize>=0.9.0       # BayesSearchCV 贝叶斯超参数优化 (skopt)
-xgboost>=1.7.0               # 测试/Sklearn.py 中使用
+xgboost>=1.7.0               # XGBRegressor 梯度提升模型
+joblib>=1.2.0                # 模型序列化
+
+# 遗传算法特征选择
+deap>=1.4.0                  # GA 特征选择 (遗传.py)
 
 # 深度学习
-tensorflow>=2.10.0           # DNN 模型训练 (含 keras)
+tensorflow>=2.10.0           # DNN 模型训练
+keras-tuner>=1.4.0           # DNN 超参数搜索 (DNN_AutoTune.py)
+
+# 分子描述符
+# rdkit 需通过 conda 安装: conda install -c conda-forge rdkit
+
+# 模型可解释性
+shap>=0.42.0                 # SHAP 特征贡献分析
 
 # 数据可视化
 matplotlib>=3.5.0
