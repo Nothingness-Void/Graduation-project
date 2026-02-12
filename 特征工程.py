@@ -1,160 +1,285 @@
+# -*- coding: utf-8 -*-
+"""
+特征工程.py - 全量 RDKit 分子描述符提取 + 交互特征
+
+使用 RDKit Descriptors.CalcMolDescriptors() 自动提取全部 ~210 个描述符，
+对聚合物+溶剂两个分子分别计算后拼接，再补充交互特征和指纹相似度。
+
+输入: data/merged_dataset.csv
+输出: data/molecular_features.xlsx
+"""
 import pandas as pd
-from rdkit import Chem
+import numpy as np
+from rdkit import Chem, RDLogger
+from rdkit.Chem import Descriptors, AllChem, rdMolDescriptors
 from rdkit.Avalon import pyAvalonTools
 from rdkit.DataStructs import FingerprintSimilarity
-from rdkit.Chem import rdMolDescriptors
-from rdkit.Chem import Descriptors
 from tqdm import tqdm
-from rdkit.Chem import DataStructs
-from rdkit.Chem import AllChem
 
-target_name = 'chi'
-smiles1_name = 'Polymer_SMILES'
-smiles2_name = 'Solvent_SMILES'
-temp_name = 'temperature'
+# 抑制 RDKit 警告 (对聚合物 SMILES [*] 替换后仍可能有少量警告)
+RDLogger.logger().setLevel(RDLogger.ERROR)
 
-# 读取输入数据
-data = pd.read_csv('data/merged_dataset.csv')
+# ========== 配置 ==========
+INPUT_PATH = "data/merged_dataset.csv"
+OUTPUT_PATH = "data/molecular_features.xlsx"
+
+TARGET_COL = "chi"
+SMILES1_COL = "Polymer_SMILES"
+SMILES2_COL = "Solvent_SMILES"
+TEMP_COL = "temperature"
 
 
-def sanitize_smiles(smi):
-    """处理聚合物 SMILES 中的 [*] 连接点标记，替换为 [H]。"""
+# ========== SMILES 预处理 ==========
+def sanitize_smiles(smi: str) -> str:
+    """
+    处理聚合物 SMILES 中的 [*] 连接点标记。
+    策略: 用 [H] 替换 [*]，使 RDKit 能正常解析。
+    """
     if not isinstance(smi, str):
-        return smi
-    smi = smi.replace('[*]', '[H]').replace('*', '')
-    return smi
-
-# 初始化结果列表
-results = []
-
-# 使用 tqdm 函数来显示进度条
-for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
-
-    smiles1 = sanitize_smiles(str(row[smiles1_name]))
-    smiles2 = sanitize_smiles(str(row[smiles2_name]))
-
-    # 从 SMILES 字符串创建分子对象
-    mol1 = Chem.MolFromSmiles(smiles1)
-    mol2 = Chem.MolFromSmiles(smiles2)
-
-    if mol1 is not None and mol2 is not None:
-        mol1 = Chem.AddHs(mol1)
-        mol2 = Chem.AddHs(mol2)
-        
-        #计算分子指纹
-
-        # 计算 Avalon 指纹
-        Avalon_fingerprint1 = pyAvalonTools.GetAvalonFP(mol1)
-        Avalon_fingerprint2 = pyAvalonTools.GetAvalonFP(mol2)
-
-        # 计算 Morgan 指纹
-        Morgan_fingerprint1 = AllChem.GetMorganFingerprintAsBitVect(mol1, 2, nBits=1024)
-        Morgan_fingerprint2 = AllChem.GetMorganFingerprintAsBitVect(mol2, 2, nBits=1024)
-
-        # 计算拓扑结构指纹
-        Topological_fingerprint1 = rdMolDescriptors.GetHashedTopologicalTorsionFingerprintAsBitVect(mol1)
-        Topological_fingerprint2 = rdMolDescriptors.GetHashedTopologicalTorsionFingerprintAsBitVect(mol2)
+        return ""
+    # 替换常见的连接点标记
+    smi = smi.replace("[*]", "[H]")
+    smi = smi.replace("*", "")
+    return smi.strip()
 
 
-        # 计算结构相似度
-        Morgan_Similar = FingerprintSimilarity(Morgan_fingerprint1, Morgan_fingerprint2) # 利用Tanimoto系数计算相似度
-
-        # 计算指纹相似度
-        Avalon_Similar = FingerprintSimilarity(Avalon_fingerprint1, Avalon_fingerprint2)  # 利用Avalon指纹计算相似度
-
-        # 计算拓补结构指纹相似度
-        Topological_Similar = FingerprintSimilarity(Topological_fingerprint1, Topological_fingerprint2) # 利用Tanimoto系数计算相似度
-
-
-
-        # 计算最大绝对偏电荷（极性描述符）
-        MaxAbsPartialCharge1 = Descriptors.MaxAbsPartialCharge(mol1)
-        MaxAbsPartialCharge2 = Descriptors.MaxAbsPartialCharge(mol2)
-        # 计算可旋转键的数量
-        rotatable_bonds1 = rdMolDescriptors.CalcNumRotatableBonds(mol1)
-        rotatable_bonds2 = rdMolDescriptors.CalcNumRotatableBonds(mol2)
+def safe_mol(smi: str):
+    """安全地从 SMILES 创建分子对象，失败返回 None。"""
+    smi = sanitize_smiles(smi)
+    if not smi:
+        return None
+    mol = Chem.MolFromSmiles(smi)
+    if mol is not None:
+        try:
+            mol = Chem.AddHs(mol)
+        except Exception:
+            pass
+    return mol
 
 
+# ========== 全量描述符计算 ==========
+# 获取所有 RDKit 2D 描述符名称
+ALL_DESC_NAMES = [x[0] for x in Descriptors._descList]
 
-        # QSPR描述符
-        # 分子量
-        mol_wt1 = rdMolDescriptors.CalcExactMolWt(mol1)
-        mol_wt2 = rdMolDescriptors.CalcExactMolWt(mol2)
-        # 疏水性
-        logp1 = Descriptors.MolLogP(mol1)
-        logp2 = Descriptors.MolLogP(mol2)
-        # 极性表面积
-        tpsa1 = rdMolDescriptors.CalcTPSA(mol1)  
-        tpsa2 = rdMolDescriptors.CalcTPSA(mol2)
-        # 计算氢键供体和受体的数量
-        n_h_donor1 = rdMolDescriptors.CalcNumHBD(mol1)
-        n_h_donor2 = rdMolDescriptors.CalcNumHBD(mol2)
-        n_h_acceptor1 = rdMolDescriptors.CalcNumHBA(mol1)
-        n_h_acceptor2 = rdMolDescriptors.CalcNumHBA(mol2)
-        # 计算分子总电荷
-        total_charge1 = sum(atom.GetFormalCharge() for atom in mol1.GetAtoms())
-        total_charge2 = sum(atom.GetFormalCharge() for atom in mol2.GetAtoms())
-        # 计算分子键数量
-        bond_types1 = set(bond.GetBondType() for bond in mol1.GetBonds())
-        bond_count1 = len(bond_types1)
-        bond_types2 = set(bond.GetBondType() for bond in mol2.GetBonds())
-        bond_count2 = len(bond_types2)
 
-        # 计算分子的Labute 约化表面积
-        LabuteASA1 = rdMolDescriptors.CalcLabuteASA(mol1)
-        LabuteASA2 = rdMolDescriptors.CalcLabuteASA(mol2)
+def calc_all_descriptors(mol) -> dict:
+    """
+    使用 CalcMolDescriptors 计算全部 ~210 个 RDKit 2D 描述符。
+    如果某个描述符计算失败，返回 NaN。
+    """
+    if mol is None:
+        return {name: np.nan for name in ALL_DESC_NAMES}
 
-        #计算杂原子数量
-        atom_count1 = Descriptors.NumHeteroatoms(mol1)
-        atom_count2 = Descriptors.NumHeteroatoms(mol2)
+    try:
+        desc_dict = Descriptors.CalcMolDescriptors(mol)
+    except Exception:
+        desc_dict = {}
+        for name, func in Descriptors._descList:
+            try:
+                desc_dict[name] = func(mol)
+            except Exception:
+                desc_dict[name] = np.nan
 
-        # ===== 新增交互特征 =====
-        # 热力学驱动力：疏水性差异（χ ∝ (δ₁-δ₂)²，LogP 差异近似）
-        Delta_LogP = abs(logp1 - logp2)
-        # 极性不匹配度
-        Delta_TPSA = abs(tpsa1 - tpsa2)
-        # 氢键匹配性：交叉项（供体1×受体2 + 受体1×供体2）
-        HB_Match = n_h_donor1 * n_h_acceptor2 + n_h_acceptor1 * n_h_donor2
-        # 分子体积差异（摩尔折射率 MolMR，与分子体积强相关）
-        MolMR1 = Descriptors.MolMR(mol1)
-        MolMR2 = Descriptors.MolMR(mol2)
-        Delta_MolMR = abs(MolMR1 - MolMR2)
-        # 分子柔性（sp3 碳比例）
-        CSP3_1 = Descriptors.FractionCSP3(mol1)
-        CSP3_2 = Descriptors.FractionCSP3(mol2)
-        # 温度物理项（χ = A + B/T，1/T 更符合物理规律）
-        Inv_T = 1000.0 / row[temp_name]
+    # 确保所有值都是数值型（部分描述符可能返回非数值）
+    result = {}
+    for name in ALL_DESC_NAMES:
+        val = desc_dict.get(name, np.nan)
+        if val is None or (isinstance(val, float) and np.isinf(val)):
+            result[name] = np.nan
+        else:
+            try:
+                result[name] = float(val)
+            except (TypeError, ValueError):
+                result[name] = np.nan
+    return result
 
-        # 将结果添加到结果列表中
-        results.append({
-            'MolWt1': mol_wt1,
-            'logP1': logp1,
-            'TPSA1': tpsa1,
-            'MaxAbsPartialCharge1': MaxAbsPartialCharge1,
-            'LabuteASA1': LabuteASA1,
-            'MolWt2': mol_wt2,
-            'logP2': logp2,
-            'TPSA2': tpsa2,
-            'MaxAbsPartialCharge2': MaxAbsPartialCharge2,
-            'LabuteASA2': LabuteASA2,
-            'Avalon Similarity': Avalon_Similar,
-            'Morgan Similarity': Morgan_Similar,
-            'Topological Similarity': Topological_Similar,
-            # ===== 交互特征 =====
-            'Delta_LogP': Delta_LogP,
-            'Delta_TPSA': Delta_TPSA,
-            'HB_Match': HB_Match,
-            'Delta_MolMR': Delta_MolMR,
-            'CSP3_1': CSP3_1,
-            'CSP3_2': CSP3_2,
-            'Inv_T': Inv_T,
-            'χ-result': row[target_name],
-        })
-    else:
-        print(f"Unable to parse SMILES string: {smiles1} or {smiles2}")
 
-# 将结果列表转换为 DataFrame
-result = pd.DataFrame(results)
+# ========== 指纹相似度 ==========
+def calc_fingerprint_similarities(mol1, mol2) -> dict:
+    """
+    计算三种分子指纹之间的 Tanimoto 相似度。
+    """
+    result = {
+        "Avalon_Similarity": np.nan,
+        "Morgan_Similarity": np.nan,
+        "Topological_Similarity": np.nan,
+    }
+    if mol1 is None or mol2 is None:
+        return result
 
-# 保存结果到 Excel 文件
-result.to_excel('data/molecular_features.xlsx', index=False)
+    try:
+        fp1 = pyAvalonTools.GetAvalonFP(mol1)
+        fp2 = pyAvalonTools.GetAvalonFP(mol2)
+        result["Avalon_Similarity"] = FingerprintSimilarity(fp1, fp2)
+    except Exception:
+        pass
+
+    try:
+        fp1 = AllChem.GetMorganFingerprintAsBitVect(mol1, 2, nBits=1024)
+        fp2 = AllChem.GetMorganFingerprintAsBitVect(mol2, 2, nBits=1024)
+        result["Morgan_Similarity"] = FingerprintSimilarity(fp1, fp2)
+    except Exception:
+        pass
+
+    try:
+        fp1 = rdMolDescriptors.GetHashedTopologicalTorsionFingerprintAsBitVect(mol1)
+        fp2 = rdMolDescriptors.GetHashedTopologicalTorsionFingerprintAsBitVect(mol2)
+        result["Topological_Similarity"] = FingerprintSimilarity(fp1, fp2)
+    except Exception:
+        pass
+
+    return result
+
+
+# ========== 交互特征 ==========
+def calc_interaction_features(desc1: dict, desc2: dict, temperature: float) -> dict:
+    """
+    计算基于物理化学原理的交互特征:
+    差值 (|polymer - solvent|) 和比值特征。
+    """
+    interaction = {}
+
+    # 差值特征 (有物理意义的配对)
+    diff_pairs = [
+        ("MolLogP", "Delta_LogP"),
+        ("TPSA", "Delta_TPSA"),
+        ("MolMR", "Delta_MolMR"),
+        ("ExactMolWt", "Delta_MolWt"),
+        ("MaxAbsPartialCharge", "Delta_MaxAbsCharge"),
+        ("HeavyAtomMolWt", "Delta_HeavyAtomMolWt"),
+        ("NumHDonors", "Delta_HBD"),
+        ("NumHAcceptors", "Delta_HBA"),
+        ("FractionCSP3", "Delta_CSP3"),
+        ("LabuteASA", "Delta_LabuteASA"),
+        ("NumRotatableBonds", "Delta_RotBonds"),
+        ("NumAromaticRings", "Delta_AromaticRings"),
+    ]
+    for d_name, feat_name in diff_pairs:
+        v1 = desc1.get(d_name, np.nan)
+        v2 = desc2.get(d_name, np.nan)
+        try:
+            interaction[feat_name] = abs(float(v1) - float(v2))
+        except (TypeError, ValueError):
+            interaction[feat_name] = np.nan
+
+    # 氢键匹配性: 供体1×受体2 + 受体1×供体2
+    try:
+        hbd1 = float(desc1.get("NumHDonors", 0))
+        hba1 = float(desc1.get("NumHAcceptors", 0))
+        hbd2 = float(desc2.get("NumHDonors", 0))
+        hba2 = float(desc2.get("NumHAcceptors", 0))
+        interaction["HB_Match"] = hbd1 * hba2 + hba1 * hbd2
+    except (TypeError, ValueError):
+        interaction["HB_Match"] = np.nan
+
+    # 温度物理项 (chi = A + B/T)
+    try:
+        interaction["Inv_T"] = 1000.0 / float(temperature)
+    except (TypeError, ValueError, ZeroDivisionError):
+        interaction["Inv_T"] = np.nan
+
+    return interaction
+
+
+# ========== 主流程 ==========
+def main():
+    print("加载数据...")
+    data = pd.read_csv(INPUT_PATH)
+    print(f"  输入: {data.shape[0]} 行, 列: {list(data.columns)}")
+    print(f"  RDKit 描述符数: {len(ALL_DESC_NAMES)}")
+    print(f"  预计输出特征数: ~{len(ALL_DESC_NAMES) * 2 + 3 + 15} 维")
+
+    results = []
+    failed = 0
+
+    for i, row in tqdm(data.iterrows(), total=len(data), desc="计算描述符"):
+        mol1 = safe_mol(str(row[SMILES1_COL]))
+        mol2 = safe_mol(str(row[SMILES2_COL]))
+
+        if mol1 is None and mol2 is None:
+            failed += 1
+            continue
+
+        # 1) 全量描述符 (分别给聚合物和溶剂加后缀)
+        desc1 = calc_all_descriptors(mol1)
+        desc2 = calc_all_descriptors(mol2)
+
+        feat_row = {}
+        for name, val in desc1.items():
+            feat_row[f"{name}_1"] = val
+        for name, val in desc2.items():
+            feat_row[f"{name}_2"] = val
+
+        # 2) 指纹相似度
+        fp_sims = calc_fingerprint_similarities(mol1, mol2)
+        feat_row.update(fp_sims)
+
+        # 3) 交互特征
+        interactions = calc_interaction_features(desc1, desc2, row.get(TEMP_COL, np.nan))
+        feat_row.update(interactions)
+
+        # 4) 目标值
+        feat_row["chi_result"] = row[TARGET_COL]
+
+        results.append(feat_row)
+
+    # 转为 DataFrame
+    df_features = pd.DataFrame(results)
+
+    # ========== 清洗 ==========
+    original_cols = len(df_features.columns) - 1  # 减去 chi_result
+
+    # 1) 删除全为 NaN 的列
+    threshold = 0.5  # 超过 50% 缺失则删除该列
+    nan_ratio = df_features.drop(columns=["chi_result"]).isnull().mean()
+    cols_to_drop = nan_ratio[nan_ratio > threshold].index.tolist()
+    if cols_to_drop:
+        df_features = df_features.drop(columns=cols_to_drop)
+        print(f"  删除高缺失率列 (>{threshold*100:.0f}%): {len(cols_to_drop)} 列")
+
+    # 2) 删除方差为 0 的列 (常量列)
+    feature_cols = [c for c in df_features.columns if c != "chi_result"]
+    const_cols = []
+    for c in feature_cols:
+        if df_features[c].dropna().nunique() <= 1:
+            const_cols.append(c)
+    if const_cols:
+        df_features = df_features.drop(columns=const_cols)
+        print(f"  删除常量列: {len(const_cols)} 列")
+
+    # 3) 填充剩余 NaN 为列中位数
+    feature_cols = [c for c in df_features.columns if c != "chi_result"]
+    nan_before = df_features[feature_cols].isnull().sum().sum()
+    for c in feature_cols:
+        if df_features[c].isnull().any():
+            df_features[c] = df_features[c].fillna(df_features[c].median())
+    nan_after = df_features[feature_cols].isnull().sum().sum()
+    if nan_before > 0:
+        print(f"  NaN 中位数填充: {nan_before} -> {nan_after}")
+
+    final_feature_count = len(df_features.columns) - 1
+    print(f"\n{'='*60}")
+    print(f"特征工程完成")
+    print(f"{'='*60}")
+    print(f"  样本数: {len(df_features)} (失败: {failed})")
+    print(f"  原始特征: {original_cols} -> 清洗后特征: {final_feature_count}")
+    print(f"  包含: {len(ALL_DESC_NAMES)}×2 描述符 + 3 相似度 + 交互特征")
+    print(f"  目标列: chi_result")
+
+    # 保存
+    df_features.to_excel(OUTPUT_PATH, index=False)
+    print(f"\n已保存至: {OUTPUT_PATH}")
+
+    # 打印特征类别统计
+    poly_feats = [c for c in df_features.columns if c.endswith("_1")]
+    solv_feats = [c for c in df_features.columns if c.endswith("_2")]
+    sim_feats = [c for c in df_features.columns if "Similarity" in c]
+    inter_feats = [c for c in df_features.columns if c.startswith("Delta_") or c in ("HB_Match", "Inv_T")]
+    print(f"\n  聚合物描述符 (_1): {len(poly_feats)}")
+    print(f"  溶剂描述符 (_2): {len(solv_feats)}")
+    print(f"  指纹相似度: {len(sim_feats)}")
+    print(f"  交互特征: {len(inter_feats)}")
+
+
+if __name__ == "__main__":
+    main()
