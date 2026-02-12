@@ -13,32 +13,49 @@ from sklearn.preprocessing import StandardScaler
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # ========== 配置 ==========
-MODEL_PATH = "results/DNN.h5"
-PREPROCESS_PATH = "results/DNN_preprocess.pkl"
+MODEL_CANDIDATES = ["results/dnn_model.keras", "results/DNN.h5", "results/best_model.keras"]
+PREPROCESS_CANDIDATES = [
+    "results/dnn_preprocess.pkl",
+    "results/DNN_preprocess.pkl",
+    "results/best_model_preprocess.pkl",
+]
 DATA_PATH = "data/molecular_features.xlsx"
-OUTPUT_PATH = "results/DNN_validation_results.xlsx"
+OUTPUT_PATH = "results/dnn_validation_results.xlsx"
 
 
 def main():
-    model = keras.models.load_model(MODEL_PATH, compile=False)
-    print(f"已加载模型: {MODEL_PATH}")
+    model_path = next((p for p in MODEL_CANDIDATES if Path(p).exists()), None)
+    if model_path is None:
+        raise FileNotFoundError(
+            "未找到 DNN 模型文件。请先运行 DNN.py（或 DNN_AutoTune.py）。"
+        )
+
+    preprocess_path = next((p for p in PREPROCESS_CANDIDATES if Path(p).exists()), None)
+
+    model = keras.models.load_model(model_path, compile=False)
+    print(f"已加载模型: {model_path}")
 
     data = pd.read_excel(DATA_PATH)
 
-    preprocess_file = Path(PREPROCESS_PATH)
-    if preprocess_file.exists():
-        with preprocess_file.open("rb") as f:
+    if preprocess_path is not None:
+        with Path(preprocess_path).open("rb") as f:
             meta = pickle.load(f)
         feature_cols = meta["feature_cols"]
         target_col = meta.get("target_col", resolve_target_col(data.columns))
+        feature_cols = [c for c in feature_cols if c in data.columns]
+        if len(feature_cols) < 5:
+            raise ValueError(f"预处理器中的有效特征不足: {len(feature_cols)}")
         scaler_X = meta["scaler_X"]
         scaler_y = meta.get("scaler_y")
-        print(f"已加载预处理器: {PREPROCESS_PATH} (features={len(feature_cols)})")
+        print(f"已加载预处理器: {preprocess_path} (features={len(feature_cols)})")
         X_val_scaled = scaler_X.transform(data[feature_cols].values)
     else:
         # 兼容旧模型：若无预处理器文件，回退到当前统一配置
         feature_cols = SELECTED_FEATURE_COLS
         target_col = resolve_target_col(data.columns)
+        feature_cols = [c for c in feature_cols if c in data.columns]
+        if len(feature_cols) < 5:
+            raise ValueError(f"有效特征不足: {len(feature_cols)}，请检查 feature_config.py")
         scaler_X = StandardScaler()
         scaler_y = None
         X_val_scaled = scaler_X.fit_transform(data[feature_cols].values)
@@ -56,7 +73,7 @@ def main():
     rmse = np.sqrt(mean_squared_error(y_true, y_pred))
 
     print("\n============ 模型验证结果 ============")
-    print(f"模型文件: {MODEL_PATH}")
+    print(f"模型文件: {model_path}")
     print(f"验证样本数: {len(y_true)}")
     print(f"R2值为：{r2:.4f}")
     print(f"MAE(平均绝对误差)值为：{mae:.4f}")

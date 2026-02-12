@@ -1,75 +1,107 @@
 """
-
 DNN 特征贡献分析脚本（SHAP）
-使用 GradientExplainer 计算各特征对 DNN 预测的 SHAP 值，
-输出特征重要性柱状图（绝对值 + 带符号）
-
+优先读取训练保存的预处理器，确保与训练输入一致。
 """
+
+import pickle
+from pathlib import Path
 import shap
 from tensorflow import keras
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.preprocessing import StandardScaler
+
 from feature_config import SELECTED_FEATURE_COLS
 
+
 # ========== 配置 ==========
-MODEL_PATH = "results/DNN.h5"                  # DNN 模型文件路径
-DATA_PATH = "data/molecular_features.xlsx"     # 特征数据文件路径
-OUTPUT_PATH = "results/DNN_SHAP_analysis.png"  # 输出图片路径
+MODEL_CANDIDATES = ["results/dnn_model.keras", "results/DNN.h5", "results/best_model.keras"]
+PREPROCESS_CANDIDATES = [
+    "results/dnn_preprocess.pkl",
+    "results/DNN_preprocess.pkl",
+    "results/best_model_preprocess.pkl",
+]
+DATA_PATH = "data/molecular_features.xlsx"
+OUTPUT_PATH = "results/dnn_shap_analysis.png"
+MAX_BACKGROUND = 256
+MAX_EXPLAIN = 1024
+RANDOM_STATE = 42
 
-# 加载模型
-model = keras.models.load_model(MODEL_PATH, compile=False)
-print(f"已加载模型: {MODEL_PATH}")
 
-# 加载数据
-data = pd.read_excel(DATA_PATH)
+def main():
+    model_path = next((p for p in MODEL_CANDIDATES if Path(p).exists()), None)
+    if model_path is None:
+        raise FileNotFoundError("未找到 DNN 模型文件。请先运行 DNN.py（或 DNN_AutoTune.py）。")
+    preprocess_path = next((p for p in PREPROCESS_CANDIDATES if Path(p).exists()), None)
 
-# 定义特征矩阵
-feature_cols = SELECTED_FEATURE_COLS
+    model = keras.models.load_model(model_path, compile=False)
+    print(f"已加载模型: {model_path}")
 
-# 获取特征并标准化
-X_val = data[feature_cols]
-scaler_X = StandardScaler()
-X_val_scaled = scaler_X.fit_transform(X_val)
-X_val_df = pd.DataFrame(X_val_scaled, columns=feature_cols)
+    data = pd.read_excel(DATA_PATH)
 
-# 初始化 GradientExplainer 解释器
-print("正在计算 SHAP 值...")
-explainer = shap.GradientExplainer(model, X_val_df)
-shap_values = explainer.shap_values(X_val_df.values)
+    if preprocess_path is not None:
+        with Path(preprocess_path).open("rb") as f:
+            meta = pickle.load(f)
+        feature_cols = meta.get("feature_cols", SELECTED_FEATURE_COLS)
+        feature_cols = [c for c in feature_cols if c in data.columns]
+        if len(feature_cols) < 5:
+            raise ValueError(f"预处理器中的有效特征不足: {len(feature_cols)}")
+        scaler_X = meta.get("scaler_X")
+        if scaler_X is None:
+            scaler_X = StandardScaler()
+            X_scaled = scaler_X.fit_transform(data[feature_cols].values)
+            print("预处理器中缺少 scaler_X，已回退到即时标准化。")
+        else:
+            X_scaled = scaler_X.transform(data[feature_cols].values)
+        print(f"已加载预处理器: {preprocess_path} (features={len(feature_cols)})")
+    else:
+        feature_cols = SELECTED_FEATURE_COLS
+        feature_cols = [c for c in feature_cols if c in data.columns]
+        if len(feature_cols) < 5:
+            raise ValueError(f"有效特征不足: {len(feature_cols)}，请检查 feature_config.py")
+        scaler_X = StandardScaler()
+        X_scaled = scaler_X.fit_transform(data[feature_cols].values)
+        print("未找到预处理器，已使用回退模式（fit_transform 全量数据）。")
 
-# 选择第一个输出的 SHAP 值
-shap_values_output = shap_values[0]
+    X_val_df = pd.DataFrame(X_scaled, columns=feature_cols)
 
-# 计算每个特征的平均绝对 SHAP 值
-mean_abs_shap = np.mean(np.abs(shap_values_output), axis=0)
+    # SHAP 对样本数较敏感，限制背景集和解释集可显著降低耗时
+    bg_n = min(MAX_BACKGROUND, len(X_val_df))
+    ex_n = min(MAX_EXPLAIN, len(X_val_df))
+    X_bg = X_val_df.sample(n=bg_n, random_state=RANDOM_STATE)
+    X_explain = X_val_df.sample(n=ex_n, random_state=RANDOM_STATE + 1)
 
-# 计算每个特征的平均 SHAP 值（带符号）
-mean_shap = np.mean(shap_values_output, axis=0)
+    print(f"正在计算 SHAP 值... background={bg_n}, explain={ex_n}")
+    explainer = shap.GradientExplainer(model, X_bg.values)
+    shap_values = explainer.shap_values(X_explain.values)
+    shap_values_output = shap_values[0] if isinstance(shap_values, list) else shap_values
 
-# 按绝对值从大到小排序
-sorted_idx = np.argsort(mean_abs_shap)
+    mean_abs_shap = np.mean(np.abs(shap_values_output), axis=0)
+    mean_shap = np.mean(shap_values_output, axis=0)
+    sorted_idx = np.argsort(mean_abs_shap)
+    feature_arr = np.array(feature_cols)
 
-# 绘图
-fig, axes = plt.subplots(1, 2, figsize=(16, 9))
+    fig, axes = plt.subplots(1, 2, figsize=(16, 9))
 
-# 左图：平均绝对 SHAP 值
-axes[0].barh(range(len(sorted_idx)), mean_abs_shap[sorted_idx], align='center')
-axes[0].set_yticks(range(len(sorted_idx)))
-axes[0].set_yticklabels(np.array(feature_cols)[sorted_idx])
-axes[0].set_xlabel('Mean |SHAP Value|')
-axes[0].set_title('Feature Importance (Absolute)')
+    axes[0].barh(range(len(sorted_idx)), mean_abs_shap[sorted_idx], align="center")
+    axes[0].set_yticks(range(len(sorted_idx)))
+    axes[0].set_yticklabels(feature_arr[sorted_idx])
+    axes[0].set_xlabel("Mean |SHAP Value|")
+    axes[0].set_title("Feature Importance (Absolute)")
 
-# 右图：平均 SHAP 值（带符号）
-colors = ['#e74c3c' if v > 0 else '#3498db' for v in mean_shap[sorted_idx]]
-axes[1].barh(range(len(sorted_idx)), mean_shap[sorted_idx], align='center', color=colors)
-axes[1].set_yticks(range(len(sorted_idx)))
-axes[1].set_yticklabels(np.array(feature_cols)[sorted_idx])
-axes[1].set_xlabel('Mean SHAP Value')
-axes[1].set_title('Feature Importance (Signed)')
+    colors = ["#e74c3c" if v > 0 else "#3498db" for v in mean_shap[sorted_idx]]
+    axes[1].barh(range(len(sorted_idx)), mean_shap[sorted_idx], align="center", color=colors)
+    axes[1].set_yticks(range(len(sorted_idx)))
+    axes[1].set_yticklabels(feature_arr[sorted_idx])
+    axes[1].set_xlabel("Mean SHAP Value")
+    axes[1].set_title("Feature Importance (Signed)")
 
-plt.tight_layout()
-plt.savefig(OUTPUT_PATH, dpi=300, bbox_inches='tight')
-print(f"\n特征贡献分析图已保存至: {OUTPUT_PATH}")
-plt.show()
+    plt.tight_layout()
+    plt.savefig(OUTPUT_PATH, dpi=300, bbox_inches="tight")
+    print(f"\n特征贡献分析图已保存至: {OUTPUT_PATH}")
+    plt.show()
+
+
+if __name__ == "__main__":
+    main()

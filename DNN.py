@@ -1,11 +1,14 @@
 import os
+
 os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
+
 import random
 import pickle
 import numpy as np
 import pandas as pd
 import matplotlib
-matplotlib.use('Agg')
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import keras
 from keras import regularizers
@@ -13,22 +16,21 @@ from keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 
 # ========== 配置 ==========
 DATA_PATH = "data/molecular_features.xlsx"
-MODEL_PATH = "results/DNN.h5"
-PREPROCESS_PATH = "results/DNN_preprocess.pkl"
-LOSS_PLOT_PATH = "results/DNN_loss.png"
-RUN_SUMMARY_PATH = "results/DNN_run_summary.csv"
+MODEL_PATH = "results/dnn_model.keras"
+PREPROCESS_PATH = "results/dnn_preprocess.pkl"
+LOSS_PLOT_PATH = "results/dnn_loss.png"
+RUN_SUMMARY_PATH = "results/dnn_run_summary.csv"
 
-
-
-# 训练设置
 SEEDS = [42, 52, 62, 72, 82]
 TEST_SIZE = 0.2
 VAL_SIZE_IN_TRAINVAL = 0.25  # train/val/test = 60/20/20
+RANDOM_STATE = 42
 
 
 def set_seed(seed: int) -> None:
@@ -40,35 +42,41 @@ def set_seed(seed: int) -> None:
 
 def build_model(input_dim: int, seed: int) -> keras.Model:
     set_seed(seed)
-    model = keras.Sequential([
-        keras.layers.Input(shape=(input_dim,)),
-        keras.layers.Dense(64, activation="relu"),
-        keras.layers.BatchNormalization(),
-        keras.layers.Dropout(0.1),
-        keras.layers.Dense(32, activation="relu"),
-        keras.layers.Dense(16, activation="relu", kernel_regularizer=regularizers.l2(1e-3)),
-        keras.layers.Dense(1, activation="linear"),
-    ])
+    model = keras.Sequential(
+        [
+            keras.layers.Input(shape=(input_dim,)),
+            keras.layers.Dense(64, activation="relu"),
+            keras.layers.BatchNormalization(),
+            keras.layers.Dropout(0.1),
+            keras.layers.Dense(32, activation="relu"),
+            keras.layers.Dense(16, activation="relu", kernel_regularizer=regularizers.l2(1e-3)),
+            keras.layers.Dense(1, activation="linear"),
+        ]
+    )
     model.compile(optimizer=keras.optimizers.Adam(learning_rate=1e-3), loss="huber", metrics=["mae"])
     return model
 
 
-
-
-
 def main():
+    os.makedirs("results", exist_ok=True)
+
     data = pd.read_excel(DATA_PATH)
     target_col = resolve_target_col(data.columns)
-    feature_cols = SELECTED_FEATURE_COLS
+    feature_cols = [c for c in SELECTED_FEATURE_COLS if c in data.columns]
+    missing_cols = [c for c in SELECTED_FEATURE_COLS if c not in data.columns]
+    if missing_cols:
+        print(f"警告：以下特征缺失，已自动跳过: {missing_cols}")
+    if len(feature_cols) < 5:
+        raise ValueError(f"有效特征过少: {len(feature_cols)}，请先检查 feature_config.py")
 
     X = data[feature_cols].values
     y = data[target_col].values
 
     X_trainval, X_test, y_trainval, y_test = train_test_split(
-        X, y, test_size=TEST_SIZE, random_state=42
+        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
     )
     X_train, X_val, y_train, y_val = train_test_split(
-        X_trainval, y_trainval, test_size=VAL_SIZE_IN_TRAINVAL, random_state=42
+        X_trainval, y_trainval, test_size=VAL_SIZE_IN_TRAINVAL, random_state=RANDOM_STATE
     )
 
     scaler_X = StandardScaler()
@@ -96,7 +104,8 @@ def main():
             ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=10, min_lr=1e-6),
         ]
         history = model.fit(
-            X_train_scaled, y_train_scaled,
+            X_train_scaled,
+            y_train_scaled,
             validation_data=(X_val_scaled, y_val_scaled),
             epochs=1000,
             batch_size=16,
@@ -111,9 +120,7 @@ def main():
         mae = mean_absolute_error(y_test, y_pred)
         rmse = np.sqrt(mean_squared_error(y_test, y_pred))
         val_loss = float(np.min(history.history["val_loss"]))
-        all_results.append(
-            {"seed": seed, "val_loss": val_loss, "R2": r2, "MAE": mae, "RMSE": rmse}
-        )
+        all_results.append({"seed": seed, "val_loss": val_loss, "R2": r2, "MAE": mae, "RMSE": rmse})
         print(f"val_loss={val_loss:.4f}, test R2={r2:.4f}, MAE={mae:.4f}, RMSE={rmse:.4f}")
 
         if val_loss < best_val_loss:
@@ -121,6 +128,9 @@ def main():
             best_model = model
             best_history = history
             best_seed = seed
+
+    if best_model is None:
+        raise RuntimeError("未得到可用 DNN 模型。")
 
     results_df = pd.DataFrame(all_results)
     print("\n==================== 多次运行统计 ====================")
@@ -139,8 +149,8 @@ def main():
                 "target_col": target_col,
                 "scaler_X": scaler_X,
                 "scaler_y": scaler_y,
-
                 "seeds": SEEDS,
+                "best_seed": best_seed,
             },
             f,
         )
