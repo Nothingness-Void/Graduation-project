@@ -38,7 +38,7 @@ def resolve_target_col(columns, preferred='χ-result'):
     raise KeyError("未找到目标列：χ-result（或包含 result 的列名）")
 
 
-def write_feature_config(selected_features, output_path='feature_config.py'):
+def write_feature_config(selected_features, all_features, output_path='feature_config.py'):
     config_text = '\n'.join([
         '"""Unified feature configuration for training/validation scripts."""',
         '',
@@ -46,9 +46,14 @@ def write_feature_config(selected_features, output_path='feature_config.py'):
         '',
         'from typing import Iterable',
         '',
-        '# Selected features from results/feature_ranking.txt (特征筛选结果)',
+        '# Selected features from results/feature_ranking.txt (RFECV 特征筛选结果)',
         'SELECTED_FEATURE_COLS = [',
         *[f'    "{feat}",' for feat in selected_features],
+        ']',
+        '',
+        '# Full feature set before feature selection',
+        'ALL_FEATURE_COLS = [',
+        *[f'    "{feat}",' for feat in all_features],
         ']',
         '',
         '',
@@ -280,7 +285,7 @@ df_optimized.to_excel('data/features_optimized.xlsx', index=False)
 print(f"筛选后数据已保存至 data/features_optimized.xlsx ({len(selected_features)} 特征 + 目标值)")
 
 # 自动同步统一特征配置
-write_feature_config(selected_features, output_path='feature_config.py')
+write_feature_config(selected_features, feature_cols, output_path='feature_config.py')
 
 # 保存排名详情
 with open('results/feature_ranking.txt', 'w', encoding='utf-8') as f:

@@ -4,15 +4,23 @@ from __future__ import annotations
 
 from typing import Iterable
 
-# Selected features from results/feature_ranking.txt (特征筛选结果)
-# Selected features from Genetic Algorithm (R2 ~0.0268)
+# Selected features from results/feature_ranking.txt (RFECV 特征筛选结果)
 SELECTED_FEATURE_COLS = [
-    'MolWt1', 
-    'LabuteASA1', 
-    'logP2', 
-    'Delta_TPSA', 
-    'HB_Match', 
-    'Inv_T'
+    "MolWt1",
+    "logP1",
+    "TPSA1",
+    "MaxAbsPartialCharge1",
+    "LabuteASA1",
+    "logP2",
+    "MaxAbsPartialCharge2",
+    "LabuteASA2",
+    "Avalon Similarity",
+    "Morgan Similarity",
+    "Delta_LogP",
+    "Delta_TPSA",
+    "Delta_MolMR",
+    "CSP3_2",
+    "Inv_T",
 ]
 
 # Full feature set before feature selection

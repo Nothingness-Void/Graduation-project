@@ -22,7 +22,7 @@ LOSS_PLOT_PATH = "results/DNN_loss.png"
 RUN_SUMMARY_PATH = "results/DNN_run_summary.csv"
 
 # 可选: "selected" (16特征) / "all" (20特征)
-FEATURE_MODE = "all"
+FEATURE_MODE = "selected"
 
 # 训练设置
 SEEDS = [42, 52, 62, 72, 82]

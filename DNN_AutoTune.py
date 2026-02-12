@@ -3,27 +3,27 @@
 DNN_AutoTune.py
 使用 Keras Tuner Hyperband 自动搜索 DNN 架构（无测试集泄漏版本）
 
-关键改进:
-1. 严格 train/val/test 三段划分，测试集只用于最终评估
-2. 对超参数化模型施加硬约束（参数/样本比超过阈值直接惩罚）
-3. 自动保存最优模型、预处理器和搜索摘要
+改进:
+1. 更宽的搜索空间: 1-4 层, 16-256 节点
+2. 放宽参数预算: ratio 上限 50 (321 样本)
+3. 增加 batch_size 搜索
+4. 增加 Hyperband 迭代次数
+5. y 标准化选项
+6. 更多重训次数 (8 次)
 """
 
 import os
 import pickle
 import numpy as np
 import pandas as pd
-import tensorflow as tf
-from tensorflow import keras
-from tensorflow.keras import regularizers
-from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
+import keras
+from keras import layers, regularizers, optimizers, callbacks as keras_callbacks, losses
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import keras_tuner as kt
 from feature_config import ALL_FEATURE_COLS, SELECTED_FEATURE_COLS, resolve_target_col
-
-os.environ["TF_ENABLE_ONEDNN_OPTS"] = "0"
 
 # =========================
 # 配置区
@@ -34,21 +34,24 @@ PREPROCESS_PATH = "results/best_model_preprocess.pkl"
 SUMMARY_PATH = "results/tuner_summary.txt"
 
 # 可选: "selected" (16特征) / "all" (20特征)
-FEATURE_MODE = "all"
+FEATURE_MODE = "selected"
 
 # 三段划分: train/val/test = 60/20/20
 TEST_SIZE = 0.2
 VAL_SIZE_IN_TRAINVAL = 0.25
 RANDOM_STATE = 42
 
-# 小数据集约束: 参数/样本比上限
-MAX_PARAM_RATIO = 20.0
+# 小数据集约束: 参数/样本比上限 (放宽到 50)
+MAX_PARAM_RATIO = 50.0
 
-# 运行规模: 为了更快拿结果，默认使用较轻配置
-MAX_EPOCHS = 120
+# y 标准化 (对 Huggins 参数右偏分布有帮助)
+SCALE_Y = True
+
+# 运行规模
+MAX_EPOCHS = 200
 HYPERBAND_FACTOR = 3
-HYPERBAND_ITERATIONS = 1
-RETRAIN_RUNS = 5
+HYPERBAND_ITERATIONS = 2
+RETRAIN_RUNS = 8
 
 
 def choose_features(mode: str):
@@ -70,21 +73,20 @@ class BoundedHyperModel(kt.HyperModel):
     def build(self, hp):
         model = keras.Sequential()
 
-        n_layers = hp.Int("n_layers", min_value=1, max_value=3, step=1)
+        n_layers = hp.Int("n_layers", min_value=1, max_value=4, step=1)
         use_bn = hp.Boolean("use_batchnorm", default=True)
-        l2_val = hp.Choice("l2_reg", values=[1e-4, 1e-3, 5e-3, 1e-2])
+        l2_val = hp.Choice("l2_reg", values=[0.0, 1e-4, 5e-4, 1e-3, 5e-3, 1e-2])
 
-        # 控制搜索空间，避免组合爆炸
         for i in range(n_layers):
-            units = hp.Choice(f"units_layer_{i}", values=[16, 32, 64, 96])
-            dropout_rate = hp.Choice(f"dropout_layer_{i}", values=[0.0, 0.05, 0.1, 0.2])
+            units = hp.Choice(f"units_layer_{i}", values=[16, 32, 64, 96, 128, 256])
+            dropout_rate = hp.Choice(f"dropout_layer_{i}", values=[0.0, 0.05, 0.1, 0.15, 0.2, 0.3])
             if i == 0:
                 model.add(
                     keras.layers.Dense(
                         units,
                         activation="relu",
                         input_shape=(self.n_features,),
-                        kernel_regularizer=regularizers.l2(l2_val),
+                        kernel_regularizer=regularizers.l2(l2_val) if l2_val > 0 else None,
                     )
                 )
             else:
@@ -92,7 +94,7 @@ class BoundedHyperModel(kt.HyperModel):
                     keras.layers.Dense(
                         units,
                         activation="relu",
-                        kernel_regularizer=regularizers.l2(l2_val),
+                        kernel_regularizer=regularizers.l2(l2_val) if l2_val > 0 else None,
                     )
                 )
 
@@ -103,9 +105,14 @@ class BoundedHyperModel(kt.HyperModel):
 
         model.add(keras.layers.Dense(1, activation="linear"))
 
-        lr = hp.Float("learning_rate", min_value=1e-4, max_value=3e-3, sampling="log")
-        loss_name = hp.Choice("loss", values=["huber", "mae"])
-        loss = keras.losses.Huber(delta=1.0) if loss_name == "huber" else "mae"
+        lr = hp.Float("learning_rate", min_value=5e-5, max_value=5e-3, sampling="log")
+        loss_name = hp.Choice("loss", values=["huber", "mae", "mse"])
+        if loss_name == "huber":
+            loss = keras.losses.Huber(delta=1.0)
+        elif loss_name == "mae":
+            loss = "mae"
+        else:
+            loss = "mse"
 
         model.compile(
             optimizer=keras.optimizers.Adam(learning_rate=lr),
@@ -115,13 +122,18 @@ class BoundedHyperModel(kt.HyperModel):
         return model
 
     def fit(self, hp, model, x, y, validation_data, callbacks=None, **kwargs):
-        # 参数超预算直接短路: 返回一个很差的 val_mae，让 tuner 淘汰该配置
+        # 参数超预算直接短路
         param_ratio = model.count_params() / max(1, self.n_train)
         if param_ratio > MAX_PARAM_RATIO:
             history = keras.callbacks.History()
             history.history["val_mae"] = [1e6]
             history.history["val_loss"] = [1e6]
             return history
+
+        # 搜索 batch_size
+        batch_size = hp.Choice("batch_size", values=[8, 16, 32, 64])
+        kwargs["batch_size"] = batch_size
+
         return model.fit(x, y, validation_data=validation_data, callbacks=callbacks, **kwargs)
 
 
@@ -149,11 +161,19 @@ def main():
     X_val_scaled = scaler_X.transform(X_val)
     X_test_scaled = scaler_X.transform(X_test)
 
+    scaler_y = None
+    y_train_fit = y_train
+    y_val_fit = y_val
+    if SCALE_Y:
+        scaler_y = StandardScaler()
+        y_train_fit = scaler_y.fit_transform(y_train.reshape(-1, 1)).ravel()
+        y_val_fit = scaler_y.transform(y_val.reshape(-1, 1)).ravel()
+
     n_features = X_train_scaled.shape[1]
     n_train = X_train_scaled.shape[0]
     print(
         f"样本划分: train={len(y_train)}, val={len(y_val)}, test={len(y_test)} | "
-        f"features={n_features}, mode={FEATURE_MODE}"
+        f"features={n_features}, mode={FEATURE_MODE}, scale_y={SCALE_Y}"
     )
 
     hypermodel = BoundedHyperModel(n_features=n_features, n_train=n_train)
@@ -165,20 +185,20 @@ def main():
         factor=HYPERBAND_FACTOR,
         hyperband_iterations=HYPERBAND_ITERATIONS,
         directory="tuner_logs",
-        project_name="dnn_autotune_v2",
+        project_name="dnn_autotune_v3",
         overwrite=True,
     )
 
     callbacks = [
-        EarlyStopping(monitor="val_loss", patience=15, restore_best_weights=True),
-        ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=5, min_lr=1e-6),
+        keras_callbacks.EarlyStopping(monitor="val_loss", patience=20, restore_best_weights=True),
+        keras_callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=8, min_lr=1e-6),
     ]
 
     print("\n开始 Hyperband 搜索...")
     tuner.search(
         X_train_scaled,
-        y_train,
-        validation_data=(X_val_scaled, y_val),
+        y_train_fit,
+        validation_data=(X_val_scaled, y_val_fit),
         callbacks=callbacks,
         verbose=0,
     )
@@ -194,11 +214,14 @@ def main():
             dropout = hp.get(f"dropout_layer_{i}")
             layers_info.append(f"{units}(d={dropout})")
         arch_str = " -> ".join(layers_info) + " -> 1"
+        built_model = tuner.hypermodel.build(hp)
+        n_params = built_model.count_params()
         line = (
             f"#{rank}: [{arch_str}] BN={hp.get('use_batchnorm')} "
             f"L2={hp.get('l2_reg')} LR={hp.get('learning_rate'):.6f} "
-            f"Loss={hp.get('loss')} Params={tuner.hypermodel.build(hp).count_params()} "
-            f"Ratio={tuner.hypermodel.build(hp).count_params()/max(1, n_train):.2f}"
+            f"Loss={hp.get('loss')} BS={hp.get('batch_size')} "
+            f"Params={n_params} "
+            f"Ratio={n_params/max(1, n_train):.2f}"
         )
         print(line)
         summary_lines.append(line)
@@ -210,25 +233,33 @@ def main():
     best_val_loss = float("inf")
     best_seed = None
 
+    best_batch_size = best_hp.get("batch_size")
+
     print(f"\n使用最优架构重训 {RETRAIN_RUNS} 次...")
     for run in range(RETRAIN_RUNS):
         seed = 42 + run * 7
-        tf.random.set_seed(seed)
+        keras.utils.set_random_seed(seed)
         np.random.seed(seed)
         model = tuner.hypermodel.build(best_hp)
         history = model.fit(
             X_train_scaled,
-            y_train,
-            validation_data=(X_val_scaled, y_val),
+            y_train_fit,
+            validation_data=(X_val_scaled, y_val_fit),
             epochs=MAX_EPOCHS * 2,
+            batch_size=best_batch_size,
             callbacks=[
-                EarlyStopping(monitor="val_loss", patience=20, restore_best_weights=True),
-                ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=8, min_lr=1e-6),
+                keras_callbacks.EarlyStopping(monitor="val_loss", patience=30, restore_best_weights=True),
+                keras_callbacks.ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=10, min_lr=1e-6),
             ],
             verbose=0,
         )
 
-        y_pred = model.predict(X_test_scaled, verbose=0).flatten()
+        y_pred_scaled = model.predict(X_test_scaled, verbose=0).flatten()
+        if scaler_y is not None:
+            y_pred = scaler_y.inverse_transform(y_pred_scaled.reshape(-1, 1)).ravel()
+        else:
+            y_pred = y_pred_scaled
+
         r2 = r2_score(y_test, y_pred)
         mae = mean_absolute_error(y_test, y_pred)
         rmse = np.sqrt(mean_squared_error(y_test, y_pred))
@@ -261,6 +292,7 @@ def main():
                 "feature_cols": feature_cols,
                 "target_col": target_col,
                 "scaler_X": scaler_X,
+                "scaler_y": scaler_y,
                 "feature_mode": FEATURE_MODE,
                 "best_hp": best_hp.values,
                 "best_seed": best_seed,
@@ -273,7 +305,7 @@ def main():
         f.write(f"{'='*70}\n\n")
         f.write(
             f"数据: train={len(y_train)}, val={len(y_val)}, test={len(y_test)}, "
-            f"features={n_features}, mode={FEATURE_MODE}\n"
+            f"features={n_features}, mode={FEATURE_MODE}, scale_y={SCALE_Y}\n"
         )
         f.write(f"参数约束: ratio <= {MAX_PARAM_RATIO}\n\n")
         f.write("Top 5 架构:\n")
