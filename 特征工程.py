@@ -8,12 +8,21 @@ from tqdm import tqdm
 from rdkit.Chem import DataStructs
 from rdkit.Chem import AllChem
 
-target_name = 'χ'
-smiles1_name = 'SMILES 1'
-smiles2_name = 'SMILES 2'
+target_name = 'chi'
+smiles1_name = 'Polymer_SMILES'
+smiles2_name = 'Solvent_SMILES'
+temp_name = 'temperature'
 
 # 读取输入数据
-data = pd.read_excel('data/huggins_preprocessed.xlsx')
+data = pd.read_csv('data/merged_dataset.csv')
+
+
+def sanitize_smiles(smi):
+    """处理聚合物 SMILES 中的 [*] 连接点标记，替换为 [H]。"""
+    if not isinstance(smi, str):
+        return smi
+    smi = smi.replace('[*]', '[H]').replace('*', '')
+    return smi
 
 # 初始化结果列表
 results = []
@@ -21,8 +30,8 @@ results = []
 # 使用 tqdm 函数来显示进度条
 for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
 
-    # 获取 SMILES 字符串
-    smiles1, smiles2 = row[smiles1_name], row[smiles2_name]
+    smiles1 = sanitize_smiles(str(row[smiles1_name]))
+    smiles2 = sanitize_smiles(str(row[smiles2_name]))
 
     # 从 SMILES 字符串创建分子对象
     mol1 = Chem.MolFromSmiles(smiles1)
@@ -114,7 +123,7 @@ for i,row in tqdm(data.iterrows(), total=len(data), desc="处理中……"):
         CSP3_1 = Descriptors.FractionCSP3(mol1)
         CSP3_2 = Descriptors.FractionCSP3(mol2)
         # 温度物理项（χ = A + B/T，1/T 更符合物理规律）
-        Inv_T = 1000.0 / row['Measured at T (K)']
+        Inv_T = 1000.0 / row[temp_name]
 
         # 将结果添加到结果列表中
         results.append({
