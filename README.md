@@ -402,10 +402,11 @@ cd Graduation-project
 pip install -r requirements.txt
 conda install -c conda-forge rdkit
 
-# 3. 数据合并 + 特征工程 + 特征选择 + 建模
+# 3. 数据合并 + 特征工程 + 两阶段特征选择 + 建模
 python 合并数据集.py              # 合并旧数据与新数据
 python 特征工程.py                # 全量 RDKit 描述符 (320 维)
-python 遗传.py                   # GA 特征选择 (~20-40 min)
+python 遗传.py                   # GA 粗筛 (320 → ~20-40, 约 20-40 min)
+python 特征筛选.py                # RFECV 精筛 (~20-40 → ~8-15)
 python Sklearn_AutoTune.py       # Sklearn 自动调参
 
 # 或: 如果已有 data/molecular_features.xlsx, 从 Step 4 开始
