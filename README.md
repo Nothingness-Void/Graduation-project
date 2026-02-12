@@ -56,9 +56,7 @@ Graduation-project/
 ├── Sklearn_AutoTune.py        # Step 5d: Sklearn 随机搜索自动调参
 │
 ├── DNN_模型验证.py             # Step 6a: DNN 模型验证
-├── Sklearn_模型验证.py         # Step 6b: Sklearn 模型验证
 ├── DNN特征贡献分析.py          # Step 6c: DNN SHAP 特征贡献分析
-├── RF特征贡献分析.py           # Step 6d: 随机森林特征重要性分析
 │
 ├── Huggins.xlsx               # 原始数据：化合物名称 + 哈金斯参数
 │
@@ -72,15 +70,25 @@ Graduation-project/
 │   └── features_optimized.xlsx        # 筛选后特征子集
 │
 ├── results/                   # 模型与结果
-│   ├── DNN.h5                 # DNN 模型
-│   ├── DNN_preprocess.pkl     # DNN 预处理器
-│   ├── best_model_sklearn.pkl # Sklearn 最优模型
+│   ├── dnn_model.keras         # DNN 模型
+│   ├── dnn_preprocess.pkl      # DNN 预处理器
+│   ├── sklearn_model_bundle.pkl # Sklearn 统一模型包
 │   ├── ga_best_model.pkl      # GA 选出的最优模型
 │   ├── ga_selected_features.txt     # GA 选中的特征列表
 │   ├── ga_evolution_log.csv         # GA 进化日志
-│   ├── sklearn_tuning_summary.txt   # AutoTune 寻优报告
+│   ├── sklearn_tuning_summary.csv   # AutoTune 寻优报告
 │   ├── feature_selection.png        # 特征筛选可视化
-│   └── DNN_loss.png                 # 训练损失曲线
+│   └── dnn_loss.png                 # 训练损失曲线
+│
+├── final_results/             # 最终交付结果（与中间体分离）
+│   └── sklearn/
+│       ├── sklearn_model_bundle.pkl
+│       ├── fingerprint_model.pkl
+│       ├── sklearn_tuning_summary.csv
+│       ├── sklearn_validation_results.xlsx
+│       ├── sklearn_feature_importance.csv
+│       ├── sklearn_feature_importance.png
+│       └── sklearn_final_report.txt
 │
 ├── requirements.txt           # Python 依赖清单
 ├── README.md                  # 本文件
@@ -332,6 +340,13 @@ python 特征筛选.py
 | MLPRegressor | hidden layers, activation, alpha, lr |
 | SVR | kernel, C, gamma, epsilon |
 
+运行后会自动完成：
+
+1. 最优模型搜索（CV 选模）
+2. 全量数据验证（R²/MAE/RMSE）
+3. 特征贡献分析（内置重要性或 permutation importance）
+4. 将最终交付文件输出到 `final_results/sklearn/`
+
 ```bash
 python Sklearn_AutoTune.py
 ```
@@ -345,14 +360,16 @@ python Sklearn_AutoTune.py
 | 脚本 | 功能 |
 |------|------|
 | [`DNN_模型验证.py`](DNN_模型验证.py) | 加载 DNN 模型，在全量数据上评估 R²/MAE/RMSE |
-| [`Sklearn_模型验证.py`](Sklearn_模型验证.py) | 加载 Sklearn 模型，在全量数据上评估 |
+| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后自动输出 Sklearn 验证结果（`final_results/sklearn/sklearn_validation_results.xlsx`） |
 
 #### 特征贡献分析
 
 | 脚本 | 功能 |
 |------|------|
 | [`DNN特征贡献分析.py`](DNN特征贡献分析.py) | SHAP GradientExplainer 分析 DNN 特征贡献 |
-| [`RF特征贡献分析.py`](RF特征贡献分析.py) | RandomForest `feature_importances_` 排序 |
+| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后自动输出 Sklearn 特征贡献（`final_results/sklearn/sklearn_feature_importance.*`） |
+
+> `Sklearn_模型验证.py` 与 `RF特征贡献分析.py` 已归档至 `废弃文件存档/`，用于历史兼容与排错。
 
 ---
 
@@ -370,8 +387,11 @@ python Sklearn_AutoTune.py
 | `features_optimized.xlsx` | `data/` | 筛选后特征子集 | Step 4 |
 | `ga_selected_features.txt` | `results/` | GA 选中的特征列表 | Step 4b |
 | `ga_evolution_log.csv` | `results/` | GA 进化日志 | Step 4b |
-| `best_model_sklearn.pkl` | `results/` | Sklearn 最优模型 | Step 5 |
-| `DNN.h5` | `results/` | DNN 模型 | Step 5 |
+| `sklearn_model_bundle.pkl` | `results/` | Sklearn 统一模型包 | Step 5 |
+| `dnn_model.keras` | `results/` | DNN 模型 | Step 5 |
+| `sklearn_final_report.txt` | `final_results/sklearn/` | Sklearn 最终报告 | Step 5d |
+| `sklearn_validation_results.xlsx` | `final_results/sklearn/` | Sklearn 验证结果明细 | Step 5d |
+| `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn 特征贡献图 | Step 5d |
 
 ---
 

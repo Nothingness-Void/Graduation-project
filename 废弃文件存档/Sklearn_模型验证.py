@@ -12,9 +12,9 @@ from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # ========== 配置 ==========
 BUNDLE_PATH = "results/sklearn_model_bundle.pkl"
-LEGACY_MODEL_PATH = "results/fingerprint_model.pkl"
+LEGACY_MODEL_PATHS = ["results/fingerprint_model.pkl", "results/best_model_sklearn.pkl"]
 DATA_PATH = "data/molecular_features.xlsx"
-OUTPUT_PATH = "results/Sklearn_validation_results.xlsx"
+OUTPUT_PATH = "results/sklearn_validation_results.xlsx"
 
 
 def main():
@@ -25,15 +25,26 @@ def main():
         with open(BUNDLE_PATH, "rb") as f:
             bundle = pickle.load(f)
         model = bundle["model"]
-        feature_cols = bundle["feature_cols"]
+        feature_cols = [c for c in bundle["feature_cols"] if c in data.columns]
+        if len(feature_cols) < 5:
+            raise ValueError(f"模型包中的有效特征不足: {len(feature_cols)}")
         target_col = bundle.get("target_col", resolve_target_col(data.columns))
+        if target_col not in data.columns:
+            target_col = resolve_target_col(data.columns)
         print(f"已加载模型包: {BUNDLE_PATH} ({model.__class__.__name__})")
     else:
-        with open(LEGACY_MODEL_PATH, "rb") as f:
+        model_path = next((p for p in LEGACY_MODEL_PATHS if Path(p).exists()), None)
+        if model_path is None:
+            raise FileNotFoundError(
+                f"未找到模型文件。请先运行 Sklearn_AutoTune.py，期望: {BUNDLE_PATH}"
+            )
+        with open(model_path, "rb") as f:
             model = pickle.load(f)
-        feature_cols = SELECTED_FEATURE_COLS
+        feature_cols = [c for c in SELECTED_FEATURE_COLS if c in data.columns]
+        if len(feature_cols) < 5:
+            raise ValueError(f"有效特征不足: {len(feature_cols)}，请检查 feature_config.py")
         target_col = resolve_target_col(data.columns)
-        print(f"已加载旧模型: {LEGACY_MODEL_PATH} ({model.__class__.__name__})")
+        print(f"已加载旧模型: {model_path} ({model.__class__.__name__})")
         print("提示: 未找到模型包，已回退到默认特征配置")
 
     X_val = data[feature_cols]
