@@ -1,436 +1,446 @@
-import pickle
+# -*- coding: utf-8 -*-
+"""
+遗传.py - 遗传算法特征选择 (基于 DEAP)
+
+从 ~320 维全量 RDKit 描述符中选出最优特征子集，
+使用 RandomForest 作为评估器，5 折交叉验证 R² 作为适应度。
+
+用法:
+    python 遗传.py
+
+输出:
+    - results/ga_selected_features.txt    (选中的特征列表)
+    - results/ga_evolution_log.csv        (每代进化日志)
+    - results/ga_best_model.pkl           (最优模型)
+    - feature_config.py                   (自动更新)
+"""
+import os
 import random
-import sys
-import joblib
+import warnings
+import time
 import numpy as np
 import pandas as pd
-import sklearn.utils
-import sklearn.model_selection as _ms
-from multiprocessing import freeze_support
-from sklearn.model_selection import train_test_split, KFold
-from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+import joblib
+from pathlib import Path
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import Ridge
-from feature_config import ALL_FEATURE_COLS, SELECTED_FEATURE_COLS, resolve_target_col
+from sklearn.model_selection import cross_val_score
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+from sklearn.model_selection import train_test_split
 
-# ----------------------------------------------------------------------
-# Compatibility shim for genetic_selection on newer scikit-learn
-# ----------------------------------------------------------------------
-if not hasattr(sklearn.utils, "_joblib"):
-    sklearn.utils._joblib = joblib
-    sys.modules["sklearn.utils._joblib"] = joblib
+from deap import base, creator, tools, algorithms
 
-if not hasattr(_ms.cross_val_score, "_ga_compat"):
-    _orig_cvs = _ms.cross_val_score
+warnings.filterwarnings("ignore")
 
-    def _cross_val_score_compat(*args, **kwargs):
-        kwargs.pop("fit_params", None)
-        return _orig_cvs(*args, **kwargs)
-
-    _cross_val_score_compat._ga_compat = True
-    _ms.cross_val_score = _cross_val_score_compat
-
-from genetic_selection import GeneticSelectionCV
-
-
-# =========================
-# 配置区
-# =========================
+# ========== 配置区 ==========
 DATA_PATH = "data/molecular_features.xlsx"
-MODEL_PATH = "results/ga_nonlinear_model.pkl"
-SUMMARY_PATH = "results/ga_nonlinear_summary.txt"
+RESULTS_DIR = "results"
 
-# 可选: "all" (20特征) / "selected" (16特征)
-FEATURE_MODE = "all"
+# GA 参数 (已针对 ~320 特征 + ~1900 样本做了平衡)
+POPULATION_SIZE = 100       # 种群大小
+N_GENERATIONS = 60          # 最大进化代数
+CROSSOVER_PROB = 0.7        # 交叉概率
+MUTATION_PROB = 0.15        # 个体变异概率
+MUTATION_IND_PROB = 0.03    # 每个基因位翻转概率
+TOURNAMENT_SIZE = 3         # 锦标赛选择大小
+EARLY_STOP_GENS = 12        # 连续多少代无改善则停止
+MIN_FEATURES = 5            # 最少选择特征数
+MAX_FEATURES = 40           # 最多选择特征数
 
-# 搜索规模:
-# - fast: 快速验证代码与方向（推荐先跑）
-# - full: 更充分搜索，耗时显著增加
-SEARCH_MODE = "fast"
+# 评估器参数 (轻量 RF，平衡速度与精度)
+RF_N_ESTIMATORS = 100
+RF_MAX_DEPTH = 8
+RF_N_JOBS = -1
+CV_FOLDS = 3               # 交叉验证折数 (3折比5折快~40%)
 
-# 数据划分比例: train/val/test = 60/20/20
+# 数据划分
 TEST_SIZE = 0.2
-VAL_SIZE_IN_TRAINVAL = 0.25
 RANDOM_STATE = 42
 
-# 多 seed 评估，让结果更稳健
-SEEDS_FAST = [42, 52]
-SEEDS_FULL = [42, 49, 56, 63, 70]
-
-# 解释性配置:
-# 随机森林没有单一解析公式，因此额外拟合一个线性代理模型用于输出公式
-EXPORT_SURROGATE_FORMULA = True
-SURROGATE_ALPHA = 1.0
+# 确保结果目录存在
+os.makedirs(RESULTS_DIR, exist_ok=True)
 
 
-def choose_features(mode: str):
-    """按配置选择输入特征集合。"""
-    if mode == "all":
-        return ALL_FEATURE_COLS
-    if mode == "selected":
-        return SELECTED_FEATURE_COLS
-    raise ValueError("FEATURE_MODE 仅支持 'all' 或 'selected'")
+# ========== 工具函数 ==========
+def format_time(seconds):
+    """格式化秒数为可读时间。"""
+    if seconds < 60:
+        return f"{seconds:.0f}s"
+    elif seconds < 3600:
+        return f"{seconds/60:.1f}min"
+    else:
+        return f"{seconds/3600:.1f}h"
 
 
-def get_ga_search_space(mode: str):
-    """
-    返回 GA 参数候选集合。
-    说明:
-    - 为控制训练时间，使用离散候选集合而非无限连续空间。
-    - full 模式下候选更丰富。
-    """
-    if mode == "fast":
-        return [
-            {
-                "max_features": 8,
-                "n_population": 60,
-                "n_generations": 20,
-                "crossover_proba": 0.7,
-                "mutation_proba": 0.1,
-                "mutation_independent_proba": 0.03,
-                "tournament_size": 3,
-                "n_gen_no_change": 8,
-            },
-            {
-                "max_features": 10,
-                "n_population": 80,
-                "n_generations": 25,
-                "crossover_proba": 0.7,
-                "mutation_proba": 0.15,
-                "mutation_independent_proba": 0.05,
-                "tournament_size": 3,
-                "n_gen_no_change": 8,
-            },
-        ]
-
-    if mode == "full":
-        return [
-            {
-                "max_features": 8,
-                "n_population": 120,
-                "n_generations": 35,
-                "crossover_proba": 0.8,
-                "mutation_proba": 0.1,
-                "mutation_independent_proba": 0.03,
-                "tournament_size": 3,
-                "n_gen_no_change": 10,
-            },
-            {
-                "max_features": 10,
-                "n_population": 160,
-                "n_generations": 40,
-                "crossover_proba": 0.8,
-                "mutation_proba": 0.15,
-                "mutation_independent_proba": 0.05,
-                "tournament_size": 4,
-                "n_gen_no_change": 12,
-            },
-            {
-                "max_features": 12,
-                "n_population": 200,
-                "n_generations": 50,
-                "crossover_proba": 0.85,
-                "mutation_proba": 0.2,
-                "mutation_independent_proba": 0.06,
-                "tournament_size": 4,
-                "n_gen_no_change": 12,
-            },
-        ]
-
-    raise ValueError("SEARCH_MODE 仅支持 'fast' 或 'full'")
-
-
-def build_ga_base_estimator(seed: int):
-    """
-    GA 进化阶段使用的基础评估器（非线性、速度与稳定性平衡）。
-    深度与树数略小，降低 GA 内部交叉验证成本。
-    """
-    return RandomForestRegressor(
-        n_estimators=80,
-        max_depth=6,
-        min_samples_leaf=2,
-        n_jobs=-1,
-        random_state=seed,
-    )
-
-
-def build_final_estimator(seed: int):
-    """
-    最终预测模型（比 GA 阶段更强一些）。
-    """
-    return RandomForestRegressor(
-        n_estimators=400,
-        max_depth=None,
-        min_samples_leaf=1,
-        n_jobs=-1,
-        random_state=seed,
-    )
-
-
-def build_formula(feature_names, intercept, coefs):
-    """将线性模型参数拼接为可读的经验公式。"""
-    formula = f"χ ≈ {intercept:.6f}"
-    for w, feat in zip(coefs, feature_names):
-        sign = "+" if w >= 0 else "-"
-        formula += f" {sign} {abs(w):.6f}*{feat}"
-    return formula
-
-
-def evaluate_single_config(X_train, y_train, X_val, y_val, feature_names, cfg, seed):
-    """
-    在单个 seed 下评估一组 GA 参数:
-    1) 用 GA 在 train 上选特征
-    2) 用最终非线性模型在选中特征上训练
-    3) 在 val 上计算指标
-    """
-    # 旧版 genetic_selection 不支持 random_state，这里手动固定随机性
-    random.seed(seed)
-    np.random.seed(seed)
-
-    cv = KFold(n_splits=5, shuffle=True, random_state=seed)
-    ga_estimator = build_ga_base_estimator(seed)
-
-    selector = GeneticSelectionCV(
-        estimator=ga_estimator,
-        cv=cv,
-        scoring="r2",
-        verbose=0,
-        n_jobs=-1,
-        caching=True,
-        **cfg,
-    )
-    selector.fit(X_train, y_train)
-
-    X_train_sel = selector.transform(X_train)
-    X_val_sel = selector.transform(X_val)
-
-    final_estimator = build_final_estimator(seed)
-    final_estimator.fit(X_train_sel, y_train)
-    y_pred = final_estimator.predict(X_val_sel)
-
-    selected_features = [str(x) for x in np.array(feature_names)[selector.support_]]
-    r2 = r2_score(y_val, y_pred)
-    mae = mean_absolute_error(y_val, y_pred)
-    rmse = np.sqrt(mean_squared_error(y_val, y_pred))
-
-    return {
-        "seed": seed,
-        "r2": r2,
-        "mae": mae,
-        "rmse": rmse,
-        "selected_features": selected_features,
-        "selector": selector,
-        "model": final_estimator,
-    }
-
-
-def summarize_config(cfg):
-    return (
-        f"max_features={cfg['max_features']}, pop={cfg['n_population']}, gen={cfg['n_generations']}, "
-        f"cross={cfg['crossover_proba']}, mut={cfg['mutation_proba']}, mut_ind={cfg['mutation_independent_proba']}, "
-        f"tour={cfg['tournament_size']}, early_stop={cfg['n_gen_no_change']}"
-    )
-
-
-def main():
-    # 1) 读取数据
+def load_data():
+    """加载特征矩阵，自动检测目标列。"""
     data = pd.read_excel(DATA_PATH)
-    target_col = resolve_target_col(data.columns)
-    feature_cols = choose_features(FEATURE_MODE)
 
-    X = data[feature_cols].values
-    y = data[target_col].values
+    # 检测目标列 (只匹配精确的目标列名，避免匹配 RDKit 的 Chi 描述符)
+    target_col = None
+    for candidate in ["chi_result", "chi-result", "χ-result", "χ"]:
+        if candidate in data.columns:
+            target_col = candidate
+            break
+    if target_col is None:
+        # 只匹配包含 'result' 的列（不匹配 'chi'，因为 RDKit 有 Chi 描述符）
+        for c in data.columns:
+            if "result" in str(c).lower():
+                target_col = c
+                break
+    if target_col is None:
+        raise KeyError(f"未找到目标列。现有列: {list(data.columns)[-5:]}")
 
-    # 2) 三段划分，避免验证集和测试集信息泄漏
-    X_trainval, X_test, y_trainval, y_test = train_test_split(
-        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
+    feature_cols = [c for c in data.columns if c != target_col]
+    X = data[feature_cols].values.astype(np.float64)
+    y = data[target_col].values.astype(np.float64)
+
+    # 处理残留 NaN
+    nan_mask = np.isnan(X)
+    if nan_mask.any():
+        col_medians = np.nanmedian(X, axis=0)
+        for j in range(X.shape[1]):
+            X[nan_mask[:, j], j] = col_medians[j]
+
+    return X, y, feature_cols
+
+
+
+def evaluate_individual(individual, X_train, y_train, base_estimator, cv_folds):
+    """
+    评估一个个体 (特征子集) 的适应度。
+
+    返回: (cv_r2,)  注意: DEAP 要求返回元组
+    """
+    selected_idx = [i for i, bit in enumerate(individual) if bit == 1]
+
+    # 惩罚: 特征数不在合法范围内
+    n_selected = len(selected_idx)
+    if n_selected < MIN_FEATURES or n_selected > MAX_FEATURES:
+        return (-1.0,)
+
+    X_subset = X_train[:, selected_idx]
+
+    try:
+        scores = cross_val_score(
+            base_estimator, X_subset, y_train,
+            cv=cv_folds, scoring="r2", n_jobs=1
+        )
+        fitness = float(np.mean(scores))
+    except Exception:
+        fitness = -1.0
+
+    return (fitness,)
+
+
+# ========== DEAP 进化引擎 ==========
+def setup_deap(n_features):
+    """配置 DEAP 工具箱。"""
+    # 清理可能的旧定义 (重复运行安全)
+    if "FitnessMax" in creator.__dict__:
+        del creator.FitnessMax
+    if "Individual" in creator.__dict__:
+        del creator.Individual
+
+    creator.create("FitnessMax", base.Fitness, weights=(1.0,))
+    creator.create("Individual", list, fitness=creator.FitnessMax)
+
+    toolbox = base.Toolbox()
+
+    # 初始化策略: 每个基因位有一定概率为 1
+    # 目标是初始选中 ~20 个特征 (20/320 ≈ 6%)
+    init_prob = min(0.1, MAX_FEATURES / n_features)
+    toolbox.register("attr_bool", random.random)
+    toolbox.register(
+        "individual", tools.initRepeat,
+        creator.Individual,
+        lambda: 1 if random.random() < init_prob else 0,
+        n=n_features
     )
-    X_train, X_val, y_train, y_val = train_test_split(
-        X_trainval,
-        y_trainval,
-        test_size=VAL_SIZE_IN_TRAINVAL,
+    toolbox.register("population", tools.initRepeat, list, toolbox.individual)
+
+    # 遗传算子
+    toolbox.register("mate", tools.cxUniform, indpb=0.5)
+    toolbox.register("mutate", tools.mutFlipBit, indpb=MUTATION_IND_PROB)
+    toolbox.register("select", tools.selTournament, tournsize=TOURNAMENT_SIZE)
+
+    return toolbox
+
+
+def run_ga(X_train, y_train, feature_cols):
+    """运行遗传算法特征选择。"""
+    n_features = X_train.shape[1]
+    print(f"\nGA 特征选择配置:")
+    print(f"  特征维度: {n_features}")
+    print(f"  种群: {POPULATION_SIZE}, 最大代数: {N_GENERATIONS}")
+    print(f"  特征数约束: [{MIN_FEATURES}, {MAX_FEATURES}]")
+    print(f"  评估器: RF(n={RF_N_ESTIMATORS}, depth={RF_MAX_DEPTH}), CV={CV_FOLDS}")
+    print(f"  早停: 连续 {EARLY_STOP_GENS} 代无改善")
+
+    toolbox = setup_deap(n_features)
+
+    # RF 评估器
+    base_rf = RandomForestRegressor(
+        n_estimators=RF_N_ESTIMATORS,
+        max_depth=RF_MAX_DEPTH,
+        min_samples_leaf=2,
+        n_jobs=RF_N_JOBS,
         random_state=RANDOM_STATE,
     )
 
-    seeds = SEEDS_FAST if SEARCH_MODE == "fast" else SEEDS_FULL
-    ga_space = get_ga_search_space(SEARCH_MODE)
-
-    print(
-        f"模式: feature_mode={FEATURE_MODE}, search_mode={SEARCH_MODE}\n"
-        f"样本: train={len(y_train)}, val={len(y_val)}, test={len(y_test)}, "
-        f"特征数={len(feature_cols)}"
+    # 注册评估函数
+    toolbox.register(
+        "evaluate", evaluate_individual,
+        X_train=X_train, y_train=y_train,
+        base_estimator=base_rf, cv_folds=CV_FOLDS
     )
-    print("开始 GA 参数搜索（非线性 RF 版本）...")
 
-    # 3) 外层参数搜索（每组参数多 seed 评估）
-    search_rows = []
-    best_cfg = None
-    best_score = -np.inf
-    best_seed_result = None
+    # 初始化种群
+    random.seed(RANDOM_STATE)
+    np.random.seed(RANDOM_STATE)
+    pop = toolbox.population(n=POPULATION_SIZE)
 
-    for idx, cfg in enumerate(ga_space, start=1):
-        print(f"\n[{idx}/{len(ga_space)}] 评估参数组: {summarize_config(cfg)}")
-        seed_results = []
-        for seed in seeds:
-            result = evaluate_single_config(
-                X_train=X_train,
-                y_train=y_train,
-                X_val=X_val,
-                y_val=y_val,
-                feature_names=feature_cols,
-                cfg=cfg,
-                seed=seed,
-            )
-            seed_results.append(result)
-            print(
-                f"  seed={seed} | val R2={result['r2']:.4f}, "
-                f"MAE={result['mae']:.4f}, RMSE={result['rmse']:.4f}, "
-                f"n_feat={len(result['selected_features'])}"
-            )
+    # 统计工具
+    stats = tools.Statistics(lambda ind: ind.fitness.values[0])
+    stats.register("max", np.max)
+    stats.register("avg", np.mean)
+    stats.register("std", np.std)
+    stats.register("min", np.min)
 
-        mean_r2 = float(np.mean([r["r2"] for r in seed_results]))
-        std_r2 = float(np.std([r["r2"] for r in seed_results]))
-        mean_mae = float(np.mean([r["mae"] for r in seed_results]))
-        mean_rmse = float(np.mean([r["rmse"] for r in seed_results]))
+    hof = tools.HallOfFame(5)
 
-        row = {
-            "cfg": cfg,
-            "mean_r2": mean_r2,
-            "std_r2": std_r2,
-            "mean_mae": mean_mae,
-            "mean_rmse": mean_rmse,
-            "seed_results": seed_results,
-        }
-        search_rows.append(row)
+    # ========== 进化循环 (带进度显示) ==========
+    print(f"\n{'='*70}")
+    print(f"{'代':>4} | {'最优R2':>8} | {'平均R2':>8} | {'标准差':>8} | {'特征数':>5} | {'耗时':>8} | 状态")
+    print(f"{'='*70}")
+
+    # 评估初代
+    t0 = time.time()
+    fitnesses = list(map(toolbox.evaluate, pop))
+    for ind, fit in zip(pop, fitnesses):
+        ind.fitness.values = fit
+    hof.update(pop)
+    record = stats.compile(pop)
+    best_n_features = sum(hof[0])
+    elapsed = time.time() - t0
+    print(
+        f"{'init':>4} | {record['max']:>8.4f} | {record['avg']:>8.4f} | "
+        f"{record['std']:>8.4f} | {best_n_features:>5} | {format_time(elapsed):>8} | 初始化"
+    )
+
+    # 进化日志
+    log_data = [{
+        "gen": 0, "max_r2": record["max"], "avg_r2": record["avg"],
+        "std_r2": record["std"], "best_n_features": best_n_features,
+        "elapsed_sec": elapsed
+    }]
+
+    best_ever_r2 = record["max"]
+    no_improve_count = 0
+
+    for gen in range(1, N_GENERATIONS + 1):
+        t_gen = time.time()
+
+        # 选择 + 交叉 + 变异
+        offspring = toolbox.select(pop, len(pop))
+        offspring = list(map(toolbox.clone, offspring))
+
+        for child1, child2 in zip(offspring[::2], offspring[1::2]):
+            if random.random() < CROSSOVER_PROB:
+                toolbox.mate(child1, child2)
+                del child1.fitness.values
+                del child2.fitness.values
+
+        for mutant in offspring:
+            if random.random() < MUTATION_PROB:
+                toolbox.mutate(mutant)
+                del mutant.fitness.values
+
+        # 评估需要重新计算的个体
+        invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+        fitnesses = list(map(toolbox.evaluate, invalid_ind))
+        for ind, fit in zip(invalid_ind, fitnesses):
+            ind.fitness.values = fit
+
+        # 精英策略: 保留上一代最优
+        pop[:] = offspring
+        hof.update(pop)
+
+        record = stats.compile(pop)
+        best_n_features = sum(hof[0])
+        elapsed = time.time() - t_gen
+
+        # 早停检测
+        if record["max"] > best_ever_r2 + 1e-5:
+            best_ever_r2 = record["max"]
+            no_improve_count = 0
+            status = "* 改善"
+        else:
+            no_improve_count += 1
+            status = f"  停滞 {no_improve_count}/{EARLY_STOP_GENS}"
 
         print(
-            f"  => 参数组汇总: mean R2={mean_r2:.4f} ± {std_r2:.4f}, "
-            f"mean MAE={mean_mae:.4f}, mean RMSE={mean_rmse:.4f}"
+            f"{gen:>4} | {record['max']:>8.4f} | {record['avg']:>8.4f} | "
+            f"{record['std']:>8.4f} | {best_n_features:>5} | {format_time(elapsed):>8} | {status}"
         )
 
-        if mean_r2 > best_score:
-            best_score = mean_r2
-            best_cfg = cfg
-            # 在该参数组里，按 val R2 选一个最佳 seed 结果用于后续 warm start 参考
-            best_seed_result = max(seed_results, key=lambda x: x["r2"])
+        log_data.append({
+            "gen": gen, "max_r2": record["max"], "avg_r2": record["avg"],
+            "std_r2": record["std"], "best_n_features": best_n_features,
+            "elapsed_sec": elapsed
+        })
 
-    print("\n" + "=" * 70)
-    print("GA 搜索完成，最佳参数组：")
-    print(summarize_config(best_cfg))
-    print(f"验证集均值 R2: {best_score:.4f}")
+        if no_improve_count >= EARLY_STOP_GENS:
+            print(f"\n>> 早停触发: 连续 {EARLY_STOP_GENS} 代无改善")
+            break
 
-    # 4) 用最佳参数在 train+val 上重新选特征，再在 test 上评估
-    X_refit = np.vstack([X_train, X_val])
-    y_refit = np.concatenate([y_train, y_val])
+    total_time = sum(d["elapsed_sec"] for d in log_data)
+    print(f"{'='*70}")
+    print(f"进化完成: {gen} 代, 总耗时 {format_time(total_time)}")
 
-    refit_seed = best_seed_result["seed"]
-    random.seed(refit_seed)
-    np.random.seed(refit_seed)
-    selector_final = GeneticSelectionCV(
-        estimator=build_ga_base_estimator(refit_seed),
-        cv=KFold(n_splits=5, shuffle=True, random_state=refit_seed),
-        scoring="r2",
-        verbose=0,
+    # 保存进化日志
+    log_df = pd.DataFrame(log_data)
+    log_df.to_csv(f"{RESULTS_DIR}/ga_evolution_log.csv", index=False, encoding="utf-8-sig")
+
+    return hof, log_df
+
+
+# ========== 主流程 ==========
+def main():
+    print("=" * 70)
+    print("遗传算法特征选择 (DEAP)")
+    print("=" * 70)
+
+    # 1) 加载数据
+    print("\n加载数据...")
+    X, y, feature_cols = load_data()
+    print(f"  数据: {X.shape[0]} 样本 × {X.shape[1]} 特征")
+
+    # 2) 划分 train/test (GA 只在 train 上搜索，test 最终评估)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
+    )
+    print(f"  划分: train={len(y_train)}, test={len(y_test)}")
+
+    # 3) GA 搜索
+    hof, log_df = run_ga(X_train, y_train, feature_cols)
+
+    # 4) 提取最优特征
+    best_individual = hof[0]
+    selected_idx = [i for i, bit in enumerate(best_individual) if bit == 1]
+    selected_features = [feature_cols[i] for i in selected_idx]
+    best_cv_r2 = best_individual.fitness.values[0]
+
+    print(f"\n{'='*70}")
+    print(f"最优特征子集 ({len(selected_features)} 个, CV R2={best_cv_r2:.4f}):")
+    print(f"{'='*70}")
+    for i, feat in enumerate(selected_features, 1):
+        print(f"  {i:>3}. {feat}")
+
+    # 5) 用最优特征在测试集上评估
+    print(f"\n测试集评估...")
+    final_rf = RandomForestRegressor(
+        n_estimators=300,
+        max_depth=None,
+        min_samples_leaf=2,
         n_jobs=-1,
-        caching=True,
-        **best_cfg,
+        random_state=RANDOM_STATE,
     )
-    selector_final.fit(X_refit, y_refit)
+    X_train_sel = X_train[:, selected_idx]
+    X_test_sel = X_test[:, selected_idx]
 
-    X_refit_sel = selector_final.transform(X_refit)
-    X_test_sel = selector_final.transform(X_test)
+    final_rf.fit(X_train_sel, y_train)
+    y_pred = final_rf.predict(X_test_sel)
 
-    final_model = build_final_estimator(refit_seed)
-    final_model.fit(X_refit_sel, y_refit)
-    y_test_pred = final_model.predict(X_test_sel)
+    test_r2 = r2_score(y_test, y_pred)
+    test_mae = mean_absolute_error(y_test, y_pred)
+    test_rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 
-    test_r2 = r2_score(y_test, y_test_pred)
-    test_mae = mean_absolute_error(y_test, y_test_pred)
-    test_rmse = np.sqrt(mean_squared_error(y_test, y_test_pred))
+    print(f"  Test R2:   {test_r2:.4f}")
+    print(f"  Test MAE:  {test_mae:.4f}")
+    print(f"  Test RMSE: {test_rmse:.4f}")
 
-    selected_features = [str(x) for x in np.array(feature_cols)[selector_final.support_]]
-    print("\n最终入选特征：")
-    print(selected_features)
-    print(
-        f"\n最终 Test 指标: R2={test_r2:.4f}, MAE={test_mae:.4f}, RMSE={test_rmse:.4f}"
-    )
+    # 6) 保存结果
+    # 6a) 特征列表
+    feat_path = f"{RESULTS_DIR}/ga_selected_features.txt"
+    with open(feat_path, "w", encoding="utf-8") as f:
+        f.write(f"GA 特征选择结果\n")
+        f.write(f"{'='*60}\n\n")
+        f.write(f"总特征数: {len(feature_cols)} -> 选中: {len(selected_features)}\n")
+        f.write(f"CV R2: {best_cv_r2:.4f}\n")
+        f.write(f"Test R2: {test_r2:.4f}, MAE: {test_mae:.4f}, RMSE: {test_rmse:.4f}\n\n")
+        f.write(f"选中的特征:\n")
+        for feat in selected_features:
+            f.write(f"  {feat}\n")
+        f.write(f"\nGA 配置:\n")
+        f.write(f"  种群={POPULATION_SIZE}, 代数={log_df['gen'].max()}\n")
+        f.write(f"  交叉={CROSSOVER_PROB}, 变异={MUTATION_PROB}\n")
+        f.write(f"  评估器: RF(n={RF_N_ESTIMATORS}, depth={RF_MAX_DEPTH}), CV={CV_FOLDS}\n")
+    print(f"\n特征列表已保存: {feat_path}")
 
-    # 4.1) 输出线性代理公式（用于解释，不替代主模型预测）
-    surrogate_info = None
-    if EXPORT_SURROGATE_FORMULA:
-        surrogate = Ridge(alpha=SURROGATE_ALPHA, random_state=RANDOM_STATE)
-        surrogate.fit(X_refit_sel, y_refit)
-        y_sur_pred = surrogate.predict(X_test_sel)
-        sur_r2 = r2_score(y_test, y_sur_pred)
-        sur_mae = mean_absolute_error(y_test, y_sur_pred)
-        sur_rmse = np.sqrt(mean_squared_error(y_test, y_sur_pred))
-        sur_coefs = surrogate.coef_.ravel() if hasattr(surrogate.coef_, "ravel") else surrogate.coef_
-        formula = build_formula(selected_features, float(surrogate.intercept_), sur_coefs)
-        surrogate_info = {
-            "model": "Ridge",
-            "alpha": SURROGATE_ALPHA,
-            "r2": float(sur_r2),
-            "mae": float(sur_mae),
-            "rmse": float(sur_rmse),
-            "formula": formula,
-        }
-        print("\n线性代理公式（解释用）：")
-        print(formula)
-        print(
-            f"线性代理 Test 指标: R2={sur_r2:.4f}, MAE={sur_mae:.4f}, RMSE={sur_rmse:.4f}"
-        )
-
-    # 5) 保存模型包和搜索摘要
-    bundle = {
-        "model": final_model,
-        "selector": selector_final,
-        "feature_cols": feature_cols,
-        "target_col": target_col,
+    # 6b) 最优模型
+    model_path = f"{RESULTS_DIR}/ga_best_model.pkl"
+    joblib.dump({
+        "model": final_rf,
         "selected_features": selected_features,
-        "best_cfg": best_cfg,
-        "search_mode": SEARCH_MODE,
-        "feature_mode": FEATURE_MODE,
-        "seed": refit_seed,
-        "metrics_test": {"r2": test_r2, "mae": test_mae, "rmse": test_rmse},
-        "surrogate_info": surrogate_info,
-    }
-    with open(MODEL_PATH, "wb") as f:
-        pickle.dump(bundle, f)
+        "selected_idx": selected_idx,
+        "cv_r2": best_cv_r2,
+        "test_r2": test_r2,
+        "test_mae": test_mae,
+        "test_rmse": test_rmse,
+    }, model_path)
+    print(f"最优模型已保存: {model_path}")
 
-    with open(SUMMARY_PATH, "w", encoding="utf-8") as f:
-        f.write("GA 非线性特征选择 + RF 回归 结果摘要\n")
-        f.write("=" * 70 + "\n\n")
-        f.write(
-            f"feature_mode={FEATURE_MODE}, search_mode={SEARCH_MODE}, "
-            f"train={len(y_train)}, val={len(y_val)}, test={len(y_test)}\n\n"
-        )
-        f.write("参数搜索结果:\n")
-        for i, row in enumerate(search_rows, start=1):
-            f.write(
-                f"{i}. {summarize_config(row['cfg'])}\n"
-                f"   mean_r2={row['mean_r2']:.4f} ± {row['std_r2']:.4f}, "
-                f"mean_mae={row['mean_mae']:.4f}, mean_rmse={row['mean_rmse']:.4f}\n"
-            )
-        f.write("\n最佳参数:\n")
-        f.write(summarize_config(best_cfg) + "\n")
-        f.write(f"\nselected_features ({len(selected_features)}):\n")
-        f.write(str(selected_features) + "\n")
-        f.write(
-            f"\nTest metrics: R2={test_r2:.4f}, MAE={test_mae:.4f}, RMSE={test_rmse:.4f}\n"
-        )
-        if surrogate_info is not None:
-            f.write(
-                f"\nSurrogate ({surrogate_info['model']}, alpha={surrogate_info['alpha']}) "
-                f"metrics: R2={surrogate_info['r2']:.4f}, "
-                f"MAE={surrogate_info['mae']:.4f}, RMSE={surrogate_info['rmse']:.4f}\n"
-            )
-            f.write("Surrogate formula:\n")
-            f.write(surrogate_info["formula"] + "\n")
+    # 6c) 自动更新 feature_config.py
+    update_feature_config(feature_cols, selected_features)
 
-    print(f"\n模型包已保存: {MODEL_PATH}")
-    print(f"搜索摘要已保存: {SUMMARY_PATH}")
+    # 6d) Top 5 个体
+    print(f"\nHall of Fame (Top 5):")
+    for rank, ind in enumerate(hof, 1):
+        n_feat = sum(ind)
+        r2 = ind.fitness.values[0]
+        print(f"  #{rank}: {n_feat} 特征, CV R2={r2:.4f}")
+
+    print(f"\n完成! 接下来可以运行:")
+    print(f"  python 特征筛选.py  # 进一步特征筛选")
+
+
+def update_feature_config(all_features, selected_features):
+    """自动更新 feature_config.py。"""
+    config_text = "\n".join([
+        '"""Unified feature configuration for training/validation scripts."""',
+        "",
+        "from __future__ import annotations",
+        "",
+        "from typing import Iterable",
+        "",
+        "# GA selected features (from 遗传.py)",
+        "SELECTED_FEATURE_COLS = [",
+        *[f'    "{feat}",' for feat in selected_features],
+        "]",
+        "",
+        "# Full feature set (all RDKit descriptors)",
+        "ALL_FEATURE_COLS = [",
+        *[f'    "{feat}",' for feat in all_features],
+        "]",
+        "",
+        "",
+        'def resolve_target_col(columns: Iterable[str], preferred: str = "chi_result") -> str:',
+        '    """Resolve target column with fallback for encoding variations."""',
+        "    cols = list(columns)",
+        "    if preferred in cols:",
+        "        return preferred",
+        "",
+        '    candidates = [c for c in cols if "result" in str(c).lower() or "chi" in str(c).lower()]',
+        "    if candidates:",
+        "        return candidates[0]",
+        "",
+        '    raise KeyError("未找到目标列：chi_result（或包含 result/chi 的列名）")',
+        "",
+    ])
+    Path("feature_config.py").write_text(config_text, encoding="utf-8")
+    print(f"feature_config.py 已自动更新 (SELECTED={len(selected_features)}, ALL={len(all_features)})")
 
 
 if __name__ == "__main__":
-    freeze_support()
     main()

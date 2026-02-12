@@ -77,13 +77,24 @@ def write_feature_config(selected_features, all_features, output_path='feature_c
 df = pd.read_excel('data/molecular_features.xlsx')
 target_col = resolve_target_col(df.columns)
 
-# 所有特征列（排除目标列）
-feature_cols = ['MolWt1', 'logP1', 'TPSA1',
-                'MaxAbsPartialCharge1', 'LabuteASA1',
-                'MolWt2', 'logP2', 'TPSA2', 
-                'MaxAbsPartialCharge2', 'LabuteASA2',
-                'Avalon Similarity', 'Morgan Similarity', 'Topological Similarity',
-                'Delta_LogP', 'Delta_TPSA', 'HB_Match', 'Delta_MolMR', 'CSP3_1', 'CSP3_2', 'Inv_T']
+# 从 feature_config.py 加载 GA 选出的特征（两阶段筛选: GA粗筛 → RFECV精筛）
+try:
+    from feature_config import SELECTED_FEATURE_COLS
+    # 验证这些列在数据中存在
+    valid_cols = [c for c in SELECTED_FEATURE_COLS if c in df.columns]
+    if len(valid_cols) >= 5:
+        feature_cols = valid_cols
+        print(f"从 feature_config.py 加载 GA 预选特征: {len(feature_cols)} 个")
+    else:
+        raise RuntimeError(
+            f"feature_config.py 中的有效特征不足 ({len(valid_cols)} 个)。\n"
+            f"请先运行 python 遗传.py 进行 GA 粗筛。"
+        )
+except ImportError:
+    raise RuntimeError(
+        "未找到 feature_config.py 或 SELECTED_FEATURE_COLS。\n"
+        "请先运行 python 遗传.py 进行 GA 粗筛，再运行本脚本精筛。"
+    )
 
 X = df[feature_cols]
 y = df[target_col]
