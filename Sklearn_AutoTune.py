@@ -12,6 +12,7 @@ import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
 from sklearn.model_selection import RandomizedSearchCV, train_test_split, KFold
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
@@ -40,6 +41,7 @@ FINAL_VALIDATION_PATH = os.path.join(FINAL_SKLEARN_DIR, "sklearn_validation_resu
 FINAL_IMPORTANCE_CSV_PATH = os.path.join(FINAL_SKLEARN_DIR, "sklearn_feature_importance.csv")
 FINAL_IMPORTANCE_PLOT_PATH = os.path.join(FINAL_SKLEARN_DIR, "sklearn_feature_importance.png")
 FINAL_REPORT_PATH = os.path.join(FINAL_SKLEARN_DIR, "sklearn_final_report.txt")
+FINAL_VALIDATION_PLOT_PATH = os.path.join(FINAL_SKLEARN_DIR, "sklearn_validation_plots.png")
 
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
@@ -97,6 +99,79 @@ def save_feature_importance_plot(importance_df, method):
     plt.tight_layout()
     plt.savefig(FINAL_IMPORTANCE_PLOT_PATH, dpi=300, bbox_inches="tight")
     plt.close()
+
+
+def save_validation_plots(y_actual, y_predicted, results_df, model_name):
+    """Generate 2x2 validation plots."""
+    residuals = y_actual - y_predicted
+    r2 = r2_score(y_actual, y_predicted)
+    mae = mean_absolute_error(y_actual, y_predicted)
+    rmse = np.sqrt(mean_squared_error(y_actual, y_predicted))
+
+    fig, axes = plt.subplots(2, 2, figsize=(14, 12))
+    fig.suptitle(f"Sklearn AutoTune — Best Model: {model_name}", fontsize=14, fontweight="bold")
+
+    # (1) Actual vs Predicted
+    ax = axes[0, 0]
+    ax.scatter(y_actual, y_predicted, alpha=0.4, s=15, c="#2196F3", edgecolors="none")
+    vmin = min(y_actual.min(), y_predicted.min())
+    vmax = max(y_actual.max(), y_predicted.max())
+    margin = (vmax - vmin) * 0.05
+    ax.plot([vmin - margin, vmax + margin], [vmin - margin, vmax + margin],
+            "r--", linewidth=1.5, label="y = x")
+    ax.set_xlabel("Actual")
+    ax.set_ylabel("Predicted")
+    ax.set_title("Actual vs Predicted")
+    ax.legend(loc="upper left")
+    ax.text(0.95, 0.05, f"R² = {r2:.4f}\nMAE = {mae:.4f}\nRMSE = {rmse:.4f}",
+            transform=ax.transAxes, ha="right", va="bottom",
+            fontsize=10, bbox=dict(boxstyle="round,pad=0.3", facecolor="wheat", alpha=0.8))
+
+    # (2) Residual Distribution
+    ax = axes[0, 1]
+    ax.hist(residuals, bins=40, color="#4CAF50", edgecolor="white", alpha=0.85)
+    ax.axvline(x=0, color="red", linestyle="--", linewidth=1.5)
+    ax.set_xlabel("Residual (Actual - Predicted)")
+    ax.set_ylabel("Frequency")
+    ax.set_title("Residual Distribution")
+    ax.text(0.95, 0.95, f"Mean = {residuals.mean():.4f}\nStd = {residuals.std():.4f}",
+            transform=ax.transAxes, ha="right", va="top",
+            fontsize=10, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgreen", alpha=0.8))
+
+    # (3) Residual vs Predicted
+    ax = axes[1, 0]
+    ax.scatter(y_predicted, residuals, alpha=0.4, s=15, c="#FF9800", edgecolors="none")
+    ax.axhline(y=0, color="red", linestyle="--", linewidth=1.5)
+    ax.set_xlabel("Predicted")
+    ax.set_ylabel("Residual")
+    ax.set_title("Residual vs Predicted (Heteroscedasticity Check)")
+
+    # (4) Model Comparison
+    ax = axes[1, 1]
+    names = results_df["Model"].tolist()
+    cv_r2 = results_df["CV Val R2"].tolist()
+    test_r2 = results_df["Test R2"].tolist()
+    x_pos = np.arange(len(names))
+    width = 0.35
+    bars1 = ax.bar(x_pos - width / 2, cv_r2, width, label="CV Val R²", color="#2196F3", alpha=0.85)
+    bars2 = ax.bar(x_pos + width / 2, test_r2, width, label="Test R²", color="#FF5722", alpha=0.85)
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(names, rotation=30, ha="right", fontsize=9)
+    ax.set_ylabel("R²")
+    ax.set_title("Model Comparison")
+    ax.legend()
+    ax.set_ylim(0, 1.05)
+    for bar in bars1:
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
+                f"{bar.get_height():.3f}", ha="center", va="bottom", fontsize=8)
+    for bar in bars2:
+        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
+                f"{bar.get_height():.3f}", ha="center", va="bottom", fontsize=8)
+
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
+    plt.savefig(FINAL_VALIDATION_PLOT_PATH, dpi=300, bbox_inches="tight")
+    plt.close()
+    print(f"可视化图表已保存: {FINAL_VALIDATION_PLOT_PATH}")
 
 
 def build_model_search_space():
@@ -315,6 +390,7 @@ def main():
         best_overall["model"], X_all, y_all, feature_cols
     )
     save_feature_importance_plot(importance_df, importance_method)
+    save_validation_plots(y_all, y_all_pred, results_df, best_overall["name"])
 
     with open(FINAL_BUNDLE_PATH, "wb") as f:
         pickle.dump(bundle, f)

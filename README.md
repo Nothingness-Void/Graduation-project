@@ -88,6 +88,7 @@ Graduation-project/
 │       ├── sklearn_validation_results.xlsx
 │       ├── sklearn_feature_importance.csv
 │       ├── sklearn_feature_importance.png
+│       ├── sklearn_validation_plots.png
 │       └── sklearn_final_report.txt
 │
 ├── requirements.txt           # Python 依赖清单
@@ -287,7 +288,7 @@ python 特征筛选.py
 
 **脚本**: [`feature_config.py`](feature_config.py)
 
-特征选择结果统一存储在此文件中，定义了 `ALL_FEATURE_COLS`（全部特征）和 `SELECTED_FEATURE_COLS`（选中特征），供下游训练和验证脚本使用。
+特征选择结果统一存储在此文件中，定义了 `SELECTED_FEATURE_COLS`（选中特征），供下游训练和验证脚本使用。
 
 ---
 
@@ -299,7 +300,7 @@ python 特征筛选.py
 
 | 配置项 | 值 |
 |--------|------|
-| 网络结构 | 64 → BN → Dropout → 32 → 16(L2) → 1 |
+| 网络结构 | 48 → BN → Dropout(0.15) → 24 → BN → Dropout(0.1) → 12(L2) → 1 |
 | 损失函数 | Huber |
 | 训练策略 | 5 个随机种子多次训练，选最优 |
 | 数据划分 | 60% 训练 / 20% 验证 / 20% 测试 |
@@ -314,7 +315,7 @@ python 特征筛选.py
 
 **脚本**: [`DNN_AutoTune.py`](DNN_AutoTune.py)
 
-使用 Keras Tuner 的 Hyperband 算法搜索 DNN 最优架构（层数、宽度、学习率、正则化等）。
+使用 Keras Tuner 的 Hyperband 算法搜索 DNN 最优架构（1-3 层、12-64 节点、学习率、正则化等）。
 
 ```bash
 .venv\Scripts\python.exe DNN_AutoTune.py
@@ -330,7 +331,7 @@ python 特征筛选.py
 
 **脚本**: [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py)
 
-5 个模型 × 50 组参数 × 5 折交叉验证自动寻优：
+4 个模型 × 50 组参数 × 5 折交叉验证自动寻优：
 
 | 模型 | 搜索维度 |
 |------|---------|
@@ -338,14 +339,14 @@ python 特征筛选.py
 | XGBRegressor | lr, n_estimators, depth, reg_alpha/lambda |
 | RandomForest | n_estimators, depth, max_features |
 | MLPRegressor | hidden layers, activation, alpha, lr |
-| SVR | kernel, C, gamma, epsilon |
 
 运行后会自动完成：
 
 1. 最优模型搜索（CV 选模）
 2. 全量数据验证（R²/MAE/RMSE）
 3. 特征贡献分析（内置重要性或 permutation importance）
-4. 将最终交付文件输出到 `final_results/sklearn/`
+4. 验证可视化（Actual vs Predicted、残差分布、模型对比等 4 张图）
+5. 将最终交付文件输出到 `final_results/sklearn/`
 
 ```bash
 python Sklearn_AutoTune.py
@@ -392,6 +393,7 @@ python Sklearn_AutoTune.py
 | `sklearn_final_report.txt` | `final_results/sklearn/` | Sklearn 最终报告 | Step 5d |
 | `sklearn_validation_results.xlsx` | `final_results/sklearn/` | Sklearn 验证结果明细 | Step 5d |
 | `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn 特征贡献图 | Step 5d |
+| `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn 验证可视化 (4 张子图) | Step 5d |
 
 ---
 
