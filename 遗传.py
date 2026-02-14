@@ -35,6 +35,7 @@ warnings.filterwarnings("ignore")
 # ========== 配置区 ==========
 DATA_PATH = "data/molecular_features.xlsx"
 RESULTS_DIR = "results"
+SPLIT_INDEX_PATH = "results/train_test_split_indices.npz"
 
 # GA 参数 (已针对 ~320 特征 + ~1900 样本做了平衡)
 POPULATION_SIZE = 100       # 种群大小
@@ -317,10 +318,26 @@ def main():
     print(f"  数据: {X.shape[0]} 样本 × {X.shape[1]} 特征")
 
     # 2) 划分 train/test (GA 只在 train 上搜索，test 最终评估)
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
+    all_indices = np.arange(len(y))
+    train_idx, test_idx = train_test_split(
+        all_indices, test_size=TEST_SIZE, random_state=RANDOM_STATE
+    )
+    train_idx = np.sort(train_idx)
+    test_idx = np.sort(test_idx)
+    X_train, X_test = X[train_idx], X[test_idx]
+    y_train, y_test = y[train_idx], y[test_idx]
+
+    # 保存 split 索引供全链路复用（特征筛选 → Sklearn → DNN）
+    np.savez(
+        SPLIT_INDEX_PATH,
+        train_idx=train_idx,
+        test_idx=test_idx,
+        n_samples=np.array([len(y)], dtype=np.int64),
+        test_size=np.array([TEST_SIZE], dtype=np.float64),
+        random_state=np.array([RANDOM_STATE], dtype=np.int64),
     )
     print(f"  划分: train={len(y_train)}, test={len(y_test)}")
+    print(f"  split 索引已保存: {SPLIT_INDEX_PATH}")
 
     # 3) GA 搜索
     hof, log_df = run_ga(X_train, y_train, feature_cols)

@@ -33,6 +33,7 @@ DATA_PATH = "data/molecular_features.xlsx"
 MODEL_PATH = "results/best_model.keras"
 PREPROCESS_PATH = "results/best_model_preprocess.pkl"
 SUMMARY_PATH = "results/tuner_summary.txt"
+SPLIT_INDEX_PATH = "results/train_test_split_indices.npz"
 
 
 
@@ -165,6 +166,26 @@ class BoundedHyperModel(kt.HyperModel):
         return model.fit(x, y, validation_data=validation_data, callbacks=callbacks, **kwargs)
 
 
+def load_saved_split_indices(n_samples: int):
+    """Load split indices if available and valid."""
+    if not os.path.exists(SPLIT_INDEX_PATH):
+        return None
+    try:
+        with np.load(SPLIT_INDEX_PATH, allow_pickle=False) as d:
+            train_idx = d["train_idx"].astype(int)
+            test_idx = d["test_idx"].astype(int)
+            saved_n = int(d["n_samples"][0]) if "n_samples" in d else None
+    except Exception:
+        return None
+    if saved_n is not None and saved_n != n_samples:
+        return None
+    if len(train_idx) == 0 or len(test_idx) == 0:
+        return None
+    if np.intersect1d(train_idx, test_idx).size > 0:
+        return None
+    return train_idx, test_idx
+
+
 def main():
     # 1) 数据加载与特征选择
     data = pd.read_excel(DATA_PATH)
@@ -173,10 +194,18 @@ def main():
     X = data[feature_cols].values
     y = data[target_col].values
 
-    # 2) 三段划分，避免测试集泄漏
-    X_trainval, X_test, y_trainval, y_test = train_test_split(
-        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
-    )
+    # 2) 三段划分，优先复用上游保存的 split
+    split_result = load_saved_split_indices(len(data))
+    if split_result is not None:
+        train_idx, test_idx = split_result
+        X_trainval, X_test = X[train_idx], X[test_idx]
+        y_trainval, y_test = y[train_idx], y[test_idx]
+        print("检测到特征筛选阶段切分索引，已复用相同 train/test 划分。")
+    else:
+        X_trainval, X_test, y_trainval, y_test = train_test_split(
+            X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
+        )
+        print("未检测到可复用切分索引，使用当前脚本默认随机划分。")
     X_train, X_val, y_train, y_val = train_test_split(
         X_trainval,
         y_trainval,

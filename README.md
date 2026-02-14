@@ -77,6 +77,7 @@ Graduation-project/
 │   ├── ga_selected_features.txt     # GA 选中的特征列表
 │   ├── ga_evolution_log.csv         # GA 进化日志
 │   ├── sklearn_tuning_summary.csv   # AutoTune 寻优报告
+│   ├── train_test_split_indices.npz # 统一 train/test 划分索引
 │   ├── feature_selection.png        # 特征筛选可视化
 │   └── dnn_loss.png                 # 训练损失曲线
 │
@@ -264,7 +265,9 @@ python 特征工程.py
 | 评估器 | RF(n=100, depth=8) | 轻量快速 |
 | 特征数约束 | [5, 40] | 控制模型复杂度 |
 
-**输出**: `results/ga_selected_features.txt`、`results/ga_evolution_log.csv`，自动更新 `feature_config.py`
+**输出**: `results/ga_selected_features.txt`、`results/ga_evolution_log.csv`、`results/train_test_split_indices.npz`，自动更新 `feature_config.py`
+
+> ℹ️ GA 会创建并保存 train/test 划分索引，下游所有脚本自动复用同一划分，确保测试集完全隔离。
 
 ```bash
 python 遗传.py    # 约 20-40 分钟
@@ -276,7 +279,7 @@ python 遗传.py    # 约 20-40 分钟
 
 **功能**: 从 GA 选出的 ~20-40 个特征中，使用 RFECV 逐个淘汰冗余特征，精确定位最优子集。自动从 `feature_config.py` 读取 GA 预选结果。
 
-> ⚠️ 必须先运行 `遗传.py`，否则脚本会报错提示。不会直接对 320 维全量特征运行 RFECV。
+> ⚠️ 必须先运行 `遗传.py`，否则脚本会报错提示。会自动加载 GA 保存的 train/test 切分索引，仅在训练集上做筛选。
 
 **输出**: 自动更新 `feature_config.py` 和 `data/features_optimized.xlsx`
 
@@ -343,7 +346,7 @@ python 特征筛选.py
 运行后会自动完成：
 
 1. 最优模型搜索（CV 选模）
-2. 全量数据验证（R²/MAE/RMSE）
+2. 测试集验证（R²/MAE/RMSE，仅用未参与训练的测试集）
 3. 特征贡献分析（内置重要性或 permutation importance）
 4. 验证可视化（Actual vs Predicted、残差分布、模型对比等 4 张图）
 5. 将最终交付文件输出到 `final_results/sklearn/`
@@ -390,6 +393,7 @@ python Sklearn_AutoTune.py
 | `ga_evolution_log.csv` | `results/` | GA 进化日志 | Step 4b |
 | `sklearn_model_bundle.pkl` | `results/` | Sklearn 统一模型包 | Step 5 |
 | `dnn_model.keras` | `results/` | DNN 模型 | Step 5 |
+| `train_test_split_indices.npz` | `results/` | 统一 train/test 划分索引 | Step 4a |
 | `sklearn_final_report.txt` | `final_results/sklearn/` | Sklearn 最终报告 | Step 5d |
 | `sklearn_validation_results.xlsx` | `final_results/sklearn/` | Sklearn 验证结果明细 | Step 5d |
 | `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn 特征贡献图 | Step 5d |
@@ -409,6 +413,7 @@ python Sklearn_AutoTune.py
 | MLPRegressor | 0.616 | 0.725 | 0.208 | 0.318 |
 | DNN (Keras) | — | 0.649 | 0.240 | 0.359 |
 
+> ℹ️ 所有模型均在相同的测试集上评估，测试集不参与特征选择或模型训练。
 > 💡 使用 GA 从 320 维特征中选择最优子集后，性能有望进一步提升。
 
 ---

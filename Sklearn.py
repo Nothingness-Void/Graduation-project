@@ -1,3 +1,4 @@
+import os
 import pickle
 import numpy as np
 import pandas as pd
@@ -20,12 +21,34 @@ DATA_PATH = "data/molecular_features.xlsx"
 MODEL_BUNDLE_PATH = "results/sklearn_model_bundle.pkl"
 LEGACY_MODEL_PATH = "results/fingerprint_model.pkl"  # 兼容旧脚本
 SUMMARY_PATH = "results/sklearn_search_summary.csv"
+SPLIT_INDEX_PATH = "results/train_test_split_indices.npz"
 
 # 训练/搜索参数
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
 CV_FOLDS = 5
 N_ITER = 40
+
+
+def load_saved_split_indices(n_samples: int):
+    """Load split indices generated in 特征筛选.py if available and valid."""
+    if not os.path.exists(SPLIT_INDEX_PATH):
+        return None
+    try:
+        with np.load(SPLIT_INDEX_PATH, allow_pickle=False) as split_data:
+            train_idx = split_data["train_idx"].astype(int)
+            test_idx = split_data["test_idx"].astype(int)
+            saved_n = int(split_data["n_samples"][0]) if "n_samples" in split_data else None
+    except Exception:
+        return None
+
+    if saved_n is not None and saved_n != n_samples:
+        return None
+    if len(train_idx) == 0 or len(test_idx) == 0:
+        return None
+    if np.intersect1d(train_idx, test_idx).size > 0:
+        return None
+    return train_idx, test_idx
 
 
 def build_search_configs():
@@ -101,9 +124,17 @@ def main():
     y = data[target_col].values
 
     # 2) 留出独立测试集（只在最后评估用）
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
-    )
+    split_indices = load_saved_split_indices(len(data))
+    if split_indices is not None:
+        train_idx, test_idx = split_indices
+        X_train, X_test = X.iloc[train_idx], X.iloc[test_idx]
+        y_train, y_test = y[train_idx], y[test_idx]
+        print("检测到特征筛选阶段切分索引，已复用相同 train/test 划分。")
+    else:
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
+        )
+        print("未检测到可复用切分索引，使用当前脚本默认随机划分。")
     print(f"特征数: {len(feature_cols)}")
     print(f"样本划分: train={len(y_train)}, test={len(y_test)}")
 

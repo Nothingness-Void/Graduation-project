@@ -42,6 +42,7 @@ FINAL_IMPORTANCE_CSV_PATH = os.path.join(FINAL_SKLEARN_DIR, "sklearn_feature_imp
 FINAL_IMPORTANCE_PLOT_PATH = os.path.join(FINAL_SKLEARN_DIR, "sklearn_feature_importance.png")
 FINAL_REPORT_PATH = os.path.join(FINAL_SKLEARN_DIR, "sklearn_final_report.txt")
 FINAL_VALIDATION_PLOT_PATH = os.path.join(FINAL_SKLEARN_DIR, "sklearn_validation_plots.png")
+SPLIT_INDEX_PATH = "results/train_test_split_indices.npz"
 
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
@@ -52,6 +53,27 @@ CV_FOLDS = 5
 def ensure_results_dir() -> None:
     os.makedirs("results", exist_ok=True)
     os.makedirs(FINAL_SKLEARN_DIR, exist_ok=True)
+
+
+def load_saved_split_indices(n_samples: int):
+    """Load split indices generated in 特征筛选.py if available and valid."""
+    if not os.path.exists(SPLIT_INDEX_PATH):
+        return None
+    try:
+        with np.load(SPLIT_INDEX_PATH, allow_pickle=False) as split_data:
+            train_idx = split_data["train_idx"].astype(int)
+            test_idx = split_data["test_idx"].astype(int)
+            saved_n = int(split_data["n_samples"][0]) if "n_samples" in split_data else None
+    except Exception:
+        return None
+
+    if saved_n is not None and saved_n != n_samples:
+        return None
+    if len(train_idx) == 0 or len(test_idx) == 0:
+        return None
+    if np.intersect1d(train_idx, test_idx).size > 0:
+        return None
+    return train_idx, test_idx
 
 
 def _final_estimator(model):
@@ -281,9 +303,17 @@ def main():
     X = data[feature_cols].values
     y = data[target_col].values
 
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
-    )
+    split_indices = load_saved_split_indices(len(data))
+    if split_indices is not None:
+        train_idx, test_idx = split_indices
+        X_train, X_test = X[train_idx], X[test_idx]
+        y_train, y_test = y[train_idx], y[test_idx]
+        print("检测到特征筛选阶段切分索引，已复用相同 train/test 划分。")
+    else:
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=TEST_SIZE, random_state=RANDOM_STATE
+        )
+        print("未检测到可复用切分索引，使用当前脚本默认随机划分。")
     print(f"特征数: {len(feature_cols)}")
     print(f"数据准备完成：训练集 {X_train.shape[0]} 样本，测试集 {X_test.shape[0]} 样本")
 
@@ -371,26 +401,25 @@ def main():
     results_df.to_csv(SUMMARY_PATH, index=False, encoding="utf-8-sig")
 
     # ========== 最终输出 (final_results/sklearn) ==========
-    X_all = data[feature_cols]
-    y_all = data[target_col].values
-    y_all_pred = best_overall["model"].predict(X_all)
-    final_r2 = r2_score(y_all, y_all_pred)
-    final_mae = mean_absolute_error(y_all, y_all_pred)
-    final_rmse = np.sqrt(mean_squared_error(y_all, y_all_pred))
+    # 仅用测试集评估，防止数据泄漏
+    y_test_pred = best_overall["model"].predict(X_test)
+    final_r2 = r2_score(y_test, y_test_pred)
+    final_mae = mean_absolute_error(y_test, y_test_pred)
+    final_rmse = np.sqrt(mean_squared_error(y_test, y_test_pred))
 
     validation_df = pd.DataFrame({
-        "Sample": range(1, len(y_all) + 1),
-        f"Actual ({target_col})": y_all,
-        "Predicted": y_all_pred,
-        "Residual": y_all - y_all_pred,
-        "Abs Error": np.abs(y_all - y_all_pred),
+        "Sample": range(1, len(y_test) + 1),
+        f"Actual ({target_col})": y_test,
+        "Predicted": y_test_pred,
+        "Residual": y_test - y_test_pred,
+        "Abs Error": np.abs(y_test - y_test_pred),
     })
 
     importance_method, importance_df = compute_feature_importance(
-        best_overall["model"], X_all, y_all, feature_cols
+        best_overall["model"], X_test, y_test, feature_cols
     )
     save_feature_importance_plot(importance_df, importance_method)
-    save_validation_plots(y_all, y_all_pred, results_df, best_overall["name"])
+    save_validation_plots(y_test, y_test_pred, results_df, best_overall["name"])
 
     with open(FINAL_BUNDLE_PATH, "wb") as f:
         pickle.dump(bundle, f)
@@ -407,7 +436,7 @@ def main():
         f.write(f"最佳参数: {best_overall['best_params']}\n")
         f.write(f"CV 最优 R2: {best_overall['cv_val_r2']:.4f}\n")
         f.write(
-            f"全量验证 R2/MAE/RMSE: {final_r2:.4f} / {final_mae:.4f} / {final_rmse:.4f}\n"
+            f"测试集验证 R2/MAE/RMSE: {final_r2:.4f} / {final_mae:.4f} / {final_rmse:.4f}\n"
         )
         f.write(f"特征贡献方法: {importance_method}\n")
         f.write("\n模型搜索汇总见: sklearn_tuning_summary.csv\n")

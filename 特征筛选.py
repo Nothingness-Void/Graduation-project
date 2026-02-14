@@ -13,6 +13,7 @@
   - results/feature_ranking.txt     — 特征排名详情
   - data/features_optimized.xlsx    — 筛选后的数据（可直接用于建模）
 """
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -21,11 +22,15 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import RFECV
-from sklearn.model_selection import KFold, RepeatedKFold
+from sklearn.model_selection import KFold, RepeatedKFold, train_test_split
 from sklearn.metrics import r2_score
 from sklearn.dummy import DummyRegressor
 import warnings
 warnings.filterwarnings('ignore')
+
+TEST_SIZE = 0.2
+RANDOM_STATE = 42
+SPLIT_INDEX_PATH = "results/train_test_split_indices.npz"
 
 
 def resolve_target_col(columns, preferred='χ-result'):
@@ -91,11 +96,60 @@ except ImportError:
         "请先运行 python 遗传.py 进行 GA 粗筛，再运行本脚本精筛。"
     )
 
-X = df[feature_cols]
-y = df[target_col]
+X_all = df[feature_cols]
+y_all = df[target_col]
+
+# 关键：优先加载 遗传.py 保存的 split 索引，保证全链路一致
+def load_saved_split_indices(n_samples: int):
+    """Load split indices if available and valid."""
+    if not os.path.exists(SPLIT_INDEX_PATH):
+        return None
+    try:
+        with np.load(SPLIT_INDEX_PATH, allow_pickle=False) as d:
+            train_idx = d["train_idx"].astype(int)
+            test_idx = d["test_idx"].astype(int)
+            saved_n = int(d["n_samples"][0]) if "n_samples" in d else None
+    except Exception:
+        return None
+    if saved_n is not None and saved_n != n_samples:
+        return None
+    if len(train_idx) == 0 or len(test_idx) == 0:
+        return None
+    if np.intersect1d(train_idx, test_idx).size > 0:
+        return None
+    return train_idx, test_idx
+
+split_result = load_saved_split_indices(len(df))
+if split_result is not None:
+    train_idx, test_idx = split_result
+    print(f"已加载 遗传.py 保存的 split 索引，复用相同 train/test 划分。")
+else:
+    all_indices = np.arange(len(df))
+    train_idx, test_idx = train_test_split(
+        all_indices, test_size=TEST_SIZE, random_state=RANDOM_STATE
+    )
+    train_idx = np.sort(train_idx)
+    test_idx = np.sort(test_idx)
+    Path("results").mkdir(parents=True, exist_ok=True)
+    np.savez(
+        SPLIT_INDEX_PATH,
+        train_idx=train_idx,
+        test_idx=test_idx,
+        n_samples=np.array([len(df)], dtype=np.int64),
+        test_size=np.array([TEST_SIZE], dtype=np.float64),
+        random_state=np.array([RANDOM_STATE], dtype=np.int64),
+    )
+    print(f"未找到已保存的 split 索引，已自行划分并保存: {SPLIT_INDEX_PATH}")
+
+X_train = X_all.iloc[train_idx]
+X_test = X_all.iloc[test_idx]
+y_train = y_all.iloc[train_idx]
+y_test = y_all.iloc[test_idx]
+X = X_train.reset_index(drop=True)
+y = y_train.reset_index(drop=True)
 
 print(f"原始特征数: {len(feature_cols)}")
-print(f"样本数: {len(y)}")
+print(f"样本数(训练集): {len(y)} | 测试集: {len(y_test)}")
 
 # ========== 1.1 目标值分布诊断 ==========
 print("\n" + "="*60)
@@ -146,7 +200,7 @@ else:
 print("\n" + "="*60)
 print("Step 3: RFECV 递归特征消除（自动确定最优特征数）")
 print("="*60)
-print("  正在运行 5 折交叉验证...")
+print("  正在训练集上运行 5 折交叉验证...")
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
@@ -298,6 +352,7 @@ with open('results/feature_ranking.txt', 'w', encoding='utf-8') as f:
     f.write("特征筛选结果\n")
     f.write(f"{'='*60}\n\n")
     f.write(f"原始特征数: {len(feature_cols)}\n")
+    f.write(f"筛选使用训练集样本数: {len(y)} (test_size={TEST_SIZE})\n")
     f.write(f"筛选后特征数: {len(selected_features)}\n\n")
     f.write("保留的特征:\n")
     for feat in selected_features:
