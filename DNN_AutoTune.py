@@ -23,6 +23,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import keras_tuner as kt
+from tqdm.auto import tqdm
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 
 # =========================
@@ -54,6 +55,40 @@ RETRAIN_RUNS = 8
 
 
 
+
+
+class ProgressHyperband(kt.Hyperband):
+    """Hyperband 搜索阶段的 trial 进度条。"""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._trial_bar = None
+        self._seen_trial_ids = set()
+
+    def run_trial(self, trial, *fit_args, **fit_kwargs):
+        if self._trial_bar is None:
+            total_trials = getattr(self.oracle, "max_trials", None)
+            self._trial_bar = tqdm(
+                total=total_trials,
+                desc="Hyperband Trials",
+                unit="trial",
+                dynamic_ncols=True,
+            )
+
+        if trial.trial_id not in self._seen_trial_ids:
+            self._seen_trial_ids.add(trial.trial_id)
+            self._trial_bar.update(1)
+
+        return super().run_trial(trial, *fit_args, **fit_kwargs)
+
+    def search(self, *args, **kwargs):
+        try:
+            return super().search(*args, **kwargs)
+        finally:
+            if self._trial_bar is not None:
+                self._trial_bar.close()
+                self._trial_bar = None
+                self._seen_trial_ids.clear()
 
 
 class BoundedHyperModel(kt.HyperModel):
@@ -171,7 +206,7 @@ def main():
 
     hypermodel = BoundedHyperModel(n_features=n_features, n_train=n_train)
 
-    tuner = kt.Hyperband(
+    tuner = ProgressHyperband(
         hypermodel=hypermodel,
         objective=kt.Objective("val_mae", direction="min"),
         max_epochs=MAX_EPOCHS,
@@ -229,7 +264,7 @@ def main():
     best_batch_size = best_hp.get("batch_size")
 
     print(f"\n使用最优架构重训 {RETRAIN_RUNS} 次...")
-    for run in range(RETRAIN_RUNS):
+    for run in tqdm(range(RETRAIN_RUNS), desc="Retrain Runs", unit="run", dynamic_ncols=True):
         seed = 42 + run * 7
         keras.utils.set_random_seed(seed)
         np.random.seed(seed)
@@ -261,7 +296,9 @@ def main():
         all_results.append(
             {"run": run + 1, "seed": seed, "val_loss": val_loss, "R2": r2, "MAE": mae, "RMSE": rmse}
         )
-        print(f"Run {run+1}: val_loss={val_loss:.4f}, test R2={r2:.4f}, MAE={mae:.4f}, RMSE={rmse:.4f}")
+        tqdm.write(
+            f"Run {run+1}: val_loss={val_loss:.4f}, test R2={r2:.4f}, MAE={mae:.4f}, RMSE={rmse:.4f}"
+        )
 
         if val_loss < best_val_loss:
             best_val_loss = val_loss
