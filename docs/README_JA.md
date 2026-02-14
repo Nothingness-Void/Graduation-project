@@ -391,7 +391,7 @@ python Y_Randomization.py
 
 ```bash
 # 1. プロジェクトをクローン
-git clone <repository-url>
+git clone https://github.com/Nothingness-Void/Graduation-project
 cd Graduation-project
 
 # 2. 依存関係をインストール

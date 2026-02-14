@@ -439,7 +439,7 @@ python Y_Randomization.py
 
 ```bash
 # 1. Clone the project
-git clone <repository-url>
+git clone https://github.com/Nothingness-Void/Graduation-project
 cd Graduation-project
 
 # 2. Install dependencies
