@@ -444,7 +444,7 @@ python Y_Randomization.py
 
 ```bash
 # 1. 克隆项目
-git clone <repository-url>
+git clone https://github.com/Nothingness-Void/Graduation-project
 cd Graduation-project
 
 # 2. 安装依赖
