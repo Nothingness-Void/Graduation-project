@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="README.md">简体中文</a> ·
+  <a href="docs/README_EN.md">English</a> ·
+  <a href="docs/README_JA.md">日本語</a>
+</p>
+
 # 基于分子描述符的哈金斯参数（Huggins Parameter）QSAR 预测模型
 
 > 本项目通过 **QSAR（定量构效关系）** 方法，利用分子描述符和机器学习 / 深度学习模型预测聚合物-溶剂体系的 **Huggins 参数（χ）**。
