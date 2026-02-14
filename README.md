@@ -90,6 +90,8 @@ Graduation-project/
 │       ├── sklearn_feature_importance.csv
 │       ├── sklearn_feature_importance.png
 │       ├── sklearn_validation_plots.png
+│       ├── y_randomization.png
+│       ├── y_randomization.csv
 │       └── sklearn_final_report.txt
 │
 ├── requirements.txt           # Python 依赖清单
@@ -373,6 +375,18 @@ python Sklearn_AutoTune.py
 | [`DNN特征贡献分析.py`](DNN特征贡献分析.py) | SHAP GradientExplainer 分析 DNN 特征贡献 |
 | [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后自动输出 Sklearn 特征贡献（`final_results/sklearn/sklearn_feature_importance.*`） |
 
+#### Y-Randomization 验证
+
+**脚本**: [`Y_Randomization.py`](Y_Randomization.py)
+
+**功能**: Y-Scrambling 验证，通过 100 次随机打乱 y 值并重训模型，验证 QSAR 模型是否真正学到了特征与目标值的关系。如果真实模型 R² 远高于随机模型分布 (p < 0.05)，则模型有效。
+
+**输出**: `final_results/sklearn/y_randomization.png`、`y_randomization.csv`
+
+```bash
+python Y_Randomization.py
+```
+
 > `Sklearn_模型验证.py` 与 `RF特征贡献分析.py` 已归档至 `废弃文件存档/`，用于历史兼容与排错。
 
 ---
@@ -398,6 +412,8 @@ python Sklearn_AutoTune.py
 | `sklearn_validation_results.xlsx` | `final_results/sklearn/` | Sklearn 验证结果明细 | Step 5d |
 | `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn 特征贡献图 | Step 5d |
 | `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn 验证可视化 (4 张子图) | Step 5d |
+| `y_randomization.png` | `final_results/sklearn/` | Y-Randomization R² 分布图 | Step 6 |
+| `y_randomization.csv` | `final_results/sklearn/` | Y-Randomization 详细数据 | Step 6 |
 
 ---
 
