@@ -14,10 +14,12 @@
 
 - [项目简介](#项目简介)
 - [项目结构](#项目结构)
-  - [Step 5：模型训练与自动调参](#step-5模型训练与自动调参)
-  - [Step 6：模型验证与分析](#step-6模型验证与分析)
+- [全流程概览（Step 1-6）](#全流程概览step-1-6)
+- [建模阶段（Step 5）](#建模阶段step-5)
+- [验证与分析阶段（Step 6）](#验证与分析阶段step-6)
 - [数据文件说明](#数据文件说明)
 - [模型性能基准](#模型性能基准)
+- [代表性输出图](#代表性输出图)
 - [快速开始](#快速开始)
 - [评估指标](#评估指标)
 
@@ -85,7 +87,10 @@ Graduation-project/
 │   ├── dnn/
 │   │   ├── dnn_y_randomization.csv
 │   │   ├── dnn_y_randomization.png
-│   │   └── dnn_y_randomization_summary.txt
+│   │   ├── dnn_y_randomization_summary.txt
+│   │   ├── dnn_validation_plots.png
+│   │   ├── dnn_validation_results.csv
+│   │   └── dnn_feature_importance.csv
 │   └── sklearn/
 │       ├── sklearn_model_bundle.pkl
 │       ├── fingerprint_model.pkl
@@ -112,9 +117,22 @@ Graduation-project/
 
 ---
 
-### Step 5：模型训练与自动调参
+## 全流程概览（Step 1-6）
 
-#### Step 5a：DNN Hyperband 自动调参
+| 阶段 | 主要脚本 | 主要输出 |
+|------|----------|----------|
+| Step 1：SMILES 获取 | `获取SMILES.py` | `data/smiles_raw.csv` |
+| Step 2：数据预处理 | `数据处理部分代码.py`、`合并数据集.py` | `data/huggins_preprocessed.xlsx`、`data/merged_dataset.csv` |
+| Step 3：特征工程 | `特征工程.py` | `data/molecular_features.xlsx`（320 维） |
+| Step 4：特征筛选 | `遗传.py`、`特征筛选.py` | `results/ga_selected_features.txt`、`data/features_optimized.xlsx` |
+| Step 5：模型训练与调参 | `Sklearn_AutoTune.py`、`DNN_AutoTune.py` | `final_results/sklearn/*`、`results/best_model.keras` |
+| Step 6：模型验证与分析 | `Y_Randomization.py`、`DNN_Y_Randomization.py`、`DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`、`final_results/dnn/dnn_y_randomization.*` |
+
+---
+
+## 建模阶段（Step 5）
+
+### Step 5a：DNN Hyperband 自动调参
 
 **脚本**: [`DNN_AutoTune.py`](DNN_AutoTune.py)
 
@@ -133,7 +151,7 @@ Graduation-project/
 .venv\Scripts\python.exe DNN_AutoTune.py
 ```
 
-#### Step 5b：Sklearn AutoTune（推荐）
+### Step 5b：Sklearn AutoTune（推荐）
 
 **脚本**: [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py)
 
@@ -160,23 +178,23 @@ python Sklearn_AutoTune.py
 
 ---
 
-### Step 6：模型验证与分析
+## 验证与分析阶段（Step 6）
 
-#### 模型验证
+### 模型验证
 
 | 脚本 | 功能 |
 |------|------|
 | [`DNN_模型验证.py`](DNN_模型验证.py) | 加载 DNN 模型，在全量数据上评估 R²/MAE/RMSE |
 | [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后自动输出 Sklearn 验证结果（`final_results/sklearn/sklearn_validation_results.xlsx`） |
 
-#### 特征贡献分析
+### 特征贡献分析
 
 | 脚本 | 功能 |
 |------|------|
 | [`DNN特征贡献分析.py`](DNN特征贡献分析.py) | SHAP GradientExplainer 分析 DNN 特征贡献 |
 | [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后自动输出 Sklearn 特征贡献（`final_results/sklearn/sklearn_feature_importance.*`） |
 
-#### Y-Randomization 验证
+### Y-Randomization 验证
 
 **脚本**: [`Y_Randomization.py`](Y_Randomization.py)
 
@@ -188,7 +206,7 @@ python Sklearn_AutoTune.py
 python Y_Randomization.py
 ```
 
-#### DNN Y-Randomization 验证
+### DNN Y-Randomization 验证
 
 **脚本**: [`DNN_Y_Randomization.py`](DNN_Y_Randomization.py)
 
@@ -198,6 +216,18 @@ python Y_Randomization.py
 
 ```bash
 python DNN_Y_Randomization.py
+```
+
+### DNN 综合验证与特征贡献分析（最新 AutoTune 版本）
+
+**脚本**: [`DNN特征贡献分析.py`](DNN特征贡献分析.py)
+
+**功能**: 严格使用 `best_model.keras + best_model_preprocess.pkl` 进行 DNN 综合分析，输出与 sklearn 类似的 2×2 验证图（Actual vs Predicted、残差分布、残差-预测散点、特征贡献），并导出验证明细与特征重要性表。
+
+**输出**: `final_results/dnn/dnn_validation_plots.png`、`dnn_validation_results.csv`、`dnn_feature_importance.csv`
+
+```bash
+python DNN特征贡献分析.py
 ```
 
 > `Sklearn_模型验证.py` 与 `RF特征贡献分析.py` 已归档至 `废弃文件存档/`，用于历史兼容与排错。
@@ -227,6 +257,9 @@ python DNN_Y_Randomization.py
 | `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn 验证可视化 (4 张子图) | Step 5d |
 | `y_randomization.png` | `final_results/sklearn/` | Y-Randomization R² 分布图 | Step 6 |
 | `y_randomization.csv` | `final_results/sklearn/` | Y-Randomization 详细数据 | Step 6 |
+| `dnn_validation_plots.png` | `final_results/dnn/` | DNN 综合验证图（4 子图） | Step 6 |
+| `dnn_validation_results.csv` | `final_results/dnn/` | DNN 测试集预测与残差明细 | Step 6 |
+| `dnn_feature_importance.csv` | `final_results/dnn/` | DNN 特征贡献（SHAP/回退重要性） | Step 6 |
 | `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² 分布图 | Step 6 |
 | `dnn_y_randomization.csv` | `final_results/dnn/` | DNN Y-Randomization 详细数据 | Step 6 |
 | `dnn_y_randomization_summary.txt` | `final_results/dnn/` | DNN Y-Randomization 统计摘要 | Step 6 |
@@ -235,18 +268,38 @@ python DNN_Y_Randomization.py
 
 ## 模型性能基准
 
-> 以下为合并数据集 (1886 样本, 6 特征 RFECV) 上的 AutoTune 结果
+> 以下为本轮全流程（GA → RFECV → AutoTune）结果：1893 样本，最终 20 特征（统一 train/test 划分）
 
 | 模型 | CV Val R² | Test R² | Test MAE | Test RMSE |
 |------|----------|---------|---------|---------|
-| **GradientBoosting** | **0.749** | **0.812** | 0.156 | 0.263 |
-| XGBRegressor | 0.726 | 0.799 | 0.150 | 0.271 |
-| RandomForest | 0.692 | 0.780 | 0.177 | 0.284 |
-| MLPRegressor | 0.616 | 0.725 | 0.208 | 0.318 |
-| DNN (Keras) | — | 0.649 | 0.240 | 0.359 |
+| **GradientBoosting** | **0.718** | **0.812** | **0.156** | **0.264** |
+| XGBRegressor | 0.712 | 0.788 | 0.163 | 0.281 |
+| RandomForest | 0.691 | 0.798 | 0.165 | 0.274 |
+| MLPRegressor | 0.662 | 0.684 | 0.197 | 0.343 |
+| DNN (AutoTune, best run) | — | 0.786 | 0.181 | 0.282 |
 
 > ℹ️ 所有模型均在相同的测试集上评估，测试集不参与特征选择或模型训练。
-> 💡 使用 GA 从 320 维特征中选择最优子集后，性能有望进一步提升。
+> ℹ️ DNN 行为 AutoTune 最优架构 8 次重训中的最佳一次（非交叉验证均值）。
+
+---
+
+## 代表性输出图
+
+### Sklearn：特征贡献图
+
+![Sklearn Feature Importance](final_results/sklearn/sklearn_feature_importance.png)
+
+### Sklearn：验证可视化（4 子图）
+
+![Sklearn Validation Plots](final_results/sklearn/sklearn_validation_plots.png)
+
+### DNN：Y-Randomization 分布图
+
+![DNN Y-Randomization](final_results/dnn/dnn_y_randomization.png)
+
+### DNN：综合验证图（4 子图）
+
+![DNN Validation Plots](final_results/dnn/dnn_validation_plots.png)
 
 ---
 
@@ -267,12 +320,14 @@ python 特征工程.py                # 全量 RDKit 描述符 (320 维)
 python 遗传.py                   # GA 粗筛 (320 → ~20-40, 约 20-40 min)
 python 特征筛选.py                # RFECV 精筛 (~20-40 → ~8-15)
 python Sklearn_AutoTune.py       # Sklearn 自动调参
+python DNN_AutoTune.py           # DNN Hyperband 自动调参
 python Y_Randomization.py        # Sklearn Y-Randomization 验证（可选）
 python DNN_Y_Randomization.py    # DNN Y-Randomization 验证（可选）
 
 # 或: 如果已有 data/molecular_features.xlsx, 从 Step 4 开始
 python 遗传.py
 python Sklearn_AutoTune.py
+python DNN_AutoTune.py
 ```
 
 ---
