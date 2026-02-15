@@ -66,6 +66,7 @@ Graduation-project/
 ├── DNN_模型验证.py             # Step 6a: DNN model validation
 ├── DNN特征贡献分析.py          # Step 6c: DNN SHAP feature contribution analysis
 ├── Y_Randomization.py         # Step 6d: Y-Randomization (Y-Scrambling) test
+├── DNN_Y_Randomization.py     # Step 6e: DNN Y-Randomization (Y-Scrambling) test
 │
 ├── Huggins.xlsx               # Raw data: compound names + Huggins parameters
 │
@@ -91,6 +92,10 @@ Graduation-project/
 │   └── dnn_loss.png
 │
 ├── final_results/             # Final deliverables (separated from intermediates)
+│   ├── dnn/
+│   │   ├── dnn_y_randomization.csv
+│   │   ├── dnn_y_randomization.png
+│   │   └── dnn_y_randomization_summary.txt
 │   └── sklearn/
 │       ├── sklearn_model_bundle.pkl
 │       ├── fingerprint_model.pkl
@@ -390,6 +395,18 @@ python Sklearn_AutoTune.py
 python Y_Randomization.py
 ```
 
+#### DNN Y-Randomization Test
+
+**Script**: [`DNN_Y_Randomization.py`](DNN_Y_Randomization.py)
+
+**Function**: Reuses the same train/test split, shuffles `y_train/y_val` for DNN retraining across multiple iterations, and compares baseline DNN vs randomized DNN test R2 distribution and p-value.
+
+**Output**: `final_results/dnn/dnn_y_randomization.csv`, `dnn_y_randomization.png`, `dnn_y_randomization_summary.txt`
+
+```bash
+python DNN_Y_Randomization.py
+```
+
 ---
 
 ## Data Files
@@ -415,6 +432,9 @@ python Y_Randomization.py
 | `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn validation plots (4 subplots) | Step 5d |
 | `y_randomization.png` | `final_results/sklearn/` | Y-Randomization R² distribution | Step 6 |
 | `y_randomization.csv` | `final_results/sklearn/` | Y-Randomization detailed data | Step 6 |
+| `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² distribution | Step 6 |
+| `dnn_y_randomization.csv` | `final_results/dnn/` | DNN Y-Randomization detailed data | Step 6 |
+| `dnn_y_randomization_summary.txt` | `final_results/dnn/` | DNN Y-Randomization summary report | Step 6 |
 
 ---
 
@@ -452,6 +472,8 @@ python 特征工程.py                # Full RDKit descriptors (320-dim)
 python 遗传.py                   # GA coarse screening (320 → ~20-40, ~20-40 min)
 python 特征筛选.py                # RFECV fine screening (~20-40 → ~8-15)
 python Sklearn_AutoTune.py       # Sklearn auto-tuning
+python Y_Randomization.py        # Sklearn Y-Randomization test (optional)
+python DNN_Y_Randomization.py    # DNN Y-Randomization test (optional)
 
 # Or: if you already have data/molecular_features.xlsx, start from Step 4
 python 遗传.py

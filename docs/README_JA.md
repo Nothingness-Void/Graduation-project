@@ -67,11 +67,14 @@ Graduation-project/
 ├── DNN_模型验证.py             # Step 6a: DNN モデル検証
 ├── DNN特征贡献分析.py          # Step 6c: DNN SHAP 特徴量寄与分析
 ├── Y_Randomization.py         # Step 6d: Y-Randomization テスト
+├── DNN_Y_Randomization.py     # Step 6e: DNN Y-Randomization テスト
 │
 ├── Huggins.xlsx               # 元データ
 ├── data/                      # 中間データ
 ├── results/                   # モデル＆結果
 ├── final_results/             # 最終成果物
+│   ├── dnn/                   # DNN Y-Randomization 出力
+│   └── sklearn/               # Sklearn 最終成果物 + Y-Randomization 出力
 ├── requirements.txt
 └── README.md
 ```
@@ -351,6 +354,18 @@ python Sklearn_AutoTune.py
 python Y_Randomization.py
 ```
 
+#### DNN Y-Randomization テスト
+
+**スクリプト**: [`DNN_Y_Randomization.py`](DNN_Y_Randomization.py)
+
+**機能**: 同一 train/test 分割を再利用し、DNN の `y_train/y_val` をランダムにシャッフルして複数回再学習し、実モデルとランダム化モデルの Test R² 分布および p-value を比較します。
+
+**出力**: `final_results/dnn/dnn_y_randomization.csv`、`dnn_y_randomization.png`、`dnn_y_randomization_summary.txt`
+
+```bash
+python DNN_Y_Randomization.py
+```
+
 ---
 
 ## データファイル一覧
@@ -368,6 +383,9 @@ python Y_Randomization.py
 | `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn 検証可視化 | Step 5d |
 | `y_randomization.png` | `final_results/sklearn/` | Y-Randomization R² 分布図 | Step 6 |
 | `y_randomization.csv` | `final_results/sklearn/` | Y-Randomization 詳細データ | Step 6 |
+| `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² 分布図 | Step 6 |
+| `dnn_y_randomization.csv` | `final_results/dnn/` | DNN Y-Randomization 詳細データ | Step 6 |
+| `dnn_y_randomization_summary.txt` | `final_results/dnn/` | DNN Y-Randomization 集計レポート | Step 6 |
 
 ---
 
@@ -404,6 +422,8 @@ python 特征工程.py                # 全量 RDKit 記述子 (320 次元)
 python 遗传.py                   # GA 粗篩 (320 → ~20-40, 約 20-40 分)
 python 特征筛选.py                # RFECV 精篩 (~20-40 → ~8-15)
 python Sklearn_AutoTune.py       # Sklearn 自動チューニング
+python Y_Randomization.py        # Sklearn Y-Randomization 検証（任意）
+python DNN_Y_Randomization.py    # DNN Y-Randomization 検証（任意）
 ```
 
 ---

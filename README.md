@@ -63,6 +63,8 @@ Graduation-project/
 │
 ├── DNN_模型验证.py             # Step 6a: DNN 模型验证
 ├── DNN特征贡献分析.py          # Step 6c: DNN SHAP 特征贡献分析
+├── Y_Randomization.py         # Step 6d: Sklearn Y-Randomization 验证
+├── DNN_Y_Randomization.py     # Step 6e: DNN Y-Randomization 验证
 │
 ├── Huggins.xlsx               # 原始数据：化合物名称 + 哈金斯参数
 │
@@ -88,6 +90,10 @@ Graduation-project/
 │   └── dnn_loss.png                 # 训练损失曲线
 │
 ├── final_results/             # 最终交付结果（与中间体分离）
+│   ├── dnn/
+│   │   ├── dnn_y_randomization.csv
+│   │   ├── dnn_y_randomization.png
+│   │   └── dnn_y_randomization_summary.txt
 │   └── sklearn/
 │       ├── sklearn_model_bundle.pkl
 │       ├── fingerprint_model.pkl
@@ -393,6 +399,18 @@ python Sklearn_AutoTune.py
 python Y_Randomization.py
 ```
 
+#### DNN Y-Randomization 验证
+
+**脚本**: [`DNN_Y_Randomization.py`](DNN_Y_Randomization.py)
+
+**功能**: 在复用同一 train/test 划分的前提下，对 DNN 的 `y_train/y_val` 进行随机打乱并重复重训，对比真实 DNN 与随机化 DNN 的测试集 R² 分布与 p-value。
+
+**输出**: `final_results/dnn/dnn_y_randomization.csv`、`dnn_y_randomization.png`、`dnn_y_randomization_summary.txt`
+
+```bash
+python DNN_Y_Randomization.py
+```
+
 > `Sklearn_模型验证.py` 与 `RF特征贡献分析.py` 已归档至 `废弃文件存档/`，用于历史兼容与排错。
 
 ---
@@ -420,6 +438,9 @@ python Y_Randomization.py
 | `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn 验证可视化 (4 张子图) | Step 5d |
 | `y_randomization.png` | `final_results/sklearn/` | Y-Randomization R² 分布图 | Step 6 |
 | `y_randomization.csv` | `final_results/sklearn/` | Y-Randomization 详细数据 | Step 6 |
+| `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² 分布图 | Step 6 |
+| `dnn_y_randomization.csv` | `final_results/dnn/` | DNN Y-Randomization 详细数据 | Step 6 |
+| `dnn_y_randomization_summary.txt` | `final_results/dnn/` | DNN Y-Randomization 统计摘要 | Step 6 |
 
 ---
 
@@ -457,6 +478,8 @@ python 特征工程.py                # 全量 RDKit 描述符 (320 维)
 python 遗传.py                   # GA 粗筛 (320 → ~20-40, 约 20-40 min)
 python 特征筛选.py                # RFECV 精筛 (~20-40 → ~8-15)
 python Sklearn_AutoTune.py       # Sklearn 自动调参
+python Y_Randomization.py        # Sklearn Y-Randomization 验证（可选）
+python DNN_Y_Randomization.py    # DNN Y-Randomization 验证（可选）
 
 # 或: 如果已有 data/molecular_features.xlsx, 从 Step 4 开始
 python 遗传.py
