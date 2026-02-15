@@ -4,7 +4,7 @@ DNN_AutoTune.py
 使用 Keras Tuner Hyperband 自动搜索 DNN 架构（无测试集泄漏版本）
 
 改进:
-1. 搜索空间: 1-3 层, 12-64 节点 (适配 18 特征)
+1. 搜索空间: 1-3 层, 12-64 节点 (适配当前筛选特征规模)
 2. 参数预算: ratio 上限 20
 3. 增加 batch_size 搜索
 4. 增加 Hyperband 迭代次数
@@ -25,6 +25,7 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import keras_tuner as kt
 from tqdm.auto import tqdm
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
+from utils.data_utils import load_saved_split_indices
 
 # =========================
 # 配置区
@@ -34,6 +35,9 @@ MODEL_PATH = "results/best_model.keras"
 PREPROCESS_PATH = "results/best_model_preprocess.pkl"
 SUMMARY_PATH = "results/tuner_summary.txt"
 SPLIT_INDEX_PATH = "results/train_test_split_indices.npz"
+
+FINAL_ROOT_DIR = "final_results"
+FINAL_DNN_DIR = os.path.join(FINAL_ROOT_DIR, "dnn")
 
 
 
@@ -166,24 +170,7 @@ class BoundedHyperModel(kt.HyperModel):
         return model.fit(x, y, validation_data=validation_data, callbacks=callbacks, **kwargs)
 
 
-def load_saved_split_indices(n_samples: int):
-    """Load split indices if available and valid."""
-    if not os.path.exists(SPLIT_INDEX_PATH):
-        return None
-    try:
-        with np.load(SPLIT_INDEX_PATH, allow_pickle=False) as d:
-            train_idx = d["train_idx"].astype(int)
-            test_idx = d["test_idx"].astype(int)
-            saved_n = int(d["n_samples"][0]) if "n_samples" in d else None
-    except Exception:
-        return None
-    if saved_n is not None and saved_n != n_samples:
-        return None
-    if len(train_idx) == 0 or len(test_idx) == 0:
-        return None
-    if np.intersect1d(train_idx, test_idx).size > 0:
-        return None
-    return train_idx, test_idx
+
 
 
 def main():
@@ -195,7 +182,7 @@ def main():
     y = data[target_col].values
 
     # 2) 三段划分，优先复用上游保存的 split
-    split_result = load_saved_split_indices(len(data))
+    split_result = load_saved_split_indices(len(data), SPLIT_INDEX_PATH)
     if split_result is not None:
         train_idx, test_idx = split_result
         X_trainval, X_test = X[train_idx], X[test_idx]
@@ -382,6 +369,26 @@ def main():
     print(f"\n最优模型已保存: {MODEL_PATH}")
     print(f"预处理信息已保存: {PREPROCESS_PATH}")
     print(f"搜索摘要已保存: {SUMMARY_PATH}")
+
+    # ========== 最终输出 (final_results/dnn) ==========
+    import shutil
+    os.makedirs(FINAL_DNN_DIR, exist_ok=True)
+    best_model.save(os.path.join(FINAL_DNN_DIR, "best_model.keras"))
+    with open(os.path.join(FINAL_DNN_DIR, "best_model_preprocess.pkl"), "wb") as f:
+        pickle.dump(
+            {
+                "feature_cols": feature_cols,
+                "target_col": target_col,
+                "scaler_X": scaler_X,
+                "scaler_y": scaler_y,
+                "best_hp": best_hp.values,
+                "best_seed": best_seed,
+            },
+            f,
+        )
+    shutil.copy2(SUMMARY_PATH, os.path.join(FINAL_DNN_DIR, "tuner_summary.txt"))
+    results_df.to_csv(os.path.join(FINAL_DNN_DIR, "dnn_retrain_results.csv"), index=False, encoding="utf-8-sig")
+    print(f"最终输出目录: {FINAL_DNN_DIR}")
 
 
 if __name__ == "__main__":

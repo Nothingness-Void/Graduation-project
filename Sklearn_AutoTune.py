@@ -23,6 +23,7 @@ from sklearn.inspection import permutation_importance
 from xgboost import XGBRegressor
 
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
+from utils.data_utils import load_saved_split_indices
 
 warnings.filterwarnings("ignore")
 
@@ -55,25 +56,7 @@ def ensure_results_dir() -> None:
     os.makedirs(FINAL_SKLEARN_DIR, exist_ok=True)
 
 
-def load_saved_split_indices(n_samples: int):
-    """Load split indices generated in 特征筛选.py if available and valid."""
-    if not os.path.exists(SPLIT_INDEX_PATH):
-        return None
-    try:
-        with np.load(SPLIT_INDEX_PATH, allow_pickle=False) as split_data:
-            train_idx = split_data["train_idx"].astype(int)
-            test_idx = split_data["test_idx"].astype(int)
-            saved_n = int(split_data["n_samples"][0]) if "n_samples" in split_data else None
-    except Exception:
-        return None
 
-    if saved_n is not None and saved_n != n_samples:
-        return None
-    if len(train_idx) == 0 or len(test_idx) == 0:
-        return None
-    if np.intersect1d(train_idx, test_idx).size > 0:
-        return None
-    return train_idx, test_idx
 
 
 def _final_estimator(model):
@@ -303,7 +286,7 @@ def main():
     X = data[feature_cols].values
     y = data[target_col].values
 
-    split_indices = load_saved_split_indices(len(data))
+    split_indices = load_saved_split_indices(len(data), SPLIT_INDEX_PATH)
     if split_indices is not None:
         train_idx, test_idx = split_indices
         X_train, X_test = X[train_idx], X[test_idx]

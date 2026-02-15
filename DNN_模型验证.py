@@ -27,7 +27,7 @@ def main():
     model_path = next((p for p in MODEL_CANDIDATES if Path(p).exists()), None)
     if model_path is None:
         raise FileNotFoundError(
-            "未找到 DNN 模型文件。请先运行 DNN.py（或 DNN_AutoTune.py）。"
+            "未找到 DNN 模型文件。请先运行 DNN_AutoTune.py 生成 best_model.keras。"
         )
 
     preprocess_path = next((p for p in PREPROCESS_CANDIDATES if Path(p).exists()), None)
@@ -50,16 +50,11 @@ def main():
         print(f"已加载预处理器: {preprocess_path} (features={len(feature_cols)})")
         X_val_scaled = scaler_X.transform(data[feature_cols].values)
     else:
-        # 兼容旧模型：若无预处理器文件，回退到当前统一配置
-        feature_cols = SELECTED_FEATURE_COLS
-        target_col = resolve_target_col(data.columns)
-        feature_cols = [c for c in feature_cols if c in data.columns]
-        if len(feature_cols) < 5:
-            raise ValueError(f"有效特征不足: {len(feature_cols)}，请检查 feature_config.py")
-        scaler_X = StandardScaler()
-        scaler_y = None
-        X_val_scaled = scaler_X.fit_transform(data[feature_cols].values)
-        print("未找到预处理器文件，已使用回退模式（fit_transform 全量数据）")
+        raise FileNotFoundError(
+            "未找到预处理器文件。\n"
+            f"尝试过的路径: {PREPROCESS_CANDIDATES}\n"
+            "请先运行 DNN_AutoTune.py 训练模型并保存预处理器。"
+        )
 
     y_true = data[target_col].values
     y_pred_scaled = model.predict(X_val_scaled, verbose=0).reshape(-1, 1)

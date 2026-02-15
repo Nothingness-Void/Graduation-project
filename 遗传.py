@@ -30,6 +30,8 @@ from sklearn.model_selection import train_test_split
 
 from deap import base, creator, tools, algorithms
 
+from feature_config import resolve_target_col
+
 warnings.filterwarnings("ignore")
 
 # ========== 配置区 ==========
@@ -74,23 +76,9 @@ def format_time(seconds):
 
 
 def load_data():
-    """加载特征矩阵，自动检测目标列。"""
+    """加载特征矩阵，使用统一的目标列检测。"""
     data = pd.read_excel(DATA_PATH)
-
-    # 检测目标列 (只匹配精确的目标列名，避免匹配 RDKit 的 Chi 描述符)
-    target_col = None
-    for candidate in ["chi_result", "chi-result", "χ-result", "χ"]:
-        if candidate in data.columns:
-            target_col = candidate
-            break
-    if target_col is None:
-        # 只匹配包含 'result' 的列（不匹配 'chi'，因为 RDKit 有 Chi 描述符）
-        for c in data.columns:
-            if "result" in str(c).lower():
-                target_col = c
-                break
-    if target_col is None:
-        raise KeyError(f"未找到目标列。现有列: {list(data.columns)[-5:]}")
+    target_col = resolve_target_col(data.columns)
 
     feature_cols = [c for c in data.columns if c != target_col]
     X = data[feature_cols].values.astype(np.float64)

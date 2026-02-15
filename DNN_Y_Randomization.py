@@ -36,6 +36,7 @@ from sklearn.metrics import r2_score
 from tqdm.auto import tqdm
 
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
+from utils.data_utils import load_saved_split_indices
 
 warnings.filterwarnings("ignore")
 
@@ -43,6 +44,11 @@ warnings.filterwarnings("ignore")
 # ========== Paths ==========
 DATA_PATH = "data/molecular_features.xlsx"
 SPLIT_INDEX_PATH = "results/train_test_split_indices.npz"
+PREPROCESS_CANDIDATES = [
+    "results/best_model_preprocess.pkl",
+    "final_results/dnn/best_model_preprocess.pkl",
+    "results/dnn_preprocess.pkl",
+]
 
 OUTPUT_DIR = "final_results/dnn"
 CSV_PATH = os.path.join(OUTPUT_DIR, "dnn_y_randomization.csv")
@@ -57,7 +63,6 @@ RANDOM_STATE = 42
 
 N_ITERATIONS = 100
 EPOCHS = 1000
-BATCH_SIZE = 16
 SCALE_Y = True
 
 
@@ -66,43 +71,75 @@ def set_seed(seed: int) -> None:
     keras.utils.set_random_seed(seed)
 
 
-def build_model(input_dim: int, seed: int) -> keras.Model:
+def load_autotune_artifacts():
+    """Load saved preprocess/hyperparameter bundle from DNN_AutoTune if available."""
+    for path in PREPROCESS_CANDIDATES:
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path, "rb") as f:
+                bundle = pickle.load(f)
+            return bundle, path
+        except Exception:
+            continue
+    return None, None
+
+
+def build_model(input_dim: int, seed: int, hp_values=None) -> keras.Model:
+    """Build DNN; if hp_values is provided, mirror DNN_AutoTune best architecture."""
     set_seed(seed)
-    model = keras.Sequential(
-        [
-            keras.layers.Input(shape=(input_dim,)),
-            keras.layers.Dense(48, activation="relu"),
-            keras.layers.BatchNormalization(),
-            keras.layers.Dropout(0.15),
-            keras.layers.Dense(24, activation="relu"),
-            keras.layers.BatchNormalization(),
-            keras.layers.Dropout(0.1),
-            keras.layers.Dense(12, activation="relu", kernel_regularizer=regularizers.l2(1e-3)),
-            keras.layers.Dense(1, activation="linear"),
-        ]
-    )
-    model.compile(optimizer=keras.optimizers.Adam(learning_rate=1e-3), loss="huber", metrics=["mae"])
+    if hp_values:
+        n_layers = int(hp_values.get("n_layers", 2))
+        use_batchnorm = bool(hp_values.get("use_batchnorm", False))
+        l2_reg = float(hp_values.get("l2_reg", 0.0) or 0.0)
+
+        model = keras.Sequential([keras.layers.Input(shape=(input_dim,))])
+        for i in range(n_layers):
+            units = int(hp_values.get(f"units_layer_{i}", 32))
+            dropout = float(hp_values.get(f"dropout_layer_{i}", 0.0) or 0.0)
+            model.add(
+                keras.layers.Dense(
+                    units,
+                    activation="relu",
+                    kernel_regularizer=regularizers.l2(l2_reg) if l2_reg > 0 else None,
+                )
+            )
+            if use_batchnorm:
+                model.add(keras.layers.BatchNormalization())
+            if dropout > 0:
+                model.add(keras.layers.Dropout(dropout))
+
+        model.add(keras.layers.Dense(1, activation="linear"))
+        learning_rate = float(hp_values.get("learning_rate", 1e-3))
+        loss_name = hp_values.get("loss", "huber")
+        if loss_name == "huber":
+            loss = keras.losses.Huber(delta=1.0)
+        elif loss_name == "mae":
+            loss = "mae"
+        else:
+            loss = "mse"
+    else:
+        model = keras.Sequential(
+            [
+                keras.layers.Input(shape=(input_dim,)),
+                keras.layers.Dense(48, activation="relu"),
+                keras.layers.BatchNormalization(),
+                keras.layers.Dropout(0.15),
+                keras.layers.Dense(24, activation="relu"),
+                keras.layers.BatchNormalization(),
+                keras.layers.Dropout(0.1),
+                keras.layers.Dense(12, activation="relu", kernel_regularizer=regularizers.l2(1e-3)),
+                keras.layers.Dense(1, activation="linear"),
+            ]
+        )
+        learning_rate = 1e-3
+        loss = "huber"
+
+    model.compile(optimizer=keras.optimizers.Adam(learning_rate=learning_rate), loss=loss, metrics=["mae"])
     return model
 
 
-def load_saved_split_indices(n_samples: int):
-    """Load split indices if available and valid."""
-    if not os.path.exists(SPLIT_INDEX_PATH):
-        return None
-    try:
-        with np.load(SPLIT_INDEX_PATH, allow_pickle=False) as d:
-            train_idx = d["train_idx"].astype(int)
-            test_idx = d["test_idx"].astype(int)
-            saved_n = int(d["n_samples"][0]) if "n_samples" in d else None
-    except Exception:
-        return None
-    if saved_n is not None and saved_n != n_samples:
-        return None
-    if len(train_idx) == 0 or len(test_idx) == 0:
-        return None
-    if np.intersect1d(train_idx, test_idx).size > 0:
-        return None
-    return train_idx, test_idx
+
 
 
 def train_and_eval_once(
@@ -114,8 +151,10 @@ def train_and_eval_once(
     y_test,
     scaler_y,
     seed: int,
+    hp_values=None,
+    batch_size: int = 16,
 ):
-    model = build_model(X_train_scaled.shape[1], seed=seed)
+    model = build_model(X_train_scaled.shape[1], seed=seed, hp_values=hp_values)
     callbacks = [
         EarlyStopping(monitor="val_loss", patience=30, restore_best_weights=True),
         ReduceLROnPlateau(monitor="val_loss", factor=0.5, patience=10, min_lr=1e-6),
@@ -125,7 +164,7 @@ def train_and_eval_once(
         y_train_fit,
         validation_data=(X_val_scaled, y_val_fit),
         epochs=EPOCHS,
-        batch_size=BATCH_SIZE,
+        batch_size=batch_size,
         callbacks=callbacks,
         verbose=0,
     )
@@ -146,22 +185,40 @@ def main():
     print("DNN Y-Randomization (Y-Scrambling) Validation")
     print("=" * 72)
 
+    preprocess_bundle, preprocess_source = load_autotune_artifacts()
+
     # 1) Load data
     data = pd.read_excel(DATA_PATH)
     target_col = resolve_target_col(data.columns)
-    feature_cols = [c for c in SELECTED_FEATURE_COLS if c in data.columns]
-    missing_cols = [c for c in SELECTED_FEATURE_COLS if c not in data.columns]
+
+    if preprocess_bundle and preprocess_bundle.get("feature_cols"):
+        requested_features = list(preprocess_bundle["feature_cols"])
+    else:
+        requested_features = list(SELECTED_FEATURE_COLS)
+
+    feature_cols = [c for c in requested_features if c in data.columns]
+    missing_cols = [c for c in requested_features if c not in data.columns]
     if missing_cols:
         print(f"Warning: missing features skipped: {missing_cols}")
     if len(feature_cols) < 5:
         raise ValueError(f"Too few valid features: {len(feature_cols)}")
 
+    hp_values = preprocess_bundle.get("best_hp") if preprocess_bundle else None
+    batch_size = 16
+    if hp_values is not None:
+        batch_size = int(hp_values.get("batch_size", 16))
+
     X = data[feature_cols].values
     y = data[target_col].values
     print(f"[Step 1/6] Data loaded: samples={len(y)}, features={len(feature_cols)}, target={target_col}")
+    if preprocess_source:
+        print(f"           model config source: {preprocess_source}")
+        print(f"           aligned with AutoTune best HP, batch_size={batch_size}")
+    else:
+        print("           model config source: fallback fixed architecture")
 
     # 2) Split (reuse saved split if available)
-    split_result = load_saved_split_indices(len(data))
+    split_result = load_saved_split_indices(len(data), SPLIT_INDEX_PATH)
     if split_result is not None:
         train_idx, test_idx = split_result
         X_trainval, X_test = X[train_idx], X[test_idx]
@@ -204,6 +261,8 @@ def main():
         y_test,
         scaler_y,
         seed=RANDOM_STATE,
+        hp_values=hp_values,
+        batch_size=batch_size,
     )
     print("[Step 4/6] Baseline model")
     print(
@@ -231,6 +290,8 @@ def main():
                 y_test,
                 scaler_y,
                 seed=RANDOM_STATE + i + 1,
+                hp_values=hp_values,
+                batch_size=batch_size,
             )
             failed = 0
         except Exception:
@@ -305,4 +366,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

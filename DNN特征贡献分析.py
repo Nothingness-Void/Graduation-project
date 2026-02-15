@@ -32,7 +32,7 @@ RANDOM_STATE = 42
 def main():
     model_path = next((p for p in MODEL_CANDIDATES if Path(p).exists()), None)
     if model_path is None:
-        raise FileNotFoundError("未找到 DNN 模型文件。请先运行 DNN.py（或 DNN_AutoTune.py）。")
+        raise FileNotFoundError("未找到 DNN 模型文件。请先运行 DNN_AutoTune.py。")
     preprocess_path = next((p for p in PREPROCESS_CANDIDATES if Path(p).exists()), None)
 
     model = keras.models.load_model(model_path, compile=False)
@@ -99,8 +99,8 @@ def main():
 
     plt.tight_layout()
     plt.savefig(OUTPUT_PATH, dpi=300, bbox_inches="tight")
+    plt.close()
     print(f"\n特征贡献分析图已保存至: {OUTPUT_PATH}")
-    plt.show()
 
 
 if __name__ == "__main__":
