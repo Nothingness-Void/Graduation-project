@@ -7,10 +7,18 @@ venv/
 results/*
 # 但排除（不屏蔽） .gitkeep 文件，从而保留文件夹结构
 !results/.gitkeep
+# 允许提交 DNN SHAP 综合图（兼容旧路径）
+!results/dnn_shap_analysis.png
 # 屏蔽 final_results 下的所有内容
 final_results/*
 # 但排除（不屏蔽） .gitkeep 文件
 !final_results/.gitkeep
+# 允许提交 DNN 最新综合分析产物
+!final_results/dnn/
+final_results/dnn/*
+!final_results/dnn/dnn_validation_plots.png
+!final_results/dnn/dnn_validation_results.csv
+!final_results/dnn/dnn_feature_importance.csv
 # 屏蔽 tuner_logs 目录
 tuner_logs/
 
