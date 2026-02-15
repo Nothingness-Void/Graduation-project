@@ -25,6 +25,7 @@ final_results/dnn/*
 final_results/sklearn/*
 !final_results/sklearn/sklearn_feature_importance.png
 !final_results/sklearn/sklearn_validation_plots.png
+!final_results/sklearn/y_randomization.png
 # 屏蔽 tuner_logs 目录
 tuner_logs/
 
