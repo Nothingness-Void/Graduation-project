@@ -2,6 +2,7 @@
 __pycache__/
 # 屏蔽虚拟环境目录
 venv/
+.venv/
 # 屏蔽 results 下的所有内容
 results/*
 # 但排除（不屏蔽） .gitkeep 文件，从而保留文件夹结构
@@ -13,8 +14,19 @@ final_results/*
 # 屏蔽 tuner_logs 目录
 tuner_logs/
 
+# 临时测试文件
+test_*.py
 
+# OS 文件
+.DS_Store
+Thumbs.db
 
+# 归档目录中的历史二进制产物（防止误提交）
+废弃文件存档/**/*.pkl
+废弃文件存档/**/*.keras
+废弃文件存档/**/*.h5
+废弃文件存档/**/*.xlsx
+废弃文件存档/**/*.png
 
 # 屏蔽所有编译后的字节码文件
 *.pyc

@@ -33,6 +33,7 @@ from sklearn.base import clone
 from tqdm.auto import tqdm
 
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
+from utils.data_utils import load_saved_split_indices
 
 warnings.filterwarnings("ignore")
 
@@ -55,24 +56,7 @@ plt.rcParams["font.sans-serif"] = ["SimHei", "DejaVu Sans"]
 plt.rcParams["axes.unicode_minus"] = False
 
 
-def load_saved_split_indices(n_samples: int):
-    """Load split indices if available and valid."""
-    if not os.path.exists(SPLIT_INDEX_PATH):
-        return None
-    try:
-        with np.load(SPLIT_INDEX_PATH, allow_pickle=False) as d:
-            train_idx = d["train_idx"].astype(int)
-            test_idx = d["test_idx"].astype(int)
-            saved_n = int(d["n_samples"][0]) if "n_samples" in d else None
-    except Exception:
-        return None
-    if saved_n is not None and saved_n != n_samples:
-        return None
-    if len(train_idx) == 0 or len(test_idx) == 0:
-        return None
-    if np.intersect1d(train_idx, test_idx).size > 0:
-        return None
-    return train_idx, test_idx
+
 
 
 def main():
@@ -82,7 +66,7 @@ def main():
     if not os.path.exists(MODEL_BUNDLE_PATH):
         raise FileNotFoundError(
             f"未找到模型文件: {MODEL_BUNDLE_PATH}\n"
-            "请先运行 Sklearn_AutoTune.py 或 Sklearn.py 训练模型。"
+            "请先运行 Sklearn_AutoTune.py 训练并导出模型。"
         )
     with open(MODEL_BUNDLE_PATH, "rb") as f:
         bundle = pickle.load(f)
@@ -108,7 +92,7 @@ def main():
     print(f"[Step 2/6] 数据加载完成: samples={len(y)}, target_col={target_col}")
 
     # 3) 复用 split
-    split_result = load_saved_split_indices(len(data))
+    split_result = load_saved_split_indices(len(data), SPLIT_INDEX_PATH)
     if split_result is not None:
         train_idx, test_idx = split_result
         X_train, X_test = X[train_idx], X[test_idx]
