@@ -293,6 +293,10 @@ python DNN特征贡献分析.py
 
 ![Sklearn Validation Plots](final_results/sklearn/sklearn_validation_plots.png)
 
+### Sklearn：Y-Randomization 分布图
+
+![Sklearn Y-Randomization](final_results/sklearn/y_randomization.png)
+
 ### DNN：Y-Randomization 分布图
 
 ![DNN Y-Randomization](final_results/dnn/dnn_y_randomization.png)

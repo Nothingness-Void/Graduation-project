@@ -7,10 +7,25 @@ venv/
 results/*
 # 但排除（不屏蔽） .gitkeep 文件，从而保留文件夹结构
 !results/.gitkeep
+# 允许提交 DNN SHAP 综合图（兼容旧路径）
+!results/dnn_shap_analysis.png
 # 屏蔽 final_results 下的所有内容
 final_results/*
 # 但排除（不屏蔽） .gitkeep 文件
 !final_results/.gitkeep
+# 允许提交 DNN 最新综合分析产物
+!final_results/dnn/
+final_results/dnn/*
+!final_results/dnn/dnn_validation_plots.png
+!final_results/dnn/dnn_validation_results.csv
+!final_results/dnn/dnn_feature_importance.csv
+!final_results/dnn/dnn_y_randomization.png
+# 允许提交 README 展示用的 Sklearn 图
+!final_results/sklearn/
+final_results/sklearn/*
+!final_results/sklearn/sklearn_feature_importance.png
+!final_results/sklearn/sklearn_validation_plots.png
+!final_results/sklearn/y_randomization.png
 # 屏蔽 tuner_logs 目录
 tuner_logs/
 
