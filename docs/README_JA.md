@@ -16,8 +16,9 @@
 
 - [プロジェクト概要](#プロジェクト概要)
 - [プロジェクト構成](#プロジェクト構成)
-- [Step 5: モデル学習と自動チューニング](#step-5-モデル学習と自動チューニング)
-- [Step 6: モデル検証と解析](#step-6-モデル検証と解析)
+- [全体フロー概要（Step 1-6）](#全体フロー概要step-1-6)
+- [モデリング段階（Step 5）](#モデリング段階step-5)
+- [検証・分析段階（Step 6）](#検証分析段階step-6)
 - [データファイル説明](#データファイル説明)
 - [モデル性能ベンチマーク](#モデル性能ベンチマーク)
 - [代表的な出力図](#代表的な出力図)
@@ -42,7 +43,7 @@
 
 ## プロジェクト構成
 
-```text
+```
 Graduation-project/
 │
 ├── 获取SMILES.py              # Step 1: 化合物名 → SMILES
@@ -118,7 +119,20 @@ Graduation-project/
 
 ---
 
-## Step 5: モデル学習と自動チューニング
+## 全体フロー概要（Step 1-6）
+
+| 段階 | 主要スクリプト | 主要出力 |
+|------|--------------|----------|
+| Step 1：SMILES 取得 | `获取SMILES.py` | `data/smiles_raw.csv` |
+| Step 2：データ前処理 | `数据处理部分代码.py`、`合并数据集.py` | `data/huggins_preprocessed.xlsx`、`data/merged_dataset.csv` |
+| Step 3：特徴量エンジニアリング | `特征工程.py` | `data/molecular_features.xlsx`（320次元） |
+| Step 4：特徴量選別 | `遗传.py`、`特征筛选.py` | `results/ga_selected_features.txt`、`data/features_optimized.xlsx` |
+| Step 5：モデル学習とチューニング | `Sklearn_AutoTune.py`、`DNN_AutoTune.py` | `final_results/sklearn/*`、`results/best_model.keras` |
+| Step 6：モデル検証と分析 | `Y_Randomization.py`、`DNN_Y_Randomization.py`、`DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`、`final_results/dnn/dnn_y_randomization.*` |
+
+---
+
+## モデリング段階（Step 5）
 
 ### Step 5a: DNN Hyperband 自動チューニング
 
@@ -166,7 +180,7 @@ python Sklearn_AutoTune.py
 
 ---
 
-## Step 6: モデル検証と解析
+## 検証・分析段階（Step 6）
 
 ### モデル検証
 

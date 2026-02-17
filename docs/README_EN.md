@@ -16,8 +16,9 @@
 
 - [Project Overview](#project-overview)
 - [Project Structure](#project-structure)
-- [Step 5: Model Training & Auto-Tuning](#step-5-model-training--auto-tuning)
-- [Step 6: Model Validation & Analysis](#step-6-model-validation--analysis)
+- [Full Pipeline Overview (Step 1-6)](#full-pipeline-overview-step-1-6)
+- [Modeling Phase (Step 5)](#modeling-phase-step-5)
+- [Validation & Analysis Phase (Step 6)](#validation--analysis-phase-step-6)
 - [Data File Descriptions](#data-file-descriptions)
 - [Model Performance Benchmarks](#model-performance-benchmarks)
 - [Representative Output Figures](#representative-output-figures)
@@ -42,7 +43,7 @@ The core workflow of this project is:
 
 ## Project Structure
 
-```text
+```
 Graduation-project/
 │
 ├── 获取SMILES.py              # Step 1: Compound Name → SMILES
@@ -118,7 +119,20 @@ Graduation-project/
 
 ---
 
-## Step 5: Model Training & Auto-Tuning
+## Full Pipeline Overview (Step 1-6)
+
+| Phase | Main Scripts | Main Outputs |
+|-------|-------------|--------------|
+| Step 1: SMILES Retrieval | `获取SMILES.py` | `data/smiles_raw.csv` |
+| Step 2: Data Preprocessing | `数据处理部分代码.py`, `合并数据集.py` | `data/huggins_preprocessed.xlsx`, `data/merged_dataset.csv` |
+| Step 3: Feature Engineering | `特征工程.py` | `data/molecular_features.xlsx` (320-dim) |
+| Step 4: Feature Selection | `遗传.py`, `特征筛选.py` | `results/ga_selected_features.txt`, `data/features_optimized.xlsx` |
+| Step 5: Model Training & Tuning | `Sklearn_AutoTune.py`, `DNN_AutoTune.py` | `final_results/sklearn/*`, `results/best_model.keras` |
+| Step 6: Validation & Analysis | `Y_Randomization.py`, `DNN_Y_Randomization.py`, `DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`, `final_results/dnn/dnn_y_randomization.*` |
+
+---
+
+## Modeling Phase (Step 5)
 
 ### Step 5a: DNN Hyperband Auto-Tuning
 
@@ -166,7 +180,7 @@ python Sklearn_AutoTune.py
 
 ---
 
-## Step 6: Model Validation & Analysis
+## Validation & Analysis Phase (Step 6)
 
 ### Model Validation
 
