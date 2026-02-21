@@ -399,7 +399,7 @@ def main():
     })
 
     importance_method, importance_df = compute_feature_importance(
-        best_overall["model"], X_test, y_test, feature_cols
+        best_overall["model"], X, y, feature_cols
     )
     save_feature_importance_plot(importance_df, importance_method)
     save_validation_plots(y_test, y_test_pred, results_df, best_overall["name"])
