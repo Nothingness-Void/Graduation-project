@@ -163,7 +163,7 @@ def main():
     if high_corr_pairs:
         print(f"\n发现 {len(high_corr_pairs)} 对高相关性特征：")
         for f1, f2, corr in sorted(high_corr_pairs, key=lambda x: -x[2]):
-            print(f"  {f1} ↔ {f2}: r={corr:.3f}")
+            print(f"  {f1} <-> {f2}: r={corr:.3f}")
     else:
         print("  未发现 |r| > 0.9 的特征对")
 
@@ -189,18 +189,18 @@ def main():
     rfecv.fit(X_scaled, y)
 
     print(f"\n  最优特征数量: {rfecv.n_features_}")
-    print(f"  最优 CV R²: {rfecv.cv_results_['mean_test_score'][rfecv.n_features_ - 5]:.4f}")
+    print(f"  最优 CV R2: {rfecv.cv_results_['mean_test_score'][rfecv.n_features_ - 5]:.4f}")
 
     selected_mask = rfecv.support_
     selected_features = [f for f, s in zip(feature_cols, selected_mask) if s]
     eliminated_features = [f for f, s in zip(feature_cols, selected_mask) if not s]
 
-    print(f"\n  ✅ 保留的特征 ({len(selected_features)}):")
+    print(f"\n  [OK] 保留的特征 ({len(selected_features)}):")
     for f in selected_features:
         rf_rank = sorted_idx.tolist().index(feature_cols.index(f)) + 1
         print(f"     {f} (RF重要性排名: #{rf_rank})")
 
-    print(f"\n  ❌ 淘汰的特征 ({len(eliminated_features)}):")
+    print(f"\n  [DROP] 淘汰的特征 ({len(eliminated_features)}):")
     for f in eliminated_features:
         rf_rank = sorted_idx.tolist().index(feature_cols.index(f)) + 1
         print(f"     {f} (RF重要性排名: #{rf_rank})")
@@ -218,12 +218,12 @@ def main():
     rf_sel = RandomForestRegressor(n_estimators=500, random_state=42, n_jobs=-1)
     scores_sel = cross_val_score(rf_sel, X_selected, y, cv=rkf, scoring='r2')
 
-    print(f"\n  全部 {len(feature_cols)} 特征 → CV R²: {scores_full.mean():.4f} ± {scores_full.std():.4f}")
-    print(f"  筛选 {len(selected_features)} 特征 → CV R²: {scores_sel.mean():.4f} ± {scores_sel.std():.4f}")
+    print(f"\n  全部 {len(feature_cols)} 特征 → CV R2: {scores_full.mean():.4f} ± {scores_full.std():.4f}")
+    print(f"  筛选 {len(selected_features)} 特征 → CV R2: {scores_sel.mean():.4f} ± {scores_sel.std():.4f}")
 
     # ========== 5.1 交叉验证诊断 ==========
     print("\n" + "="*60)
-    print("Step 4.1: 交叉验证诊断 (每折 R² + 基线)")
+    print("Step 4.1: 交叉验证诊断 (每折 R2 + 基线)")
     print("="*60)
 
     kf = KFold(n_splits=5, shuffle=True, random_state=42)
@@ -256,19 +256,19 @@ def main():
 
         print(f"  Fold {fold}: Full={r2_full:.4f}, Selected={r2_sel:.4f}, Dummy={r2_dummy:.4f}")
 
-    print("\n  每折 R² 统计:")
+    print("\n  每折 R2 统计:")
     print(f"  Full     mean={np.mean(full_fold_scores):.4f}, std={np.std(full_fold_scores):.4f}")
     print(f"  Selected mean={np.mean(sel_fold_scores):.4f}, std={np.std(sel_fold_scores):.4f}")
     print(f"  Dummy    mean={np.mean(dummy_fold_scores):.4f}, std={np.std(dummy_fold_scores):.4f}")
 
     if scores_sel.mean() >= scores_full.mean():
-        print(f"\n  ✅ 筛选后性能 ≥ 全特征，推荐使用 {len(selected_features)} 个特征")
+        print(f"\n  [OK] 筛选后性能 >= 全特征，推荐使用 {len(selected_features)} 个特征")
     else:
         diff = scores_full.mean() - scores_sel.mean()
         if diff < 0.01:
-            print(f"\n  ✅ 筛选后性能仅下降 {diff:.4f}，但特征更少更稳定，推荐使用")
+            print(f"\n  [OK] 筛选后性能仅下降 {diff:.4f}，但特征更少更稳定，推荐使用")
         else:
-            print(f"\n  ⚠️ 筛选后性能下降 {diff:.4f}，请斟酌取舍")
+            print(f"\n  [WARN] 筛选后性能下降 {diff:.4f}，请斟酌取舍")
 
     # ========== 6. 可视化 ==========
     fig, axes = plt.subplots(1, 3, figsize=(20, 7))
@@ -291,7 +291,7 @@ def main():
                      alpha=0.2)
     ax2.axvline(x=rfecv.n_features_, color='r', linestyle='--', label=f'Optimal: {rfecv.n_features_}')
     ax2.set_xlabel('Number of Features')
-    ax2.set_ylabel('CV R²')
+    ax2.set_ylabel('CV R2')
     ax2.set_title('RFECV: Optimal Number of Features')
     ax2.legend()
 
@@ -301,7 +301,7 @@ def main():
                    [scores_full.mean(), scores_sel.mean()],
                    yerr=[scores_full.std(), scores_sel.std()],
                    color=['#3498db', '#2ecc71'], capsize=10)
-    ax3.set_ylabel('CV R²')
+    ax3.set_ylabel('CV R2')
     ax3.set_title('Performance Comparison')
 
     plt.tight_layout()
@@ -332,7 +332,7 @@ def main():
         f.write(f"\n淘汰的特征:\n")
         for feat in eliminated_features:
             f.write(f"  {feat}\n")
-        f.write(f"\nCV R² 对比:\n")
+        f.write(f"\nCV R2 对比:\n")
         f.write(f"  全特征: {scores_full.mean():.4f} ± {scores_full.std():.4f}\n")
         f.write(f"  筛选后: {scores_sel.mean():.4f} ± {scores_sel.std():.4f}\n")
 

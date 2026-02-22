@@ -53,7 +53,7 @@ MAX_FEATURES = 40           # 最多选择特征数
 # 评估器参数 (轻量 RF，平衡速度与精度)
 RF_N_ESTIMATORS = 100
 RF_MAX_DEPTH = 8
-RF_N_JOBS = -1
+RF_N_JOBS = 1              # 单线程 RF，把并行留给外层 CV
 CV_FOLDS = 3               # 交叉验证折数 (3折比5折快~40%)
 
 # 数据划分
@@ -113,7 +113,7 @@ def evaluate_individual(individual, X_train, y_train, base_estimator, cv_folds):
     try:
         scores = cross_val_score(
             base_estimator, X_subset, y_train,
-            cv=cv_folds, scoring="r2", n_jobs=1
+            cv=cv_folds, scoring="r2", n_jobs=-1
         )
         fitness = float(np.mean(scores))
     except Exception:

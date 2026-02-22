@@ -56,6 +56,19 @@ dropped_smiles = before - len(df_merged)
 if dropped_smiles > 0:
     print(f"  删除 SMILES 缺失: {dropped_smiles} 行")
 
+# 4.1b 清除 SMILES 中的空白字符 (原始数据中存在 Tab 等混入)
+df_merged["Polymer_SMILES"] = df_merged["Polymer_SMILES"].str.strip()
+df_merged["Solvent_SMILES"] = df_merged["Solvent_SMILES"].str.strip()
+
+# 4.1c 删除 strip 后变为空字符串的行
+before = len(df_merged)
+df_merged = df_merged[
+    (df_merged["Polymer_SMILES"] != "") & (df_merged["Solvent_SMILES"] != "")
+]
+dropped_empty = before - len(df_merged)
+if dropped_empty > 0:
+    print(f"  删除空 SMILES (strip 后): {dropped_empty} 行")
+
 # 4.2 删除 chi 缺失或无穷的行
 before = len(df_merged)
 df_merged = df_merged[np.isfinite(df_merged["chi"])]
@@ -80,7 +93,31 @@ dropped_dup = before - len(df_merged)
 if dropped_dup > 0:
     print(f"  删除精确重复: {dropped_dup} 行")
 
-# 4.5 过滤极端异常值 (|chi| > 10)
+# 4.5 解决 chi 冲突: 仅对同一 (SMILES对 + 温度) 存在不同 chi 值的组取中位数
+group_keys = ["Polymer_SMILES", "Solvent_SMILES", "temperature"]
+before = len(df_merged)
+
+# 标记冲突组
+chi_counts = df_merged.groupby(group_keys)["chi"].transform("nunique")
+is_conflict = chi_counts > 1
+n_conflicts = df_merged.loc[is_conflict, group_keys].drop_duplicates().shape[0]
+
+if n_conflicts > 0:
+    # 拆分: 冲突行 vs 非冲突行
+    df_ok = df_merged[~is_conflict].copy()
+    df_conflict = df_merged[is_conflict].copy()
+
+    # 仅对冲突组做中位数聚合
+    agg_dict = {c: "first" for c in df_conflict.columns if c not in group_keys + ["chi"]}
+    agg_dict["chi"] = "median"
+    df_resolved = df_conflict.groupby(group_keys, as_index=False).agg(agg_dict)
+
+    # 合并回来
+    df_merged = pd.concat([df_ok, df_resolved], ignore_index=True)
+    after = len(df_merged)
+    print(f"  解决 chi 冲突 (取中位数): {n_conflicts} 组, {before} → {after} 行")
+
+# 4.6 过滤极端异常值 (|chi| > 10)
 before = len(df_merged)
 df_merged = df_merged[df_merged["chi"].abs() <= 10]
 dropped_outlier = before - len(df_merged)
