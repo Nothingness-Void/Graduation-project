@@ -31,12 +31,16 @@ import warnings
 
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 from utils.data_utils import load_saved_split_indices
+from utils.plot_style import COLORS, add_stat_box, apply_plot_theme, plot_top_barh, style_axis
 
 warnings.filterwarnings('ignore')
+apply_plot_theme()
 
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
 SPLIT_INDEX_PATH = "results/train_test_split_indices.npz"
+TOP_IMPORTANCE_N = 15
+GA_FEATURES_PATH = "results/ga_selected_features.txt"
 
 
 def write_feature_config(selected_features, all_features, output_path='feature_config.py'):
@@ -70,16 +74,40 @@ def write_feature_config(selected_features, all_features, output_path='feature_c
     print(f"统一特征配置已自动更新: {output_path}")
 
 
+def load_ga_feature_list(df_columns):
+    if not os.path.exists(GA_FEATURES_PATH):
+        return []
+
+    lines = Path(GA_FEATURES_PATH).read_text(encoding="utf-8").splitlines()
+    features = []
+    in_feature_block = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped == "选中的特征:":
+            in_feature_block = True
+            continue
+        if in_feature_block and stripped.startswith("GA 配置:"):
+            break
+        if in_feature_block and stripped:
+            features.append(stripped)
+
+    return [c for c in features if c in df_columns]
+
+
 def main():
     # ========== 1. 数据加载 ==========
     df = pd.read_excel('data/molecular_features.xlsx')
     target_col = resolve_target_col(df.columns)
 
-    # 从 feature_config.py 加载 GA 选出的特征（两阶段筛选: GA粗筛 → RFECV精筛）
+    # 优先从 GA 结果文件恢复粗筛特征，避免 feature_config.py 已被 RFECV 覆盖时再次筛 21 -> 21
+    ga_cols = load_ga_feature_list(df.columns)
     valid_cols = [c for c in SELECTED_FEATURE_COLS if c in df.columns]
-    if len(valid_cols) >= 5:
+    if len(ga_cols) >= 5:
+        feature_cols = ga_cols
+        print(f"从 results/ga_selected_features.txt 加载 GA 预选特征: {len(feature_cols)} 个")
+    elif len(valid_cols) >= 5:
         feature_cols = valid_cols
-        print(f"从 feature_config.py 加载 GA 预选特征: {len(feature_cols)} 个")
+        print(f"从 feature_config.py 加载特征列表: {len(feature_cols)} 个")
     else:
         raise RuntimeError(
             f"feature_config.py 中的有效特征不足 ({len(valid_cols)} 个)。\n"
@@ -272,39 +300,73 @@ def main():
 
     # ========== 6. 可视化 ==========
     fig, axes = plt.subplots(1, 3, figsize=(20, 7))
+    fig.suptitle("Feature Selection Summary", fontsize=16, fontweight="bold")
 
     # 图1：特征重要性柱状图
     ax1 = axes[0]
-    ax1.barh(range(len(sorted_idx)), importances[sorted_idx[::-1]], align='center')
-    ax1.set_yticks(range(len(sorted_idx)))
-    ax1.set_yticklabels([feature_cols[i] for i in sorted_idx[::-1]], fontsize=8)
-    ax1.set_xlabel('Importance')
-    ax1.set_title('Random Forest Feature Importance')
+    top_idx = sorted_idx[:TOP_IMPORTANCE_N][::-1]
+    top_importances = importances[top_idx]
+    plot_top_barh(
+        ax1,
+        [feature_cols[i] for i in top_idx],
+        top_importances,
+        title=f"Random Forest Importance (Top {len(top_idx)})",
+        xlabel="Importance",
+        base_color=COLORS["primary"],
+    )
 
     # 图2：RFECV 曲线
     ax2 = axes[1]
     n_features_range = range(5, 5 + len(rfecv.cv_results_['mean_test_score']))
-    ax2.plot(n_features_range, rfecv.cv_results_['mean_test_score'], 'b-o', markersize=3)
+    ax2.plot(n_features_range, rfecv.cv_results_['mean_test_score'], color=COLORS["primary"], marker='o', markersize=3)
     ax2.fill_between(n_features_range,
                      np.array(rfecv.cv_results_['mean_test_score']) - np.array(rfecv.cv_results_['std_test_score']),
                      np.array(rfecv.cv_results_['mean_test_score']) + np.array(rfecv.cv_results_['std_test_score']),
-                     alpha=0.2)
-    ax2.axvline(x=rfecv.n_features_, color='r', linestyle='--', label=f'Optimal: {rfecv.n_features_}')
+                     alpha=0.2, color=COLORS["primary"])
+    ax2.axvline(x=rfecv.n_features_, color=COLORS["accent"], linestyle='--', label=f'Optimal: {rfecv.n_features_}')
     ax2.set_xlabel('Number of Features')
     ax2.set_ylabel('CV R2')
     ax2.set_title('RFECV: Optimal Number of Features')
     ax2.legend()
+    style_axis(ax2)
+    best_score = rfecv.cv_results_['mean_test_score'][rfecv.n_features_ - 5]
+    ax2.scatter([rfecv.n_features_], [best_score], color=COLORS["accent"], zorder=3)
+    add_stat_box(
+        ax2,
+        f"Best features = {rfecv.n_features_}\nBest CV R2 = {best_score:.3f}",
+        loc="lower right",
+        facecolor=COLORS["neutral_light"],
+        fontsize=9,
+    )
 
-    # 图3：对比柱状图
+    # 图3：对比分布图
     ax3 = axes[2]
-    bars = ax3.bar([f'All Features\n({len(feature_cols)})', f'Selected\n({len(selected_features)})'],
-                   [scores_full.mean(), scores_sel.mean()],
-                   yerr=[scores_full.std(), scores_sel.std()],
-                   color=['#3498db', '#2ecc71'], capsize=10)
+    box = ax3.boxplot(
+        [scores_full, scores_sel],
+        labels=[f'All Features\n({len(feature_cols)})', f'Selected\n({len(selected_features)})'],
+        patch_artist=True,
+        widths=0.5,
+        showmeans=True,
+    )
+    for patch, color in zip(box["boxes"], [COLORS["primary"], COLORS["secondary"]]):
+        patch.set_facecolor(color)
+        patch.set_alpha(0.75)
+    rng = np.random.RandomState(RANDOM_STATE)
+    for i, scores in enumerate([scores_full, scores_sel], start=1):
+        jitter = rng.normal(i, 0.03, size=len(scores))
+        ax3.scatter(jitter, scores, s=12, alpha=0.35, color=COLORS["neutral"], edgecolors="none")
     ax3.set_ylabel('CV R2')
-    ax3.set_title('Performance Comparison')
+    ax3.set_title('CV Score Distribution Comparison')
+    style_axis(ax3, grid_axis="y")
+    add_stat_box(
+        ax3,
+        f"All: {scores_full.mean():.3f} ± {scores_full.std():.3f}\nSelected: {scores_sel.mean():.3f} ± {scores_sel.std():.3f}",
+        loc="upper right",
+        facecolor=COLORS["neutral_light"],
+        fontsize=9,
+    )
 
-    plt.tight_layout()
+    plt.tight_layout(rect=[0, 0, 1, 0.95])
     plt.savefig('results/feature_selection.png', dpi=300, bbox_inches='tight')
     plt.close()
     print(f"\n可视化已保存至 results/feature_selection.png")

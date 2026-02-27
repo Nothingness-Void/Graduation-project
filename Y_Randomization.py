@@ -34,6 +34,7 @@ from tqdm.auto import tqdm
 
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 from utils.data_utils import load_saved_split_indices
+from utils.plot_style import COLORS, apply_plot_theme, plot_metric_hist
 
 warnings.filterwarnings("ignore")
 
@@ -54,6 +55,7 @@ TEST_SIZE = 0.2
 # 中文 + 英文字体配置
 plt.rcParams["font.sans-serif"] = ["SimHei", "DejaVu Sans"]
 plt.rcParams["axes.unicode_minus"] = False
+apply_plot_theme()
 
 
 
@@ -186,28 +188,48 @@ def main():
     print(f"详细数据已保存: {CSV_PATH}")
 
     # 8) 可视化 (英文标注)
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
 
     # CV R2 distribution
     ax = axes[0]
-    ax.hist(rand_cv_r2, bins=25, color="#6baed6", edgecolor="white", alpha=0.85, label="Randomized")
-    ax.axvline(real_cv_r2, color="#e74c3c", linewidth=2.5, linestyle="--", label=f"Real model (R2={real_cv_r2:.4f})")
-    ax.set_xlabel("CV R2", fontsize=12)
-    ax.set_ylabel("Count", fontsize=12)
-    ax.set_title(f"Y-Randomization: CV R2  (p={p_value_cv:.4f})", fontsize=13, fontweight="bold")
-    ax.legend(fontsize=10)
+    plot_metric_hist(
+        ax,
+        rand_cv_r2,
+        title="Y-Randomization: CV R2",
+        xlabel="CV R2",
+        real_value=real_cv_r2,
+        p_value=p_value_cv,
+        stats_text=(
+            f"Random mean = {rand_cv_r2.mean():.3f}\n"
+            f"Random p95 = {np.quantile(rand_cv_r2, 0.95):.3f}\n"
+            f">= real: {ge_cv}/{N_ITERATIONS}"
+        ),
+        color=COLORS["primary"],
+    )
 
     # Test R2 distribution
     ax = axes[1]
-    ax.hist(rand_test_r2, bins=25, color="#74c476", edgecolor="white", alpha=0.85, label="Randomized")
-    ax.axvline(real_test_r2, color="#e74c3c", linewidth=2.5, linestyle="--", label=f"Real model (R2={real_test_r2:.4f})")
-    ax.set_xlabel("Test R2", fontsize=12)
-    ax.set_ylabel("Count", fontsize=12)
-    ax.set_title(f"Y-Randomization: Test R2  (p={p_value_test:.4f})", fontsize=13, fontweight="bold")
-    ax.legend(fontsize=10)
+    plot_metric_hist(
+        ax,
+        rand_test_r2,
+        title="Y-Randomization: Test R2",
+        xlabel="Test R2",
+        real_value=real_test_r2,
+        p_value=p_value_test,
+        stats_text=(
+            f"Random mean = {rand_test_r2.mean():.3f}\n"
+            f"Random p95 = {np.quantile(rand_test_r2, 0.95):.3f}\n"
+            f">= real: {ge_test}/{N_ITERATIONS}"
+        ),
+        color=COLORS["secondary"],
+    )
 
-    fig.suptitle(f"Y-Randomization Test — {model_name} ({N_ITERATIONS} iterations)",
-                 fontsize=14, fontweight="bold", y=1.02)
+    fig.suptitle(
+        f"Sklearn Y-Randomization\n{model_name} | {N_ITERATIONS} iterations",
+        fontsize=16,
+        fontweight="bold",
+        y=1.02,
+    )
     plt.tight_layout()
     plt.savefig(PLOT_PATH, dpi=200, bbox_inches="tight")
     plt.close()

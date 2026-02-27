@@ -24,8 +24,17 @@ from xgboost import XGBRegressor
 
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 from utils.data_utils import load_saved_split_indices
+from utils.plot_style import (
+    COLORS,
+    add_stat_box,
+    apply_plot_theme,
+    plot_model_comparison,
+    plot_top_barh,
+    style_axis,
+)
 
 warnings.filterwarnings("ignore")
+apply_plot_theme()
 
 
 # ========== 配置区 ==========
@@ -49,6 +58,7 @@ TEST_SIZE = 0.2
 RANDOM_STATE = 42
 N_ITER = 50
 CV_FOLDS = 5
+TOP_IMPORTANCE_N = 15
 
 
 def ensure_results_dir() -> None:
@@ -96,11 +106,20 @@ def compute_feature_importance(model, X, y, feature_cols):
 
 
 def save_feature_importance_plot(importance_df, method):
-    plot_df = importance_df.sort_values("Importance", ascending=True)
-    plt.figure(figsize=(12, 8))
-    plt.barh(plot_df["Feature"], plot_df["Importance"], align="center")
-    plt.xlabel(f"Importance ({method})")
-    plt.title("Sklearn Feature Importance")
+    plot_df = (
+        importance_df.head(TOP_IMPORTANCE_N)
+        .sort_values("Importance", ascending=True)
+        .reset_index(drop=True)
+    )
+    fig, ax = plt.subplots(figsize=(11, 7))
+    plot_top_barh(
+        ax,
+        plot_df["Feature"],
+        plot_df["Importance"],
+        title=f"Sklearn Feature Importance (Top {len(plot_df)})",
+        xlabel=f"Importance ({method})",
+        base_color=COLORS["highlight"],
+    )
     plt.tight_layout()
     plt.savefig(FINAL_IMPORTANCE_PLOT_PATH, dpi=300, bbox_inches="tight")
     plt.close()
@@ -114,64 +133,77 @@ def save_validation_plots(y_actual, y_predicted, results_df, model_name):
     rmse = np.sqrt(mean_squared_error(y_actual, y_predicted))
 
     fig, axes = plt.subplots(2, 2, figsize=(14, 12))
-    fig.suptitle(f"Sklearn AutoTune — Best Model: {model_name}", fontsize=14, fontweight="bold")
+    fig.suptitle(f"Sklearn Validation Dashboard\nBest by CV: {model_name}", fontsize=16, fontweight="bold")
 
     # (1) Actual vs Predicted
     ax = axes[0, 0]
-    ax.scatter(y_actual, y_predicted, alpha=0.4, s=15, c="#2196F3", edgecolors="none")
+    hb = ax.hexbin(y_actual, y_predicted, gridsize=30, cmap="Blues", mincnt=1, linewidths=0)
     vmin = min(y_actual.min(), y_predicted.min())
     vmax = max(y_actual.max(), y_predicted.max())
     margin = (vmax - vmin) * 0.05
-    ax.plot([vmin - margin, vmax + margin], [vmin - margin, vmax + margin],
-            "r--", linewidth=1.5, label="y = x")
+    ax.plot(
+        [vmin - margin, vmax + margin],
+        [vmin - margin, vmax + margin],
+        linestyle="--",
+        linewidth=1.8,
+        color=COLORS["accent"],
+        label="Ideal fit",
+    )
     ax.set_xlabel("Actual")
     ax.set_ylabel("Predicted")
     ax.set_title("Actual vs Predicted")
     ax.legend(loc="upper left")
-    ax.text(0.95, 0.05, f"R² = {r2:.4f}\nMAE = {mae:.4f}\nRMSE = {rmse:.4f}",
-            transform=ax.transAxes, ha="right", va="bottom",
-            fontsize=10, bbox=dict(boxstyle="round,pad=0.3", facecolor="wheat", alpha=0.8))
+    ax.set_aspect("equal", adjustable="box")
+    style_axis(ax)
+    fig.colorbar(hb, ax=ax, fraction=0.046, pad=0.04, label="Count")
+    add_stat_box(
+        ax,
+        f"R2 = {r2:.4f}\nMAE = {mae:.4f}\nRMSE = {rmse:.4f}",
+        loc="lower right",
+        facecolor=COLORS["neutral_light"],
+    )
 
     # (2) Residual Distribution
     ax = axes[0, 1]
-    ax.hist(residuals, bins=40, color="#4CAF50", edgecolor="white", alpha=0.85)
-    ax.axvline(x=0, color="red", linestyle="--", linewidth=1.5)
+    ax.hist(residuals, bins=40, color=COLORS["secondary"], edgecolor="white", alpha=0.9)
+    ax.axvline(x=0, color=COLORS["accent"], linestyle="--", linewidth=1.8)
     ax.set_xlabel("Residual (Actual - Predicted)")
     ax.set_ylabel("Frequency")
     ax.set_title("Residual Distribution")
-    ax.text(0.95, 0.95, f"Mean = {residuals.mean():.4f}\nStd = {residuals.std():.4f}",
-            transform=ax.transAxes, ha="right", va="top",
-            fontsize=10, bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgreen", alpha=0.8))
+    style_axis(ax, grid_axis="y")
+    add_stat_box(
+        ax,
+        f"Mean = {residuals.mean():.4f}\nStd = {residuals.std():.4f}",
+        loc="upper right",
+        facecolor=COLORS["secondary_light"],
+    )
 
     # (3) Residual vs Predicted
     ax = axes[1, 0]
-    ax.scatter(y_predicted, residuals, alpha=0.4, s=15, c="#FF9800", edgecolors="none")
-    ax.axhline(y=0, color="red", linestyle="--", linewidth=1.5)
+    ax.scatter(y_predicted, residuals, alpha=0.45, s=18, color=COLORS["accent"], edgecolors="none")
+    ax.axhline(y=0, color=COLORS["accent"], linestyle="--", linewidth=1.8)
+    ax.axhline(y=rmse, color=COLORS["neutral"], linestyle=":", linewidth=1)
+    ax.axhline(y=-rmse, color=COLORS["neutral"], linestyle=":", linewidth=1)
     ax.set_xlabel("Predicted")
     ax.set_ylabel("Residual")
-    ax.set_title("Residual vs Predicted (Heteroscedasticity Check)")
+    ax.set_title("Residual vs Predicted")
+    style_axis(ax)
+    add_stat_box(
+        ax,
+        f"+RMSE = {rmse:.3f}\n-RMSE = {-rmse:.3f}",
+        loc="upper right",
+        facecolor=COLORS["accent_light"],
+        fontsize=9,
+    )
 
     # (4) Model Comparison
     ax = axes[1, 1]
-    names = results_df["Model"].tolist()
-    cv_r2 = results_df["CV Val R2"].tolist()
-    test_r2 = results_df["Test R2"].tolist()
-    x_pos = np.arange(len(names))
-    width = 0.35
-    bars1 = ax.bar(x_pos - width / 2, cv_r2, width, label="CV Val R²", color="#2196F3", alpha=0.85)
-    bars2 = ax.bar(x_pos + width / 2, test_r2, width, label="Test R²", color="#FF5722", alpha=0.85)
-    ax.set_xticks(x_pos)
-    ax.set_xticklabels(names, rotation=30, ha="right", fontsize=9)
-    ax.set_ylabel("R²")
-    ax.set_title("Model Comparison")
-    ax.legend()
-    ax.set_ylim(0, 1.05)
-    for bar in bars1:
-        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
-                f"{bar.get_height():.3f}", ha="center", va="bottom", fontsize=8)
-    for bar in bars2:
-        ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
-                f"{bar.get_height():.3f}", ha="center", va="bottom", fontsize=8)
+    plot_model_comparison(
+        ax,
+        results_df["Model"].tolist(),
+        results_df["CV Val R2"].tolist(),
+        results_df["Test R2"].tolist(),
+    )
 
     plt.tight_layout(rect=[0, 0, 1, 0.96])
     plt.savefig(FINAL_VALIDATION_PLOT_PATH, dpi=300, bbox_inches="tight")

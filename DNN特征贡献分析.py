@@ -25,7 +25,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import shap
 import keras
 from keras import regularizers
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
@@ -33,9 +32,16 @@ from sklearn.model_selection import train_test_split
 
 from feature_config import resolve_target_col
 from utils.data_utils import load_saved_split_indices
+from utils.plot_style import COLORS, add_stat_box, apply_plot_theme, plot_top_barh, style_axis
 
 
 warnings.filterwarnings("ignore")
+apply_plot_theme()
+
+try:
+    import shap
+except Exception:
+    shap = None
 
 
 # ========== 路径配置（仅最新） ==========
@@ -60,6 +66,7 @@ RANDOM_STATE = 42
 MAX_BACKGROUND = 256
 MAX_EXPLAIN = 1024
 PERM_REPEATS = 5
+TOP_IMPORTANCE_N = 12
 
 
 def ensure_dirs():
@@ -136,7 +143,8 @@ def _manual_load_weights_from_keras_archive(model, keras_path: str):
         weights_path = os.path.join(td, "model.weights.h5")
 
         with h5py.File(weights_path, "r") as h5f:
-            keys = list(h5f.keys())
+            layer_root = h5f["layers"] if "layers" in h5f else h5f
+            keys = list(layer_root.keys())
 
             def find_group_for_layer(layer_name: str):
                 lname = layer_name.lower()
@@ -154,7 +162,7 @@ def _manual_load_weights_from_keras_archive(model, keras_path: str):
                 gkey = find_group_for_layer(layer.name)
                 if gkey is None:
                     continue
-                group = h5f[gkey]
+                group = layer_root[gkey]
                 if "vars" not in group:
                     continue
 
@@ -244,6 +252,8 @@ def compute_importance(model, x_train_scaled, x_test_scaled, y_test, feature_col
     x_explain = x_test_scaled[:ex_n]
 
     try:
+        if shap is None:
+            raise ImportError("shap import failed")
         explainer = shap.GradientExplainer(model, x_bg)
         shap_values = explainer.shap_values(x_explain)
         shap_out = shap_values[0] if isinstance(shap_values, list) else shap_values
@@ -270,59 +280,79 @@ def save_dashboard_plot(y_test, y_pred, imp_df, method, model_label):
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
 
     fig, axes = plt.subplots(2, 2, figsize=(14, 12))
-    fig.suptitle(f"DNN Validation Dashboard — {model_label}", fontsize=14, fontweight="bold")
+    fig.suptitle("DNN Validation Dashboard", fontsize=16, fontweight="bold")
+    fig.text(0.5, 0.955, model_label, ha="center", fontsize=10, color=COLORS["neutral"])
 
     ax = axes[0, 0]
-    ax.scatter(y_test, y_pred, alpha=0.45, s=16, c="#2196F3", edgecolors="none")
+    hb = ax.hexbin(y_test, y_pred, gridsize=28, cmap="Blues", mincnt=1, linewidths=0)
     vmin = min(y_test.min(), y_pred.min())
     vmax = max(y_test.max(), y_pred.max())
     margin = (vmax - vmin) * 0.05 if vmax > vmin else 0.1
-    ax.plot([vmin - margin, vmax + margin], [vmin - margin, vmax + margin], "r--", linewidth=1.5)
+    ax.plot(
+        [vmin - margin, vmax + margin],
+        [vmin - margin, vmax + margin],
+        linestyle="--",
+        linewidth=1.8,
+        color=COLORS["accent"],
+        label="Ideal fit",
+    )
     ax.set_xlabel("Actual")
     ax.set_ylabel("Predicted")
     ax.set_title("Actual vs Predicted")
-    ax.text(
-        0.95,
-        0.05,
-        f"R² = {r2:.4f}\nMAE = {mae:.4f}\nRMSE = {rmse:.4f}",
-        transform=ax.transAxes,
-        ha="right",
-        va="bottom",
-        fontsize=10,
-        bbox=dict(boxstyle="round,pad=0.3", facecolor="wheat", alpha=0.85),
+    ax.set_aspect("equal", adjustable="box")
+    ax.legend(loc="upper left")
+    style_axis(ax)
+    fig.colorbar(hb, ax=ax, fraction=0.046, pad=0.04, label="Count")
+    add_stat_box(
+        ax,
+        f"R2 = {r2:.4f}\nMAE = {mae:.4f}\nRMSE = {rmse:.4f}",
+        loc="lower right",
+        facecolor=COLORS["neutral_light"],
     )
 
     ax = axes[0, 1]
-    ax.hist(residuals, bins=35, color="#4CAF50", edgecolor="white", alpha=0.85)
-    ax.axvline(0, color="red", linestyle="--", linewidth=1.5)
+    ax.hist(residuals, bins=35, color=COLORS["secondary"], edgecolor="white", alpha=0.9)
+    ax.axvline(0, color=COLORS["accent"], linestyle="--", linewidth=1.8)
     ax.set_xlabel("Residual (Actual - Predicted)")
     ax.set_ylabel("Frequency")
     ax.set_title("Residual Distribution")
-    ax.text(
-        0.95,
-        0.95,
+    style_axis(ax, grid_axis="y")
+    add_stat_box(
+        ax,
         f"Mean = {residuals.mean():.4f}\nStd = {residuals.std():.4f}",
-        transform=ax.transAxes,
-        ha="right",
-        va="top",
-        fontsize=10,
-        bbox=dict(boxstyle="round,pad=0.3", facecolor="lightgreen", alpha=0.85),
+        loc="upper right",
+        facecolor=COLORS["secondary_light"],
     )
 
     ax = axes[1, 0]
-    ax.scatter(y_pred, residuals, alpha=0.45, s=16, c="#FF9800", edgecolors="none")
-    ax.axhline(0, color="red", linestyle="--", linewidth=1.5)
+    ax.scatter(y_pred, residuals, alpha=0.45, s=18, color=COLORS["accent"], edgecolors="none")
+    ax.axhline(0, color=COLORS["accent"], linestyle="--", linewidth=1.8)
+    ax.axhline(rmse, color=COLORS["neutral"], linestyle=":", linewidth=1)
+    ax.axhline(-rmse, color=COLORS["neutral"], linestyle=":", linewidth=1)
     ax.set_xlabel("Predicted")
     ax.set_ylabel("Residual")
-    ax.set_title("Residual vs Predicted (Heteroscedasticity Check)")
+    ax.set_title("Residual vs Predicted")
+    style_axis(ax)
+    add_stat_box(
+        ax,
+        f"+RMSE = {rmse:.3f}\n-RMSE = {-rmse:.3f}",
+        loc="upper right",
+        facecolor=COLORS["accent_light"],
+        fontsize=9,
+    )
 
     ax = axes[1, 1]
-    top_df = imp_df.head(12).sort_values("Importance", ascending=True)
-    ax.barh(top_df["Feature"], top_df["Importance"], color="#7E57C2", alpha=0.9)
-    ax.set_xlabel("Importance")
-    ax.set_title(f"Feature Importance ({method})")
+    top_df = imp_df.head(TOP_IMPORTANCE_N).sort_values("Importance", ascending=True)
+    plot_top_barh(
+        ax,
+        top_df["Feature"],
+        top_df["Importance"],
+        title=f"Top Contributing Features ({len(top_df)})",
+        xlabel=f"Importance ({method})",
+        base_color=COLORS["highlight"],
+    )
 
-    plt.tight_layout(rect=[0, 0, 1, 0.96])
+    plt.tight_layout(rect=[0, 0, 1, 0.94])
     plt.savefig(VALIDATION_PLOT_PATH, dpi=300, bbox_inches="tight")
     plt.close()
 
@@ -375,7 +405,7 @@ def main():
     val_df.to_csv(VALIDATION_CSV_PATH, index=False, encoding="utf-8-sig")
     imp_df.to_csv(IMPORTANCE_CSV_PATH, index=False, encoding="utf-8-sig")
 
-    model_label = f"{Path(model_path).name} | {load_mode}"
+    model_label = f"Test set evaluation | {len(feature_cols)} selected features"
     save_dashboard_plot(y_test, y_pred, imp_df, method, model_label)
 
     print(f"模型来源: {model_path}")

@@ -37,8 +37,10 @@ from tqdm.auto import tqdm
 
 from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 from utils.data_utils import load_saved_split_indices
+from utils.plot_style import COLORS, apply_plot_theme, plot_metric_hist
 
 warnings.filterwarnings("ignore")
+apply_plot_theme()
 
 
 # ========== Paths ==========
@@ -333,13 +335,22 @@ def main():
     df["real_test_r2"] = real_test_r2
     df.to_csv(CSV_PATH, index=False, encoding="utf-8-sig")
 
-    plt.figure(figsize=(8, 5))
-    plt.hist(rand_test, bins=25, color="#74c476", edgecolor="white", alpha=0.85, label="Randomized")
-    plt.axvline(real_test_r2, color="#e74c3c", linewidth=2.5, linestyle="--", label=f"Real model (R2={real_test_r2:.4f})")
-    plt.xlabel("Test R2")
-    plt.ylabel("Count")
-    plt.title(f"DNN Y-Randomization (p={p_value:.4f})")
-    plt.legend()
+    fig, ax = plt.subplots(figsize=(8.8, 5.5))
+    plot_metric_hist(
+        ax,
+        rand_test,
+        title="DNN Y-Randomization",
+        xlabel="Test R2",
+        real_value=real_test_r2,
+        p_value=p_value,
+        stats_text=(
+            f"Random mean = {rand_test.mean():.3f}\n"
+            f"Random p95 = {np.quantile(rand_test, 0.95):.3f}\n"
+            f">= real: {ge_count}/{N_ITERATIONS}"
+        ),
+        color=COLORS["secondary"],
+    )
+    fig.suptitle("DNN Signal Validation", fontsize=16, fontweight="bold", y=1.02)
     plt.tight_layout()
     plt.savefig(PLOT_PATH, dpi=200, bbox_inches="tight")
     plt.close()
