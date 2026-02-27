@@ -32,7 +32,7 @@ from sklearn.model_selection import train_test_split
 
 from feature_config import resolve_target_col
 from utils.data_utils import load_saved_split_indices
-from utils.plot_style import COLORS, add_stat_box, apply_plot_theme, plot_top_barh, style_axis
+from utils.plot_style import COLORS, HEXBIN_CMAP, add_stat_box, apply_plot_theme, plot_top_barh, style_axis
 
 
 warnings.filterwarnings("ignore")
@@ -284,13 +284,13 @@ def save_dashboard_plot(y_test, y_pred, imp_df, method, model_label):
     fig.text(0.5, 0.955, model_label, ha="center", fontsize=10, color=COLORS["neutral"])
 
     ax = axes[0, 0]
-    hb = ax.hexbin(y_test, y_pred, gridsize=28, cmap="Blues", mincnt=1, linewidths=0)
+    hb = ax.hexbin(y_test, y_pred, gridsize=28, cmap=HEXBIN_CMAP, mincnt=1, linewidths=0)
     vmin = min(y_test.min(), y_pred.min())
     vmax = max(y_test.max(), y_pred.max())
-    margin = (vmax - vmin) * 0.05 if vmax > vmin else 0.1
+    margin_ax = (vmax - vmin) * 0.05 if vmax > vmin else 0.1
     ax.plot(
-        [vmin - margin, vmax + margin],
-        [vmin - margin, vmax + margin],
+        [vmin - margin_ax, vmax + margin_ax],
+        [vmin - margin_ax, vmax + margin_ax],
         linestyle="--",
         linewidth=1.8,
         color=COLORS["accent"],
@@ -333,9 +333,11 @@ def save_dashboard_plot(y_test, y_pred, imp_df, method, model_label):
     ax.set_ylabel("Residual")
     ax.set_title("Residual vs Predicted")
     style_axis(ax)
+    within_1rmse = np.mean(np.abs(residuals) <= rmse) * 100
+    within_2rmse = np.mean(np.abs(residuals) <= 2 * rmse) * 100
     add_stat_box(
         ax,
-        f"+RMSE = {rmse:.3f}\n-RMSE = {-rmse:.3f}",
+        f"Within \u00b1RMSE: {within_1rmse:.1f}%\nWithin \u00b12\u00d7RMSE: {within_2rmse:.1f}%",
         loc="upper right",
         facecolor=COLORS["accent_light"],
         fontsize=9,

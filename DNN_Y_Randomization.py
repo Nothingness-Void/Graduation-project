@@ -336,6 +336,7 @@ def main():
     df.to_csv(CSV_PATH, index=False, encoding="utf-8-sig")
 
     fig, ax = plt.subplots(figsize=(8.8, 5.5))
+    conclusion = "PASS" if p_value < 0.05 else "FAIL"
     plot_metric_hist(
         ax,
         rand_test,
@@ -345,14 +346,15 @@ def main():
         p_value=p_value,
         stats_text=(
             f"Random mean = {rand_test.mean():.3f}\n"
-            f"Random p95 = {np.quantile(rand_test, 0.95):.3f}\n"
-            f">= real: {ge_count}/{N_ITERATIONS}"
+            f"Random p95  = {np.quantile(rand_test, 0.95):.3f}\n"
+            f"{conclusion}  p = {p_value:.4f}"
         ),
+        stats_loc="upper left",
         color=COLORS["secondary"],
     )
     fig.suptitle("DNN Signal Validation", fontsize=16, fontweight="bold", y=1.02)
     plt.tight_layout()
-    plt.savefig(PLOT_PATH, dpi=200, bbox_inches="tight")
+    plt.savefig(PLOT_PATH, dpi=300, bbox_inches="tight")
     plt.close()
 
     with open(SUMMARY_PATH, "w", encoding="utf-8") as f:

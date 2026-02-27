@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
 
 
 COLORS = {
@@ -20,6 +21,11 @@ COLORS = {
     "text": "#1f2933",
 }
 
+HEXBIN_CMAP = LinearSegmentedColormap.from_list(
+    "project_primary_blues",
+    ["#f7fbff", COLORS["primary_light"], COLORS["primary"]],
+)
+
 MODEL_NAME_MAP = {
     "XGBRegressor": "XGB",
     "GradientBoosting": "GBDT",
@@ -30,11 +36,20 @@ MODEL_NAME_MAP = {
 
 
 def apply_plot_theme() -> None:
+    """Apply publication-grade matplotlib theme across the project."""
     plt.rcParams.update(
         {
+            # --- canvas ---
             "figure.facecolor": "white",
             "axes.facecolor": "white",
             "savefig.facecolor": "white",
+            "savefig.dpi": 300,
+            "figure.dpi": 150,
+            # --- fonts (publication) ---
+            "font.family": "sans-serif",
+            "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
+            "mathtext.fontset": "stix",
+            # --- axes ---
             "axes.edgecolor": "#d4dbe3",
             "axes.labelcolor": COLORS["text"],
             "axes.titlecolor": COLORS["text"],
@@ -44,15 +59,21 @@ def apply_plot_theme() -> None:
             "axes.spines.top": False,
             "axes.spines.right": False,
             "axes.linewidth": 0.8,
+            # --- grid ---
             "grid.color": "#ccd6e0",
             "grid.linestyle": "--",
             "grid.alpha": 0.35,
+            # --- font sizes ---
             "font.size": 11,
             "axes.titlesize": 14,
             "axes.labelsize": 12,
+            "xtick.labelsize": 10,
+            "ytick.labelsize": 10,
+            # --- legend ---
             "legend.frameon": True,
             "legend.framealpha": 0.95,
             "legend.edgecolor": "#d4dbe3",
+            "legend.fontsize": 10,
         }
     )
 
@@ -147,6 +168,7 @@ def plot_metric_hist(
     real_value: float | None = None,
     p_value: float | None = None,
     stats_text: str | None = None,
+    stats_loc: str = "upper left",
     color: str | None = None,
 ) -> None:
     values = np.asarray(values, dtype=float)
@@ -166,9 +188,9 @@ def plot_metric_hist(
     ax.set_title(f"{title}{suffix}")
     style_axis(ax, grid_axis="y")
     if real_value is not None:
-        ax.legend(loc="upper left", fontsize=9)
+        ax.legend(loc="upper right", fontsize=9)
     if stats_text:
-        add_stat_box(ax, stats_text, loc="upper right", facecolor=COLORS["neutral_light"], fontsize=9)
+        add_stat_box(ax, stats_text, loc=stats_loc, facecolor=COLORS["neutral_light"], fontsize=9)
 
 
 def plot_model_comparison(ax, names, cv_r2, test_r2) -> None:
@@ -202,21 +224,17 @@ def plot_model_comparison(ax, names, cv_r2, test_r2) -> None:
     style_axis(ax, grid_axis="y")
     ax.legend(loc="upper right", fontsize=9)
 
-    for bar in list(bars1) + list(bars2):
-        height = bar.get_height()
-        ax.text(
-            bar.get_x() + bar.get_width() / 2,
-            height + (0.008 if height >= 0 else -0.025),
-            f"{height:.3f}",
-            ha="center",
-            va="bottom" if height >= 0 else "top",
-            fontsize=8,
-        )
-
-    add_stat_box(
-        ax,
-        f"Best CV: {short_names[best_cv]}\nBest Test: {short_names[best_test]}",
-        loc="lower right",
-        facecolor=COLORS["neutral_light"],
-        fontsize=9,
-    )
+    for i, (bar1, bar2) in enumerate(zip(bars1, bars2)):
+        for bar, is_best in [(bar1, i == best_cv), (bar2, i == best_test)]:
+            height = bar.get_height()
+            label = f"{height:.3f}" + (" (*)" if is_best else "")
+            ax.text(
+                bar.get_x() + bar.get_width() / 2,
+                height + (0.008 if height >= 0 else -0.025),
+                label,
+                ha="center",
+                va="bottom" if height >= 0 else "top",
+                fontsize=8,
+                fontweight="bold" if is_best else "normal",
+                color=COLORS["accent"] if is_best else COLORS["text"],
+            )

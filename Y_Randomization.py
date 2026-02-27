@@ -52,10 +52,10 @@ CV_FOLDS = 5             # 交叉验证折数
 RANDOM_STATE = 42
 TEST_SIZE = 0.2
 
-# 中文 + 英文字体配置
-plt.rcParams["font.sans-serif"] = ["SimHei", "DejaVu Sans"]
-plt.rcParams["axes.unicode_minus"] = False
+# 先应用统一主题，再追加中文字体（顺序不可反）
 apply_plot_theme()
+plt.rcParams["font.sans-serif"] = ["SimHei", "Arial", "DejaVu Sans"]
+plt.rcParams["axes.unicode_minus"] = False
 
 
 
@@ -192,6 +192,7 @@ def main():
 
     # CV R2 distribution
     ax = axes[0]
+    cv_conclusion = "PASS" if p_value_cv < 0.05 else "FAIL"
     plot_metric_hist(
         ax,
         rand_cv_r2,
@@ -201,14 +202,16 @@ def main():
         p_value=p_value_cv,
         stats_text=(
             f"Random mean = {rand_cv_r2.mean():.3f}\n"
-            f"Random p95 = {np.quantile(rand_cv_r2, 0.95):.3f}\n"
-            f">= real: {ge_cv}/{N_ITERATIONS}"
+            f"Random p95  = {np.quantile(rand_cv_r2, 0.95):.3f}\n"
+            f"{cv_conclusion}  p = {p_value_cv:.4f}"
         ),
+        stats_loc="upper left",
         color=COLORS["primary"],
     )
 
     # Test R2 distribution
     ax = axes[1]
+    test_conclusion = "PASS" if p_value_test < 0.05 else "FAIL"
     plot_metric_hist(
         ax,
         rand_test_r2,
@@ -218,9 +221,10 @@ def main():
         p_value=p_value_test,
         stats_text=(
             f"Random mean = {rand_test_r2.mean():.3f}\n"
-            f"Random p95 = {np.quantile(rand_test_r2, 0.95):.3f}\n"
-            f">= real: {ge_test}/{N_ITERATIONS}"
+            f"Random p95  = {np.quantile(rand_test_r2, 0.95):.3f}\n"
+            f"{test_conclusion}  p = {p_value_test:.4f}"
         ),
+        stats_loc="upper left",
         color=COLORS["secondary"],
     )
 
@@ -231,7 +235,7 @@ def main():
         y=1.02,
     )
     plt.tight_layout()
-    plt.savefig(PLOT_PATH, dpi=200, bbox_inches="tight")
+    plt.savefig(PLOT_PATH, dpi=300, bbox_inches="tight")
     plt.close()
     print(f"分布图已保存: {PLOT_PATH}")
 

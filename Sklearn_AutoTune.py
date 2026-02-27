@@ -26,6 +26,7 @@ from feature_config import SELECTED_FEATURE_COLS, resolve_target_col
 from utils.data_utils import load_saved_split_indices
 from utils.plot_style import (
     COLORS,
+    HEXBIN_CMAP,
     add_stat_box,
     apply_plot_theme,
     plot_model_comparison,
@@ -137,13 +138,13 @@ def save_validation_plots(y_actual, y_predicted, results_df, model_name):
 
     # (1) Actual vs Predicted
     ax = axes[0, 0]
-    hb = ax.hexbin(y_actual, y_predicted, gridsize=30, cmap="Blues", mincnt=1, linewidths=0)
+    hb = ax.hexbin(y_actual, y_predicted, gridsize=30, cmap=HEXBIN_CMAP, mincnt=1, linewidths=0)
     vmin = min(y_actual.min(), y_predicted.min())
     vmax = max(y_actual.max(), y_predicted.max())
-    margin = (vmax - vmin) * 0.05
+    margin_ax = (vmax - vmin) * 0.05
     ax.plot(
-        [vmin - margin, vmax + margin],
-        [vmin - margin, vmax + margin],
+        [vmin - margin_ax, vmax + margin_ax],
+        [vmin - margin_ax, vmax + margin_ax],
         linestyle="--",
         linewidth=1.8,
         color=COLORS["accent"],
@@ -178,7 +179,7 @@ def save_validation_plots(y_actual, y_predicted, results_df, model_name):
         facecolor=COLORS["secondary_light"],
     )
 
-    # (3) Residual vs Predicted
+    # (3) Residual vs Predicted — stat box shows within-RMSE coverage
     ax = axes[1, 0]
     ax.scatter(y_predicted, residuals, alpha=0.45, s=18, color=COLORS["accent"], edgecolors="none")
     ax.axhline(y=0, color=COLORS["accent"], linestyle="--", linewidth=1.8)
@@ -188,9 +189,11 @@ def save_validation_plots(y_actual, y_predicted, results_df, model_name):
     ax.set_ylabel("Residual")
     ax.set_title("Residual vs Predicted")
     style_axis(ax)
+    within_1rmse = np.mean(np.abs(residuals) <= rmse) * 100
+    within_2rmse = np.mean(np.abs(residuals) <= 2 * rmse) * 100
     add_stat_box(
         ax,
-        f"+RMSE = {rmse:.3f}\n-RMSE = {-rmse:.3f}",
+        f"Within \u00b1RMSE: {within_1rmse:.1f}%\nWithin \u00b12\u00d7RMSE: {within_2rmse:.1f}%",
         loc="upper right",
         facecolor=COLORS["accent_light"],
         fontsize=9,
