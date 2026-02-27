@@ -5,7 +5,7 @@
 
 # 数据处理与科学计算
 pandas>=1.5.0
-numpy>=1.23.0
+numpy>=1.23.0,<2.0.0         # NumPy 2.x 与 RDKit 不兼容，请勿升级
 openpyxl>=3.0.0              # pandas 读取 .xlsx 文件所需引擎
 
 # 机器学习 (Sklearn 及相关)
