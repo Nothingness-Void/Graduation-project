@@ -34,9 +34,9 @@
 本プロジェクトの核心的なワークフローは以下の通りです：
 
 1. 元の文献データから化合物名を抽出し、**SMILES** 分子構造表現に変換します。
-2. 複数のソースからのデータセットを統合します（旧データ 323件 + 新データ 1586件 = **1893件**）。
-3. **RDKit** を利用して、全 **約210個** の2D分子記述子 + 指紋類似度 + 相互作用特徴量を自動計算し、**320次元の特徴量行列** を生成します。
-4. **遺伝的アルゴリズム（GA）** を使用して、320次元の中から最適な特徴量サブセットを選択します。
+2. 複数のソースからのデータセットを統合します（旧データ 323件 + 新データ 1586件 = **1815件**、文献間の chi 矛盾データは中央値で自動統合）。
+3. **RDKit** を利用して、全 **約210個** の2D分子記述子 + 指紋類似度 + 相互作用特徴量を自動計算し、**332次元の特徴量行列** を生成します。
+4. **遺伝的アルゴリズム（GA）** を使用して、332次元の中から最適な特徴量サブセットを選択します。
 5. 最適な特徴量に基づき、**AutoTune** を使用して ML / DNN モデルの自動ハイパーパラメータ最適化と学習を行います。
 
 ---
@@ -48,8 +48,8 @@ Graduation-project/
 │
 ├── 获取SMILES.py              # Step 1: 化合物名 → SMILES
 ├── 数据处理部分代码.py          # Step 2: χ 式の解析 + 温度展開
-├── 合并数据集.py               # Step 2.5: 旧データと新データの統合
-├── 特征工程.py                 # Step 3: 全量 RDKit 記述子抽出 (320次元)
+├── 合并数据集.py               # Step 2.5: 旧データと新データの統合（SMILES クリーニング・chi 矛盾解決含む）
+├── 特征工程.py                 # Step 3: 全量 RDKit 記述子抽出 (332次元)
 ├── 遗传.py                    # Step 4a: 遺伝的アルゴリズム (GA) 粗選別
 ├── 特征筛选.py                 # Step 4b: RFECV 精選別
 ├── feature_config.py           # 特徴量設定センター (選択された特徴量列の統一管理)
@@ -69,8 +69,8 @@ Graduation-project/
 │   ├── smiles_cleaned.xlsx
 │   ├── huggins_preprocessed.xlsx
 │   ├── 43579_2022_237_MOESM1_ESM.csv  # 新規外部データセット (1586件)
-│   ├── merged_dataset.csv             # 統合後データセット (1893件)
-│   ├── molecular_features.xlsx        # 320次元特徴量行列
+│   ├── merged_dataset.csv             # 統合後データセット (1815件、矛盾解決済み)
+│   ├── molecular_features.xlsx        # 332次元特徴量行列
 │   └── features_optimized.xlsx        # 選別後特徴量サブセット
 │
 ├── results/                   # モデルと結果
@@ -125,7 +125,7 @@ Graduation-project/
 |------|--------------|----------|
 | Step 1：SMILES 取得 | `获取SMILES.py` | `data/smiles_raw.csv` |
 | Step 2：データ前処理 | `数据处理部分代码.py`、`合并数据集.py` | `data/huggins_preprocessed.xlsx`、`data/merged_dataset.csv` |
-| Step 3：特徴量エンジニアリング | `特征工程.py` | `data/molecular_features.xlsx`（320次元） |
+| Step 3：特徴量エンジニアリング | `特征工程.py` | `data/molecular_features.xlsx`（332次元） |
 | Step 4：特徴量選別 | `遗传.py`、`特征筛选.py` | `results/ga_selected_features.txt`、`data/features_optimized.xlsx` |
 | Step 5：モデル学習とチューニング | `Sklearn_AutoTune.py`、`DNN_AutoTune.py` | `final_results/sklearn/*`、`results/best_model.keras` |
 | Step 6：モデル検証と分析 | `Y_Randomization.py`、`DNN_Y_Randomization.py`、`DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`、`final_results/dnn/dnn_y_randomization.*` |
@@ -245,8 +245,8 @@ python DNN特征贡献分析.py
 | `smiles_raw.csv` | `data/` | SMILES 照会結果 | Step 1 |
 | `smiles_cleaned.xlsx` | `data/` | 手動クリーニング後の SMILES | 手動処理 |
 | `huggins_preprocessed.xlsx` | `data/` | 前処理済みデータ (323件) | Step 2 |
-| `merged_dataset.csv` | `data/` | 統合データセット (1893件) | Step 2.5 |
-| `molecular_features.xlsx` | `data/` | 320次元特徴量行列 | Step 3 |
+| `merged_dataset.csv` | `data/` | 統合データセット (1815件、矛盾解決済み) | Step 2.5 |
+| `molecular_features.xlsx` | `data/` | 332次元特徴量行列 | Step 3 |
 | `features_optimized.xlsx` | `data/` | 選別後特徴量サブセット | Step 4 |
 | `ga_selected_features.txt` | `results/` | GA 選別特徴量リスト | Step 4b |
 | `ga_evolution_log.csv` | `results/` | GA 進化ログ | Step 4b |
@@ -270,18 +270,19 @@ python DNN特征贡献分析.py
 
 ## モデル性能ベンチマーク
 
-> 以下は、本全フロー（GA → RFECV → AutoTune）の結果です：1893 サンプル、最終 20 特徴量（統一 train/test 分割）
+> 以下は、本全フロー（GA → RFECV → AutoTune）の結果です：**1815 サンプル（データクリーニング後）**、最終 21 特徴量（統一 train/test 分割）
 
 | モデル | CV Val R² | Test R² | Test MAE | Test RMSE |
 |--------|-----------|---------|----------|-----------|
-| **GradientBoosting** | **0.718** | **0.812** | **0.156** | **0.264** |
-| XGBRegressor | 0.712 | 0.788 | 0.163 | 0.281 |
-| RandomForest | 0.691 | 0.798 | 0.165 | 0.274 |
-| MLPRegressor | 0.662 | 0.684 | 0.197 | 0.343 |
-| DNN (AutoTune, best run) | — | 0.786 | 0.181 | 0.282 |
+| **XGBRegressor** | **0.656** | **0.730** | **0.213** | **0.338** |
+| GradientBoosting | 0.652 | 0.707 | 0.207 | 0.352 |
+| RandomForestRegressor | 0.647 | 0.740 | 0.208 | 0.332 |
+| MLPRegressor | 0.587 | 0.691 | 0.225 | 0.362 |
+| DNN (AutoTune, best run) | — | 0.709 | 0.228 | 0.351 |
 
 > ℹ️ すべてのモデルは同一のテストセットで評価されており、テストセットは特徴量選択やモデル学習には一切関与していません。
 > ℹ️ DNN 行は、AutoTune 最適アーキテクチャの8回再学習のうち最良の回の結果です（CV 平均ではありません）。
+> ℹ️ 旧バージョンと比較して、本バージョンは文献間 chi 矛盾データを清洗済みであり、評価がより厳密で結果の信頼性が高いです。
 
 ---
 
@@ -322,9 +323,9 @@ conda install -c conda-forge rdkit
 
 # 3. データ統合 + 特徴量エンジニアリング + 二段階特徴量選択 + モデリング
 python 合并数据集.py              # 旧データと新データの統合
-python 特征工程.py                # 全量 RDKit 記述子 (320次元)
-python 遗传.py                   # GA 粗選別 (320 → ~20-40, 約 20-40 分)
-python 特征筛选.py                # RFECV 精選別 (~20-40 → ~8-15)
+python 特征工程.py                # 全量 RDKit 記述子 (332次元)
+python 遗传.py                   # GA 粗選別 (332 → 35, 約 20-40 分)
+python 特征筛选.py                # RFECV 精選別 (35 → 21)
 python Sklearn_AutoTune.py       # Sklearn 自動チューニング
 python DNN_AutoTune.py           # DNN Hyperband 自動チューニング
 python Y_Randomization.py        # Sklearn Y-Randomization 検証（オプション）

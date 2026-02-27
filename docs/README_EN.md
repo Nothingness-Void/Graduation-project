@@ -34,9 +34,9 @@ The **Huggins Parameter (chi)** is a key thermodynamic parameter describing poly
 The core workflow of this project is:
 
 1. Extract compound names from original literature data and convert them to **SMILES** molecular structure representations.
-2. Merge datasets from multiple sources (323 legacy records + 1586 new records = **1893 records**).
-3. Use **RDKit** to automatically calculate all **~210** 2D molecular descriptors + fingerprint similarities + interaction features, generating a **320-dimensional feature matrix**.
-4. Use **Genetic Algorithm (GA)** to select the optimal feature subset from the 320 dimensions.
+2. Merge datasets from multiple sources (323 legacy records + 1586 new records = **1815 records** after resolving cross-literature chi conflicts via median aggregation).
+3. Use **RDKit** to automatically calculate all **~210** 2D molecular descriptors + fingerprint similarities + interaction features, generating a **332-dimensional feature matrix**.
+4. Use **Genetic Algorithm (GA)** to select the optimal feature subset from the 332 dimensions.
 5. Based on the optimal features, use **AutoTune** for automatic hyperparameter optimization to train ML / DNN models.
 
 ---
@@ -48,8 +48,8 @@ Graduation-project/
 │
 ├── 获取SMILES.py              # Step 1: Compound Name → SMILES
 ├── 数据处理部分代码.py          # Step 2: χ Expression Parsing + Temperature Expansion
-├── 合并数据集.py               # Step 2.5: Merge Legacy & New Datasets
-├── 特征工程.py                 # Step 3: Full RDKit Descriptor Extraction (320-dim)
+├── 合并数据集.py               # Step 2.5: Merge Legacy & New Datasets (with SMILES cleanup & chi conflict resolution)
+├── 特征工程.py                 # Step 3: Full RDKit Descriptor Extraction (332-dim)
 ├── 遗传.py                    # Step 4a: Genetic Algorithm (GA) Coarse Selection
 ├── 特征筛选.py                 # Step 4b: RFECV Refinement
 ├── feature_config.py           # Feature Config Center (Unified Management of Selected Features)
@@ -69,8 +69,8 @@ Graduation-project/
 │   ├── smiles_cleaned.xlsx
 │   ├── huggins_preprocessed.xlsx
 │   ├── 43579_2022_237_MOESM1_ESM.csv  # New External Dataset (1586 records)
-│   ├── merged_dataset.csv             # Merged Dataset (1893 records)
-│   ├── molecular_features.xlsx        # 320-dim Feature Matrix
+│   ├── merged_dataset.csv             # Merged Dataset (1815 records, conflicts resolved)
+│   ├── molecular_features.xlsx        # 332-dim Feature Matrix
 │   └── features_optimized.xlsx        # Filtered Feature Subset
 │
 ├── results/                   # Models & Results
@@ -125,7 +125,7 @@ Graduation-project/
 |-------|-------------|--------------|
 | Step 1: SMILES Retrieval | `获取SMILES.py` | `data/smiles_raw.csv` |
 | Step 2: Data Preprocessing | `数据处理部分代码.py`, `合并数据集.py` | `data/huggins_preprocessed.xlsx`, `data/merged_dataset.csv` |
-| Step 3: Feature Engineering | `特征工程.py` | `data/molecular_features.xlsx` (320-dim) |
+| Step 3: Feature Engineering | `特征工程.py` | `data/molecular_features.xlsx` (332-dim) |
 | Step 4: Feature Selection | `遗传.py`, `特征筛选.py` | `results/ga_selected_features.txt`, `data/features_optimized.xlsx` |
 | Step 5: Model Training & Tuning | `Sklearn_AutoTune.py`, `DNN_AutoTune.py` | `final_results/sklearn/*`, `results/best_model.keras` |
 | Step 6: Validation & Analysis | `Y_Randomization.py`, `DNN_Y_Randomization.py`, `DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`, `final_results/dnn/dnn_y_randomization.*` |
@@ -245,8 +245,8 @@ python DNN特征贡献分析.py
 | `smiles_raw.csv` | `data/` | SMILES Query Results | Step 1 |
 | `smiles_cleaned.xlsx` | `data/` | Manually Cleaned SMILES | Manual |
 | `huggins_preprocessed.xlsx` | `data/` | Preprocessed Data (323 records) | Step 2 |
-| `merged_dataset.csv` | `data/` | Merged Dataset (1893 records) | Step 2.5 |
-| `molecular_features.xlsx` | `data/` | 320-dim Feature Matrix | Step 3 |
+| `merged_dataset.csv` | `data/` | Merged Dataset (1815 records, conflicts resolved) | Step 2.5 |
+| `molecular_features.xlsx` | `data/` | 332-dim Feature Matrix | Step 3 |
 | `features_optimized.xlsx` | `data/` | Filtered Feature Subset | Step 4 |
 | `ga_selected_features.txt` | `results/` | GA Selected Feature List | Step 4b |
 | `ga_evolution_log.csv` | `results/` | GA Evolution Log | Step 4b |
@@ -270,18 +270,19 @@ python DNN特征贡献分析.py
 
 ## Model Performance Benchmarks
 
-> The following are the AutoTune results on the Full Pipeline (GA → RFECV → AutoTune): 1893 samples, final 20 features (unified train/test split)
+> The following are the AutoTune results on the Full Pipeline (GA → RFECV → AutoTune): **1815 samples (after data cleaning)**, final 21 features (unified train/test split)
 
 | Model | CV Val R² | Test R² | Test MAE | Test RMSE |
 |-------|-----------|---------|----------|-----------|
-| **GradientBoosting** | **0.718** | **0.812** | **0.156** | **0.264** |
-| XGBRegressor | 0.712 | 0.788 | 0.163 | 0.281 |
-| RandomForest | 0.691 | 0.798 | 0.165 | 0.274 |
-| MLPRegressor | 0.662 | 0.684 | 0.197 | 0.343 |
-| DNN (AutoTune, best run) | — | 0.786 | 0.181 | 0.282 |
+| **XGBRegressor** | **0.656** | **0.730** | **0.213** | **0.338** |
+| GradientBoosting | 0.652 | 0.707 | 0.207 | 0.352 |
+| RandomForestRegressor | 0.647 | 0.740 | 0.208 | 0.332 |
+| MLPRegressor | 0.587 | 0.691 | 0.225 | 0.362 |
+| DNN (AutoTune, best run) | — | 0.709 | 0.228 | 0.351 |
 
 > ℹ️ All models are evaluated on the same test set, which is not involved in feature selection or model training.
 > ℹ️ DNN row shows the best run out of 8 retrainings of the optimal architecture from AutoTune (not CV mean).
+> ℹ️ Compared to the previous version, this run uses data cleaned of cross-literature chi conflicts, making evaluation more rigorous and results more reliable.
 
 ---
 
@@ -322,9 +323,9 @@ conda install -c conda-forge rdkit
 
 # 3. Data Merge + Feature Engineering + Two-Stage Feature Selection + Modeling
 python 合并数据集.py              # Merge Legacy & New Data
-python 特征工程.py                # Full RDKit Descriptors (320 dim)
-python 遗传.py                   # GA Coarse Selection (320 → ~20-40, approx 20-40 min)
-python 特征筛选.py                # RFECV Refinement (~20-40 → ~8-15)
+python 特征工程.py                # Full RDKit Descriptors (332 dim)
+python 遗传.py                   # GA Coarse Selection (332 → 35, approx 20-40 min)
+python 特征筛选.py                # RFECV Refinement (35 → 21)
 python Sklearn_AutoTune.py       # Sklearn Auto-Tuning
 python DNN_AutoTune.py           # DNN Hyperband Auto-Tuning
 python Y_Randomization.py        # Sklearn Y-Randomization Validation (Optional)
