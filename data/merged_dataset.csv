@@ -8,18 +8,6 @@ poly(3-hexylthiophene),tetrahydrofuran,CCCCCCC1=CSC=C1,C1CCOC1,0.39,300.0,old_da
 poly(3-dodecylthiophene),tetrahydrofuran,CCCCCCCCCCCCC1=CSC=C1,C1CCOC1,-0.38,300.0,old_dataset
 polystyrene,poly(4-hydroxystyrene),C=CC1=CC=CC=C1,C=CC1=CC=C(C=C1)O,0.68,298.15,old_dataset
 poly(ethylene oxide),poly(methyl acrylate),C1CO1,COC(=O)C=C,-0.04,313.15,old_dataset
-polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.399,298.15,old_dataset
-polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.403,313.15,old_dataset
-polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.4,328.15,old_dataset
-polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.4,298.15,old_dataset
-polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.411,313.15,old_dataset
-polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.42,328.15,old_dataset
-polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.394,298.15,old_dataset
-polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.373,313.15,old_dataset
-polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.395,328.15,old_dataset
-polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.437,298.15,old_dataset
-polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.438,313.15,old_dataset
-polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.44,328.15,old_dataset
 poly(4-tert-butylstyrene),poly(methyl methacrylate),CC(C)(C)C1=CC=C(C=C1)C=C,CC(=C)C(=O)OC,0.09654238444482348,293.15,old_dataset
 poly(4-tert-butylstyrene),poly(methyl methacrylate),CC(C)(C)C1=CC=C(C=C1)C=C,CC(=C)C(=O)OC,0.09190631700478312,303.15,old_dataset
 poly(4-tert-butylstyrene),poly(methyl methacrylate),CC(C)(C)C1=CC=C(C=C1)C=C,CC(=C)C(=O)OC,0.08756634200862208,313.15,old_dataset
@@ -42,12 +30,6 @@ poly(methyl methacrylate),carbon dioxide,CC(=C)C(=O)OC,C(=O)=O,1.499,313.0,old_d
 poly(hydroxyethyl acrylate),poly(methyl acrylate),C=CC(=O)OCCO,COC(=O)C=C,0.06,293.0,old_dataset
 poly(hydroxyethyl acrylate),poly(octyl acrylate),C=CC(=O)OCCO,CCCCCCCCOC(=O)C=C,0.13,293.0,old_dataset
 poly(methyl acrylate),poly(octyl acrylate),COC(=O)C=C,CCCCCCCCOC(=O)C=C,0.07,293.0,old_dataset
-poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.5940644721132526,293.15,old_dataset
-poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.5068684973563022,293.15,old_dataset
-poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.53322360566263,293.15,old_dataset
-poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.5617277844107113,293.15,old_dataset
-deuterated poly(butylene oxide),poly(butylene oxide),C1CCOC1,C1CCOC1,-2.25e-05,320.0,old_dataset
-deuterated poly(butylene oxide),poly(butylene oxide),C1CCOC1,C1CCOC1,4e-05,320.0,old_dataset
 poly(ethylene oxide),1-ethyl-3-methylimidazolium bis(trifluoromethanesulfonyl)amide,C1CO1,CCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.43,298.15,old_dataset
 poly(ethylene oxide),1-ethyl-3-methylimidazolium bis(fluorosulfonyl)amide,C1CO1,CCN1C=C[N+](=C1)C.[N-](S(=O)(=O)F)S(=O)(=O)F,0.48,298.15,old_dataset
 poly(ethylene oxide),water,C1CO1,O,0.3144847916387511,373.15,old_dataset
@@ -55,7 +37,6 @@ polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.35,150.0,old_dataset
 polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.261578947368421,190.0,old_dataset
 polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1633333333333333,270.0,old_dataset
 polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1332258064516129,310.0,old_dataset
-polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.047,313.15,old_dataset
 poly(butyl acrylate),poly(benzyl methacrylate),CCCCOC(=O)C=C,CC(=C)C(=O)OCC1=CC=CC=C1,0.03441427155599603,353.15,old_dataset
 poly(butyl acrylate),poly(benzyl methacrylate),CCCCOC(=O)C=C,CC(=C)C(=O)OCC1=CC=CC=C1,0.03457560727457713,393.15,old_dataset
 poly(butyl acrylate),poly(benzyl methacrylate),CCCCOC(=O)C=C,CC(=C)C(=O)OCC1=CC=CC=C1,0.03481644298848145,473.15,old_dataset
@@ -69,16 +50,7 @@ dibutyl phthalate,polyisoprene,CCCCOC(=O)C1=CC=CC=C1C(=O)OCCCC,CC(=C)C=C,1.03645
 dibutyl phthalate,polyisoprene,CCCCOC(=O)C1=CC=CC=C1C(=O)OCCCC,CC(=C)C=C,0.9837902028698664,303.15,old_dataset
 dibutyl phthalate,polyisoprene,CCCCOC(=O)C1=CC=CC=C1C(=O)OCCCC,CC(=C)C=C,0.9344914577678429,313.15,old_dataset
 dibutyl phthalate,polyisoprene,CCCCOC(=O)C1=CC=CC=C1C(=O)OCCCC,CC(=C)C=C,0.8882438496054463,323.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.1319404059355279,293.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.1319489691571829,303.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.1319569854702219,313.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.1319645056475321,323.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.05630180794814942,293.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.05584652812139206,303.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.05542032572249721,313.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.05502050131517872,323.15,old_dataset
 poly(allylamine hydrochloride),water,C=CCN.Cl,O,-0.0513,298.15,old_dataset
-poly(acrylic acid),water,C=CC(=O)O,O,0.729,298.15,old_dataset
 "poly(N,N-dimethylacrylamide)",polyethylene,CN(C)C(=O)C=C,C=C,0.2749146798983421,413.15,old_dataset
 poly(3-hexylthiophene),poly(methyl methacrylate),CCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1569148342235211,496.15,old_dataset
 poly(3-hexylthiophene),poly(methyl methacrylate),CCCCCCC1=CSC=C1,CC(=C)C(=O)OC,0.1565155051215103,497.9,old_dataset
@@ -110,25 +82,8 @@ polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.0535102564102564,390.0,o
 polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.04620144927536232,431.25,old_dataset
 polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.03510486618004867,513.75,old_dataset
 polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.03079369369369369,555.0,old_dataset
-polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.3173984308374553,293.15,old_dataset
-polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2999681675738084,303.15,old_dataset
-polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2836511256586302,313.15,old_dataset
-polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2683439579142813,323.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1306032747740065,293.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1239529935675408,303.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1177274469104263,313.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1118872040847904,323.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03393928023196316,293.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.0335454395513772,303.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03317675235510139,313.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03283088349063902,323.15,old_dataset
 poly(propylene),carbon monofluoride,CC=C,[CH2]F,0.394,298.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1095366877025414,293.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1061609104403761,303.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1030007344722976,313.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1000361442054773,323.15,old_dataset
 poly(methyl methacrylate),chloroform,CC(=C)C(=O)OC,C(Cl)(Cl)Cl,0.39,298.15,old_dataset
-polystyrene,chloroform,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl,0.45,298.15,old_dataset
 acetone,poly(methyl methacrylate),CC(=O)C,CC(=C)C(=O)OC,0.18,298.15,old_dataset
 acetone,polystyrene,CC(=O)C,C=CC1=CC=CC=C1,1.1,298.15,old_dataset
 toluene,poly(methyl methacrylate),CC1=CC=CC=C1,CC(=C)C(=O)OC,0.45,298.15,old_dataset
@@ -141,7 +96,6 @@ polyisoprene,poly(methyl methacrylate),CC(=C)C=C,CC(=C)C(=O)OC,0.077,413.15,old_
 polystyrene,poly(n-butyl acrylate),C=CC1=CC=CC=C1,CCCCOC(=O)C=C,0.087,503.15,old_dataset
 chloroform,silicon oxide,C(Cl)(Cl)Cl,O=[Si]=O,3.4,298.15,old_dataset
 poly(acrylic acid),acetone,C=CC(=O)O,CC(=O)C,1.057,298.15,old_dataset
-poly(acrylic acid),water,C=CC(=O)O,O,4.333,298.15,old_dataset
 poly(butyl acrylate),acetone,CCCCOC(=O)C=C,CC(=O)C,0.49,298.15,old_dataset
 poly(trifluoroethyl methacrylate),acetone,CC(=C)C(=O)OCC(F)(F)F,CC(=O)C,0.542,298.15,old_dataset
 polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,-0.011,298.15,old_dataset
@@ -150,65 +104,30 @@ polyisoprene,polystyrene,CC(=C)C=C,C=CC1=CC=CC=C1,0.1142676786628006,293.15,old_
 polyisoprene,polystyrene,CC(=C)C=C,C=CC1=CC=CC=C1,0.108776414316345,303.15,old_dataset
 polyisoprene,polystyrene,CC(=C)C=C,C=CC1=CC=CC=C1,0.1036358614082708,313.15,old_dataset
 polyisoprene,polystyrene,CC(=C)C=C,C=CC1=CC=CC=C1,0.09881346124090981,323.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03191591335493775,293.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03155583044697345,303.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03121874501037842,313.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03090252204858425,323.15,old_dataset
 polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1733333333333333,180.0,old_dataset
-polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2226409687873103,293.15,old_dataset
-polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2116021771400297,303.15,old_dataset
-polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2012684017244132,313.15,old_dataset
-polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.1915741915519109,323.15,old_dataset
 polystyrene,poly(4-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=NC=C1,-0.04999999999999999,433.15,old_dataset
 polystyrene,poly(tert-butoxystyrene),C=CC1=CC=CC=C1,CC(C)(C)OC=Cc1ccccc1,-0.003000000000000003,298.15,old_dataset
 poly(4-vinylpyridine),poly(tert-butoxystyrene),C=CC1=CC=NC=C1,CC(C)(C)OC=Cc1ccccc1,-0.03999999999999998,298.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04130376940133038,293.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04086491835724889,303.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04045409548139869,313.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04006869874671205,323.15,old_dataset
 poly(4-tert-butylstyrene),poly(2-vinylpyridine),CC(C)(C)C1=CC=C(C=C1)C=C,C=CC1=CC=CC=N1,0.1173922497840306,405.15,old_dataset
 poly(4-tert-butylstyrene),poly(2-vinylpyridine),CC(C)(C)C1=CC=C(C=C1)C=C,C=CC1=CC=CC=N1,0.1069213698947125,432.15,old_dataset
 poly(4-tert-butylstyrene),poly(2-vinylpyridine),CC(C)(C)C1=CC=C(C=C1)C=C,C=CC1=CC=CC=N1,0.08946882649388052,486.15,old_dataset
 poly(4-tert-butylstyrene),poly(2-vinylpyridine),CC(C)(C)C1=CC=C(C=C1)C=C,C=CC1=CC=CC=N1,0.08211998441001658,513.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1819070441753369,293.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1748179119247897,303.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.168181542391825,313.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1619559028315024,323.15,old_dataset
-water,polyacrylamide,O,C=CC(=O)N,0.45,298.15,old_dataset
-water,polyacrylamide,O,C=CC(=O)N,0.47,298.15,old_dataset
-poly(ethylene oxide),water,C1CO1,O,-0.04000000000000004,298.15,old_dataset
 polystyrene,poly(4-vinylbenzyltrimethylammonium chloride),C=CC1=CC=CC=C1,C[N+](C)(C)CC1=CC=C(C=C1)C=C.[Cl-],0.197,301.15,old_dataset
 polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.07,463.15,old_dataset
 methanol,poly(N-isopropylacrylamide),CO,CC(C)NC(=O)C=C,0.45,298.15,old_dataset
 water,poly(N-isopropylacrylamide),O,CC(C)NC(=O)C=C,-0.1,298.15,old_dataset
 polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.055,298.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.217468019785093,293.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.2071606465446149,303.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.197511575922082,313.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1884596936407241,323.15,old_dataset
-polystyrene,deuterated poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04007497867985673,293.15,old_dataset
-polystyrene,deuterated poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03971624608279729,303.15,old_dataset
-polystyrene,deuterated poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03938042471658949,313.15,old_dataset
-polystyrene,deuterated poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03906538759090206,323.15,old_dataset
 poly(lactic acid),tetrahydrofuran,CC(C(=O)O)O,C1CCOC1,0.11,298.15,old_dataset
 poly(norbornene),tetrahydrofuran,"C1CC2CC1C=C2
 C1CC2CC1C=C2",C1CCOC1,0.42,298.15,old_dataset
 poly(lactic acid),poly(norbornene),CC(C(=O)O)O,"C1CC2CC1C=C2
 C1CC2CC1C=C2",0.72,298.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1578613167320485,293.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.149826966848095,303.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1423057480440684,313.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1352500232090361,323.15,old_dataset
 polyisoprene,poly(methyl methacrylate),CC(=C)C=C,CC(=C)C(=O)OC,0.077,295.15,old_dataset
 polystyrene,polycarbonate,C=CC1=CC=CC=C1,C(=O)([O-])[O-],0.0304,523.15,old_dataset
 polystyrene,poly(vinyl chloride),C=CC1=CC=CC=C1,C=CCl,0.099,298.15,old_dataset
 polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.0044,298.15,old_dataset
 polystyrene,poly(tert-butyl acrylate),C=CC1=CC=CC=C1,CC(C)(C)OC(=O)C=C,0.09,298.15,old_dataset
 polystyrene,poly(butyl methacrylate),C=CC1=CC=CC=C1,CCCCOC(=O)C(=C)C,-0.002999999999999999,393.15,old_dataset
-polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.06467402524304965,293.15,old_dataset
-polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.06128283193138712,303.15,old_dataset
-polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05810822449305446,313.15,old_dataset
-polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05513009593068235,323.15,old_dataset
 poly(n-hexyl methacrylate),polystyrene,CCCCCCOC(=O)C(=C)C,C=CC1=CC=CC=C1,-0.003500000000000001,428.15,old_dataset
 polyvinyl alcohol,water,C=CO,O,0.506,298.15,old_dataset
 poly(cyclohexylethylene),polyethylene,C=CC1CCCCC1,C=C,0.08288995394849054,293.15,old_dataset
@@ -227,10 +146,6 @@ polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.07865444311785777,293.15
 polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.07530117103744022,303.15,old_dataset
 polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.07216206290914898,313.15,old_dataset
 polystyrene,poly(ethylene oxide),C=CC1=CC=CC=C1,C1CO1,0.06921723657744083,323.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04341405423844448,293.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04291218868546924,303.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04244237585821491,313.15,old_dataset
-polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.0420016401052143,323.15,old_dataset
 poly(ethylene oxide),polyisoprene,C1CO1,CC(=C)C=C,0.346729490022173,293.15,old_dataset
 poly(ethylene oxide),polyisoprene,C1CO1,CC(=C)C=C,0.3394153059541481,303.15,old_dataset
 poly(ethylene oxide),polyisoprene,C1CO1,CC(=C)C=C,0.3325682580233115,313.15,old_dataset
@@ -238,22 +153,12 @@ poly(ethylene oxide),polyisoprene,C1CO1,CC(=C)C=C,0.3261449791118676,323.15,old_
 polystyrene,polyethylene,C=CC1=CC=CC=C1,C=C,0.07,298.15,old_dataset
 poly(methyl methacrylate),poly(vinylidene fluoride),CC(=C)C(=O)OC,C=C(F)F,-0.07,298.15,old_dataset
 polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,-0.02,433.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.001451564557393826,293.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.001397777173016659,303.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.001347425035925276,313.15,old_dataset
-polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.001300189231007272,323.15,old_dataset
-poly(ethylene oxide),water,C1CO1,O,0.426,298.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.06149363806924783,293.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.05895055253174997,303.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.05656988663579755,313.15,old_dataset
-polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.05433656196812627,323.15,old_dataset
 polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.324743476036159,293.15,old_dataset
 polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.3178906481939634,303.15,old_dataset
 polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.3114754909787642,313.15,old_dataset
 polyisoprene,poly(ethylene oxide),CC(=C)C=C,C1CO1,0.305457372737119,323.15,old_dataset
 polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.09148322147651007,298.0,old_dataset
 polystyrene,carbon tetrachloride,C=CC1=CC=CC=C1,C(Cl)(Cl)(Cl)Cl,0.72,298.15,old_dataset
-polystyrene,benzene,C=CC1=CC=CC=C1,C1=CC=CC=C1,0.28,298.15,old_dataset
 polystyrene,chlorobenzene,C=CC1=CC=CC=C1,C1=CC=C(C=C1)Cl,0.33,338.15,old_dataset
 polystyrene,toluene,C=CC1=CC=CC=C1,CC1=CC=CC=C1,0.35,338.15,old_dataset
 polystyrene,"1,1,2-trichloroethane",C=CC1=CC=CC=C1,C(C(Cl)Cl)Cl,0.38,338.15,old_dataset
@@ -273,41 +178,20 @@ polystyrene,poly(n-hexyl methacrylate),C=CC1=CC=CC=C1,CCCCCCOC(=O)C(=C)C,0.04429
 polystyrene,poly(n-hexyl methacrylate),C=CC1=CC=CC=C1,CCCCCCOC(=O)C(=C)C,0.0439470688673876,439.25,old_dataset
 polystyrene,poly(n-hexyl methacrylate),C=CC1=CC=CC=C1,CCCCCCOC(=O)C(=C)C,0.04333068362480128,471.75,old_dataset
 polystyrene,poly(n-hexyl methacrylate),C=CC1=CC=CC=C1,CCCCCCOC(=O)C(=C)C,0.04305327868852459,488.0,old_dataset
-polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05298263175848542,293.15,old_dataset
-polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05145227939963715,303.15,old_dataset
-polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05001966629410826,313.15,old_dataset
-polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.04867571870648306,323.15,old_dataset
 polystyrene,"1,2-dichloroethane",C=CC1=CC=CC=C1,C(CCl)Cl,0.03,298.15,old_dataset
 poly(ethyl methacrylate),poly(butyl acrylate),CCOC(=O)C(=C)C,CCCCOC(=O)C=C,0.013,503.15,old_dataset
 polystyrene,poly(butyl methacrylate),C=CC1=CC=CC=C1,CCCCOC(=O)C(=C)C,-0.0009999999999999974,298.15,old_dataset
-polystyrene,chloroform,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl,0.29,298.15,old_dataset
 polybutadiene,chloroform,C=CC=C,C(Cl)(Cl)Cl,0.21,298.15,old_dataset
 poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,CCCCCCOc1ccc(cc1CC)C#CCC,CC(=C)C=C,0.02771055773494797,293.15,old_dataset
 poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,CCCCCCOc1ccc(cc1CC)C#CCC,CC(=C)C=C,0.02379465611083623,303.15,old_dataset
 poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,CCCCCCOc1ccc(cc1CC)C#CCC,CC(=C)C=C,0.02012885198786524,313.15,old_dataset
 poly(diethylhexyloxy-p-phenylenevinylene),polyisoprene,CCCCCCOc1ccc(cc1CC)C#CCC,CC(=C)C=C,0.01668992727835371,323.15,old_dataset
-polystyrene,chloroform,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl,0.35,298.15,old_dataset
-polystyrene,toluene,C=CC1=CC=CC=C1,CC1=CC=CC=C1,0.35,298.15,old_dataset
 poly(4-vinylpyridine),chloroform,C=CC1=CC=NC=C1,C(Cl)(Cl)Cl,0.67,298.15,old_dataset
 poly(4-vinylpyridine),toluene,C=CC1=CC=NC=C1,CC1=CC=CC=C1,1.01,298.15,old_dataset
 carbon tetrachloride,polystyrene,C(Cl)(Cl)(Cl)Cl,C=CC1=CC=CC=C1,0.396,298.15,old_dataset
 cyclohexane,polystyrene,C1CCCCC1,C=CC1=CC=CC=C1,0.505,298.15,old_dataset
-polystyrene,benzene,C=CC1=CC=CC=C1,C1=CC=CC=C1,0.438,298.15,old_dataset
-polystyrene,toluene,C=CC1=CC=CC=C1,CC1=CC=CC=C1,0.432,298.15,old_dataset
 poly(propylene oxide),"2,6-diaminotriazine",CC1CO1,C1=CNN(N=C1N)N,3.5,298.15,old_dataset
 polyethylene,"2,6-diaminotriazine",C=C,C1=CNN(N=C1N)N,3.0,298.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.8196759338222754,293.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.776803562592776,303.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.73666932779818,313.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.6990190314095621,323.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.7120126215248168,293.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.665764473033152,303.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.6224700622704775,313.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.5818551756150396,323.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.4325720620842573,293.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.4047781626257629,303.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.3787593804885839,313.15,old_dataset
-polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.3543509206250968,323.15,old_dataset
 polybutadiene,methyl acetate,[*]C=CCC[*],CC(=O)OC,1.03,368.0,new_dataset
 polybutadiene,tetrahydrofuran,[*]C=CCC[*],C1CCOC1,0.32,368.0,new_dataset
 polybutadiene,2-butanone,[*]C=CCC[*],CCC(=O)C,1.08,368.0,new_dataset
@@ -569,8 +453,8 @@ polyisobutylene,"2,2-dimethylbutane",[*]CC([*])(C)C,CCC(C)(C)C,0.475,296.5,new_d
 polyisobutylene,"2,2-dimethylpropane",[*]CC([*])(C)C,CC(C)(C)C,0.82,308.0,new_dataset
 polyisobutylene,2-butanone,[*]CC([*])(C)C,CCC(=O)C,0.495,298.0,new_dataset
 polyisobutylene,pentene,[*]CC([*])(C)C,CCCC=C,0.445,298.0,new_dataset
-poly(vinyl acetate),benzene,	[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.26,323.0,new_dataset
-poly(vinyl acetate),benzene,	[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.36,313.0,new_dataset
+poly(vinyl acetate),benzene,[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.26,323.0,new_dataset
+poly(vinyl acetate),benzene,[*]CC([*])OC(C)=O,C1=CC=CC=C1,0.36,313.0,new_dataset
 poly(methyl methacrylate),acetone,[*]CC([*])(C)C(=O)OC,CC(=O)C,0.32,297.15,new_dataset
 poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.45,296.5,new_dataset
 poly(methyl methacrylate),toluene,[*]CC([*])(C)C(=O)OC,CC1=CC=CC=C1,0.89,433.0,new_dataset
@@ -1894,3 +1778,41 @@ ethyl cellulose,2-pentanone,OCC1OC(O[*])C(O)C(O)C1[*],CCCC(=O)C,0.37,298.0,new_d
 ethyl cellulose,benzene,OCC1OC(O[*])C(O)C(O)C1[*],C1=CC=CC=C1,0.48,298.0,new_dataset
 ethyl cellulose,carbon tetrachloride,OCC1OC(O[*])C(O)C(O)C1[*],C(Cl)(Cl)(Cl)Cl,0.46,298.0,new_dataset
 ethyl cellulose,toluene,OCC1OC(O[*])C(O)C(O)C1[*],CC1=CC=CC=C1,0.47,298.0,new_dataset
+deuterated poly(butylene oxide),poly(butylene oxide),C1CCOC1,C1CCOC1,8.750000000000001e-06,320.0,old_dataset
+poly(ethylene oxide),water,C1CO1,O,0.19299999999999998,298.15,old_dataset
+poly(acrylic acid),water,C=CC(=O)O,O,2.531,298.15,old_dataset
+polystyrene,chloroform,C=CC1=CC=CC=C1,C(Cl)(Cl)Cl,0.35,298.15,old_dataset
+polystyrene,benzene,C=CC1=CC=CC=C1,C1=CC=CC=C1,0.359,298.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1095366877025414,293.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1061609104403761,303.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1030007344722976,313.15,old_dataset
+polystyrene,poly(2-vinylpyridine),C=CC1=CC=CC=C1,C=CC1=CC=CC=N1,0.1000361442054773,323.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05882832850076754,293.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05636755566551214,303.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.05001966629410826,313.15,old_dataset
+polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.0519029073185827,323.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04068937404059356,293.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.04029058222002309,303.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03991726009899409,313.15,old_dataset
+polystyrene,poly(methyl methacrylate),C=CC1=CC=CC=C1,CC(=C)C(=O)OC,0.03956704316880706,323.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1306032747740065,293.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1239529935675408,303.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1177274469104263,313.15,old_dataset
+polystyrene,polyisoprene,C=CC1=CC=CC=C1,CC(=C)C=C,0.1118872040847904,323.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2700196998123828,293.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.25578517235691905,303.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.24245976369152172,313.15,old_dataset
+polystyrene,poly(lactic acid),C=CC1=CC=CC=C1,CC(C(=O)O)O,0.2299590747330961,323.15,old_dataset
+polystyrene,toluene,C=CC1=CC=CC=C1,CC1=CC=CC=C1,0.391,298.15,old_dataset
+polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.3995,298.15,old_dataset
+polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.40700000000000003,313.15,old_dataset
+polybutadiene,tetrahydrofuran,C=CC=C,C1CCOC1,0.41000000000000003,328.15,old_dataset
+polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.4155,298.15,old_dataset
+polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.40549999999999997,313.15,old_dataset
+polyisoprene,cyclohexane,CC(=C)C=C,C1CCCCC1,0.4175,328.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.7120126215248168,293.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.665764473033152,303.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.6224700622704775,313.15,old_dataset
+polyisoprene,poly(lactic acid),CC(=C)C=C,CC(C(=O)O)O,0.5818551756150396,323.15,old_dataset
+poly(butyl methacrylate),1-butyl-3-methylimidazolium bis(trifluoromethylsulfonyl)imide,CCCCOC(=O)C(=C)C,CCCCN1C=C[N+](=C1)C.C(F)(F)(F)S(=O)(=O)[N-]S(=O)(=O)C(F)(F)F,0.5474756950366706,293.15,old_dataset
+water,polyacrylamide,O,C=CC(=O)N,0.45999999999999996,298.15,old_dataset

@@ -32,9 +32,9 @@
 本项目的核心思路是：
 
 1. 从原始文献数据中提取化合物名称，转换为 **SMILES** 分子结构表示
-2. 合并多来源数据集（旧数据 323 条 + 新数据 1586 条 = **1893 条**）
-3. 利用 **RDKit** 自动计算全部 **~210 个** 2D 分子描述符 + 指纹相似度 + 交互特征，生成 **320 维特征矩阵**
-4. 使用 **遗传算法（GA）** 从 320 维中选出最优特征子集
+2. 合并多来源数据集（旧数据 323 条 + 新数据 1586 条，清洗并解决文献间 chi 冲突后得到 **1815 条**）
+3. 利用 **RDKit** 自动计算全部 **~210 个** 2D 分子描述符 + 指纹相似度 + 交互特征，生成 **332 维特征矩阵**
+4. 使用 **遗传算法（GA）** 从 332 维中选出最优特征子集
 5. 基于最优特征，使用 **AutoTune** 自动超参数优化训练 ML / DNN 模型
 
 ---
@@ -47,7 +47,7 @@ Graduation-project/
 ├── 获取SMILES.py              # Step 1: 化合物名称 → SMILES
 ├── 数据处理部分代码.py          # Step 2: χ 表达式解析 + 温度裂变
 ├── 合并数据集.py               # Step 2.5: 合并旧数据与新数据
-├── 特征工程.py                 # Step 3: 全量 RDKit 描述符提取 (320 维)
+├── 特征工程.py                 # Step 3: 全量 RDKit 描述符提取 (332 维)
 ├── 遗传.py                    # Step 4a: 遗传算法 (GA) 粗筛
 ├── 特征筛选.py                 # Step 4b: RFECV 精筛
 ├── feature_config.py           # 特征配置中心 (统一管理选中的特征列)
@@ -67,8 +67,8 @@ Graduation-project/
 │   ├── smiles_cleaned.xlsx
 │   ├── huggins_preprocessed.xlsx
 │   ├── 43579_2022_237_MOESM1_ESM.csv  # 新增外部数据集 (1586 条)
-│   ├── merged_dataset.csv             # 合并后数据集 (1893 条)
-│   ├── molecular_features.xlsx        # 320 维特征矩阵
+│   ├── merged_dataset.csv             # 合并后数据集 (1815 条，冲突已解决)
+│   ├── molecular_features.xlsx        # 332 维特征矩阵
 │   └── features_optimized.xlsx        # 筛选后特征子集
 │
 ├── results/                   # 模型与结果
@@ -123,7 +123,7 @@ Graduation-project/
 |------|----------|----------|
 | Step 1：SMILES 获取 | `获取SMILES.py` | `data/smiles_raw.csv` |
 | Step 2：数据预处理 | `数据处理部分代码.py`、`合并数据集.py` | `data/huggins_preprocessed.xlsx`、`data/merged_dataset.csv` |
-| Step 3：特征工程 | `特征工程.py` | `data/molecular_features.xlsx`（320 维） |
+| Step 3：特征工程 | `特征工程.py` | `data/molecular_features.xlsx`（332 维） |
 | Step 4：特征筛选 | `遗传.py`、`特征筛选.py` | `results/ga_selected_features.txt`、`data/features_optimized.xlsx` |
 | Step 5：模型训练与调参 | `Sklearn_AutoTune.py`、`DNN_AutoTune.py` | `final_results/sklearn/*`、`results/best_model.keras` |
 | Step 6：模型验证与分析 | `Y_Randomization.py`、`DNN_Y_Randomization.py`、`DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`、`final_results/dnn/dnn_y_randomization.*` |
@@ -243,8 +243,8 @@ python DNN特征贡献分析.py
 | `smiles_raw.csv` | `data/` | SMILES 查询结果 | Step 1 |
 | `smiles_cleaned.xlsx` | `data/` | 手动清洗后的 SMILES | 手动处理 |
 | `huggins_preprocessed.xlsx` | `data/` | 预处理数据 (323 条) | Step 2 |
-| `merged_dataset.csv` | `data/` | 合并数据集 (1893 条) | Step 2.5 |
-| `molecular_features.xlsx` | `data/` | 320 维特征矩阵 | Step 3 |
+| `merged_dataset.csv` | `data/` | 合并数据集 (1815 条，冲突已解决) | Step 2.5 |
+| `molecular_features.xlsx` | `data/` | 332 维特征矩阵 | Step 3 |
 | `features_optimized.xlsx` | `data/` | 筛选后特征子集 | Step 4 |
 | `ga_selected_features.txt` | `results/` | GA 选中的特征列表 | Step 4b |
 | `ga_evolution_log.csv` | `results/` | GA 进化日志 | Step 4b |
@@ -268,18 +268,19 @@ python DNN特征贡献分析.py
 
 ## 模型性能基准
 
-> 以下为本轮全流程（GA → RFECV → AutoTune）结果：1893 样本，最终 20 特征（统一 train/test 划分）
+> 以下为本轮全流程（GA → RFECV → AutoTune）结果：1815 样本，最终 21 特征（统一 train/test 划分）
 
 | 模型 | CV Val R² | Test R² | Test MAE | Test RMSE |
 |------|----------|---------|---------|---------|
-| **GradientBoosting** | **0.718** | **0.812** | **0.156** | **0.264** |
-| XGBRegressor | 0.712 | 0.788 | 0.163 | 0.281 |
-| RandomForest | 0.691 | 0.798 | 0.165 | 0.274 |
-| MLPRegressor | 0.662 | 0.684 | 0.197 | 0.343 |
-| DNN (AutoTune, best run) | — | 0.786 | 0.181 | 0.282 |
+| **XGBRegressor** | **0.656** | **0.730** | **0.213** | **0.338** |
+| GradientBoosting | 0.652 | 0.707 | 0.207 | 0.352 |
+| RandomForestRegressor | 0.647 | 0.740 | 0.208 | 0.332 |
+| MLPRegressor | 0.587 | 0.691 | 0.225 | 0.362 |
+| DNN (AutoTune, best run) | — | 0.709 | 0.228 | 0.351 |
 
 > ℹ️ 所有模型均在相同的测试集上评估，测试集不参与特征选择或模型训练。
 > ℹ️ DNN 行为 AutoTune 最优架构 8 次重训中的最佳一次（非交叉验证均值）。
+> ℹ️ 相比旧版结果，本轮使用了已清洗并解决文献间 chi 冲突的数据，评估更严格，结果更可靠。
 
 ---
 
@@ -320,9 +321,9 @@ conda install -c conda-forge rdkit
 
 # 3. 数据合并 + 特征工程 + 两阶段特征选择 + 建模
 python 合并数据集.py              # 合并旧数据与新数据
-python 特征工程.py                # 全量 RDKit 描述符 (320 维)
-python 遗传.py                   # GA 粗筛 (320 → ~20-40, 约 20-40 min)
-python 特征筛选.py                # RFECV 精筛 (~20-40 → ~8-15)
+python 特征工程.py                # 全量 RDKit 描述符 (332 维)
+python 遗传.py                   # GA 粗筛 (332 → 35, 约 20-40 min)
+python 特征筛选.py                # RFECV 精筛 (35 → 21)
 python Sklearn_AutoTune.py       # Sklearn 自动调参
 python DNN_AutoTune.py           # DNN Hyperband 自动调参
 python Y_Randomization.py        # Sklearn Y-Randomization 验证（可选）

@@ -52,3 +52,11 @@ Thumbs.db
 build/
 dist/
 *.egg-info/
+
+# 分析/存档输出（旧版快照、重跑日志、指标对比）
+analysis/
+Analysis/
+analysis/baseline_*/
+analysis/rerun_*/
+analysis/*.json
+analysis/collect_metrics.py

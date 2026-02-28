@@ -174,9 +174,25 @@ def calc_interaction_features(desc1: dict, desc2: dict, temperature: float) -> d
 
     # 温度物理项 (chi = A + B/T)
     try:
-        interaction["Inv_T"] = 1000.0 / float(temperature)
+        inv_t = 1000.0 / float(temperature)
     except (TypeError, ValueError, ZeroDivisionError):
-        interaction["Inv_T"] = np.nan
+        inv_t = np.nan
+    interaction["Inv_T"] = inv_t
+
+    # 温度×物性 交互项 (B/T 中的 B 取决于聚合物-溶剂的相互作用性质)
+    cross_pairs = [
+        ("Delta_LogP",         "InvT_x_DLogP"),       # 温度调节疏水性差异贡献
+        ("Delta_MolMR",        "InvT_x_DMolMR"),      # 温度调节极化率差异贡献
+        ("Delta_MaxAbsCharge", "InvT_x_DMaxCharge"),   # 温度调节静电作用贡献
+        ("Delta_TPSA",         "InvT_x_DTPSA"),       # 温度调节极性表面积差异
+        ("HB_Match",           "InvT_x_HBMatch"),     # 温度调节氢键匹配贡献
+    ]
+    for src_feat, cross_name in cross_pairs:
+        src_val = interaction.get(src_feat, np.nan)
+        try:
+            interaction[cross_name] = inv_t * float(src_val)
+        except (TypeError, ValueError):
+            interaction[cross_name] = np.nan
 
     return interaction
 
@@ -274,7 +290,7 @@ def main():
     poly_feats = [c for c in df_features.columns if c.endswith("_1")]
     solv_feats = [c for c in df_features.columns if c.endswith("_2")]
     sim_feats = [c for c in df_features.columns if "Similarity" in c]
-    inter_feats = [c for c in df_features.columns if c.startswith("Delta_") or c in ("HB_Match", "Inv_T")]
+    inter_feats = [c for c in df_features.columns if c.startswith("Delta_") or c.startswith("InvT_x_") or c in ("HB_Match", "Inv_T")]
     print(f"\n  聚合物描述符 (_1): {len(poly_feats)}")
     print(f"  溶剂描述符 (_2): {len(solv_feats)}")
     print(f"  指纹相似度: {len(sim_feats)}")

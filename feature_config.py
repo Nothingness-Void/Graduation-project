@@ -6,25 +6,15 @@ from typing import Iterable
 
 # Selected features (auto-updated by 遗传.py / 特征筛选.py)
 SELECTED_FEATURE_COLS = [
-    "qed_1",
-    "MaxPartialCharge_1",
-    "MinPartialCharge_1",
-    "Chi0n_1",
-    "Chi1n_1",
+    "MinAbsEStateIndex_1",
     "SMR_VSA5_1",
-    "FractionCSP3_1",
+    "SMR_VSA6_1",
     "fr_C_O_1",
-    "fr_ketone_1",
-    "MaxPartialCharge_2",
-    "Chi1n_2",
-    "Chi2n_2",
-    "PEOE_VSA9_2",
-    "SMR_VSA10_2",
-    "SlogP_VSA5_2",
-    "TPSA_2",
+    "MinAbsPartialCharge_2",
+    "Chi2v_2",
+    "NumHDonors_2",
     "MolLogP_2",
-    "MolMR_2",
-    "Delta_LabuteASA",
+    "Delta_CSP3",
     "Inv_T",
 ]
 
