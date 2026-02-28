@@ -6,27 +6,16 @@ from typing import Iterable
 
 # Selected features (auto-updated by 遗传.py / 特征筛选.py)
 SELECTED_FEATURE_COLS = [
-    "qed_1",
-    "BCUT2D_MWLOW_1",
-    "BCUT2D_CHGLO_1",
-    "PEOE_VSA8_1",
+    "MinAbsEStateIndex_1",
+    "SMR_VSA5_1",
     "SMR_VSA6_1",
-    "VSA_EState2_1",
-    "NumRotatableBonds_1",
-    "fr_ketone_1",
-    "fr_ketone_Topliss_1",
-    "MaxAbsEStateIndex_2",
-    "MinAbsEStateIndex_2",
-    "ExactMolWt_2",
+    "fr_C_O_1",
     "MinAbsPartialCharge_2",
-    "FpDensityMorgan1_2",
-    "PEOE_VSA6_2",
-    "PEOE_VSA7_2",
-    "SlogP_VSA1_2",
-    "VSA_EState5_2",
-    "NumRotatableBonds_2",
-    "fr_NH2_2",
-    "Delta_HeavyAtomMolWt",
+    "Chi2v_2",
+    "NumHDonors_2",
+    "MolLogP_2",
+    "Delta_CSP3",
+    "Inv_T",
 ]
 
 
