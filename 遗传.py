@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-遗传.py - 遗传算法特征选择 (基于 DEAP)
+遗传.py - 性能型 GA 特征选择 (基于 DEAP)
 
 从 ~320 维全量 RDKit 描述符中选出最优特征子集，
-使用 RandomForest 作为评估器，5 折交叉验证 R² 作为适应度。
+使用 RandomForest 或 XGBRegressor 作为评估器，交叉验证 R2 作为适应度。
 
 用法:
     python 遗传.py
@@ -23,6 +23,7 @@ import pandas as pd
 import joblib
 from pathlib import Path
 from sklearn.ensemble import RandomForestRegressor
+from xgboost import XGBRegressor
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
@@ -50,11 +51,22 @@ EARLY_STOP_GENS = 12        # 连续多少代无改善则停止
 MIN_FEATURES = 5            # 最少选择特征数
 MAX_FEATURES = 40           # 最多选择特征数
 
-# 评估器参数 (轻量 RF，平衡速度与精度)
+# 评估器选择: "RF" 或 "XGB"
+EVALUATOR = "RF"
+SUPPORTED_EVALUATORS = {"RF", "XGB"}
+
+# RF 参数
 RF_N_ESTIMATORS = 100
 RF_MAX_DEPTH = 8
 RF_N_JOBS = 1              # 单线程 RF，把并行留给外层 CV
+
+# XGB 参数
+XGB_N_ESTIMATORS = 100
+XGB_MAX_DEPTH = 6
+XGB_LEARNING_RATE = 0.1
+
 CV_FOLDS = 3               # 交叉验证折数 (3折比5折快~40%)
+MANDATORY_FEATURES = ["Inv_T"]  # 物理先验必选特征
 
 # 数据划分
 TEST_SIZE = 0.2
@@ -94,13 +106,77 @@ def load_data():
     return X, y, feature_cols
 
 
+def resolve_mandatory_indices(feature_cols):
+    """Resolve mandatory feature indices from names."""
+    indices = []
+    missing = []
+    for feat in MANDATORY_FEATURES:
+        if feat in feature_cols:
+            indices.append(feature_cols.index(feat))
+        else:
+            missing.append(feat)
+    if missing:
+        raise KeyError(f"必选特征不存在于特征矩阵中: {missing}")
+    return sorted(set(indices))
 
-def evaluate_individual(individual, X_train, y_train, base_estimator, cv_folds):
+
+def repair_individual(individual, mandatory_idx):
+    """Force mandatory features to remain selected."""
+    for idx in mandatory_idx:
+        individual[idx] = 1
+    return individual
+
+
+def get_evaluator_name():
+    """Validate and normalize evaluator name."""
+    evaluator = str(EVALUATOR).strip().upper()
+    if evaluator not in SUPPORTED_EVALUATORS:
+        supported = ", ".join(sorted(SUPPORTED_EVALUATORS))
+        raise ValueError(f"EVALUATOR 必须是以下之一: {supported}，当前值: {EVALUATOR}")
+    return evaluator
+
+
+def build_estimator(for_final_eval=False):
+    """Build estimator consistently for GA scoring and final test evaluation."""
+    evaluator = get_evaluator_name()
+
+    if evaluator == "XGB":
+        params = {
+            "n_estimators": XGB_N_ESTIMATORS,
+            "max_depth": XGB_MAX_DEPTH,
+            "learning_rate": XGB_LEARNING_RATE,
+            "n_jobs": 1,
+            "random_state": RANDOM_STATE,
+            "verbosity": 0,
+        }
+        if for_final_eval:
+            params["n_estimators"] = max(XGB_N_ESTIMATORS, 300)
+        return XGBRegressor(**params)
+
+    params = {
+        "n_estimators": RF_N_ESTIMATORS,
+        "max_depth": RF_MAX_DEPTH,
+        "min_samples_leaf": 2,
+        "n_jobs": RF_N_JOBS,
+        "random_state": RANDOM_STATE,
+    }
+    if for_final_eval:
+        params.update({
+            "n_estimators": 300,
+            "max_depth": None,
+            "n_jobs": -1,
+        })
+    return RandomForestRegressor(**params)
+
+
+
+def evaluate_individual(individual, X_train, y_train, base_estimator, cv_folds, mandatory_idx):
     """
     评估一个个体 (特征子集) 的适应度。
 
     返回: (cv_r2,)  注意: DEAP 要求返回元组
     """
+    repair_individual(individual, mandatory_idx)
     selected_idx = [i for i, bit in enumerate(individual) if bit == 1]
 
     # 惩罚: 特征数不在合法范围内
@@ -123,7 +199,7 @@ def evaluate_individual(individual, X_train, y_train, base_estimator, cv_folds):
 
 
 # ========== DEAP 进化引擎 ==========
-def setup_deap(n_features):
+def setup_deap(n_features, mandatory_idx):
     """配置 DEAP 工具箱。"""
     # 清理可能的旧定义 (重复运行安全)
     if "FitnessMax" in creator.__dict__:
@@ -140,12 +216,14 @@ def setup_deap(n_features):
     # 目标是初始选中 ~20 个特征 (20/320 ≈ 6%)
     init_prob = min(0.1, MAX_FEATURES / n_features)
     toolbox.register("attr_bool", random.random)
-    toolbox.register(
-        "individual", tools.initRepeat,
-        creator.Individual,
-        lambda: 1 if random.random() < init_prob else 0,
-        n=n_features
-    )
+    def init_individual():
+        ind = creator.Individual(
+            [1 if random.random() < init_prob else 0 for _ in range(n_features)]
+        )
+        repair_individual(ind, mandatory_idx)
+        return ind
+
+    toolbox.register("individual", init_individual)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
     # 遗传算子
@@ -159,29 +237,26 @@ def setup_deap(n_features):
 def run_ga(X_train, y_train, feature_cols):
     """运行遗传算法特征选择。"""
     n_features = X_train.shape[1]
-    print(f"\nGA 特征选择配置:")
+    evaluator = get_evaluator_name()
+    mandatory_idx = resolve_mandatory_indices(feature_cols)
+    mandatory_names = [feature_cols[i] for i in mandatory_idx]
+    print(f"\nGA 特征选择配置 (性能版):")
     print(f"  特征维度: {n_features}")
     print(f"  种群: {POPULATION_SIZE}, 最大代数: {N_GENERATIONS}")
     print(f"  特征数约束: [{MIN_FEATURES}, {MAX_FEATURES}]")
-    print(f"  评估器: RF(n={RF_N_ESTIMATORS}, depth={RF_MAX_DEPTH}), CV={CV_FOLDS}")
+    print(f"  评估器: {evaluator}, CV={CV_FOLDS}")
     print(f"  早停: 连续 {EARLY_STOP_GENS} 代无改善")
+    print(f"  必选特征: {mandatory_names}")
 
-    toolbox = setup_deap(n_features)
+    toolbox = setup_deap(n_features, mandatory_idx)
 
-    # RF 评估器
-    base_rf = RandomForestRegressor(
-        n_estimators=RF_N_ESTIMATORS,
-        max_depth=RF_MAX_DEPTH,
-        min_samples_leaf=2,
-        n_jobs=RF_N_JOBS,
-        random_state=RANDOM_STATE,
-    )
+    # 构建评估器
+    base_estimator = build_estimator(for_final_eval=False)
 
-    # 注册评估函数
     toolbox.register(
         "evaluate", evaluate_individual,
         X_train=X_train, y_train=y_train,
-        base_estimator=base_rf, cv_folds=CV_FOLDS
+        base_estimator=base_estimator, cv_folds=CV_FOLDS, mandatory_idx=mandatory_idx
     )
 
     # 初始化种群
@@ -237,12 +312,15 @@ def run_ga(X_train, y_train, feature_cols):
         for child1, child2 in zip(offspring[::2], offspring[1::2]):
             if random.random() < CROSSOVER_PROB:
                 toolbox.mate(child1, child2)
+                repair_individual(child1, mandatory_idx)
+                repair_individual(child2, mandatory_idx)
                 del child1.fitness.values
                 del child2.fitness.values
 
         for mutant in offspring:
             if random.random() < MUTATION_PROB:
                 toolbox.mutate(mutant)
+                repair_individual(mutant, mandatory_idx)
                 del mutant.fitness.values
 
         # 评估需要重新计算的个体
@@ -299,6 +377,7 @@ def main():
     print("=" * 70)
     print("遗传算法特征选择 (DEAP)")
     print("=" * 70)
+    evaluator = get_evaluator_name()
 
     # 1) 加载数据
     print("\n加载数据...")
@@ -344,18 +423,12 @@ def main():
 
     # 5) 用最优特征在测试集上评估
     print(f"\n测试集评估...")
-    final_rf = RandomForestRegressor(
-        n_estimators=300,
-        max_depth=None,
-        min_samples_leaf=2,
-        n_jobs=-1,
-        random_state=RANDOM_STATE,
-    )
+    final_model = build_estimator(for_final_eval=True)
     X_train_sel = X_train[:, selected_idx]
     X_test_sel = X_test[:, selected_idx]
 
-    final_rf.fit(X_train_sel, y_train)
-    y_pred = final_rf.predict(X_test_sel)
+    final_model.fit(X_train_sel, y_train)
+    y_pred = final_model.predict(X_test_sel)
 
     test_r2 = r2_score(y_test, y_pred)
     test_mae = mean_absolute_error(y_test, y_pred)
@@ -380,13 +453,15 @@ def main():
         f.write(f"\nGA 配置:\n")
         f.write(f"  种群={POPULATION_SIZE}, 代数={log_df['gen'].max()}\n")
         f.write(f"  交叉={CROSSOVER_PROB}, 变异={MUTATION_PROB}\n")
-        f.write(f"  评估器: RF(n={RF_N_ESTIMATORS}, depth={RF_MAX_DEPTH}), CV={CV_FOLDS}\n")
+        f.write(f"  评估器: {evaluator}, CV={CV_FOLDS}\n")
+        f.write(f"  必选特征: {MANDATORY_FEATURES}\n")
     print(f"\n特征列表已保存: {feat_path}")
 
     # 6b) 最优模型
     model_path = f"{RESULTS_DIR}/ga_best_model.pkl"
     joblib.dump({
-        "model": final_rf,
+        "model": final_model,
+        "evaluator": evaluator,
         "selected_features": selected_features,
         "selected_idx": selected_idx,
         "cv_r2": best_cv_r2,
@@ -444,3 +519,4 @@ def update_feature_config(all_features, selected_features):
 
 if __name__ == "__main__":
     main()
+
