@@ -1,18 +1,21 @@
 # -*- coding: utf-8 -*-
 """
-遗传.py - 性能型 GA 特征选择 (基于 DEAP)
+遗传.py - 三级特征选择流程: MI 粗筛 → GA 组合搜索 → RFECV 精筛
 
-从 ~320 维全量 RDKit 描述符中选出最优特征子集，
-使用 RandomForest 或 XGBRegressor 作为评估器，交叉验证 R2 作为适应度。
+流程:
+  1. Mutual Information 粗筛: 从 ~330 维特征中保留 MI top-N（确定性）
+  2. GA 组合搜索: 在缩小后的特征空间中搜索最优子集
+  3. RFECV 精筛: 由 特征筛选.py 完成，去除冗余特征
 
 用法:
     python 遗传.py
 
 输出:
-    - results/ga_selected_features.txt    (选中的特征列表)
-    - results/ga_evolution_log.csv        (每代进化日志)
-    - results/ga_best_model.pkl           (最优模型)
-    - feature_config.py                   (自动更新)
+    - results/ga_selected_features.txt
+    - results/ga_evolution_log.csv
+    - results/ga_best_model.pkl
+    - results/mi_ranking.csv               (MI 排名)
+    - feature_config.py                    (自动更新)
 """
 import os
 import random
@@ -26,6 +29,7 @@ from sklearn.ensemble import RandomForestRegressor
 from xgboost import XGBRegressor
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import StandardScaler
+from sklearn.feature_selection import mutual_info_regression
 from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
 from sklearn.model_selection import train_test_split
 
@@ -51,6 +55,9 @@ EARLY_STOP_GENS = 12        # 连续多少代无改善则停止
 MIN_FEATURES = 5            # 最少选择特征数
 MAX_FEATURES = 40           # 最多选择特征数
 
+# MI 预筛选 (第一级)
+MI_TOP_N = 60               # MI 排名取 top-N，缩小 GA 搜索空间
+
 # 评估器选择: "RF" 或 "XGB"
 EVALUATOR = "RF"
 SUPPORTED_EVALUATORS = {"RF", "XGB"}
@@ -66,7 +73,15 @@ XGB_MAX_DEPTH = 6
 XGB_LEARNING_RATE = 0.1
 
 CV_FOLDS = 3               # 交叉验证折数 (3折比5折快~40%)
-MANDATORY_FEATURES = ["Inv_T"]  # 物理先验必选特征
+MANDATORY_FEATURES = [     # 物理先验必选特征（保守版）
+    "Inv_T",
+    "Delta_LogP",
+    "Delta_TPSA",
+    "Delta_MaxAbsCharge",
+    "HB_Match",
+    "InvT_x_DTPSA",
+    "InvT_x_DMaxCharge",
+]
 
 # 数据划分
 TEST_SIZE = 0.2
@@ -406,10 +421,48 @@ def main():
     print(f"  划分: train={len(y_train)}, test={len(y_test)}")
     print(f"  split 索引已保存: {SPLIT_INDEX_PATH}")
 
-    # 3) GA 搜索
+    # 3) MI 粗筛 (第一级: 确定性)
+    print(f"\n{'='*70}")
+    print(f"Stage 1: Mutual Information 粗筛")
+    print(f"{'='*70}")
+    mi_scores = mutual_info_regression(
+        X_train, y_train, random_state=RANDOM_STATE, n_neighbors=5
+    )
+    mi_df = pd.DataFrame({
+        "feature": feature_cols,
+        "mi_score": mi_scores,
+    }).sort_values("mi_score", ascending=False).reset_index(drop=True)
+    mi_df["rank"] = mi_df.index + 1
+    mi_df.to_csv(f"{RESULTS_DIR}/mi_ranking.csv", index=False, encoding="utf-8-sig")
+    print(f"  MI 排名已保存: {RESULTS_DIR}/mi_ranking.csv")
+
+    # 取 top-N + 强制保留 MANDATORY
+    mi_top_names = mi_df["feature"].head(MI_TOP_N).tolist()
+    for mf in MANDATORY_FEATURES:
+        if mf not in mi_top_names:
+            mi_top_names.append(mf)
+            print(f"  必选特征 {mf} 不在 MI top-{MI_TOP_N}，已强制加入")
+
+    # 缩减特征矩阵
+    mi_keep_idx = [feature_cols.index(f) for f in mi_top_names]
+    X_train = X_train[:, mi_keep_idx]
+    X_test = X_test[:, mi_keep_idx]
+    feature_cols = [feature_cols[i] for i in mi_keep_idx]
+    X = X[:, mi_keep_idx]  # 同步全量 X
+
+    print(f"  特征缩减: {len(mi_scores)} -> {len(feature_cols)} (MI top-{MI_TOP_N} + 必选)")
+    print(f"  MI top-5: {mi_df['feature'].head(5).tolist()}")
+    inv_t_rank = mi_df[mi_df['feature'] == 'Inv_T']['rank'].values
+    if len(inv_t_rank) > 0:
+        print(f"  Inv_T MI 排名: #{int(inv_t_rank[0])} (MI={mi_df[mi_df['feature']=='Inv_T']['mi_score'].values[0]:.4f})")
+
+    # 4) GA 组合搜索 (第二级)
+    print(f"\n{'='*70}")
+    print(f"Stage 2: GA 组合搜索")
+    print(f"{'='*70}")
     hof, log_df = run_ga(X_train, y_train, feature_cols)
 
-    # 4) 提取最优特征
+    # 5) 提取最优特征
     best_individual = hof[0]
     selected_idx = [i for i, bit in enumerate(best_individual) if bit == 1]
     selected_features = [feature_cols[i] for i in selected_idx]
@@ -519,4 +572,3 @@ def update_feature_config(all_features, selected_features):
 
 if __name__ == "__main__":
     main()
-
