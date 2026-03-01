@@ -1,0 +1,7 @@
+{
+  "label": "post_performance",
+  "result_source": "analysis\\ga_compare_interactions_20260228\\performance_ga",
+  "code_mode": "git",
+  "common_commit": "1e98b53",
+  "notes": "加入显式 InvT_x_* 交互项后的性能版。"
+}

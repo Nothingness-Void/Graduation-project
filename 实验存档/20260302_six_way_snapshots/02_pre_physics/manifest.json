@@ -1,0 +1,7 @@
+{
+  "label": "pre_physics",
+  "result_source": "analysis\\ga_compare_20260228\\physics_ga",
+  "code_mode": "git",
+  "common_commit": "f09b74f",
+  "notes": "Pre 版本物理解释线，特征工程仍为 pre 版本，ElasticNet GA 来自早期非 MI 脚本。"
+}

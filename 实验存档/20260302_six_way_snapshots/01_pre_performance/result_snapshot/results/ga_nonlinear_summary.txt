@@ -1,0 +1,22 @@
+GA 非线性特征选择 + RF 回归 结果摘要
+======================================================================
+
+feature_mode=all, search_mode=fast, train=192, val=64, test=65
+
+参数搜索结果:
+1. max_features=8, pop=60, gen=20, cross=0.7, mut=0.1, mut_ind=0.03, tour=3, early_stop=8
+   mean_r2=0.3591 ± 0.0450, mean_mae=0.1939, mean_rmse=0.4696
+2. max_features=10, pop=80, gen=25, cross=0.7, mut=0.15, mut_ind=0.05, tour=3, early_stop=8
+   mean_r2=0.2481 ± 0.0661, mean_mae=0.1984, mean_rmse=0.5085
+
+最佳参数:
+max_features=8, pop=60, gen=20, cross=0.7, mut=0.1, mut_ind=0.03, tour=3, early_stop=8
+
+selected_features (7):
+['LabuteASA1', 'logP2', 'LabuteASA2', 'Avalon Similarity', 'Delta_LogP', 'Delta_TPSA', 'CSP3_1']
+
+Test metrics: R2=0.1143, MAE=0.2148, RMSE=0.5599
+
+Surrogate (Ridge, alpha=1.0) metrics: R2=-0.1346, MAE=0.2964, RMSE=0.6337
+Surrogate formula:
+χ ≈ 0.502407 - 0.004702*LabuteASA1 + 0.241037*logP2 - 0.010329*LabuteASA2 - 0.276899*Avalon Similarity - 0.023239*Delta_LogP + 0.018918*Delta_TPSA + 0.335993*CSP3_1

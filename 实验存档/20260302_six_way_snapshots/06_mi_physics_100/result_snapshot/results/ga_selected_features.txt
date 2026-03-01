@@ -1,0 +1,51 @@
+GA-ElasticNet 特征选择结果 (物理解释版)
+============================================================
+
+全量特征数: 325
+MI 后候选数: 101
+GA 选中特征数: 16
+CV R2: -0.1686
+Test R2: 0.1552, MAE: 0.4059, RMSE: 0.5983
+
+选中的特征:
+  Delta_MaxAbsCharge
+  MinPartialCharge_1
+  MinPartialCharge_2
+  MinEStateIndex_1
+  MaxEStateIndex_1
+  InvT_x_DTPSA
+  HeavyAtomMolWt_1
+  SMR_VSA1_1
+  Delta_TPSA
+  InvT_x_DMaxCharge
+  FpDensityMorgan1_2
+  PEOE_VSA8_2
+  Inv_T
+  Delta_LogP
+  Chi2v_2
+  HB_Match
+
+ElasticNet 系数:
+  Intercept = 0.7027
+  + 0.0997  Delta_MaxAbsCharge
+  + 0.0746  PEOE_VSA8_2
+  - 0.0470  Chi2v_2
+  + 0.0421  FpDensityMorgan1_2
+  - 0.0387  Inv_T
+  + 0.0183  Delta_LogP
+  + 0.0112  Delta_TPSA
+  - 0.0000  MinPartialCharge_1
+  - 0.0000  MinPartialCharge_2
+  - 0.0000  MinEStateIndex_1
+  - 0.0000  MaxEStateIndex_1
+  - 0.0000  InvT_x_DTPSA
+  - 0.0000  HeavyAtomMolWt_1
+  - 0.0000  SMR_VSA1_1
+  - 0.0000  InvT_x_DMaxCharge
+  - 0.0000  HB_Match
+
+GA 配置:
+  种群=100, 代数=36
+  交叉=0.7, 变异=0.15
+  评估器: ElasticNet(alpha=0.1, l1=0.5), CV=3
+  必选特征: ['Inv_T', 'Delta_LogP', 'Delta_TPSA', 'Delta_MaxAbsCharge', 'HB_Match', 'InvT_x_DTPSA', 'InvT_x_DMaxCharge']

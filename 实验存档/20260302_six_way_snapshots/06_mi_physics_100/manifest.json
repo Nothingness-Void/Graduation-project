@@ -1,0 +1,7 @@
+{
+  "label": "mi_physics_100",
+  "result_source": "analysis\\ga_compare_interactions_20260301\\mi_physics",
+  "code_mode": "working",
+  "common_commit": null,
+  "notes": "MI top-100 + 保守物理先验 + ElasticNet 物理版 GA。当前工作区 results/ 即该组完整结果。"
+}

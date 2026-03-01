@@ -1,0 +1,33 @@
+特征筛选结果
+============================================================
+
+原始特征数: 16
+筛选使用训练集样本数: 1452 (test_size=0.2)
+筛选后特征数: 15
+
+保留的特征:
+  Delta_MaxAbsCharge
+  MinPartialCharge_1
+  MinPartialCharge_2
+  MinEStateIndex_1
+  MaxEStateIndex_1
+  InvT_x_DTPSA
+  HeavyAtomMolWt_1
+  SMR_VSA1_1
+  Delta_TPSA
+  InvT_x_DMaxCharge
+  FpDensityMorgan1_2
+  PEOE_VSA8_2
+  Inv_T
+  Delta_LogP
+  Chi2v_2
+
+淘汰的特征:
+  HB_Match
+
+CV R2 对比:
+  全特征: 0.6834 ± 0.0491
+  筛选后: 0.6832 ± 0.0493
+
+可直接复制到代码中的特征列表:
+feature_cols = ['Delta_MaxAbsCharge', 'MinPartialCharge_1', 'MinPartialCharge_2', 'MinEStateIndex_1', 'MaxEStateIndex_1', 'InvT_x_DTPSA', 'HeavyAtomMolWt_1', 'SMR_VSA1_1', 'Delta_TPSA', 'InvT_x_DMaxCharge', 'FpDensityMorgan1_2', 'PEOE_VSA8_2', 'Inv_T', 'Delta_LogP', 'Chi2v_2']

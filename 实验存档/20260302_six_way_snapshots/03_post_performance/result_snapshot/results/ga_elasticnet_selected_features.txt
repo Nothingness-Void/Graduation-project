@@ -1,0 +1,63 @@
+GA-ElasticNet 特征选择结果 (物理解释版)
+============================================================
+
+总特征数: 332 -> 选中: 23
+CV R2: 0.2172
+Test R2: 0.2636, MAE: 0.3837, RMSE: 0.5586
+
+选中的特征:
+  MinAbsPartialCharge_1
+  BCUT2D_MWLOW_1
+  SlogP_VSA7_1
+  VSA_EState1_1
+  fr_priamide_1
+  MinEStateIndex_2
+  HeavyAtomMolWt_2
+  ExactMolWt_2
+  FpDensityMorgan3_2
+  BertzCT_2
+  PEOE_VSA3_2
+  SMR_VSA2_2
+  SMR_VSA5_2
+  SlogP_VSA6_2
+  VSA_EState3_2
+  VSA_EState5_2
+  VSA_EState7_2
+  NumAromaticRings_2
+  NumRotatableBonds_2
+  fr_NH2_2
+  Delta_MolMR
+  Delta_MaxAbsCharge
+  Inv_T
+
+ElasticNet 系数:
+  Intercept = 0.7027
+  + 0.1188  SMR_VSA2_2
+  + 0.1113  Delta_MaxAbsCharge
+  + 0.0661  fr_NH2_2
+  + 0.0578  VSA_EState3_2
+  - 0.0521  VSA_EState7_2
+  + 0.0493  NumRotatableBonds_2
+  - 0.0364  HeavyAtomMolWt_2
+  - 0.0363  SlogP_VSA6_2
+  + 0.0174  SMR_VSA5_2
+  - 0.0149  Inv_T
+  - 0.0104  PEOE_VSA3_2
+  - 0.0065  SlogP_VSA7_1
+  + 0.0035  VSA_EState5_2
+  - 0.0000  BCUT2D_MWLOW_1
+  - 0.0000  BertzCT_2
+  - 0.0000  FpDensityMorgan3_2
+  - 0.0000  ExactMolWt_2
+  - 0.0000  MinEStateIndex_2
+  - 0.0000  NumAromaticRings_2
+  - 0.0000  fr_priamide_1
+  - 0.0000  VSA_EState1_1
+  - 0.0000  Delta_MolMR
+  - 0.0000  MinAbsPartialCharge_1
+
+GA 配置:
+  种群=100, 代数=36
+  交叉=0.7, 变异=0.15
+  评估器: ElasticNet(alpha=0.1, l1=0.5), CV=3
+  必选特征: ['Inv_T']

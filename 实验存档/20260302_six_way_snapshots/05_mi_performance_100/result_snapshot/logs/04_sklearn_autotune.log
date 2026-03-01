@@ -1,0 +1,49 @@
+���ڼ�������...
+��⵽����ɸѡ�׶��з��������Ѹ�����ͬ train/test ���֡�
+������: 22
+����׼����ɣ�ѵ���� 1452 ���������Լ� 363 ����
+
+��ʼ�Զ�Ѱ�� (ÿ��ģ�� 50 �����, 5 �۽�����֤)...
+
+���ڵ���: MLPRegressor ...
+Fitting 5 folds for each of 50 candidates, totalling 250 fits
+  ���Ų���: {'model__solver': 'adam', 'model__learning_rate_init': 0.001, 'model__hidden_layer_sizes': (256, 128, 64), 'model__batch_size': 32, 'model__alpha': 1e-05, 'model__activation': 'relu'}
+  CV ѵ�� R2: 0.9147, CV ��֤ R2: 0.6613
+  ���Լ� R2: 0.7969, MAE: 0.1745, RMSE: 0.2934
+
+���ڵ���: XGBRegressor ...
+Fitting 5 folds for each of 50 candidates, totalling 250 fits
+  ���Ų���: {'model__subsample': 1.0, 'model__reg_lambda': 0.1, 'model__reg_alpha': 0.1, 'model__n_estimators': 800, 'model__min_child_weight': 1, 'model__max_depth': 7, 'model__learning_rate': 0.1, 'model__gamma': 0, 'model__colsample_bytree': 0.5}
+  CV ѵ�� R2: 0.9989, CV ��֤ R2: 0.7379
+  ���Լ� R2: 0.8448, MAE: 0.1526, RMSE: 0.2565
+
+���ڵ���: RandomForestRegressor ...
+Fitting 5 folds for each of 50 candidates, totalling 250 fits
+  ���Ų���: {'model__n_estimators': 800, 'model__min_samples_split': 2, 'model__min_samples_leaf': 1, 'model__max_features': 'log2', 'model__max_depth': 30}
+  CV ѵ�� R2: 0.9593, CV ��֤ R2: 0.7085
+  ���Լ� R2: 0.8165, MAE: 0.1713, RMSE: 0.2788
+
+���ڵ���: GradientBoosting ...
+Fitting 5 folds for each of 50 candidates, totalling 250 fits
+  ���Ų���: {'model__subsample': 0.7, 'model__n_estimators': 800, 'model__min_samples_split': 2, 'model__min_samples_leaf': 2, 'model__max_features': None, 'model__max_depth': 8, 'model__loss': 'huber', 'model__learning_rate': 0.1}
+  CV ѵ�� R2: 0.9957, CV ��֤ R2: 0.7414
+  ���Լ� R2: 0.8308, MAE: 0.1520, RMSE: 0.2678
+
+============================================================
+����ģ�͵��Ž������
+============================================================
+                Model                                                                                                                                                                                                                                   Best Params  CV Train R2  CV Val R2  Test R2  Test MAE  Test RMSE
+     GradientBoosting                   {'model__subsample': 0.7, 'model__n_estimators': 800, 'model__min_samples_split': 2, 'model__min_samples_leaf': 2, 'model__max_features': None, 'model__max_depth': 8, 'model__loss': 'huber', 'model__learning_rate': 0.1}     0.995730   0.741359 0.830790  0.151970   0.267791
+         XGBRegressor {'model__subsample': 1.0, 'model__reg_lambda': 0.1, 'model__reg_alpha': 0.1, 'model__n_estimators': 800, 'model__min_child_weight': 1, 'model__max_depth': 7, 'model__learning_rate': 0.1, 'model__gamma': 0, 'model__colsample_bytree': 0.5}     0.998907   0.737921 0.844774  0.152617   0.256487
+RandomForestRegressor                                                                                              {'model__n_estimators': 800, 'model__min_samples_split': 2, 'model__min_samples_leaf': 1, 'model__max_features': 'log2', 'model__max_depth': 30}     0.959350   0.708466 0.816539  0.171292   0.278840
+         MLPRegressor                                                       {'model__solver': 'adam', 'model__learning_rate_init': 0.001, 'model__hidden_layer_sizes': (256, 128, 64), 'model__batch_size': 32, 'model__alpha': 1e-05, 'model__activation': 'relu'}     0.914666   0.661271 0.796875  0.174486   0.293404
+���ӻ�ͼ���ѱ���: final_results\sklearn\sklearn_validation_plots.png
+
+���ģ�� (�� CV R2 ѡ��): GradientBoosting
+��� CV R2: 0.7414
+ͳһģ�Ͱ��ѱ���: results/sklearn_model_bundle.pkl
+����ģ���ѱ���: results/fingerprint_model.pkl
+����ժҪ�ѱ���: results/sklearn_tuning_summary.csv
+
+�������Ŀ¼: final_results\sklearn
+���ձ���: final_results\sklearn\sklearn_final_report.txt

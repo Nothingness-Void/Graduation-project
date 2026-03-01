@@ -1,0 +1,47 @@
+特征筛选结果
+============================================================
+
+原始特征数: 30
+筛选使用训练集样本数: 1452 (test_size=0.2)
+筛选后特征数: 10
+
+保留的特征:
+  MinAbsEStateIndex_1
+  SMR_VSA5_1
+  SMR_VSA6_1
+  fr_C_O_1
+  MinAbsPartialCharge_2
+  Chi2v_2
+  NumHDonors_2
+  MolLogP_2
+  Delta_CSP3
+  Inv_T
+
+淘汰的特征:
+  PEOE_VSA3_1
+  EState_VSA7_1
+  fr_NH2_1
+  fr_alkyl_halide_1
+  fr_ketone_Topliss_1
+  fr_para_hydroxylation_1
+  MaxEStateIndex_2
+  SMR_VSA1_2
+  SMR_VSA9_2
+  SlogP_VSA3_2
+  EState_VSA8_2
+  FractionCSP3_2
+  NHOHCount_2
+  NOCount_2
+  NumAromaticHeterocycles_2
+  NumSaturatedHeterocycles_2
+  fr_NH2_2
+  fr_allylic_oxid_2
+  fr_ether_2
+  HB_Match
+
+CV R2 对比:
+  全特征: 0.7229 ± 0.0458
+  筛选后: 0.7253 ± 0.0445
+
+可直接复制到代码中的特征列表:
+feature_cols = ['MinAbsEStateIndex_1', 'SMR_VSA5_1', 'SMR_VSA6_1', 'fr_C_O_1', 'MinAbsPartialCharge_2', 'Chi2v_2', 'NumHDonors_2', 'MolLogP_2', 'Delta_CSP3', 'Inv_T']

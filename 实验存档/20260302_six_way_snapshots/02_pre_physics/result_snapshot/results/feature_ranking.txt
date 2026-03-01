@@ -1,0 +1,40 @@
+特征筛选结果
+============================================================
+
+原始特征数: 23
+筛选使用训练集样本数: 1452 (test_size=0.2)
+筛选后特征数: 9
+
+保留的特征:
+  MinAbsPartialCharge_1
+  BCUT2D_MWLOW_1
+  VSA_EState1_1
+  HeavyAtomMolWt_2
+  SMR_VSA5_2
+  VSA_EState3_2
+  Delta_MolMR
+  Delta_MaxAbsCharge
+  Inv_T
+
+淘汰的特征:
+  SlogP_VSA7_1
+  fr_priamide_1
+  MinEStateIndex_2
+  ExactMolWt_2
+  FpDensityMorgan3_2
+  BertzCT_2
+  PEOE_VSA3_2
+  SMR_VSA2_2
+  SlogP_VSA6_2
+  VSA_EState5_2
+  VSA_EState7_2
+  NumAromaticRings_2
+  NumRotatableBonds_2
+  fr_NH2_2
+
+CV R2 对比:
+  全特征: 0.7026 ± 0.0467
+  筛选后: 0.7072 ± 0.0438
+
+可直接复制到代码中的特征列表:
+feature_cols = ['MinAbsPartialCharge_1', 'BCUT2D_MWLOW_1', 'VSA_EState1_1', 'HeavyAtomMolWt_2', 'SMR_VSA5_2', 'VSA_EState3_2', 'Delta_MolMR', 'Delta_MaxAbsCharge', 'Inv_T']

@@ -1,0 +1,6 @@
+﻿Model,Best parameter,CV Best R2,Test R2,Test MAE,Test RMSE
+Ridge,"OrderedDict([('model__alpha', 84.8822622194719), ('model__max_iter', 20000)])",0.2731083500316268,0.1292395036784142,0.2621183334482142,0.555187618930722
+Lasso,"OrderedDict([('model__alpha', 0.035191748220329735), ('model__max_iter', 2000)])",0.3037303610692255,0.1354393465478526,0.2626602933101961,0.5532076113123382
+SVR,"OrderedDict([('model__C', 1000.0), ('model__epsilon', 0.1656321690244266), ('model__gamma', 0.0001), ('model__kernel', 'linear')])",0.32389119089894636,0.13167787640461037,0.25599564062614283,0.5544097337340821
+RandomForest,"OrderedDict([('model__max_depth', 20), ('model__max_features', 'log2'), ('model__min_samples_leaf', 1), ('model__n_estimators', 127)])",0.5518010718921355,0.1267392602965256,0.20284730237581525,0.5559841118678912
+GradientBoosting,"OrderedDict([('model__learning_rate', 0.05509151977836839), ('model__max_depth', 2), ('model__min_samples_leaf', 8), ('model__n_estimators', 427), ('model__subsample', 0.8764553631729737)])",0.6389600273585001,0.2057242138160218,0.20226601931950036,0.5302443809143028
