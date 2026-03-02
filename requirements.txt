@@ -10,7 +10,6 @@ openpyxl>=3.0.0              # pandas 读取 .xlsx 文件所需引擎
 
 # 机器学习 (Sklearn 及相关)
 scikit-learn>=1.1.0
-scikit-optimize>=0.9.0       # BayesSearchCV 贝叶斯超参数优化 (skopt)
 xgboost>=1.7.0               # XGBRegressor 梯度提升模型
 joblib>=1.2.0                # 模型序列化
 

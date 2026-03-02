@@ -34,7 +34,7 @@
 1. 从原始文献数据中提取化合物名称，转换为 **SMILES** 分子结构表示
 2. 合并多来源数据集（旧数据 323 条 + 新数据 1586 条，清洗并解决文献间 chi 冲突后得到 **1815 条**）
 3. 利用 **RDKit** 自动计算全部 **~210 个** 2D 分子描述符 + 指纹相似度 + 交互特征，生成 **332 维特征矩阵**
-4. 使用 **遗传算法（GA）** 从 332 维中选出最优特征子集
+4. 使用 **遗传算法（GA）** 与 RFECV 从 332 维中筛选特征子集，当前仓库默认由 `feature_config.py` 管理 **10 个展示特征**
 5. 基于最优特征，使用 **AutoTune** 自动超参数优化训练 ML / DNN 模型
 
 ---
@@ -60,8 +60,6 @@ Graduation-project/
 ├── Y_Randomization.py         # Step 6d: Sklearn Y-Randomization 验证
 ├── DNN_Y_Randomization.py     # Step 6e: DNN Y-Randomization 验证
 │
-├── Huggins.xlsx               # 原始数据：化合物名称 + 哈金斯参数
-│
 ├── data/                      # 中间过程数据
 │   ├── smiles_raw.csv
 │   ├── smiles_cleaned.xlsx
@@ -71,49 +69,34 @@ Graduation-project/
 │   ├── molecular_features.xlsx        # 332 维特征矩阵
 │   └── features_optimized.xlsx        # 筛选后特征子集
 │
-├── results/                   # 模型与结果
-│   ├── best_model.keras        # DNN AutoTune 最优模型
-│   ├── best_model_preprocess.pkl # DNN 预处理器 + 最优超参
-│   ├── sklearn_model_bundle.pkl # Sklearn 统一模型包
-│   ├── ga_best_model.pkl      # GA 选出的最优模型
-│   ├── ga_selected_features.txt     # GA 选中的特征列表
-│   ├── ga_evolution_log.csv         # GA 进化日志
-│   ├── sklearn_tuning_summary.csv   # AutoTune 寻优报告
-│   ├── train_test_split_indices.npz # 统一 train/test 划分索引
-│   ├── feature_selection.png        # 特征筛选可视化
-│   └── dnn_loss.png                 # 训练损失曲线
+├── results/                   # 运行时结果目录
+│   ├── .gitkeep
+│   └── dnn_shap_analysis.png        # 当前已提交示例图
 │
-├── final_results/             # 最终交付结果（与中间体分离）
+├── final_results/             # 当前已提交的最终展示结果
 │   ├── dnn/
-│   │   ├── dnn_y_randomization.csv
-│   │   ├── dnn_y_randomization.png
-│   │   ├── dnn_y_randomization_summary.txt
+│   │   ├── dnn_feature_importance.csv
 │   │   ├── dnn_validation_plots.png
 │   │   ├── dnn_validation_results.csv
-│   │   └── dnn_feature_importance.csv
+│   │   └── dnn_y_randomization.png
 │   └── sklearn/
-│       ├── sklearn_model_bundle.pkl
-│       ├── fingerprint_model.pkl
-│       ├── sklearn_tuning_summary.csv
-│       ├── sklearn_validation_results.xlsx
-│       ├── sklearn_feature_importance.csv
 │       ├── sklearn_feature_importance.png
 │       ├── sklearn_validation_plots.png
-│       ├── y_randomization.png
-│       ├── y_randomization.csv
-│       └── sklearn_final_report.txt
+│       └── y_randomization.png
 │
 ├── utils/                     # 共享工具模块
-│   └── data_utils.py           # load_saved_split_indices 等
+│   ├── data_utils.py           # load_saved_split_indices 等
+│   └── plot_style.py           # 统一绘图样式
 │
 ├── requirements.txt           # Python 依赖清单
 ├── README.md                  # 本文件
 │
-├── 测试/                      # 实验性脚本
-├── 模型/                      # 历史模型存档
+├── 模型/                      # 已提交模型归档
 ├── 参考/                      # 参考代码
 └── 废弃文件存档/               # 已归档的废弃文件 (Sklearn.py, DNN.py 等)
 ```
+
+> 说明：训练与验证会在 `results/` 和 `final_results/` 下生成更多中间文件与模型文件；README 后文按脚本默认输出路径说明，但这些产物不要求全部纳入版本控制。
 
 ---
 
@@ -124,9 +107,9 @@ Graduation-project/
 | Step 1：SMILES 获取 | `获取SMILES.py` | `data/smiles_raw.csv` |
 | Step 2：数据预处理 | `数据处理部分代码.py`、`合并数据集.py` | `data/huggins_preprocessed.xlsx`、`data/merged_dataset.csv` |
 | Step 3：特征工程 | `特征工程.py` | `data/molecular_features.xlsx`（332 维） |
-| Step 4：特征筛选 | `遗传.py`、`特征筛选.py` | `results/ga_selected_features.txt`、`data/features_optimized.xlsx` |
-| Step 5：模型训练与调参 | `Sklearn_AutoTune.py`、`DNN_AutoTune.py` | `final_results/sklearn/*`、`results/best_model.keras` |
-| Step 6：模型验证与分析 | `Y_Randomization.py`、`DNN_Y_Randomization.py`、`DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`、`final_results/dnn/dnn_y_randomization.*` |
+| Step 4：特征筛选 | `遗传.py`、`特征筛选.py` | `feature_config.py`、`data/features_optimized.xlsx`、`results/*` |
+| Step 5：模型训练与调参 | `Sklearn_AutoTune.py`、`DNN_AutoTune.py` | `results/`（运行时模型/日志）与 `final_results/` |
+| Step 6：模型验证与分析 | `Y_Randomization.py`、`DNN_Y_Randomization.py`、`DNN特征贡献分析.py` | `final_results/sklearn/`、`final_results/dnn/` |
 
 ---
 
@@ -184,8 +167,8 @@ python Sklearn_AutoTune.py
 
 | 脚本 | 功能 |
 |------|------|
-| [`DNN_模型验证.py`](DNN_模型验证.py) | 加载 DNN 模型，在全量数据上评估 R²/MAE/RMSE |
-| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后自动输出 Sklearn 验证结果（`final_results/sklearn/sklearn_validation_results.xlsx`） |
+| [`DNN_模型验证.py`](DNN_模型验证.py) | 加载 DNN 模型，复用统一 train/test 划分，仅在测试集上评估 R²/MAE/RMSE |
+| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后输出 Sklearn 验证图；如保留完整运行产物，还会写入 bundle、报告与验证明细 |
 
 ### 特征贡献分析
 
@@ -200,7 +183,7 @@ python Sklearn_AutoTune.py
 
 **功能**: Y-Scrambling 验证，通过 100 次随机打乱 y 值并重训模型，验证 QSAR 模型是否真正学到了特征与目标值的关系。如果真实模型 R² 远高于随机模型分布 (p < 0.05)，则模型有效。
 
-**输出**: `final_results/sklearn/y_randomization.png`、`y_randomization.csv`
+**输出**: 默认写入 `final_results/sklearn/`；当前仓库已提交 `y_randomization.png`，完整运行时可额外生成 CSV 明细。
 
 ```bash
 python Y_Randomization.py
@@ -212,7 +195,7 @@ python Y_Randomization.py
 
 **功能**: 在复用同一 train/test 划分的前提下，对 DNN 的 `y_train/y_val` 进行随机打乱并重复重训，对比真实 DNN 与随机化 DNN 的测试集 R² 分布与 p-value。
 
-**输出**: `final_results/dnn/dnn_y_randomization.csv`、`dnn_y_randomization.png`、`dnn_y_randomization_summary.txt`
+**输出**: 默认写入 `final_results/dnn/`；当前仓库已提交 `dnn_y_randomization.png`，完整运行时可额外生成 CSV 与统计摘要。
 
 ```bash
 python DNN_Y_Randomization.py
@@ -222,7 +205,7 @@ python DNN_Y_Randomization.py
 
 **脚本**: [`DNN特征贡献分析.py`](DNN特征贡献分析.py)
 
-**功能**: 严格使用 `best_model.keras + best_model_preprocess.pkl` 进行 DNN 综合分析，输出与 sklearn 类似的 2×2 验证图（Actual vs Predicted、残差分布、残差-预测散点、特征贡献），并导出验证明细与特征重要性表。
+**功能**: 严格使用训练阶段保存的 `best_model.keras + best_model_preprocess.pkl` 进行 DNN 综合分析，输出与 sklearn 类似的 2×2 验证图（Actual vs Predicted、残差分布、残差-预测散点、特征贡献），并导出验证明细与特征重要性表。
 
 **输出**: `final_results/dnn/dnn_validation_plots.png`、`dnn_validation_results.csv`、`dnn_feature_importance.csv`
 
@@ -236,39 +219,44 @@ python DNN特征贡献分析.py
 
 ## 数据文件说明
 
-| 文件 | 位置 | 描述 | 产生阶段 |
-|------|------|------|----------|
-| `Huggins.xlsx` | 根目录 | 原始数据 | 输入 |
-| `43579_2022_237_MOESM1_ESM.csv` | `data/` | 外部数据集 (1586 条) | 新增输入 |
-| `smiles_raw.csv` | `data/` | SMILES 查询结果 | Step 1 |
-| `smiles_cleaned.xlsx` | `data/` | 手动清洗后的 SMILES | 手动处理 |
-| `huggins_preprocessed.xlsx` | `data/` | 预处理数据 (323 条) | Step 2 |
-| `merged_dataset.csv` | `data/` | 合并数据集 (1815 条，冲突已解决) | Step 2.5 |
-| `molecular_features.xlsx` | `data/` | 332 维特征矩阵 | Step 3 |
-| `features_optimized.xlsx` | `data/` | 筛选后特征子集 | Step 4 |
-| `ga_selected_features.txt` | `results/` | GA 选中的特征列表 | Step 4b |
-| `ga_evolution_log.csv` | `results/` | GA 进化日志 | Step 4b |
-| `sklearn_model_bundle.pkl` | `results/` | Sklearn 统一模型包 | Step 5 |
-| `best_model.keras` | `results/` | DNN AutoTune 最优模型 | Step 5 |
+### 当前仓库已提交文件
+
+| 文件 | 位置 | 描述 |
+|------|------|------|
+| `43579_2022_237_MOESM1_ESM.csv` | `data/` | 外部数据集 (1586 条) |
+| `smiles_raw.csv` | `data/` | SMILES 查询结果 |
+| `smiles_cleaned.xlsx` | `data/` | 手动清洗后的 SMILES |
+| `huggins_preprocessed.xlsx` | `data/` | 预处理数据 (323 条) |
+| `merged_dataset.csv` | `data/` | 合并数据集 (1815 条，冲突已解决) |
+| `molecular_features.xlsx` | `data/` | 332 维特征矩阵 |
+| `features_optimized.xlsx` | `data/` | 筛选后特征子集 |
+| `dnn_shap_analysis.png` | `results/` | DNN SHAP 示例图 |
+| `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn 特征贡献图 |
+| `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn 验证可视化 (4 张子图) |
+| `y_randomization.png` | `final_results/sklearn/` | Sklearn Y-Randomization 分布图 |
+| `dnn_validation_plots.png` | `final_results/dnn/` | DNN 综合验证图（4 子图） |
+| `dnn_validation_results.csv` | `final_results/dnn/` | DNN 测试集预测与残差明细 |
+| `dnn_feature_importance.csv` | `final_results/dnn/` | DNN 特征贡献（SHAP/回退重要性） |
+| `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization 分布图 |
+
+### 运行脚本时会按需生成的文件
+
+| 文件 | 默认位置 | 描述 | 产生阶段 |
+|------|----------|------|----------|
 | `train_test_split_indices.npz` | `results/` | 统一 train/test 划分索引 | Step 4a |
-| `sklearn_final_report.txt` | `final_results/sklearn/` | Sklearn 最终报告 | Step 5d |
-| `sklearn_validation_results.xlsx` | `final_results/sklearn/` | Sklearn 验证结果明细 | Step 5d |
-| `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn 特征贡献图 | Step 5d |
-| `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn 验证可视化 (4 张子图) | Step 5d |
-| `y_randomization.png` | `final_results/sklearn/` | Y-Randomization R² 分布图 | Step 6 |
+| `ga_selected_features.txt` / `ga_evolution_log.csv` | `results/` | GA 特征筛选日志与结果 | Step 4 |
+| `best_model.keras` / `best_model_preprocess.pkl` | `results/` 或 `final_results/dnn/` | DNN 模型与预处理器 | Step 5 |
+| `sklearn_model_bundle.pkl` / `sklearn_tuning_summary.csv` | `results/` 或 `final_results/sklearn/` | Sklearn 模型包与调参摘要 | Step 5 |
+| `sklearn_validation_results.xlsx` / `sklearn_final_report.txt` | `final_results/sklearn/` | Sklearn 验证明细与报告 | Step 5/6 |
 | `y_randomization.csv` | `final_results/sklearn/` | Y-Randomization 详细数据 | Step 6 |
-| `dnn_validation_plots.png` | `final_results/dnn/` | DNN 综合验证图（4 子图） | Step 6 |
-| `dnn_validation_results.csv` | `final_results/dnn/` | DNN 测试集预测与残差明细 | Step 6 |
-| `dnn_feature_importance.csv` | `final_results/dnn/` | DNN 特征贡献（SHAP/回退重要性） | Step 6 |
-| `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² 分布图 | Step 6 |
-| `dnn_y_randomization.csv` | `final_results/dnn/` | DNN Y-Randomization 详细数据 | Step 6 |
-| `dnn_y_randomization_summary.txt` | `final_results/dnn/` | DNN Y-Randomization 统计摘要 | Step 6 |
+| `dnn_y_randomization.csv` / `dnn_y_randomization_summary.txt` | `final_results/dnn/` | DNN Y-Randomization 详细数据与统计摘要 | Step 6 |
 
 ---
 
 ## 模型性能基准
 
-> 以下为本轮全流程（GA → RFECV → AutoTune）结果：1815 样本，最终 21 特征（统一 train/test 划分）
+> 下表保留的是一次历史全流程实验（GA → RFECV → AutoTune）的基准结果：1815 样本，21 特征（统一 train/test 划分）。
+> 当前仓库默认由 `feature_config.py` 管理 10 个展示特征，已提交的 DNN 验证图与 CSV 对应当前配置；历史表格仅用于基线对比。
 
 | 模型 | CV Val R² | Test R² | Test MAE | Test RMSE |
 |------|----------|---------|---------|---------|
@@ -279,8 +267,8 @@ python DNN特征贡献分析.py
 | DNN (AutoTune, best run) | — | 0.709 | 0.228 | 0.351 |
 
 > ℹ️ 所有模型均在相同的测试集上评估，测试集不参与特征选择或模型训练。
-> ℹ️ DNN 行为 AutoTune 最优架构 8 次重训中的最佳一次（非交叉验证均值）。
-> ℹ️ 相比旧版结果，本轮使用了已清洗并解决文献间 chi 冲突的数据，评估更严格，结果更可靠。
+> ℹ️ DNN 行为历史 AutoTune 最优架构 8 次重训中的最佳一次（非交叉验证均值）。
+> ℹ️ 如需查看当前仓库默认 10 特征配置的 DNN 指标，可直接参考 `final_results/dnn/dnn_validation_results.csv` 与对应验证图。
 
 ---
 
@@ -322,8 +310,8 @@ conda install -c conda-forge rdkit
 # 3. 数据合并 + 特征工程 + 两阶段特征选择 + 建模
 python 合并数据集.py              # 合并旧数据与新数据
 python 特征工程.py                # 全量 RDKit 描述符 (332 维)
-python 遗传.py                   # GA 粗筛 (332 → 35, 约 20-40 min)
-python 特征筛选.py                # RFECV 精筛 (35 → 21)
+python 遗传.py                   # GA 粗筛
+python 特征筛选.py                # RFECV 精筛（更新 feature_config.py）
 python Sklearn_AutoTune.py       # Sklearn 自动调参
 python DNN_AutoTune.py           # DNN Hyperband 自动调参
 python Y_Randomization.py        # Sklearn Y-Randomization 验证（可选）
