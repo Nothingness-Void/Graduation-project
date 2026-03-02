@@ -118,10 +118,8 @@ methanol,poly(N-isopropylacrylamide),CO,CC(C)NC(=O)C=C,0.45,298.15,old_dataset
 water,poly(N-isopropylacrylamide),O,CC(C)NC(=O)C=C,-0.1,298.15,old_dataset
 polystyrene,polybutadiene,C=CC1=CC=CC=C1,C=CC=C,0.055,298.15,old_dataset
 poly(lactic acid),tetrahydrofuran,CC(C(=O)O)O,C1CCOC1,0.11,298.15,old_dataset
-poly(norbornene),tetrahydrofuran,"C1CC2CC1C=C2
-C1CC2CC1C=C2",C1CCOC1,0.42,298.15,old_dataset
-poly(lactic acid),poly(norbornene),CC(C(=O)O)O,"C1CC2CC1C=C2
-C1CC2CC1C=C2",0.72,298.15,old_dataset
+poly(norbornene),tetrahydrofuran,C1CC2CC1C=C2,C1CCOC1,0.42,298.15,old_dataset
+poly(lactic acid),poly(norbornene),CC(C(=O)O)O,C1CC2CC1C=C2,0.72,298.15,old_dataset
 polyisoprene,poly(methyl methacrylate),CC(=C)C=C,CC(=C)C(=O)OC,0.077,295.15,old_dataset
 polystyrene,polycarbonate,C=CC1=CC=CC=C1,C(=O)([O-])[O-],0.0304,523.15,old_dataset
 polystyrene,poly(vinyl chloride),C=CC1=CC=CC=C1,C=CCl,0.099,298.15,old_dataset

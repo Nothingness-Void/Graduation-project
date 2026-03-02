@@ -19,6 +19,7 @@
 - [验证与分析阶段（Step 6）](#验证与分析阶段step-6)
 - [数据文件说明](#数据文件说明)
 - [模型性能基准](#模型性能基准)
+- [实验存档](#实验存档)
 - [代表性输出图](#代表性输出图)
 - [快速开始](#快速开始)
 - [评估指标](#评估指标)
@@ -48,7 +49,8 @@ Graduation-project/
 ├── 数据处理部分代码.py          # Step 2: χ 表达式解析 + 温度裂变
 ├── 合并数据集.py               # Step 2.5: 合并旧数据与新数据
 ├── 特征工程.py                 # Step 3: 全量 RDKit 描述符提取 (332 维)
-├── 遗传.py                    # Step 4a: 遗传算法 (GA) 粗筛
+├── 遗传.py                    # Step 4a: 遗传算法 (GA) 粗筛（性能版，RF evaluator）
+├── 遗传_ElasticNet.py         # Step 4a: 遗传算法 (GA) 粗筛（物理版，ElasticNet evaluator）
 ├── 特征筛选.py                 # Step 4b: RFECV 精筛
 ├── feature_config.py           # 特征配置中心 (统一管理选中的特征列)
 │
@@ -59,8 +61,6 @@ Graduation-project/
 ├── DNN特征贡献分析.py          # Step 6c: DNN SHAP 特征贡献分析
 ├── Y_Randomization.py         # Step 6d: Sklearn Y-Randomization 验证
 ├── DNN_Y_Randomization.py     # Step 6e: DNN Y-Randomization 验证
-│
-├── Huggins.xlsx               # 原始数据：化合物名称 + 哈金斯参数
 │
 ├── data/                      # 中间过程数据
 │   ├── smiles_raw.csv
@@ -80,36 +80,26 @@ Graduation-project/
 │   ├── ga_evolution_log.csv         # GA 进化日志
 │   ├── sklearn_tuning_summary.csv   # AutoTune 寻优报告
 │   ├── train_test_split_indices.npz # 统一 train/test 划分索引
-│   ├── feature_selection.png        # 特征筛选可视化
-│   └── dnn_loss.png                 # 训练损失曲线
+│   └── feature_selection.png        # 特征筛选可视化
 │
 ├── final_results/             # 最终交付结果（与中间体分离）
-│   ├── dnn/
-│   │   ├── dnn_y_randomization.csv
-│   │   ├── dnn_y_randomization.png
-│   │   ├── dnn_y_randomization_summary.txt
+│   ├── dnn/                   # Git 仅跟踪 .png/.csv；其余本地生成
 │   │   ├── dnn_validation_plots.png
 │   │   ├── dnn_validation_results.csv
-│   │   └── dnn_feature_importance.csv
-│   └── sklearn/
-│       ├── sklearn_model_bundle.pkl
-│       ├── fingerprint_model.pkl
-│       ├── sklearn_tuning_summary.csv
-│       ├── sklearn_validation_results.xlsx
-│       ├── sklearn_feature_importance.csv
+│   │   ├── dnn_feature_importance.csv
+│   │   └── dnn_y_randomization.png
+│   └── sklearn/               # Git 仅跟踪 .png；其余本地生成
 │       ├── sklearn_feature_importance.png
 │       ├── sklearn_validation_plots.png
-│       ├── y_randomization.png
-│       ├── y_randomization.csv
-│       └── sklearn_final_report.txt
+│       └── y_randomization.png
 │
 ├── utils/                     # 共享工具模块
-│   └── data_utils.py           # load_saved_split_indices 等
+│   ├── data_utils.py           # load_saved_split_indices 等
+│   └── plot_style.py           # 统一绘图主题
 │
 ├── requirements.txt           # Python 依赖清单
 ├── README.md                  # 本文件
 │
-├── 测试/                      # 实验性脚本
 ├── 模型/                      # 历史模型存档
 ├── 参考/                      # 参考代码
 └── 废弃文件存档/               # 已归档的废弃文件 (Sklearn.py, DNN.py 等)
@@ -124,7 +114,7 @@ Graduation-project/
 | Step 1：SMILES 获取 | `获取SMILES.py` | `data/smiles_raw.csv` |
 | Step 2：数据预处理 | `数据处理部分代码.py`、`合并数据集.py` | `data/huggins_preprocessed.xlsx`、`data/merged_dataset.csv` |
 | Step 3：特征工程 | `特征工程.py` | `data/molecular_features.xlsx`（332 维） |
-| Step 4：特征筛选 | `遗传.py`、`特征筛选.py` | `results/ga_selected_features.txt`、`data/features_optimized.xlsx` |
+| Step 4：特征筛选 | `遗传.py`（性能版 GA）、`遗传_ElasticNet.py`（物理版 GA）、`特征筛选.py` | `results/ga_selected_features.txt`、`data/features_optimized.xlsx` |
 | Step 5：模型训练与调参 | `Sklearn_AutoTune.py`、`DNN_AutoTune.py` | `final_results/sklearn/*`、`results/best_model.keras` |
 | Step 6：模型验证与分析 | `Y_Randomization.py`、`DNN_Y_Randomization.py`、`DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`、`final_results/dnn/dnn_y_randomization.*` |
 
@@ -184,7 +174,7 @@ python Sklearn_AutoTune.py
 
 | 脚本 | 功能 |
 |------|------|
-| [`DNN_模型验证.py`](DNN_模型验证.py) | 加载 DNN 模型，在全量数据上评估 R²/MAE/RMSE |
+| [`DNN_模型验证.py`](DNN_模型验证.py) | 加载 DNN 模型，在测试集上评估 R²/MAE/RMSE |
 | [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后自动输出 Sklearn 验证结果（`final_results/sklearn/sklearn_validation_results.xlsx`） |
 
 ### 特征贡献分析
@@ -236,51 +226,54 @@ python DNN特征贡献分析.py
 
 ## 数据文件说明
 
-| 文件 | 位置 | 描述 | 产生阶段 |
-|------|------|------|----------|
-| `Huggins.xlsx` | 根目录 | 原始数据 | 输入 |
-| `43579_2022_237_MOESM1_ESM.csv` | `data/` | 外部数据集 (1586 条) | 新增输入 |
-| `smiles_raw.csv` | `data/` | SMILES 查询结果 | Step 1 |
-| `smiles_cleaned.xlsx` | `data/` | 手动清洗后的 SMILES | 手动处理 |
-| `huggins_preprocessed.xlsx` | `data/` | 预处理数据 (323 条) | Step 2 |
-| `merged_dataset.csv` | `data/` | 合并数据集 (1815 条，冲突已解决) | Step 2.5 |
-| `molecular_features.xlsx` | `data/` | 332 维特征矩阵 | Step 3 |
-| `features_optimized.xlsx` | `data/` | 筛选后特征子集 | Step 4 |
-| `ga_selected_features.txt` | `results/` | GA 选中的特征列表 | Step 4b |
-| `ga_evolution_log.csv` | `results/` | GA 进化日志 | Step 4b |
-| `sklearn_model_bundle.pkl` | `results/` | Sklearn 统一模型包 | Step 5 |
-| `best_model.keras` | `results/` | DNN AutoTune 最优模型 | Step 5 |
-| `train_test_split_indices.npz` | `results/` | 统一 train/test 划分索引 | Step 4a |
-| `sklearn_final_report.txt` | `final_results/sklearn/` | Sklearn 最终报告 | Step 5d |
-| `sklearn_validation_results.xlsx` | `final_results/sklearn/` | Sklearn 验证结果明细 | Step 5d |
-| `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn 特征贡献图 | Step 5d |
-| `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn 验证可视化 (4 张子图) | Step 5d |
-| `y_randomization.png` | `final_results/sklearn/` | Y-Randomization R² 分布图 | Step 6 |
-| `y_randomization.csv` | `final_results/sklearn/` | Y-Randomization 详细数据 | Step 6 |
-| `dnn_validation_plots.png` | `final_results/dnn/` | DNN 综合验证图（4 子图） | Step 6 |
-| `dnn_validation_results.csv` | `final_results/dnn/` | DNN 测试集预测与残差明细 | Step 6 |
-| `dnn_feature_importance.csv` | `final_results/dnn/` | DNN 特征贡献（SHAP/回退重要性） | Step 6 |
-| `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² 分布图 | Step 6 |
-| `dnn_y_randomization.csv` | `final_results/dnn/` | DNN Y-Randomization 详细数据 | Step 6 |
-| `dnn_y_randomization_summary.txt` | `final_results/dnn/` | DNN Y-Randomization 统计摘要 | Step 6 |
+| 文件 | 位置 | 描述 | 产生阶段 | Git |
+|------|------|------|----------|-----|
+| `43579_2022_237_MOESM1_ESM.csv` | `data/` | 外部数据集 (1586 条) | 新增输入 | ✅ |
+| `smiles_raw.csv` | `data/` | SMILES 查询结果 | Step 1 | ✅ |
+| `smiles_cleaned.xlsx` | `data/` | 手动清洗后的 SMILES | 手动处理 | ✅ |
+| `huggins_preprocessed.xlsx` | `data/` | 预处理数据 (323 条) | Step 2 | ✅ |
+| `merged_dataset.csv` | `data/` | 合并数据集 (1815 条，冲突已解决) | Step 2.5 | ✅ |
+| `molecular_features.xlsx` | `data/` | 332 维特征矩阵 | Step 3 | ✅ |
+| `features_optimized.xlsx` | `data/` | 筛选后特征子集 | Step 4 | ✅ |
+| `ga_selected_features.txt` | `results/` | GA 选中的特征列表 | Step 4 | — |
+| `ga_evolution_log.csv` | `results/` | GA 进化日志 | Step 4 | — |
+| `train_test_split_indices.npz` | `results/` | 统一 train/test 划分索引 | Step 4 | — |
+| `sklearn_model_bundle.pkl` | `results/` | Sklearn 统一模型包 | Step 5 | — |
+| `best_model.keras` | `results/` | DNN AutoTune 最优模型 | Step 5 | — |
+| `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn 特征贡献图 | Step 5 | ✅ |
+| `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn 验证可视化 (4 子图) | Step 5 | ✅ |
+| `y_randomization.png` | `final_results/sklearn/` | Y-Randomization R² 分布图 | Step 6 | ✅ |
+| `dnn_validation_plots.png` | `final_results/dnn/` | DNN 综合验证图 (4 子图) | Step 6 | ✅ |
+| `dnn_validation_results.csv` | `final_results/dnn/` | DNN 测试集预测与残差明细 | Step 6 | ✅ |
+| `dnn_feature_importance.csv` | `final_results/dnn/` | DNN 特征贡献（SHAP/回退重要性） | Step 6 | ✅ |
+| `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² 分布图 | Step 6 | ✅ |
+
+> ℹ️ `results/` 整体被 `.gitignore` 排除（本地运行后生成）。`final_results/` 下仅 `.png` / `.csv` 被 Git 跟踪，其余（如 `.pkl`、`.txt`、`.xlsx`）为本地产物。
 
 ---
 
 ## 模型性能基准
 
-> 以下为本轮全流程（GA → RFECV → AutoTune）结果：1815 样本，最终 21 特征（统一 train/test 划分）
+> 以下为当前工作区主线结果（`pre_physics`）：1815 样本，最终 9 特征（统一 train/test 划分）
 
 | 模型 | CV Val R² | Test R² | Test MAE | Test RMSE |
 |------|----------|---------|---------|---------|
-| **XGBRegressor** | **0.656** | **0.730** | **0.213** | **0.338** |
-| GradientBoosting | 0.652 | 0.707 | 0.207 | 0.352 |
-| RandomForestRegressor | 0.647 | 0.740 | 0.208 | 0.332 |
-| MLPRegressor | 0.587 | 0.691 | 0.225 | 0.362 |
-| DNN (AutoTune, best run) | — | 0.709 | 0.228 | 0.351 |
+| **GradientBoosting** | **0.739** | **0.852** | **0.145** | **0.250** |
+| XGBRegressor | 0.725 | 0.827 | 0.165 | 0.271 |
+| RandomForestRegressor | 0.699 | 0.822 | 0.162 | 0.275 |
+| MLPRegressor | 0.597 | 0.748 | 0.227 | 0.327 |
+| DNN (AutoTune, best run) | — | 0.764 | 0.208 | 0.316 |
 
 > ℹ️ 所有模型均在相同的测试集上评估，测试集不参与特征选择或模型训练。
 > ℹ️ DNN 行为 AutoTune 最优架构 8 次重训中的最佳一次（非交叉验证均值）。
-> ℹ️ 相比旧版结果，本轮使用了已清洗并解决文献间 chi 冲突的数据，评估更严格，结果更可靠。
+> ℹ️ 当前默认展示的是 9 特征 `pre_physics` 可解释基线；其余 5 组对比实验已单独归档。
+
+---
+
+## 实验存档
+
+- 六组结果与代码快照：[`实验存档/20260302_six_way_snapshots/README.md`](实验存档/20260302_six_way_snapshots/README.md)
+- 特征选择探索日志：[`实验存档/EXPLORATION_LOG.md`](实验存档/EXPLORATION_LOG.md)
 
 ---
 
@@ -322,8 +315,9 @@ conda install -c conda-forge rdkit
 # 3. 数据合并 + 特征工程 + 两阶段特征选择 + 建模
 python 合并数据集.py              # 合并旧数据与新数据
 python 特征工程.py                # 全量 RDKit 描述符 (332 维)
-python 遗传.py                   # GA 粗筛 (332 → 35, 约 20-40 min)
-python 特征筛选.py                # RFECV 精筛 (35 → 21)
+python 遗传_ElasticNet.py        # 物理版 GA 粗筛 (332→~20 特征, ElasticNet, 约 10-20 min) [推荐]
+# python 遗传.py                 # 性能版 GA 粗筛 (332→~30 特征, RF, 约 20-40 min) [备选]
+python 特征筛选.py                # RFECV 精筛 (23 → 9, 最终特征集)
 python Sklearn_AutoTune.py       # Sklearn 自动调参
 python DNN_AutoTune.py           # DNN Hyperband 自动调参
 python Y_Randomization.py        # Sklearn Y-Randomization 验证（可选）

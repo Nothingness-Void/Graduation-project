@@ -56,9 +56,15 @@ dropped_smiles = before - len(df_merged)
 if dropped_smiles > 0:
     print(f"  删除 SMILES 缺失: {dropped_smiles} 行")
 
-# 4.1b 清除 SMILES 中的空白字符 (原始数据中存在 Tab 等混入)
-df_merged["Polymer_SMILES"] = df_merged["Polymer_SMILES"].str.strip()
-df_merged["Solvent_SMILES"] = df_merged["Solvent_SMILES"].str.strip()
+# 4.1b 清除 SMILES 中的空白字符 (原始数据中存在换行/Tab 等混入)
+for col in ["Polymer_SMILES", "Solvent_SMILES"]:
+    df_merged[col] = (
+        df_merged[col]
+        .str.replace("\n", "", regex=False)
+        .str.replace("\r", "", regex=False)
+        .str.replace("\t", "", regex=False)
+        .str.strip()
+    )
 
 # 4.1c 删除 strip 后变为空字符串的行
 before = len(df_merged)

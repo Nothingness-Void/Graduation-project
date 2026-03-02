@@ -60,3 +60,16 @@ analysis/baseline_*/
 analysis/rerun_*/
 analysis/*.json
 analysis/collect_metrics.py
+
+# 历史模型存档（二进制文件不适合 git 版本管理）
+模型/
+
+# 参考代码中的数据文件
+参考/**/*.xlsx
+
+# 实验存档中的模型二进制产物
+实验存档/**/*.pkl
+实验存档/**/*.keras
+实验存档/**/*.h5
+实验存档/**/*.npz
+实验存档/**/*.xlsx
