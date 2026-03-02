@@ -102,9 +102,7 @@ Graduation-project/
 ├── requirements.txt           # Python Dependency List
 ├── README.md                  # This file
 │
-
 ├── 模型/                      # Historical Model Archives
-├── 参考/                      # Reference Code
 └── 废弃文件存档/               # Archived Obsolete Files (Sklearn.py, DNN.py, etc.)
 ```
 
@@ -127,7 +125,7 @@ Graduation-project/
 
 ### Step 5a: DNN Hyperband Auto-Tuning
 
-**Script**: [`DNN_AutoTune.py`](DNN_AutoTune.py)
+**Script**: [`DNN_AutoTune.py`](../DNN_AutoTune.py)
 
 Uses Keras Tuner's Hyperband algorithm to search for the optimal DNN architecture (1-3 layers, 12-64 nodes, learning rate, regularization, etc.).
 
@@ -146,7 +144,7 @@ Uses Keras Tuner's Hyperband algorithm to search for the optimal DNN architectur
 
 ### Step 5b: Sklearn AutoTune (Recommended)
 
-**Script**: [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py)
+**Script**: [`Sklearn_AutoTune.py`](../Sklearn_AutoTune.py)
 
 4 Models × 50 Parameter Sets × 5-Fold Cross-Validation Automatic Optimization:
 
@@ -177,19 +175,19 @@ python Sklearn_AutoTune.py
 
 | Script | Function |
 |--------|----------|
-| [`DNN_模型验证.py`](DNN_模型验证.py) | Loads DNN model, evaluates R²/MAE/RMSE on the test set |
-| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | Automatically outputs Sklearn validation results after training (`final_results/sklearn/sklearn_validation_results.xlsx`) |
+| [`DNN_模型验证.py`](../DNN_模型验证.py) | Loads DNN model, evaluates R²/MAE/RMSE on the test set |
+| [`Sklearn_AutoTune.py`](../Sklearn_AutoTune.py) | Automatically outputs Sklearn validation results after training (`final_results/sklearn/sklearn_validation_results.xlsx`) |
 
 ### Feature Contribution Analysis
 
 | Script | Function |
 |--------|----------|
-| [`DNN特征贡献分析.py`](DNN特征贡献分析.py) | SHAP GradientExplainer analysis of DNN feature contributions |
-| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | Automatically outputs Sklearn feature contributions after training (`final_results/sklearn/sklearn_feature_importance.*`) |
+| [`DNN特征贡献分析.py`](../DNN特征贡献分析.py) | SHAP GradientExplainer analysis of DNN feature contributions |
+| [`Sklearn_AutoTune.py`](../Sklearn_AutoTune.py) | Automatically outputs Sklearn feature contributions after training (`final_results/sklearn/sklearn_feature_importance.*`) |
 
 ### Y-Randomization Validation
 
-**Script**: [`Y_Randomization.py`](Y_Randomization.py)
+**Script**: [`Y_Randomization.py`](../Y_Randomization.py)
 
 **Function**: Y-Scrambling validation. Randomly shuffles y-values 100 times and retrains the model to verify if the QSAR model has truly learned the relationship between features and the target. If the real model R² is significantly higher than the randomized model distribution (p < 0.05), the model is valid.
 
@@ -201,7 +199,7 @@ python Y_Randomization.py
 
 ### DNN Y-Randomization Validation
 
-**Script**: [`DNN_Y_Randomization.py`](DNN_Y_Randomization.py)
+**Script**: [`DNN_Y_Randomization.py`](../DNN_Y_Randomization.py)
 
 **Function**: Reusing the same train/test split, randomly shuffles DNN's `y_train/y_val` and repeats retraining to compare the test set R² distribution and p-value of the real DNN vs. randomized DNN.
 
@@ -213,7 +211,7 @@ python DNN_Y_Randomization.py
 
 ### DNN Integrated Validation & Feature Contribution (Latest AutoTune)
 
-**Script**: [`DNN特征贡献分析.py`](DNN特征贡献分析.py)
+**Script**: [`DNN特征贡献分析.py`](../DNN特征贡献分析.py)
 
 **Function**: Strictly uses `best_model.keras + best_model_preprocess.pkl` to generate a sklearn-style 2×2 DNN dashboard (Actual vs Predicted, Residual Distribution, Residual vs Predicted, Feature Importance), plus validation details and feature importance tables.
 
@@ -251,7 +249,7 @@ python DNN特征贡献分析.py
 | `dnn_feature_importance.csv` | `final_results/dnn/` | DNN Feature Contribution (SHAP/Fallback) | Step 6 | ✅ |
 | `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² Distribution | Step 6 | ✅ |
 
-> ℹ️ `results/` is entirely excluded by `.gitignore` (generated locally). Under `final_results/`, only `.png` / `.csv` files are Git-tracked; others (`.pkl`, `.txt`, `.xlsx`) are local artifacts.
+> ℹ️ `results/` is not Git-tracked by default; only `.gitkeep` and the legacy compatibility figure `dnn_shap_analysis.png` are kept. Under `final_results/`, only `.png` / `.csv` files are Git-tracked; others (`.pkl`, `.txt`, `.xlsx`) are local artifacts.
 
 ---
 
@@ -327,7 +325,8 @@ python Y_Randomization.py        # Sklearn Y-Randomization Validation (Optional)
 python DNN_Y_Randomization.py    # DNN Y-Randomization Validation (Optional)
 
 # OR: If data/molecular_features.xlsx already exists, start from Step 4
-python 遗传.py
+python 遗传_ElasticNet.py        # GA coarse selection
+python 特征筛选.py                # RFECV refinement (→ 9 features)
 python Sklearn_AutoTune.py
 python DNN_AutoTune.py
 ```

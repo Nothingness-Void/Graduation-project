@@ -101,7 +101,6 @@ Graduation-project/
 ├── README.md                  # 本文件
 │
 ├── 模型/                      # 历史模型存档
-├── 参考/                      # 参考代码
 └── 废弃文件存档/               # 已归档的废弃文件 (Sklearn.py, DNN.py 等)
 ```
 
@@ -248,7 +247,7 @@ python DNN特征贡献分析.py
 | `dnn_feature_importance.csv` | `final_results/dnn/` | DNN 特征贡献（SHAP/回退重要性） | Step 6 | ✅ |
 | `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² 分布图 | Step 6 | ✅ |
 
-> ℹ️ `results/` 整体被 `.gitignore` 排除（本地运行后生成）。`final_results/` 下仅 `.png` / `.csv` 被 Git 跟踪，其余（如 `.pkl`、`.txt`、`.xlsx`）为本地产物。
+> ℹ️ `results/` 默认不纳入 Git 跟踪，仅保留 `.gitkeep` 和历史兼容图 `dnn_shap_analysis.png`。`final_results/` 下仅 `.png` / `.csv` 被 Git 跟踪，其余（如 `.pkl`、`.txt`、`.xlsx`）为本地产物。
 
 ---
 
@@ -324,7 +323,8 @@ python Y_Randomization.py        # Sklearn Y-Randomization 验证（可选）
 python DNN_Y_Randomization.py    # DNN Y-Randomization 验证（可选）
 
 # 或: 如果已有 data/molecular_features.xlsx, 从 Step 4 开始
-python 遗传.py
+python 遗传_ElasticNet.py        # GA 粗筛
+python 特征筛选.py                # RFECV 精筛 (→ 9 特征)
 python Sklearn_AutoTune.py
 python DNN_AutoTune.py
 ```
