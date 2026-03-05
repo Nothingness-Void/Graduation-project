@@ -21,6 +21,7 @@
 - [Validation & Analysis Phase (Step 6)](#validation--analysis-phase-step-6)
 - [Data File Descriptions](#data-file-descriptions)
 - [Model Performance Benchmarks](#model-performance-benchmarks)
+- [Experiment Archives](#experiment-archives)
 - [Representative Output Figures](#representative-output-figures)
 - [Quick Start](#quick-start)
 - [Evaluation Metrics](#evaluation-metrics)
@@ -29,14 +30,14 @@
 
 ## Project Overview
 
-The **Huggins Parameter (chi)** is a key thermodynamic parameter describing polymer-solvent interactions, reflecting the affinity between a solvent and a polymer in a mixture.
+The **Huggins Parameter (χ)** is a key thermodynamic parameter describing polymer-solvent interactions, reflecting the affinity between a solvent and a polymer in a mixture.
 
 The core workflow of this project is:
 
 1. Extract compound names from original literature data and convert them to **SMILES** molecular structure representations.
-2. Merge datasets from multiple sources (323 legacy records + 1586 new records = **1815 records** after resolving cross-literature chi conflicts via median aggregation).
+2. Merge datasets from multiple sources (323 legacy records + 1586 new records, cleaned and resolved cross-literature chi conflicts to obtain **1815 records**).
 3. Use **RDKit** to automatically calculate all **~210** 2D molecular descriptors + fingerprint similarities + interaction features, generating a **332-dimensional feature matrix**.
-4. Use **Genetic Algorithm (GA)** and RFECV to refine the 332-dimensional feature space; the current repository defaults to **10 showcase features** managed by `feature_config.py`.
+4. Use **Genetic Algorithm (GA)** to select the optimal feature subset from the 332 dimensions.
 5. Based on the optimal features, use **AutoTune** for automatic hyperparameter optimization to train ML / DNN models.
 
 ---
@@ -48,9 +49,10 @@ Graduation-project/
 │
 ├── 获取SMILES.py              # Step 1: Compound Name → SMILES
 ├── 数据处理部分代码.py          # Step 2: χ Expression Parsing + Temperature Expansion
-├── 合并数据集.py               # Step 2.5: Merge Legacy & New Datasets (with SMILES cleanup & chi conflict resolution)
+├── 合并数据集.py               # Step 2.5: Merge Legacy & New Datasets
 ├── 特征工程.py                 # Step 3: Full RDKit Descriptor Extraction (332-dim)
-├── 遗传.py                    # Step 4a: Genetic Algorithm (GA) Coarse Selection
+├── 遗传.py                    # Step 4a: GA Coarse Selection (Performance ver., RF evaluator)
+├── 遗传_ElasticNet.py         # Step 4a: GA Coarse Selection (Physics ver., ElasticNet evaluator)
 ├── 特征筛选.py                 # Step 4b: RFECV Refinement
 ├── feature_config.py           # Feature Config Center (Unified Management of Selected Features)
 │
@@ -71,34 +73,38 @@ Graduation-project/
 │   ├── molecular_features.xlsx        # 332-dim Feature Matrix
 │   └── features_optimized.xlsx        # Filtered Feature Subset
 │
-├── results/                   # Runtime output directory
-│   ├── .gitkeep
-│   └── dnn_shap_analysis.png        # Example artifact currently committed
+├── results/                   # Models & Results
+│   ├── best_model.keras        # DNN AutoTune Best Model
+│   ├── best_model_preprocess.pkl # DNN Preprocessor + Best Hyperparameters
+│   ├── sklearn_model_bundle.pkl # Sklearn Unified Model Bundle
+│   ├── ga_best_model.pkl      # GA Best Model
+│   ├── ga_selected_features.txt     # GA Selected Feature List
+│   ├── ga_evolution_log.csv         # GA Evolution Log
+│   ├── sklearn_tuning_summary.csv   # AutoTune Optimization Report
+│   ├── train_test_split_indices.npz # Unified Train/Test Split Indices
+│   └── feature_selection.png        # Feature Selection Visualization
 │
-├── final_results/             # Final showcase artifacts currently committed
-│   ├── dnn/
-│   │   ├── dnn_feature_importance.csv
+├── final_results/             # Final Deliverables (Separated from Intermediates)
+│   ├── dnn/                   # Git tracks .png/.csv only; rest generated locally
 │   │   ├── dnn_validation_plots.png
 │   │   ├── dnn_validation_results.csv
+│   │   ├── dnn_feature_importance.csv
 │   │   └── dnn_y_randomization.png
-│   └── sklearn/
+│   └── sklearn/               # Git tracks .png only; rest generated locally
 │       ├── sklearn_feature_importance.png
 │       ├── sklearn_validation_plots.png
 │       └── y_randomization.png
 │
 ├── utils/                     # Shared Utility Modules
 │   ├── data_utils.py           # load_saved_split_indices, etc.
-│   └── plot_style.py           # Unified plotting style
+│   └── plot_style.py           # Unified plot theme
 │
 ├── requirements.txt           # Python Dependency List
 ├── README.md                  # This file
 │
-├── 模型/                      # Committed Model Archives
-├── 参考/                      # Reference Code
+├── 模型/                      # Historical Model Archives
 └── 废弃文件存档/               # Archived Obsolete Files (Sklearn.py, DNN.py, etc.)
 ```
-
-> Note: training and validation scripts can generate additional models, logs, and intermediate files under `results/` and `final_results/`. The sections below document the default output paths, but not every generated artifact is kept under version control.
 
 ---
 
@@ -109,9 +115,9 @@ Graduation-project/
 | Step 1: SMILES Retrieval | `获取SMILES.py` | `data/smiles_raw.csv` |
 | Step 2: Data Preprocessing | `数据处理部分代码.py`, `合并数据集.py` | `data/huggins_preprocessed.xlsx`, `data/merged_dataset.csv` |
 | Step 3: Feature Engineering | `特征工程.py` | `data/molecular_features.xlsx` (332-dim) |
-| Step 4: Feature Selection | `遗传.py`, `特征筛选.py` | `feature_config.py`, `data/features_optimized.xlsx`, `results/*` |
-| Step 5: Model Training & Tuning | `Sklearn_AutoTune.py`, `DNN_AutoTune.py` | `results/` (runtime models/logs) and `final_results/` |
-| Step 6: Validation & Analysis | `Y_Randomization.py`, `DNN_Y_Randomization.py`, `DNN特征贡献分析.py` | `final_results/sklearn/`, `final_results/dnn/` |
+| Step 4: Feature Selection | `遗传.py` (Performance GA), `遗传_ElasticNet.py` (Physics GA), `特征筛选.py` | `results/ga_selected_features.txt`, `data/features_optimized.xlsx` |
+| Step 5: Model Training & Tuning | `Sklearn_AutoTune.py`, `DNN_AutoTune.py` | `final_results/sklearn/*`, `results/best_model.keras` |
+| Step 6: Validation & Analysis | `Y_Randomization.py`, `DNN_Y_Randomization.py`, `DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`, `final_results/dnn/dnn_y_randomization.*` |
 
 ---
 
@@ -119,7 +125,7 @@ Graduation-project/
 
 ### Step 5a: DNN Hyperband Auto-Tuning
 
-**Script**: [`DNN_AutoTune.py`](DNN_AutoTune.py)
+**Script**: [`DNN_AutoTune.py`](../DNN_AutoTune.py)
 
 Uses Keras Tuner's Hyperband algorithm to search for the optimal DNN architecture (1-3 layers, 12-64 nodes, learning rate, regularization, etc.).
 
@@ -138,7 +144,7 @@ Uses Keras Tuner's Hyperband algorithm to search for the optimal DNN architectur
 
 ### Step 5b: Sklearn AutoTune (Recommended)
 
-**Script**: [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py)
+**Script**: [`Sklearn_AutoTune.py`](../Sklearn_AutoTune.py)
 
 4 Models × 50 Parameter Sets × 5-Fold Cross-Validation Automatic Optimization:
 
@@ -169,23 +175,23 @@ python Sklearn_AutoTune.py
 
 | Script | Function |
 |--------|----------|
-| [`DNN_模型验证.py`](DNN_模型验证.py) | Loads the DNN model, reuses the unified train/test split, and evaluates R²/MAE/RMSE on the held-out test set only |
-| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | Outputs Sklearn validation plots after training; when full runtime artifacts are kept, it also writes the bundle, report, and detailed tables |
+| [`DNN_模型验证.py`](../DNN_模型验证.py) | Loads DNN model, evaluates R²/MAE/RMSE on the test set |
+| [`Sklearn_AutoTune.py`](../Sklearn_AutoTune.py) | Automatically outputs Sklearn validation results after training (`final_results/sklearn/sklearn_validation_results.xlsx`) |
 
 ### Feature Contribution Analysis
 
 | Script | Function |
 |--------|----------|
-| [`DNN特征贡献分析.py`](DNN特征贡献分析.py) | SHAP GradientExplainer analysis of DNN feature contributions |
-| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | Automatically outputs Sklearn feature contributions after training (`final_results/sklearn/sklearn_feature_importance.*`) |
+| [`DNN特征贡献分析.py`](../DNN特征贡献分析.py) | SHAP GradientExplainer analysis of DNN feature contributions |
+| [`Sklearn_AutoTune.py`](../Sklearn_AutoTune.py) | Automatically outputs Sklearn feature contributions after training (`final_results/sklearn/sklearn_feature_importance.*`) |
 
 ### Y-Randomization Validation
 
-**Script**: [`Y_Randomization.py`](Y_Randomization.py)
+**Script**: [`Y_Randomization.py`](../Y_Randomization.py)
 
 **Function**: Y-Scrambling validation. Randomly shuffles y-values 100 times and retrains the model to verify if the QSAR model has truly learned the relationship between features and the target. If the real model R² is significantly higher than the randomized model distribution (p < 0.05), the model is valid.
 
-**Output**: Written to `final_results/sklearn/` by default. This repository currently keeps `y_randomization.png`; a full run can additionally produce the CSV detail file.
+**Output**: `final_results/sklearn/y_randomization.png`, `y_randomization.csv`
 
 ```bash
 python Y_Randomization.py
@@ -193,11 +199,11 @@ python Y_Randomization.py
 
 ### DNN Y-Randomization Validation
 
-**Script**: [`DNN_Y_Randomization.py`](DNN_Y_Randomization.py)
+**Script**: [`DNN_Y_Randomization.py`](../DNN_Y_Randomization.py)
 
 **Function**: Reusing the same train/test split, randomly shuffles DNN's `y_train/y_val` and repeats retraining to compare the test set R² distribution and p-value of the real DNN vs. randomized DNN.
 
-**Output**: Written to `final_results/dnn/` by default. This repository currently keeps `dnn_y_randomization.png`; a full run can additionally produce the CSV and summary text.
+**Output**: `final_results/dnn/dnn_y_randomization.csv`, `dnn_y_randomization.png`, `dnn_y_randomization_summary.txt`
 
 ```bash
 python DNN_Y_Randomization.py
@@ -205,9 +211,9 @@ python DNN_Y_Randomization.py
 
 ### DNN Integrated Validation & Feature Contribution (Latest AutoTune)
 
-**Script**: [`DNN特征贡献分析.py`](DNN特征贡献分析.py)
+**Script**: [`DNN特征贡献分析.py`](../DNN特征贡献分析.py)
 
-**Function**: Strictly uses the training-stage `best_model.keras + best_model_preprocess.pkl` files to generate a sklearn-style 2×2 DNN dashboard (Actual vs Predicted, Residual Distribution, Residual vs Predicted, Feature Importance), plus validation details and feature importance tables.
+**Function**: Strictly uses `best_model.keras + best_model_preprocess.pkl` to generate a sklearn-style 2×2 DNN dashboard (Actual vs Predicted, Residual Distribution, Residual vs Predicted, Feature Importance), plus validation details and feature importance tables.
 
 **Output**: `final_results/dnn/dnn_validation_plots.png`, `dnn_validation_results.csv`, `dnn_feature_importance.csv`
 
@@ -221,56 +227,54 @@ python DNN特征贡献分析.py
 
 ## Data File Descriptions
 
-### Files currently committed in this repository
+| File | Location | Description | Stage | Git |
+|------|----------|-------------|-------|-----|
+| `43579_2022_237_MOESM1_ESM.csv` | `data/` | External Dataset (1586 records) | New Input | ✅ |
+| `smiles_raw.csv` | `data/` | SMILES Query Results | Step 1 | ✅ |
+| `smiles_cleaned.xlsx` | `data/` | Manually Cleaned SMILES | Manual | ✅ |
+| `huggins_preprocessed.xlsx` | `data/` | Preprocessed Data (323 records) | Step 2 | ✅ |
+| `merged_dataset.csv` | `data/` | Merged Dataset (1815 records, conflicts resolved) | Step 2.5 | ✅ |
+| `molecular_features.xlsx` | `data/` | 332-dim Feature Matrix | Step 3 | ✅ |
+| `features_optimized.xlsx` | `data/` | Filtered Feature Subset | Step 4 | ✅ |
+| `ga_selected_features.txt` | `results/` | GA Selected Feature List | Step 4 | — |
+| `ga_evolution_log.csv` | `results/` | GA Evolution Log | Step 4 | — |
+| `train_test_split_indices.npz` | `results/` | Unified Train/Test Split Indices | Step 4 | — |
+| `sklearn_model_bundle.pkl` | `results/` | Sklearn Unified Model Bundle | Step 5 | — |
+| `best_model.keras` | `results/` | DNN AutoTune Best Model | Step 5 | — |
+| `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn Feature Contribution Plot | Step 5 | ✅ |
+| `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn Validation Plots (4 subplots) | Step 5 | ✅ |
+| `y_randomization.png` | `final_results/sklearn/` | Y-Randomization R² Distribution | Step 6 | ✅ |
+| `dnn_validation_plots.png` | `final_results/dnn/` | DNN Integrated Validation Plot (4 subplots) | Step 6 | ✅ |
+| `dnn_validation_results.csv` | `final_results/dnn/` | DNN Test Predictions & Residuals | Step 6 | ✅ |
+| `dnn_feature_importance.csv` | `final_results/dnn/` | DNN Feature Contribution (SHAP/Fallback) | Step 6 | ✅ |
+| `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-Randomization R² Distribution | Step 6 | ✅ |
 
-| File | Location | Description |
-|------|----------|-------------|
-| `43579_2022_237_MOESM1_ESM.csv` | `data/` | External Dataset (1586 records) |
-| `smiles_raw.csv` | `data/` | SMILES Query Results |
-| `smiles_cleaned.xlsx` | `data/` | Manually Cleaned SMILES |
-| `huggins_preprocessed.xlsx` | `data/` | Preprocessed Data (323 records) |
-| `merged_dataset.csv` | `data/` | Merged Dataset (1815 records, conflicts resolved) |
-| `molecular_features.xlsx` | `data/` | 332-dim Feature Matrix |
-| `features_optimized.xlsx` | `data/` | Filtered Feature Subset |
-| `dnn_shap_analysis.png` | `results/` | Example DNN SHAP figure |
-| `sklearn_feature_importance.png` | `final_results/sklearn/` | Sklearn feature contribution plot |
-| `sklearn_validation_plots.png` | `final_results/sklearn/` | Sklearn validation plots (4 subplots) |
-| `y_randomization.png` | `final_results/sklearn/` | Sklearn Y-randomization distribution |
-| `dnn_validation_plots.png` | `final_results/dnn/` | DNN integrated validation plot (4 subplots) |
-| `dnn_validation_results.csv` | `final_results/dnn/` | DNN test predictions and residuals |
-| `dnn_feature_importance.csv` | `final_results/dnn/` | DNN feature contribution (SHAP/fallback) |
-| `dnn_y_randomization.png` | `final_results/dnn/` | DNN Y-randomization distribution |
-
-### Files generated on demand when the scripts are run
-
-| File | Default Location | Description | Generated Stage |
-|------|------------------|-------------|-----------------|
-| `train_test_split_indices.npz` | `results/` | Unified train/test split indices | Step 4a |
-| `ga_selected_features.txt` / `ga_evolution_log.csv` | `results/` | GA feature-selection logs and outputs | Step 4 |
-| `best_model.keras` / `best_model_preprocess.pkl` | `results/` or `final_results/dnn/` | DNN model and preprocess bundle | Step 5 |
-| `sklearn_model_bundle.pkl` / `sklearn_tuning_summary.csv` | `results/` or `final_results/sklearn/` | Sklearn model bundle and tuning summary | Step 5 |
-| `sklearn_validation_results.xlsx` / `sklearn_final_report.txt` | `final_results/sklearn/` | Sklearn detailed validation results and report | Step 5/6 |
-| `y_randomization.csv` | `final_results/sklearn/` | Y-randomization detailed data | Step 6 |
-| `dnn_y_randomization.csv` / `dnn_y_randomization_summary.txt` | `final_results/dnn/` | DNN Y-randomization detailed data and summary | Step 6 |
+> ℹ️ `results/` is not Git-tracked by default; only `.gitkeep` and the legacy compatibility figure `dnn_shap_analysis.png` are kept. Under `final_results/`, only `.png` / `.csv` files are Git-tracked; others (`.pkl`, `.txt`, `.xlsx`) are local artifacts.
 
 ---
 
 ## Model Performance Benchmarks
 
-> The table below is kept as a historical baseline from one full-pipeline experiment (GA → RFECV → AutoTune): **1815 samples (after data cleaning)**, 21 features (unified train/test split).
-> The current repository defaults to 10 showcase features managed by `feature_config.py`; the committed DNN validation plot and CSV correspond to that current configuration.
+> The following are the current workspace mainline results (`pre_physics`): 1815 samples, final 9 features (unified train/test split)
 
 | Model | CV Val R² | Test R² | Test MAE | Test RMSE |
-|-------|-----------|---------|----------|-----------|
-| **XGBRegressor** | **0.656** | **0.730** | **0.213** | **0.338** |
-| GradientBoosting | 0.652 | 0.707 | 0.207 | 0.352 |
-| RandomForestRegressor | 0.647 | 0.740 | 0.208 | 0.332 |
-| MLPRegressor | 0.587 | 0.691 | 0.225 | 0.362 |
-| DNN (AutoTune, best run) | — | 0.709 | 0.228 | 0.351 |
+|-------|----------|---------|---------|---------|
+| **GradientBoosting** | **0.739** | **0.852** | **0.145** | **0.250** |
+| XGBRegressor | 0.725 | 0.827 | 0.165 | 0.271 |
+| RandomForestRegressor | 0.699 | 0.822 | 0.162 | 0.275 |
+| MLPRegressor | 0.597 | 0.748 | 0.227 | 0.327 |
+| DNN (AutoTune, best run) | — | 0.764 | 0.208 | 0.316 |
 
 > ℹ️ All models are evaluated on the same test set, which is not involved in feature selection or model training.
-> ℹ️ The DNN row refers to the best run among 8 retrainings of the historical AutoTune architecture (not a CV mean).
-> ℹ️ For the current committed 10-feature DNN snapshot, see `final_results/dnn/dnn_validation_results.csv` together with the validation dashboard.
+> ℹ️ DNN row shows the best run out of 8 retrainings of the optimal architecture from AutoTune (not CV mean).
+> ℹ️ The default display shows the 9-feature `pre_physics` interpretable baseline; 5 other comparison experiments are archived separately.
+
+---
+
+## Experiment Archives
+
+- Six-way results and code snapshots: [`实验存档/20260302_six_way_snapshots/README.md`](../实验存档/20260302_six_way_snapshots/README.md)
+- Feature selection exploration log: [`实验存档/EXPLORATION_LOG.md`](../实验存档/EXPLORATION_LOG.md)
 
 ---
 
@@ -312,15 +316,17 @@ conda install -c conda-forge rdkit
 # 3. Data Merge + Feature Engineering + Two-Stage Feature Selection + Modeling
 python 合并数据集.py              # Merge Legacy & New Data
 python 特征工程.py                # Full RDKit Descriptors (332 dim)
-python 遗传.py                   # GA coarse selection
-python 特征筛选.py                # RFECV refinement (updates feature_config.py)
+python 遗传_ElasticNet.py        # Physics GA Coarse Selection (332→~20 features, ElasticNet, ~10-20 min) [Recommended]
+# python 遗传.py                 # Performance GA Coarse Selection (332→~30 features, RF, ~20-40 min) [Alternative]
+python 特征筛选.py                # RFECV Refinement (23 → 9, final feature set)
 python Sklearn_AutoTune.py       # Sklearn Auto-Tuning
 python DNN_AutoTune.py           # DNN Hyperband Auto-Tuning
 python Y_Randomization.py        # Sklearn Y-Randomization Validation (Optional)
 python DNN_Y_Randomization.py    # DNN Y-Randomization Validation (Optional)
 
 # OR: If data/molecular_features.xlsx already exists, start from Step 4
-python 遗传.py
+python 遗传_ElasticNet.py        # GA coarse selection
+python 特征筛选.py                # RFECV refinement (→ 9 features)
 python Sklearn_AutoTune.py
 python DNN_AutoTune.py
 ```

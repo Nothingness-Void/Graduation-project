@@ -1,0 +1,7 @@
+{
+  "label": "mi_performance_100",
+  "result_source": "analysis\\ga_compare_interactions_20260301\\mi_performance",
+  "code_mode": "working",
+  "common_commit": null,
+  "notes": "MI top-100 + 保守物理先验 + 性能版 GA。注意：原始 results/ 目录在首次归档时复制异常，已保留 data/final_results/logs/feature_config 及六组汇总。"
+}

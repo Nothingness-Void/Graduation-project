@@ -1,0 +1,128 @@
+========================================================================
+Y-Randomization (Y-Scrambling) ��֤
+========================================================================
+[Step 1/6] �Ѽ������ģ��: GradientBoosting
+          ������: 9
+          ��������: 100, CV����: 5
+[Step 2/6] ���ݼ������: samples=1815, target_col=chi_result
+[Step 3/6] �Ѹ��� split ����: results/train_test_split_indices.npz
+          ��������: train=1452, test=363
+[Step 4/6] ��ʵģ�ͻ���:
+          CV R2 = 0.7386 �� 0.0282
+          Test R2 = 0.8520
+[Step 5/6] ��ʼ Y-Randomization: 100 ��
+
+Y-Randomization:   0%|          | 0/100 [00:00<?, ?iter/s]
+Y-Randomization:   1%|          | 1/100 [00:07<11:53,  7.21s/iter]
+Y-Randomization:   2%|��         | 2/100 [00:14<11:39,  7.13s/iter]
+Y-Randomization:   3%|��         | 3/100 [00:21<11:24,  7.06s/iter]
+Y-Randomization:   4%|��         | 4/100 [00:28<11:11,  7.00s/iter]
+Y-Randomization:   5%|��         | 5/100 [00:35<11:05,  7.01s/iter]
+Y-Randomization:   6%|��         | 6/100 [00:42<10:54,  6.96s/iter]
+Y-Randomization:   7%|��         | 7/100 [00:48<10:44,  6.93s/iter]
+Y-Randomization:   8%|��         | 8/100 [00:55<10:39,  6.96s/iter]
+Y-Randomization:   9%|��         | 9/100 [01:02<10:32,  6.96s/iter]
+Y-Randomization:  10%|��         | 10/100 [01:09<10:25,  6.95s/iter]
+Y-Randomization:  11%|��         | 11/100 [01:17<10:27,  7.05s/iter]
+Y-Randomization:  12%|����        | 12/100 [01:23<10:15,  6.99s/iter]
+Y-Randomization:  13%|����        | 13/100 [01:31<10:21,  7.14s/iter]
+Y-Randomization:  14%|����        | 14/100 [01:38<10:13,  7.13s/iter]
+Y-Randomization:  15%|����        | 15/100 [01:45<09:58,  7.04s/iter]
+Y-Randomization:  16%|����        | 16/100 [01:52<09:53,  7.07s/iter]
+Y-Randomization:  17%|����        | 17/100 [01:59<09:46,  7.07s/iter]
+Y-Randomization:  18%|����        | 18/100 [02:06<09:43,  7.12s/iter]
+Y-Randomization:  19%|����        | 19/100 [02:13<09:31,  7.05s/iter]
+Y-Randomization:  20%|����        | 20/100 [02:20<09:21,  7.02s/iter]
+Y-Randomization:  21%|����        | 21/100 [02:27<09:16,  7.04s/iter]
+Y-Randomization:  22%|������       | 22/100 [02:34<09:09,  7.04s/iter]
+Y-Randomization:  23%|������       | 23/100 [02:41<08:56,  6.97s/iter]
+Y-Randomization:  24%|������       | 24/100 [02:48<08:49,  6.97s/iter]
+Y-Randomization:  25%|������       | 25/100 [02:55<08:44,  7.00s/iter]
+Y-Randomization:  26%|������       | 26/100 [03:02<08:38,  7.01s/iter]
+Y-Randomization:  27%|������       | 27/100 [03:09<08:30,  7.00s/iter]
+Y-Randomization:  28%|������       | 28/100 [03:16<08:21,  6.97s/iter]
+Y-Randomization:  29%|������       | 29/100 [03:23<08:22,  7.08s/iter]
+Y-Randomization:  30%|������       | 30/100 [03:30<08:14,  7.06s/iter]
+Y-Randomization:  31%|������       | 31/100 [03:37<08:00,  6.97s/iter]
+Y-Randomization:  32%|��������      | 32/100 [03:44<07:56,  7.00s/iter]
+Y-Randomization:  33%|��������      | 33/100 [03:52<07:56,  7.12s/iter]
+Y-Randomization:  34%|��������      | 34/100 [03:58<07:44,  7.04s/iter]
+Y-Randomization:  35%|��������      | 35/100 [04:06<07:38,  7.05s/iter]
+Y-Randomization:  36%|��������      | 36/100 [04:12<07:27,  7.00s/iter]
+Y-Randomization:  37%|��������      | 37/100 [04:19<07:15,  6.91s/iter]
+Y-Randomization:  38%|��������      | 38/100 [04:26<07:08,  6.91s/iter]
+Y-Randomization:  39%|��������      | 39/100 [04:33<07:07,  7.00s/iter]
+Y-Randomization:  40%|��������      | 40/100 [04:40<07:01,  7.03s/iter]
+Y-Randomization:  41%|��������      | 41/100 [04:47<06:51,  6.97s/iter]
+Y-Randomization:  42%|����������     | 42/100 [04:54<06:46,  7.00s/iter]
+Y-Randomization:  43%|����������     | 43/100 [05:01<06:41,  7.05s/iter]
+Y-Randomization:  44%|����������     | 44/100 [05:08<06:31,  6.99s/iter]
+Y-Randomization:  45%|����������     | 45/100 [05:15<06:23,  6.98s/iter]
+Y-Randomization:  46%|����������     | 46/100 [05:22<06:15,  6.95s/iter]
+Y-Randomization:  47%|����������     | 47/100 [05:29<06:09,  6.97s/iter]
+Y-Randomization:  48%|����������     | 48/100 [05:36<06:05,  7.04s/iter]
+Y-Randomization:  49%|����������     | 49/100 [05:44<06:03,  7.13s/iter]
+Y-Randomization:  50%|����������     | 50/100 [05:51<05:59,  7.19s/iter]
+Y-Randomization:  51%|����������     | 51/100 [05:58<05:51,  7.18s/iter]
+Y-Randomization:  52%|������������    | 52/100 [06:05<05:40,  7.09s/iter]
+Y-Randomization:  53%|������������    | 53/100 [06:12<05:37,  7.18s/iter]
+Y-Randomization:  54%|������������    | 54/100 [06:20<05:32,  7.22s/iter]
+Y-Randomization:  55%|������������    | 55/100 [06:27<05:23,  7.19s/iter]
+Y-Randomization:  56%|������������    | 56/100 [06:34<05:13,  7.11s/iter]
+Y-Randomization:  57%|������������    | 57/100 [06:41<05:02,  7.04s/iter]
+Y-Randomization:  58%|������������    | 58/100 [06:47<04:53,  6.98s/iter]
+Y-Randomization:  59%|������������    | 59/100 [06:55<04:48,  7.04s/iter]
+Y-Randomization:  60%|������������    | 60/100 [07:02<04:39,  6.99s/iter]
+Y-Randomization:  61%|������������    | 61/100 [07:09<04:34,  7.03s/iter]
+Y-Randomization:  62%|��������������   | 62/100 [07:15<04:23,  6.93s/iter]
+Y-Randomization:  63%|��������������   | 63/100 [07:22<04:15,  6.90s/iter]
+Y-Randomization:  64%|��������������   | 64/100 [07:29<04:10,  6.97s/iter]
+Y-Randomization:  65%|��������������   | 65/100 [07:36<04:04,  6.98s/iter]
+Y-Randomization:  66%|��������������   | 66/100 [07:43<03:58,  7.02s/iter]
+Y-Randomization:  67%|��������������   | 67/100 [07:50<03:51,  7.03s/iter]
+Y-Randomization:  68%|��������������   | 68/100 [07:57<03:43,  6.98s/iter]
+Y-Randomization:  69%|��������������   | 69/100 [08:04<03:35,  6.96s/iter]
+Y-Randomization:  70%|��������������   | 70/100 [08:12<03:31,  7.07s/iter]
+Y-Randomization:  71%|��������������   | 71/100 [08:18<03:23,  7.02s/iter]
+Y-Randomization:  72%|����������������  | 72/100 [08:26<03:18,  7.09s/iter]
+Y-Randomization:  73%|����������������  | 73/100 [08:33<03:11,  7.09s/iter]
+Y-Randomization:  74%|����������������  | 74/100 [08:40<03:02,  7.01s/iter]
+Y-Randomization:  75%|����������������  | 75/100 [08:47<02:57,  7.10s/iter]
+Y-Randomization:  76%|����������������  | 76/100 [08:54<02:48,  7.02s/iter]
+Y-Randomization:  77%|����������������  | 77/100 [09:01<02:41,  7.04s/iter]
+Y-Randomization:  78%|����������������  | 78/100 [09:08<02:35,  7.06s/iter]
+Y-Randomization:  79%|����������������  | 79/100 [09:15<02:28,  7.06s/iter]
+Y-Randomization:  80%|����������������  | 80/100 [09:22<02:19,  6.96s/iter]
+Y-Randomization:  81%|����������������  | 81/100 [09:29<02:13,  7.00s/iter]
+Y-Randomization:  82%|������������������ | 82/100 [09:36<02:06,  7.01s/iter]
+Y-Randomization:  83%|������������������ | 83/100 [09:43<01:59,  7.04s/iter]
+Y-Randomization:  84%|������������������ | 84/100 [09:50<01:53,  7.08s/iter]
+Y-Randomization:  85%|������������������ | 85/100 [09:57<01:45,  7.05s/iter]
+Y-Randomization:  86%|������������������ | 86/100 [10:04<01:37,  6.99s/iter]
+Y-Randomization:  87%|������������������ | 87/100 [10:11<01:31,  7.02s/iter]
+Y-Randomization:  88%|������������������ | 88/100 [10:18<01:24,  7.05s/iter]
+Y-Randomization:  89%|������������������ | 89/100 [10:25<01:16,  6.93s/iter]
+Y-Randomization:  90%|������������������ | 90/100 [10:32<01:10,  7.09s/iter]
+Y-Randomization:  91%|������������������ | 91/100 [10:39<01:02,  7.00s/iter]
+Y-Randomization:  92%|��������������������| 92/100 [10:46<00:55,  6.99s/iter]
+Y-Randomization:  93%|��������������������| 93/100 [10:53<00:49,  7.02s/iter]
+Y-Randomization:  94%|��������������������| 94/100 [11:00<00:41,  7.00s/iter]
+Y-Randomization:  95%|��������������������| 95/100 [11:07<00:35,  7.02s/iter]
+Y-Randomization:  96%|��������������������| 96/100 [11:14<00:27,  6.96s/iter]
+Y-Randomization:  97%|��������������������| 97/100 [11:21<00:21,  7.01s/iter]
+Y-Randomization:  98%|��������������������| 98/100 [11:28<00:14,  7.09s/iter]
+Y-Randomization:  99%|��������������������| 99/100 [11:36<00:07,  7.12s/iter]
+Y-Randomization: 100%|��������������������| 100/100 [11:43<00:00,  7.07s/iter]
+Y-Randomization: 100%|��������������������| 100/100 [11:43<00:00,  7.03s/iter]
+[Step 6/6] ͳ�ƽ��
+------------------------------------------------------------------------
+��ʵģ��:     CV R2=0.7386 �� 0.0282, Test R2=0.8520
+���ģ��(CV): mean=-0.2718, std=0.0389, p95=-0.2111, max=-0.1576
+���ģ��(Test): mean=-0.2268, std=0.0885, p95=-0.0772, max=0.0126
+p-value: CV=0.0099 (0/100), Test=0.0099 (0/100)
+�쳣����: 0
+�ܺ�ʱ: 710.7s
+------------------------------------------------------------------------
+����: PASS - ģ����Ч (p < 0.05)
+��ϸ�����ѱ���: final_results/sklearn\y_randomization.csv
+�ֲ�ͼ�ѱ���: final_results/sklearn\y_randomization.png

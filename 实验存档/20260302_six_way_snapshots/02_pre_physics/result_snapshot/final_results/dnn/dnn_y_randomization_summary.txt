@@ -1,0 +1,13 @@
+DNN Y-Randomization Summary
+========================================================================
+iterations=100
+baseline_test_r2=0.714583
+random_mean_test_r2=-0.033452
+random_std_test_r2=0.023300
+random_p95_test_r2=-0.002157
+random_max_test_r2=0.030477
+p_value=0.009901
+ge_count=0
+failed_iterations=0
+elapsed_sec=229.17
+conclusion=PASS

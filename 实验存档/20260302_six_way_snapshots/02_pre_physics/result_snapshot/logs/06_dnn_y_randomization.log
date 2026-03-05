@@ -1,0 +1,137 @@
+WARNING:tensorflow:From C:\Users\17449\AppData\Local\Programs\Python\Python310\lib\site-packages\keras\src\losses.py:2976: The name tf.losses.sparse_softmax_cross_entropy is deprecated. Please use tf.compat.v1.losses.sparse_softmax_cross_entropy instead.
+
+WARNING:tensorflow:From C:\Users\17449\AppData\Local\Programs\Python\Python310\lib\site-packages\keras\src\backend.py:1398: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
+2026-02-28 13:14:09.166688: I tensorflow/core/platform/cpu_feature_guard.cc:182] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE SSE2 SSE3 SSE4.1 SSE4.2 AVX2 AVX512F AVX512_VNNI AVX512_BF16 AVX_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:tensorflow:From C:\Users\17449\AppData\Local\Programs\Python\Python310\lib\site-packages\keras\src\utils\tf_utils.py:492: The name tf.ragged.RaggedTensorValue is deprecated. Please use tf.compat.v1.ragged.RaggedTensorValue instead.
+
+WARNING:tensorflow:From C:\Users\17449\AppData\Local\Programs\Python\Python310\lib\site-packages\keras\src\engine\base_layer_utils.py:384: The name tf.executing_eagerly_outside_functions is deprecated. Please use tf.compat.v1.executing_eagerly_outside_functions instead.
+
+========================================================================
+DNN Y-Randomization (Y-Scrambling) Validation
+========================================================================
+[Step 1/6] Data loaded: samples=1815, features=9, target=chi_result
+           model config source: results/best_model_preprocess.pkl
+           aligned with AutoTune best HP, batch_size=16
+[Step 2/6] Reused split: results/train_test_split_indices.npz
+           split sizes: train=1089, val=363, test=363
+[Step 3/6] Preprocess done (scale_y=True)
+[Step 4/6] Baseline model
+           test R2=0.7146, best val_loss=0.1053, epochs=117
+[Step 5/6] Start Y-randomization: iterations=100
+
+DNN Y-Randomization:   0%|          | 0/100 [00:00<?, ?iter/s]
+DNN Y-Randomization:   1%|          | 1/100 [00:02<04:10,  2.53s/iter]
+DNN Y-Randomization:   2%|��         | 2/100 [00:04<03:43,  2.28s/iter]
+DNN Y-Randomization:   3%|��         | 3/100 [00:07<03:55,  2.42s/iter]
+DNN Y-Randomization:   4%|��         | 4/100 [00:09<03:38,  2.27s/iter]
+DNN Y-Randomization:   5%|��         | 5/100 [00:11<03:36,  2.28s/iter]
+DNN Y-Randomization:   6%|��         | 6/100 [00:14<03:42,  2.37s/iter]
+DNN Y-Randomization:   7%|��         | 7/100 [00:16<03:35,  2.31s/iter]
+DNN Y-Randomization:   8%|��         | 8/100 [00:19<03:58,  2.59s/iter]
+DNN Y-Randomization:   9%|��         | 9/100 [00:21<03:42,  2.44s/iter]
+DNN Y-Randomization:  10%|��         | 10/100 [00:23<03:27,  2.31s/iter]
+DNN Y-Randomization:  11%|��         | 11/100 [00:25<03:20,  2.25s/iter]
+DNN Y-Randomization:  12%|����        | 12/100 [00:27<03:12,  2.18s/iter]
+DNN Y-Randomization:  13%|����        | 13/100 [00:29<03:07,  2.15s/iter]
+DNN Y-Randomization:  14%|����        | 14/100 [00:31<03:01,  2.11s/iter]
+DNN Y-Randomization:  15%|����        | 15/100 [00:34<03:01,  2.13s/iter]
+DNN Y-Randomization:  16%|����        | 16/100 [00:36<03:02,  2.17s/iter]
+DNN Y-Randomization:  17%|����        | 17/100 [00:38<03:08,  2.27s/iter]
+DNN Y-Randomization:  18%|����        | 18/100 [00:40<02:59,  2.19s/iter]
+DNN Y-Randomization:  19%|����        | 19/100 [00:43<03:00,  2.23s/iter]
+DNN Y-Randomization:  20%|����        | 20/100 [00:45<02:53,  2.16s/iter]
+DNN Y-Randomization:  21%|����        | 21/100 [00:47<02:51,  2.18s/iter]
+DNN Y-Randomization:  22%|������       | 22/100 [00:49<02:45,  2.12s/iter]
+DNN Y-Randomization:  23%|������       | 23/100 [00:51<02:54,  2.27s/iter]
+DNN Y-Randomization:  24%|������       | 24/100 [00:54<02:48,  2.22s/iter]
+DNN Y-Randomization:  25%|������       | 25/100 [00:56<02:53,  2.31s/iter]
+DNN Y-Randomization:  26%|������       | 26/100 [00:58<02:49,  2.29s/iter]
+DNN Y-Randomization:  27%|������       | 27/100 [01:00<02:39,  2.19s/iter]
+DNN Y-Randomization:  28%|������       | 28/100 [01:03<02:55,  2.44s/iter]
+DNN Y-Randomization:  29%|������       | 29/100 [01:05<02:42,  2.29s/iter]
+DNN Y-Randomization:  30%|������       | 30/100 [01:07<02:38,  2.27s/iter]
+DNN Y-Randomization:  31%|������       | 31/100 [01:10<02:46,  2.42s/iter]
+DNN Y-Randomization:  32%|��������      | 32/100 [01:12<02:35,  2.29s/iter]
+DNN Y-Randomization:  33%|��������      | 33/100 [01:15<02:33,  2.29s/iter]
+DNN Y-Randomization:  34%|��������      | 34/100 [01:16<02:24,  2.19s/iter]
+DNN Y-Randomization:  35%|��������      | 35/100 [01:19<02:20,  2.17s/iter]
+DNN Y-Randomization:  36%|��������      | 36/100 [01:21<02:17,  2.14s/iter]
+DNN Y-Randomization:  37%|��������      | 37/100 [01:23<02:17,  2.18s/iter]
+DNN Y-Randomization:  38%|��������      | 38/100 [01:25<02:19,  2.26s/iter]
+DNN Y-Randomization:  39%|��������      | 39/100 [01:28<02:16,  2.24s/iter]
+DNN Y-Randomization:  40%|��������      | 40/100 [01:30<02:16,  2.27s/iter]
+DNN Y-Randomization:  41%|��������      | 41/100 [01:32<02:08,  2.18s/iter]
+DNN Y-Randomization:  42%|����������     | 42/100 [01:34<02:13,  2.30s/iter]
+DNN Y-Randomization:  43%|����������     | 43/100 [01:36<02:05,  2.20s/iter]
+DNN Y-Randomization:  44%|����������     | 44/100 [01:39<02:03,  2.21s/iter]
+DNN Y-Randomization:  45%|����������     | 45/100 [01:41<01:57,  2.14s/iter]
+DNN Y-Randomization:  46%|����������     | 46/100 [01:43<01:58,  2.19s/iter]
+DNN Y-Randomization:  47%|����������     | 47/100 [01:46<02:03,  2.33s/iter]
+DNN Y-Randomization:  48%|����������     | 48/100 [01:48<01:57,  2.26s/iter]
+DNN Y-Randomization:  49%|����������     | 49/100 [01:50<01:53,  2.22s/iter]
+DNN Y-Randomization:  50%|����������     | 50/100 [01:52<01:46,  2.13s/iter]
+DNN Y-Randomization:  51%|����������     | 51/100 [01:54<01:43,  2.11s/iter]
+DNN Y-Randomization:  52%|������������    | 52/100 [01:56<01:42,  2.14s/iter]
+DNN Y-Randomization:  53%|������������    | 53/100 [01:58<01:42,  2.18s/iter]
+DNN Y-Randomization:  54%|������������    | 54/100 [02:01<01:42,  2.24s/iter]
+DNN Y-Randomization:  55%|������������    | 55/100 [02:03<01:38,  2.18s/iter]
+DNN Y-Randomization:  56%|������������    | 56/100 [02:05<01:34,  2.14s/iter]
+DNN Y-Randomization:  57%|������������    | 57/100 [02:07<01:32,  2.15s/iter]
+DNN Y-Randomization:  58%|������������    | 58/100 [02:09<01:29,  2.14s/iter]
+DNN Y-Randomization:  59%|������������    | 59/100 [02:11<01:30,  2.22s/iter]
+DNN Y-Randomization:  60%|������������    | 60/100 [02:14<01:27,  2.18s/iter]
+DNN Y-Randomization:  61%|������������    | 61/100 [02:16<01:23,  2.14s/iter]
+DNN Y-Randomization:  62%|��������������   | 62/100 [02:18<01:24,  2.22s/iter]
+DNN Y-Randomization:  63%|��������������   | 63/100 [02:20<01:20,  2.18s/iter]
+DNN Y-Randomization:  64%|��������������   | 64/100 [02:22<01:20,  2.24s/iter]
+DNN Y-Randomization:  65%|��������������   | 65/100 [02:24<01:15,  2.17s/iter]
+DNN Y-Randomization:  66%|��������������   | 66/100 [02:27<01:17,  2.29s/iter]
+DNN Y-Randomization:  67%|��������������   | 67/100 [02:29<01:12,  2.18s/iter]
+DNN Y-Randomization:  68%|��������������   | 68/100 [02:31<01:10,  2.22s/iter]
+DNN Y-Randomization:  69%|��������������   | 69/100 [02:34<01:09,  2.25s/iter]
+DNN Y-Randomization:  70%|��������������   | 70/100 [02:36<01:09,  2.32s/iter]
+DNN Y-Randomization:  71%|��������������   | 71/100 [02:38<01:07,  2.31s/iter]
+DNN Y-Randomization:  72%|����������������  | 72/100 [02:40<01:03,  2.25s/iter]
+DNN Y-Randomization:  73%|����������������  | 73/100 [02:43<00:59,  2.20s/iter]
+DNN Y-Randomization:  74%|����������������  | 74/100 [02:45<00:56,  2.17s/iter]
+DNN Y-Randomization:  75%|����������������  | 75/100 [02:47<00:57,  2.32s/iter]
+DNN Y-Randomization:  76%|����������������  | 76/100 [02:50<00:55,  2.31s/iter]
+DNN Y-Randomization:  77%|����������������  | 77/100 [02:52<00:51,  2.22s/iter]
+DNN Y-Randomization:  78%|����������������  | 78/100 [02:54<00:48,  2.21s/iter]
+DNN Y-Randomization:  79%|����������������  | 79/100 [02:56<00:47,  2.26s/iter]
+DNN Y-Randomization:  80%|����������������  | 80/100 [02:58<00:43,  2.19s/iter]
+DNN Y-Randomization:  81%|����������������  | 81/100 [03:00<00:41,  2.16s/iter]
+DNN Y-Randomization:  82%|������������������ | 82/100 [03:02<00:38,  2.13s/iter]
+DNN Y-Randomization:  83%|������������������ | 83/100 [03:05<00:36,  2.14s/iter]
+DNN Y-Randomization:  84%|������������������ | 84/100 [03:07<00:35,  2.23s/iter]
+DNN Y-Randomization:  85%|������������������ | 85/100 [03:09<00:32,  2.18s/iter]
+DNN Y-Randomization:  86%|������������������ | 86/100 [03:11<00:29,  2.12s/iter]
+DNN Y-Randomization:  87%|������������������ | 87/100 [03:13<00:27,  2.12s/iter]
+DNN Y-Randomization:  88%|������������������ | 88/100 [03:15<00:25,  2.13s/iter]
+DNN Y-Randomization:  89%|������������������ | 89/100 [03:18<00:24,  2.21s/iter]
+DNN Y-Randomization:  90%|������������������ | 90/100 [03:20<00:21,  2.20s/iter]
+DNN Y-Randomization:  91%|������������������ | 91/100 [03:22<00:19,  2.14s/iter]
+DNN Y-Randomization:  92%|��������������������| 92/100 [03:24<00:17,  2.20s/iter]
+DNN Y-Randomization:  93%|��������������������| 93/100 [03:27<00:15,  2.25s/iter]
+DNN Y-Randomization:  94%|��������������������| 94/100 [03:29<00:12,  2.17s/iter]
+DNN Y-Randomization:  95%|��������������������| 95/100 [03:31<00:10,  2.14s/iter]
+DNN Y-Randomization:  96%|��������������������| 96/100 [03:33<00:08,  2.18s/iter]
+DNN Y-Randomization:  97%|��������������������| 97/100 [03:35<00:06,  2.12s/iter]
+DNN Y-Randomization:  98%|��������������������| 98/100 [03:37<00:04,  2.14s/iter]
+DNN Y-Randomization:  99%|��������������������| 99/100 [03:40<00:02,  2.28s/iter]
+DNN Y-Randomization: 100%|��������������������| 100/100 [03:42<00:00,  2.23s/iter]
+DNN Y-Randomization: 100%|��������������������| 100/100 [03:42<00:00,  2.22s/iter]
+[Step 6/6] Summary
+------------------------------------------------------------------------
+baseline test R2: 0.7146
+randomized test R2: mean=-0.0335, std=0.0233, p95=-0.0022, max=0.0305
+p-value: 0.0099 (0/100)
+failed iterations: 0
+elapsed: 229.2s
+conclusion: PASS - model signal is significant (p < 0.05)
+------------------------------------------------------------------------
+saved: final_results/dnn\dnn_y_randomization.csv
+saved: final_results/dnn\dnn_y_randomization.png
+saved: final_results/dnn\dnn_y_randomization_summary.txt

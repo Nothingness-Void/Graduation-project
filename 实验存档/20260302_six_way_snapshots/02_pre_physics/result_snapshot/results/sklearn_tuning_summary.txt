@@ -1,0 +1,17 @@
+Sklearn 自动寻优结果汇总
+============================================================
+
+特征模式: selected, 特征数: 15
+训练集: 256, 测试集: 65
+每模型迭代次数: 50
+
+                Model  CV Train R2  CV Val R2   Test R2  Test MAE  Test RMSE
+     GradientBoosting     0.977678   0.652188  0.068542  0.209334   0.574212
+         XGBRegressor     0.982886   0.621914  0.278033  0.194494   0.505533
+         MLPRegressor     0.797942   0.548284 -0.005559  0.249241   0.596615
+RandomForestRegressor     0.927543   0.544716  0.146891  0.200675   0.549532
+                  SVR     0.941734   0.493568  0.067196  0.239865   0.574627
+
+最佳模型: GradientBoosting
+最佳参数:
+{'model__subsample': 1.0, 'model__n_estimators': 500, 'model__min_samples_split': 10, 'model__min_samples_leaf': 1, 'model__max_features': 'sqrt', 'model__max_depth': 5, 'model__loss': 'huber', 'model__learning_rate': 0.03}

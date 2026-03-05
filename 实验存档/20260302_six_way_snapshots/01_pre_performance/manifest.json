@@ -1,0 +1,7 @@
+{
+  "label": "pre_performance",
+  "result_source": "analysis\\ga_compare_20260228\\performance_ga",
+  "code_mode": "git",
+  "common_commit": "f09b74f",
+  "notes": "Pre 版本主性能线，未加入显式 InvT_x_* 交互项，也未加入 MI 预筛。"
+}

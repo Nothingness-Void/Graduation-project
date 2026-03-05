@@ -1,0 +1,45 @@
+特征筛选结果
+============================================================
+
+原始特征数: 28
+筛选使用训练集样本数: 1452 (test_size=0.2)
+筛选后特征数: 9
+
+保留的特征:
+  MaxPartialCharge_1
+  Kappa3_1
+  PEOE_VSA8_1
+  MaxAbsEStateIndex_2
+  MinAbsEStateIndex_2
+  PEOE_VSA8_2
+  VSA_EState3_2
+  Delta_MaxAbsCharge
+  Inv_T
+
+淘汰的特征:
+  SMR_VSA10_1
+  SlogP_VSA7_1
+  EState_VSA4_1
+  VSA_EState10_1
+  NumAliphaticCarbocycles_1
+  NumAliphaticHeterocycles_1
+  NumSaturatedCarbocycles_1
+  fr_para_hydroxylation_1
+  PEOE_VSA7_2
+  SMR_VSA10_2
+  SMR_VSA2_2
+  SlogP_VSA1_2
+  SlogP_VSA6_2
+  VSA_EState5_2
+  fr_NH2_2
+  fr_ether_2
+  fr_phenol_noOrthoHbond_2
+  fr_pyridine_2
+  fr_quatN_2
+
+CV R2 对比:
+  全特征: 0.7069 ± 0.0525
+  筛选后: 0.7037 ± 0.0527
+
+可直接复制到代码中的特征列表:
+feature_cols = ['MaxPartialCharge_1', 'Kappa3_1', 'PEOE_VSA8_1', 'MaxAbsEStateIndex_2', 'MinAbsEStateIndex_2', 'PEOE_VSA8_2', 'VSA_EState3_2', 'Delta_MaxAbsCharge', 'Inv_T']

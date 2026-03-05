@@ -1,0 +1,53 @@
+特征筛选结果
+============================================================
+
+原始特征数: 36
+筛选使用训练集样本数: 1452 (test_size=0.2)
+筛选后特征数: 30
+
+保留的特征:
+  BCUT2D_MWLOW_1
+  PEOE_VSA4_1
+  PEOE_VSA8_1
+  SMR_VSA5_1
+  SMR_VSA6_1
+  SlogP_VSA3_1
+  FractionCSP3_1
+  fr_halogen_1
+  fr_ketone_1
+  fr_ketone_Topliss_1
+  fr_methoxy_1
+  MaxPartialCharge_2
+  MinAbsPartialCharge_2
+  FpDensityMorgan1_2
+  Chi1_2
+  Chi2n_2
+  Chi3n_2
+  SMR_VSA2_2
+  SMR_VSA7_2
+  SlogP_VSA6_2
+  HeavyAtomCount_2
+  NumAromaticCarbocycles_2
+  NumRotatableBonds_2
+  NumSaturatedCarbocycles_2
+  MolLogP_2
+  fr_Al_COO_2
+  fr_NH2_2
+  Delta_MolWt
+  HB_Match
+  Inv_T
+
+淘汰的特征:
+  NumSaturatedCarbocycles_1
+  NumSaturatedHeterocycles_1
+  fr_aniline_1
+  SlogP_VSA11_2
+  NumAromaticHeterocycles_2
+  fr_lactone_2
+
+CV R2 对比:
+  全特征: 0.7147 ± 0.0460
+  筛选后: 0.7145 ± 0.0467
+
+可直接复制到代码中的特征列表:
+feature_cols = ['BCUT2D_MWLOW_1', 'PEOE_VSA4_1', 'PEOE_VSA8_1', 'SMR_VSA5_1', 'SMR_VSA6_1', 'SlogP_VSA3_1', 'FractionCSP3_1', 'fr_halogen_1', 'fr_ketone_1', 'fr_ketone_Topliss_1', 'fr_methoxy_1', 'MaxPartialCharge_2', 'MinAbsPartialCharge_2', 'FpDensityMorgan1_2', 'Chi1_2', 'Chi2n_2', 'Chi3n_2', 'SMR_VSA2_2', 'SMR_VSA7_2', 'SlogP_VSA6_2', 'HeavyAtomCount_2', 'NumAromaticCarbocycles_2', 'NumRotatableBonds_2', 'NumSaturatedCarbocycles_2', 'MolLogP_2', 'fr_Al_COO_2', 'fr_NH2_2', 'Delta_MolWt', 'HB_Match', 'Inv_T']

@@ -1,0 +1,29 @@
+DNN 自动架构搜索结果 (无测试集泄漏版本)
+======================================================================
+
+数据: train=1089, val=363, test=363, features=10, scale_y=True
+参数约束: ratio <= 20.0
+
+Top 5 架构:
+#1: [64(d=0.0) -> 32(d=0.0) -> 1] BN=False L2=0.0005 LR=0.004866 Loss=mae BS=16 Params=2817 Ratio=2.59
+#2: [24(d=0.05) -> 32(d=0.0) -> 1] BN=False L2=0.001 LR=0.004750 Loss=mae BS=32 Params=1097 Ratio=1.01
+#3: [64(d=0.0) -> 32(d=0.0) -> 1] BN=False L2=0.0005 LR=0.004866 Loss=mae BS=16 Params=2817 Ratio=2.59
+#4: [32(d=0.0) -> 16(d=0.0) -> 32(d=0.0) -> 1] BN=False L2=0.001 LR=0.000836 Loss=mae BS=8 Params=1457 Ratio=1.34
+#5: [64(d=0.0) -> 12(d=0.15) -> 48(d=0.05) -> 1] BN=False L2=0.0005 LR=0.001025 Loss=mae BS=8 Params=2157 Ratio=1.98
+
+重训结果:
+ run  seed  val_loss       R2      MAE     RMSE
+   1    42  0.333667 0.784517 0.181340 0.302197
+   2    49  0.331204 0.807235 0.174464 0.285823
+   3    56  0.318575 0.814404 0.177920 0.280458
+   4    63  0.335312 0.791390 0.185431 0.297339
+   5    70  0.321531 0.814792 0.168220 0.280164
+   6    77  0.308275 0.793986 0.185690 0.295483
+   7    84  0.329738 0.784876 0.188739 0.301945
+   8    91  0.325550 0.785881 0.187311 0.301239
+
+R2 mean=0.7971, std=0.0130, best=0.8148
+best_seed=77, best_val_loss=0.3083
+
+Best HP:
+{'n_layers': 2, 'use_batchnorm': False, 'l2_reg': 0.0005, 'units_layer_0': 64, 'dropout_layer_0': 0.0, 'learning_rate': 0.004866173394034618, 'loss': 'mae', 'units_layer_1': 32, 'dropout_layer_1': 0.0, 'batch_size': 16, 'units_layer_2': 24, 'dropout_layer_2': 0.2, 'tuner/epochs': 200, 'tuner/initial_epoch': 67, 'tuner/bracket': 3, 'tuner/round': 3, 'tuner/trial_id': '0457'}
