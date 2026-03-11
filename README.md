@@ -34,7 +34,7 @@
 
 1. 从原始文献数据中提取化合物名称，转换为 **SMILES** 分子结构表示
 2. 合并多来源数据集（旧数据 323 条 + 新数据 1586 条，清洗并解决文献间 chi 冲突后得到 **1815 条**）
-3. 利用 **RDKit** 自动计算全部 **~210 个** 2D 分子描述符 + 指纹相似度 + 交互特征，生成 **332 维特征矩阵**
+3. 利用 **RDKit** 自动计算全部 **~210 个** 2D 分子描述符 + 指纹相似度 + 差值特征与温度逆数项，生成 **332 维特征矩阵**
 4. 使用 **遗传算法（GA）** 从 332 维中选出最优特征子集
 5. 基于最优特征，使用 **AutoTune** 自动超参数优化训练 ML / DNN 模型
 
@@ -97,6 +97,7 @@ Graduation-project/
 │       └── y_randomization.png
 │
 ├── utils/                     # 共享工具模块
+│   ├── __init__.py
 │   ├── data_utils.py           # load_saved_split_indices 等
 │   └── plot_style.py           # 统一绘图主题
 │
@@ -183,7 +184,7 @@ python Sklearn_AutoTune.py
 | 脚本 | 功能 |
 |------|------|
 | [`DNN_模型验证.py`](DNN_模型验证.py) | 加载 DNN 模型，在测试集上评估 R²/MAE/RMSE |
-| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后自动输出 Sklearn 验证结果（`final_results/sklearn/sklearn_validation_results.xlsx`） |
+| [`Sklearn_AutoTune.py`](Sklearn_AutoTune.py) | 训练结束后自动输出 Sklearn 验证结果（`final_results/sklearn/sklearn_validation_results.xlsx`，本地产物，不纳入 Git） |
 
 ### 特征贡献分析
 
