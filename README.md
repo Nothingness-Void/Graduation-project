@@ -49,9 +49,9 @@ Graduation-project/
 ├── 数据处理部分代码.py          # Step 2: χ 表达式解析 + 温度裂变
 ├── 合并数据集.py               # Step 2.5: 合并旧数据与新数据
 ├── 特征工程.py                 # Step 3: 全量 RDKit 描述符提取 (332 维)
-├── 遗传.py                    # Step 4a: 遗传算法 (GA) 粗筛（性能版，RF evaluator）
-├── 遗传_ElasticNet.py         # Step 4a: 遗传算法 (GA) 粗筛（物理版，ElasticNet evaluator）
-├── 特征筛选.py                 # Step 4b: RFECV 精筛
+├── 遗传.py                    # Step 4a: 遗传算法 (GA) 粗筛（性能版，默认供 RFECV 自动接续）
+├── 遗传_ElasticNet.py         # Step 4a: 遗传算法 (GA) 粗筛（物理版，独立输出 ga_elasticnet_*）
+├── 特征筛选.py                 # Step 4b: RFECV 精筛（默认读取 results/ga_selected_features.txt）
 ├── feature_config.py           # 特征配置中心 (统一管理选中的特征列)
 │
 ├── DNN_AutoTune.py            # Step 5a: DNN Hyperband 自动调参
@@ -76,8 +76,11 @@ Graduation-project/
 │   ├── best_model_preprocess.pkl # DNN 预处理器 + 最优超参
 │   ├── sklearn_model_bundle.pkl # Sklearn 统一模型包
 │   ├── ga_best_model.pkl      # GA 选出的最优模型
+│   ├── ga_elasticnet_best_model.pkl # 物理版 GA 最优模型
 │   ├── ga_selected_features.txt     # GA 选中的特征列表
+│   ├── ga_elasticnet_selected_features.txt # 物理版 GA 选中的特征列表
 │   ├── ga_evolution_log.csv         # GA 进化日志
+│   ├── ga_elasticnet_evolution_log.csv # 物理版 GA 进化日志
 │   ├── sklearn_tuning_summary.csv   # AutoTune 寻优报告
 │   ├── train_test_split_indices.npz # 统一 train/test 划分索引
 │   └── feature_selection.png        # 特征筛选可视化
@@ -97,10 +100,10 @@ Graduation-project/
 │   ├── data_utils.py           # load_saved_split_indices 等
 │   └── plot_style.py           # 统一绘图主题
 │
+├── docs/                      # 英文 / 日文 README
+├── 实验存档/                   # 六组实验快照与探索日志
 ├── requirements.txt           # Python 依赖清单
 ├── README.md                  # 本文件
-│
-├── 模型/                      # 历史模型存档
 └── 废弃文件存档/               # 已归档的废弃文件 (Sklearn.py, DNN.py 等)
 ```
 
@@ -113,13 +116,18 @@ Graduation-project/
 | Step 1：SMILES 获取 | `获取SMILES.py` | `data/smiles_raw.csv` |
 | Step 2：数据预处理 | `数据处理部分代码.py`、`合并数据集.py` | `data/huggins_preprocessed.xlsx`、`data/merged_dataset.csv` |
 | Step 3：特征工程 | `特征工程.py` | `data/molecular_features.xlsx`（332 维） |
-| Step 4：特征筛选 | `遗传.py`（性能版 GA）、`遗传_ElasticNet.py`（物理版 GA）、`特征筛选.py` | `results/ga_selected_features.txt`、`data/features_optimized.xlsx` |
+| Step 4：特征筛选 | `遗传.py`（性能版 GA）、`遗传_ElasticNet.py`（物理版 GA）、`特征筛选.py` | `results/ga_selected_features.txt`、`results/ga_elasticnet_selected_features.txt`、`data/features_optimized.xlsx` |
 | Step 5：模型训练与调参 | `Sklearn_AutoTune.py`、`DNN_AutoTune.py` | `final_results/sklearn/*`、`results/best_model.keras` |
 | Step 6：模型验证与分析 | `Y_Randomization.py`、`DNN_Y_Randomization.py`、`DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`、`final_results/dnn/dnn_y_randomization.*` |
+
+> ℹ️ 推荐的自动衔接链路是 `遗传.py -> 特征筛选.py`。当前 `特征筛选.py` 默认读取 `results/ga_selected_features.txt`；
+> `遗传_ElasticNet.py` 会生成独立的 `results/ga_elasticnet_*` 结果，用于物理解释对比，若要继续接入 RFECV，需手动同步特征列表。
 
 ---
 
 ## 建模阶段（Step 5）
+
+以下命令默认在同一个已激活的 Python 环境中执行；文中的 `python` 指当前环境对应的解释器。
 
 ### Step 5a：DNN Hyperband 自动调参
 
@@ -133,12 +141,13 @@ Graduation-project/
 | 搜索空间 | 1-3 层, 12-64 节点, L2 正则化, Dropout |
 | 数据划分 | 60% 训练 / 20% 验证 / 20% 测试 |
 | 标准化 | X 和 y 均使用 StandardScaler |
-| 重训 | 最优架构多种子重训 8 次 |
+| 重训 | 最优架构多种子重训 8 次，最终模型按 validation MAE 选择 |
 
 ```bash
-# 需要使用 .venv 中的 Python (Keras 3 兼容)
-.venv\Scripts\python.exe DNN_AutoTune.py
+python DNN_AutoTune.py
 ```
+
+> ℹ️ 当前 `DNN_AutoTune.py` 使用与 Hyperband 相同的验证指标 `val_mae` 选择最终 seed，不使用 `test_r2` 选模型。
 
 ### Step 5b：Sklearn AutoTune（推荐）
 
@@ -189,7 +198,7 @@ python Sklearn_AutoTune.py
 
 **功能**: Y-Scrambling 验证，通过 100 次随机打乱 y 值并重训模型，验证 QSAR 模型是否真正学到了特征与目标值的关系。如果真实模型 R² 远高于随机模型分布 (p < 0.05)，则模型有效。
 
-**输出**: `final_results/sklearn/y_randomization.png`、`y_randomization.csv`
+**输出**: `final_results/sklearn/y_randomization.png`、`final_results/sklearn/y_randomization.csv`
 
 ```bash
 python Y_Randomization.py
@@ -201,7 +210,7 @@ python Y_Randomization.py
 
 **功能**: 在复用同一 train/test 划分的前提下，对 DNN 的 `y_train/y_val` 进行随机打乱并重复重训，对比真实 DNN 与随机化 DNN 的测试集 R² 分布与 p-value。
 
-**输出**: `final_results/dnn/dnn_y_randomization.csv`、`dnn_y_randomization.png`、`dnn_y_randomization_summary.txt`
+**输出**: `final_results/dnn/dnn_y_randomization.csv`、`final_results/dnn/dnn_y_randomization.png`、`final_results/dnn/dnn_y_randomization_summary.txt`
 
 ```bash
 python DNN_Y_Randomization.py
@@ -213,7 +222,7 @@ python DNN_Y_Randomization.py
 
 **功能**: 严格使用 `best_model.keras + best_model_preprocess.pkl` 进行 DNN 综合分析，输出与 sklearn 类似的 2×2 验证图（Actual vs Predicted、残差分布、残差-预测散点、特征贡献），并导出验证明细与特征重要性表。
 
-**输出**: `final_results/dnn/dnn_validation_plots.png`、`dnn_validation_results.csv`、`dnn_feature_importance.csv`
+**输出**: `final_results/dnn/dnn_validation_plots.png`、`final_results/dnn/dnn_validation_results.csv`、`final_results/dnn/dnn_feature_importance.csv`
 
 ```bash
 python DNN特征贡献分析.py
@@ -235,7 +244,9 @@ python DNN特征贡献分析.py
 | `molecular_features.xlsx` | `data/` | 332 维特征矩阵 | Step 3 | ✅ |
 | `features_optimized.xlsx` | `data/` | 筛选后特征子集 | Step 4 | ✅ |
 | `ga_selected_features.txt` | `results/` | GA 选中的特征列表 | Step 4 | — |
+| `ga_elasticnet_selected_features.txt` | `results/` | 物理版 GA 选中的特征列表 | Step 4 | — |
 | `ga_evolution_log.csv` | `results/` | GA 进化日志 | Step 4 | — |
+| `ga_elasticnet_evolution_log.csv` | `results/` | 物理版 GA 进化日志 | Step 4 | — |
 | `train_test_split_indices.npz` | `results/` | 统一 train/test 划分索引 | Step 4 | — |
 | `sklearn_model_bundle.pkl` | `results/` | Sklearn 统一模型包 | Step 5 | — |
 | `best_model.keras` | `results/` | DNN AutoTune 最优模型 | Step 5 | — |
@@ -261,10 +272,10 @@ python DNN特征贡献分析.py
 | XGBRegressor | 0.725 | 0.827 | 0.165 | 0.271 |
 | RandomForestRegressor | 0.699 | 0.822 | 0.162 | 0.275 |
 | MLPRegressor | 0.597 | 0.748 | 0.227 | 0.327 |
-| DNN (AutoTune, best run) | — | 0.764 | 0.208 | 0.316 |
+| DNN (AutoTune, historical best run) | — | 0.764 | 0.208 | 0.316 |
 
 > ℹ️ 所有模型均在相同的测试集上评估，测试集不参与特征选择或模型训练。
-> ℹ️ DNN 行为 AutoTune 最优架构 8 次重训中的最佳一次（非交叉验证均值）。
+> ℹ️ DNN 行为历史 best run 指标，用于与六组存档横向对比；当前仓库落盘的最终 `best_model.keras` 按 validation MAE 选择。
 > ℹ️ 当前默认展示的是 9 特征 `pre_physics` 可解释基线；其余 5 组对比实验已单独归档。
 
 ---
@@ -307,15 +318,21 @@ python DNN特征贡献分析.py
 git clone https://github.com/Nothingness-Void/Graduation-project
 cd Graduation-project
 
-# 2. 安装依赖
-pip install -r requirements.txt
-conda install -c conda-forge rdkit
+# 2. 创建并激活环境（推荐使用 conda，保证 RDKit 与 TensorFlow 使用同一解释器）
+conda create -n huggins-qsar python=3.10 -y
+conda activate huggins-qsar
 
-# 3. 数据合并 + 特征工程 + 两阶段特征选择 + 建模
+# 3. 安装依赖
+pip install -r requirements.txt
+conda install -c conda-forge rdkit -y
+
+# 下文所有 python 命令都默认在上述已激活环境中执行
+
+# 4. 数据合并 + 特征工程 + 两阶段特征选择 + 建模
 python 合并数据集.py              # 合并旧数据与新数据
 python 特征工程.py                # 全量 RDKit 描述符 (332 维)
-python 遗传_ElasticNet.py        # 物理版 GA 粗筛 (332→~20 特征, ElasticNet, 约 10-20 min) [推荐]
-# python 遗传.py                 # 性能版 GA 粗筛 (332→~30 特征, RF, 约 20-40 min) [备选]
+python 遗传.py                   # 性能版 GA 粗筛 (与 特征筛选.py 自动衔接) [推荐]
+# python 遗传_ElasticNet.py      # 物理版 GA 粗筛 (输出 ga_elasticnet_*，需手动同步后再接 RFECV) [备选]
 python 特征筛选.py                # RFECV 精筛 (23 → 9, 最终特征集)
 python Sklearn_AutoTune.py       # Sklearn 自动调参
 python DNN_AutoTune.py           # DNN Hyperband 自动调参
@@ -323,7 +340,7 @@ python Y_Randomization.py        # Sklearn Y-Randomization 验证（可选）
 python DNN_Y_Randomization.py    # DNN Y-Randomization 验证（可选）
 
 # 或: 如果已有 data/molecular_features.xlsx, 从 Step 4 开始
-python 遗传_ElasticNet.py        # GA 粗筛
+python 遗传.py                   # GA 粗筛
 python 特征筛选.py                # RFECV 精筛 (→ 9 特征)
 python Sklearn_AutoTune.py
 python DNN_AutoTune.py

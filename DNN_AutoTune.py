@@ -62,6 +62,17 @@ RETRAIN_RUNS = 8
 
 
 
+def get_best_val_mae(history: keras.callbacks.History) -> float:
+    """Use the tuner objective consistently when selecting the final retrain seed."""
+    history_dict = getattr(history, "history", {})
+    for key in ("val_mae", "val_mean_absolute_error"):
+        values = history_dict.get(key)
+        if values:
+            return float(np.min(values))
+
+    raise KeyError("训练历史中未找到 val_mae/val_mean_absolute_error，无法按验证 MAE 选择最终模型。")
+
+
 class ProgressHyperband(kt.Hyperband):
     """Hyperband 搜索阶段的 trial 进度条。"""
 
@@ -274,8 +285,9 @@ def main():
     best_hp = top_hps[0]
     all_results = []
     best_model = None
-    best_val_loss = float("inf")
+    best_val_mae = float("inf")
     best_seed = None
+    selection_metric = "val_mae"
 
     best_batch_size = best_hp.get("batch_size")
 
@@ -307,17 +319,27 @@ def main():
         r2 = r2_score(y_test, y_pred)
         mae = mean_absolute_error(y_test, y_pred)
         rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+        val_mae = get_best_val_mae(history)
         val_loss = float(np.min(history.history["val_loss"]))
 
         all_results.append(
-            {"run": run + 1, "seed": seed, "val_loss": val_loss, "R2": r2, "MAE": mae, "RMSE": rmse}
+            {
+                "run": run + 1,
+                "seed": seed,
+                "val_mae": val_mae,
+                "val_loss": val_loss,
+                "R2": r2,
+                "MAE": mae,
+                "RMSE": rmse,
+            }
         )
         tqdm.write(
-            f"Run {run+1}: val_loss={val_loss:.4f}, test R2={r2:.4f}, MAE={mae:.4f}, RMSE={rmse:.4f}"
+            f"Run {run+1}: val_mae={val_mae:.4f}, val_loss={val_loss:.4f}, "
+            f"test R2={r2:.4f}, MAE={mae:.4f}, RMSE={rmse:.4f}"
         )
 
-        if val_loss < best_val_loss:
-            best_val_loss = val_loss
+        if val_mae < best_val_mae:
+            best_val_mae = val_mae
             best_model = model
             best_seed = seed
 
@@ -328,7 +350,7 @@ def main():
         f"\nR2 mean={results_df['R2'].mean():.4f}, std={results_df['R2'].std():.4f}, "
         f"best={results_df['R2'].max():.4f}"
     )
-    print(f"按 val_loss 选中的最佳 seed: {best_seed}, val_loss={best_val_loss:.4f}")
+    print(f"按 {selection_metric} 选中的最佳 seed: {best_seed}, {selection_metric}={best_val_mae:.4f}")
 
     # 4) 保存最优模型与预处理信息
     best_model.save(MODEL_PATH)
@@ -342,6 +364,8 @@ def main():
 
                 "best_hp": best_hp.values,
                 "best_seed": best_seed,
+                "selection_metric": selection_metric,
+                "best_val_mae": best_val_mae,
             },
             f,
         )
@@ -363,7 +387,10 @@ def main():
             f"\nR2 mean={results_df['R2'].mean():.4f}, std={results_df['R2'].std():.4f}, "
             f"best={results_df['R2'].max():.4f}\n"
         )
-        f.write(f"best_seed={best_seed}, best_val_loss={best_val_loss:.4f}\n")
+        f.write(
+            f"best_seed={best_seed}, selection_metric={selection_metric}, "
+            f"best_val_mae={best_val_mae:.4f}\n"
+        )
         f.write(f"\nBest HP:\n{best_hp.values}\n")
 
     print(f"\n最优模型已保存: {MODEL_PATH}")
@@ -383,6 +410,8 @@ def main():
                 "scaler_y": scaler_y,
                 "best_hp": best_hp.values,
                 "best_seed": best_seed,
+                "selection_metric": selection_metric,
+                "best_val_mae": best_val_mae,
             },
             f,
         )
