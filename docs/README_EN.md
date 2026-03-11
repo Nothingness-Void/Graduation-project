@@ -4,11 +4,11 @@
   <a href="README_JA.md">日本語</a>
 </p>
 
-# Huggins Parameter (chi) QSAR Prediction Model based on Molecular Descriptors
+# Huggins Parameter (χ) QSAR Prediction Model based on Molecular Descriptors
 
 > This version is AI-translated and may contain minor wording errors.
 >
-> This project uses **QSAR (Quantitative Structure-Activity Relationship)** methods to predict the **Huggins Parameter (chi)** of polymer-solvent systems using molecular descriptors and machine learning / deep learning models.
+> This project uses **QSAR (Quantitative Structure-Activity Relationship)** methods to predict the **Huggins Parameter (χ)** of polymer-solvent systems using molecular descriptors and machine learning / deep learning models.
 
 ---
 
@@ -36,7 +36,7 @@ The core workflow of this project is:
 
 1. Extract compound names from original literature data and convert them to **SMILES** molecular structure representations.
 2. Merge datasets from multiple sources (323 legacy records + 1586 new records, cleaned and resolved cross-literature chi conflicts to obtain **1815 records**).
-3. Use **RDKit** to automatically calculate all **~210** 2D molecular descriptors + fingerprint similarities + interaction features, generating a **332-dimensional feature matrix**.
+3. Use **RDKit** to automatically calculate all **~210** 2D molecular descriptors + fingerprint similarities + delta features and inverse temperature terms, generating a **332-dimensional feature matrix**.
 4. Use **Genetic Algorithm (GA)** to select the optimal feature subset from the 332 dimensions.
 5. Based on the optimal features, use **AutoTune** for automatic hyperparameter optimization to train ML / DNN models.
 
@@ -51,9 +51,9 @@ Graduation-project/
 ├── 数据处理部分代码.py          # Step 2: χ Expression Parsing + Temperature Expansion
 ├── 合并数据集.py               # Step 2.5: Merge Legacy & New Datasets
 ├── 特征工程.py                 # Step 3: Full RDKit Descriptor Extraction (332-dim)
-├── 遗传.py                    # Step 4a: GA Coarse Selection (Performance ver., RF evaluator)
-├── 遗传_ElasticNet.py         # Step 4a: GA Coarse Selection (Physics ver., ElasticNet evaluator)
-├── 特征筛选.py                 # Step 4b: RFECV Refinement
+├── 遗传.py                    # Step 4a: GA Coarse Selection (Performance ver., auto-feeds RFECV)
+├── 遗传_ElasticNet.py         # Step 4a: GA Coarse Selection (Physics ver., outputs ga_elasticnet_*)
+├── 特征筛选.py                 # Step 4b: RFECV Refinement (reads results/ga_selected_features.txt by default)
 ├── feature_config.py           # Feature Config Center (Unified Management of Selected Features)
 │
 ├── DNN_AutoTune.py            # Step 5a: DNN Hyperband Auto-Tuning
@@ -78,8 +78,11 @@ Graduation-project/
 │   ├── best_model_preprocess.pkl # DNN Preprocessor + Best Hyperparameters
 │   ├── sklearn_model_bundle.pkl # Sklearn Unified Model Bundle
 │   ├── ga_best_model.pkl      # GA Best Model
+│   ├── ga_elasticnet_best_model.pkl # Physics GA Best Model
 │   ├── ga_selected_features.txt     # GA Selected Feature List
+│   ├── ga_elasticnet_selected_features.txt # Physics GA Selected Feature List
 │   ├── ga_evolution_log.csv         # GA Evolution Log
+│   ├── ga_elasticnet_evolution_log.csv # Physics GA Evolution Log
 │   ├── sklearn_tuning_summary.csv   # AutoTune Optimization Report
 │   ├── train_test_split_indices.npz # Unified Train/Test Split Indices
 │   └── feature_selection.png        # Feature Selection Visualization
@@ -96,13 +99,14 @@ Graduation-project/
 │       └── y_randomization.png
 │
 ├── utils/                     # Shared Utility Modules
+│   ├── __init__.py
 │   ├── data_utils.py           # load_saved_split_indices, etc.
 │   └── plot_style.py           # Unified plot theme
 │
+├── docs/                      # English / Japanese README
+├── 实验存档/                   # Six-way experiment snapshots & exploration log
 ├── requirements.txt           # Python Dependency List
 ├── README.md                  # This file
-│
-├── 模型/                      # Historical Model Archives
 └── 废弃文件存档/               # Archived Obsolete Files (Sklearn.py, DNN.py, etc.)
 ```
 
@@ -115,13 +119,18 @@ Graduation-project/
 | Step 1: SMILES Retrieval | `获取SMILES.py` | `data/smiles_raw.csv` |
 | Step 2: Data Preprocessing | `数据处理部分代码.py`, `合并数据集.py` | `data/huggins_preprocessed.xlsx`, `data/merged_dataset.csv` |
 | Step 3: Feature Engineering | `特征工程.py` | `data/molecular_features.xlsx` (332-dim) |
-| Step 4: Feature Selection | `遗传.py` (Performance GA), `遗传_ElasticNet.py` (Physics GA), `特征筛选.py` | `results/ga_selected_features.txt`, `data/features_optimized.xlsx` |
+| Step 4: Feature Selection | `遗传.py` (Performance GA), `遗传_ElasticNet.py` (Physics GA), `特征筛选.py` | `results/ga_selected_features.txt`, `results/ga_elasticnet_selected_features.txt`, `data/features_optimized.xlsx` |
 | Step 5: Model Training & Tuning | `Sklearn_AutoTune.py`, `DNN_AutoTune.py` | `final_results/sklearn/*`, `results/best_model.keras` |
 | Step 6: Validation & Analysis | `Y_Randomization.py`, `DNN_Y_Randomization.py`, `DNN特征贡献分析.py` | `final_results/sklearn/y_randomization.*`, `final_results/dnn/dnn_y_randomization.*` |
+
+> ℹ️ The recommended auto-chaining pipeline is `遗传.py -> 特征筛选.py`. Currently, `特征筛选.py` reads `results/ga_selected_features.txt` by default;
+> `遗传_ElasticNet.py` generates independent `results/ga_elasticnet_*` results for physics-interpretability comparison. To feed these into RFECV, manual feature list sync is required.
 
 ---
 
 ## Modeling Phase (Step 5)
+
+All commands below assume the same activated Python environment; `python` refers to the current environment's interpreter.
 
 ### Step 5a: DNN Hyperband Auto-Tuning
 
@@ -135,12 +144,13 @@ Uses Keras Tuner's Hyperband algorithm to search for the optimal DNN architectur
 | Search Space | 1-3 layers, 12-64 nodes, L2 Regularization, Dropout |
 | Data Split | 60% Train / 20% Validation / 20% Test |
 | Standardization | StandardScaler for both X and y |
-| Retraining | Best architecture retrained 8 times with different seeds |
+| Retraining | Best architecture retrained 8 times with different seeds, final model selected by validation MAE |
 
 ```bash
-# Requires Python in .venv (Keras 3 compatible)
-.venv\Scripts\python.exe DNN_AutoTune.py
+python DNN_AutoTune.py
 ```
+
+> ℹ️ `DNN_AutoTune.py` uses the same validation metric `val_mae` as Hyperband for final seed selection, not `test_r2`.
 
 ### Step 5b: Sklearn AutoTune (Recommended)
 
@@ -176,7 +186,7 @@ python Sklearn_AutoTune.py
 | Script | Function |
 |--------|----------|
 | [`DNN_模型验证.py`](../DNN_模型验证.py) | Loads DNN model, evaluates R²/MAE/RMSE on the test set |
-| [`Sklearn_AutoTune.py`](../Sklearn_AutoTune.py) | Automatically outputs Sklearn validation results after training (`final_results/sklearn/sklearn_validation_results.xlsx`) |
+| [`Sklearn_AutoTune.py`](../Sklearn_AutoTune.py) | Automatically outputs Sklearn validation results after training (`final_results/sklearn/sklearn_validation_results.xlsx`, local artifact, not Git-tracked) |
 
 ### Feature Contribution Analysis
 
@@ -191,7 +201,7 @@ python Sklearn_AutoTune.py
 
 **Function**: Y-Scrambling validation. Randomly shuffles y-values 100 times and retrains the model to verify if the QSAR model has truly learned the relationship between features and the target. If the real model R² is significantly higher than the randomized model distribution (p < 0.05), the model is valid.
 
-**Output**: `final_results/sklearn/y_randomization.png`, `y_randomization.csv`
+**Output**: `final_results/sklearn/y_randomization.png`, `final_results/sklearn/y_randomization.csv`
 
 ```bash
 python Y_Randomization.py
@@ -203,7 +213,7 @@ python Y_Randomization.py
 
 **Function**: Reusing the same train/test split, randomly shuffles DNN's `y_train/y_val` and repeats retraining to compare the test set R² distribution and p-value of the real DNN vs. randomized DNN.
 
-**Output**: `final_results/dnn/dnn_y_randomization.csv`, `dnn_y_randomization.png`, `dnn_y_randomization_summary.txt`
+**Output**: `final_results/dnn/dnn_y_randomization.csv`, `final_results/dnn/dnn_y_randomization.png`, `final_results/dnn/dnn_y_randomization_summary.txt`
 
 ```bash
 python DNN_Y_Randomization.py
@@ -215,7 +225,7 @@ python DNN_Y_Randomization.py
 
 **Function**: Strictly uses `best_model.keras + best_model_preprocess.pkl` to generate a sklearn-style 2×2 DNN dashboard (Actual vs Predicted, Residual Distribution, Residual vs Predicted, Feature Importance), plus validation details and feature importance tables.
 
-**Output**: `final_results/dnn/dnn_validation_plots.png`, `dnn_validation_results.csv`, `dnn_feature_importance.csv`
+**Output**: `final_results/dnn/dnn_validation_plots.png`, `final_results/dnn/dnn_validation_results.csv`, `final_results/dnn/dnn_feature_importance.csv`
 
 ```bash
 python DNN特征贡献分析.py
@@ -237,7 +247,9 @@ python DNN特征贡献分析.py
 | `molecular_features.xlsx` | `data/` | 332-dim Feature Matrix | Step 3 | ✅ |
 | `features_optimized.xlsx` | `data/` | Filtered Feature Subset | Step 4 | ✅ |
 | `ga_selected_features.txt` | `results/` | GA Selected Feature List | Step 4 | — |
+| `ga_elasticnet_selected_features.txt` | `results/` | Physics GA Selected Feature List | Step 4 | — |
 | `ga_evolution_log.csv` | `results/` | GA Evolution Log | Step 4 | — |
+| `ga_elasticnet_evolution_log.csv` | `results/` | Physics GA Evolution Log | Step 4 | — |
 | `train_test_split_indices.npz` | `results/` | Unified Train/Test Split Indices | Step 4 | — |
 | `sklearn_model_bundle.pkl` | `results/` | Sklearn Unified Model Bundle | Step 5 | — |
 | `best_model.keras` | `results/` | DNN AutoTune Best Model | Step 5 | — |
@@ -263,10 +275,10 @@ python DNN特征贡献分析.py
 | XGBRegressor | 0.725 | 0.827 | 0.165 | 0.271 |
 | RandomForestRegressor | 0.699 | 0.822 | 0.162 | 0.275 |
 | MLPRegressor | 0.597 | 0.748 | 0.227 | 0.327 |
-| DNN (AutoTune, best run) | — | 0.764 | 0.208 | 0.316 |
+| DNN (AutoTune, historical best run) | — | 0.764 | 0.208 | 0.316 |
 
 > ℹ️ All models are evaluated on the same test set, which is not involved in feature selection or model training.
-> ℹ️ DNN row shows the best run out of 8 retrainings of the optimal architecture from AutoTune (not CV mean).
+> ℹ️ DNN row shows the historical best run metric for cross-archive comparison; the final `best_model.keras` in the repository is selected by validation MAE.
 > ℹ️ The default display shows the 9-feature `pre_physics` interpretable baseline; 5 other comparison experiments are archived separately.
 
 ---
@@ -309,15 +321,21 @@ python DNN特征贡献分析.py
 git clone https://github.com/Nothingness-Void/Graduation-project
 cd Graduation-project
 
-# 2. Install dependencies
-pip install -r requirements.txt
-conda install -c conda-forge rdkit
+# 2. Create and activate environment (conda recommended to ensure RDKit and TensorFlow use the same interpreter)
+conda create -n huggins-qsar python=3.10 -y
+conda activate huggins-qsar
 
-# 3. Data Merge + Feature Engineering + Two-Stage Feature Selection + Modeling
+# 3. Install dependencies
+pip install -r requirements.txt
+conda install -c conda-forge rdkit -y
+
+# All python commands below assume the above activated environment
+
+# 4. Data Merge + Feature Engineering + Two-Stage Feature Selection + Modeling
 python 合并数据集.py              # Merge Legacy & New Data
 python 特征工程.py                # Full RDKit Descriptors (332 dim)
-python 遗传_ElasticNet.py        # Physics GA Coarse Selection (332→~20 features, ElasticNet, ~10-20 min) [Recommended]
-# python 遗传.py                 # Performance GA Coarse Selection (332→~30 features, RF, ~20-40 min) [Alternative]
+python 遗传.py                   # Performance GA Coarse Selection (auto-chains with 特征筛选.py) [Recommended]
+# python 遗传_ElasticNet.py      # Physics GA Coarse Selection (outputs ga_elasticnet_*, manual sync needed for RFECV) [Alternative]
 python 特征筛选.py                # RFECV Refinement (23 → 9, final feature set)
 python Sklearn_AutoTune.py       # Sklearn Auto-Tuning
 python DNN_AutoTune.py           # DNN Hyperband Auto-Tuning
@@ -325,7 +343,7 @@ python Y_Randomization.py        # Sklearn Y-Randomization Validation (Optional)
 python DNN_Y_Randomization.py    # DNN Y-Randomization Validation (Optional)
 
 # OR: If data/molecular_features.xlsx already exists, start from Step 4
-python 遗传_ElasticNet.py        # GA coarse selection
+python 遗传.py                   # GA coarse selection
 python 特征筛选.py                # RFECV refinement (→ 9 features)
 python Sklearn_AutoTune.py
 python DNN_AutoTune.py
